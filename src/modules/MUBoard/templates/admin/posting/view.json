@@ -1,0 +1,8 @@
+{* purpose of this template: postings view json view in admin area *}
+{muboardTemplateHeaders contentType='application/json'}
+[
+{foreach item='item' from=$items name='postings'}
+    {if not $smarty.foreach.postings.first},{/if}
+    {$item->toJson()}
+{/foreach}
+]

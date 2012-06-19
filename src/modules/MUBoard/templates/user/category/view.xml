@@ -1,0 +1,9 @@
+{* purpose of this template: categories view xml view in user area *}
+{muboardTemplateHeaders contentType='text/xml'}<?xml version="1.0" encoding="{charset}" ?>
+<categories>
+{foreach item='item' from=$items}
+    {include file='user/category/include.xml'}
+{foreachelse}
+    <noCategory />
+{/foreach}
+</categories>

@@ -1,0 +1,3 @@
+{* purpose of this template: abos display json view in admin area *}
+{muboardTemplateHeaders contentType='application/json'}
+{$abo->toJson()}

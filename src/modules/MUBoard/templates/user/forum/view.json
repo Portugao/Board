@@ -1,0 +1,8 @@
+{* purpose of this template: forums view json view in user area *}
+{muboardTemplateHeaders contentType='application/json'}
+[
+{foreach item='item' from=$items name='forums'}
+    {if not $smarty.foreach.forums.first},{/if}
+    {$item->toJson()}
+{/foreach}
+]

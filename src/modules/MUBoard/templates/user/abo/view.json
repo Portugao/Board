@@ -1,0 +1,8 @@
+{* purpose of this template: abos view json view in user area *}
+{muboardTemplateHeaders contentType='application/json'}
+[
+{foreach item='item' from=$items name='abos'}
+    {if not $smarty.foreach.abos.first},{/if}
+    {$item->toJson()}
+{/foreach}
+]

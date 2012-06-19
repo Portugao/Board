@@ -1,0 +1,3 @@
+{* purpose of this template: forums display json view in admin area *}
+{muboardTemplateHeaders contentType='application/json'}
+{$forum->toJson()}

@@ -1,0 +1,5 @@
+{* purpose of this template: abos view csv view in admin area *}
+{muboardTemplateHeaders contentType='text/comma-separated-values; charset=iso-8859-15' asAttachment=true filename='Abos.csv'}
+"{gt text='Userid'}";"{gt text='Catid'}";"{gt text='Forumid'}";"{gt text='Postingid'}"{foreach item='abo' from=$items}
+"{$abo.userid|replace:"\"":""}";"{$abo.catid|replace:"\"":""}";"{$abo.forumid|replace:"\"":""}";"{$abo.postingid|replace:"\"":""}"{/foreach}
+

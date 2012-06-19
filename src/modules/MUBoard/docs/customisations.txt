@@ -1,0 +1,44 @@
+
+
+CUSTOMISATIONS
+--------------
+
+MUBoard - Manual additions and amendments
+
+
+Changes by hand on the model to change in MOST
+
+
+
+Changed Files
+
+*templates/user/category/view.tpl
+*templates/user/category/display.tpl
+*styles/style.css
+
+
+Implemented Classes
+
+
+*lib/MUBoard/Api/Admin.php
+*lib/MUBoard/Api/User.php
+*lib/MUBoard/Controller/User.php
+*lib/MUBoard/Entity/Forum.php
+*lib/MUBoard/Entity/Posting.php
+*lib/MUBoard/Form/Handler/User/Posting/Edit.php
+*lib/MUBoard/Util/Model.php
+*lib/MUBoard/Util/View.php
+
+Additional Files
+
+customisations.txt
+
+*templates/plugins/block.muboardform.php
+*templates/plugins/modifier.muboardGetLAstPosting.php
+*templates/plugins/modifier.muboardGetNumberOfIssuesOfCategory.php
+*templates/plugins/modifier.muboardGetNumberOfIssuesOfForum.php
+*templates/plugins/modifier.muboardGetNumberOfPostingsOfCategory.php
+*templates/plugins/modifier.muboardGetNumberOfPostingsOfForum.php
+
+
+
