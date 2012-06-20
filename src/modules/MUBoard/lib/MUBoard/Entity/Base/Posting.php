@@ -94,7 +94,7 @@ abstract class MUBoard_Entity_Base_Posting extends Zikula_EntityAccess
      * @ORM\Column(type="boolean")
      * @var boolean $state.
      */
-    protected $state = false;
+    protected $state = true;
     /**
      * First image meta data array.
      *
