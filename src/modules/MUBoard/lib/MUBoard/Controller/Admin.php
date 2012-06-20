@@ -16,5 +16,64 @@
  */
 class MUBoard_Controller_Admin extends MUBoard_Controller_Base_Admin
 {
-    // feel free to add your own controller methods here
+	/**
+	 * Controller method to close a posting ( issue )
+	 */
+
+	public function close()
+	{
+
+		$request = new Zikula_Request_Http();
+		$id = $request->getGet()->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
+			
+		MUBoard_Util_Model::closePosting($id);
+			
+		return System::redirect(ModUtil::url($this->name, 'user', 'view' , array('ot' => 'posting', 'id' => $id)));
+			
+	}
+
+	/**
+	 * Controller method to take an abo
+	 */
+
+	public function take()
+	{
+		$request = new Zikula_Request_Http();
+		$posting = $request->getGet()->filter('posting', 0, FILTER_SANITIZE_NUMBER_INT);
+		$forum = $request->getGet()->filter('forum', 0, FILTER_SANITIZE_NUMBER_INT);
+		$category = $request->getGet()->filter('category', 0, FILTER_SANITIZE_NUMBER_INT);
+
+		MUBoard_Util_Model::takeAbo($posting, $forum, $category);
+		if ($posting > 0) {
+			return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $posting)));
+		}
+		if ($forum > 0) {
+			return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $posting)));
+		}
+	}
+
+	/**
+	 * Controller method to quit an abo
+	 */
+
+	public function quit()
+	{
+		$request = new Zikula_Request_Http();
+		$posting = $request->getGet()->filter('posting', 0, FILTER_SANITIZE_NUMBER_INT);
+		$forum = $request->getGet()->filter('forum', 0, FILTER_SANITIZE_NUMBER_INT);
+		$category = $request->getGet()->filter('category', 0, FILTER_SANITIZE_NUMBER_INT);
+		$view = $request->getGet()->filter('view', 'view', FILTER_SANITIZE_NUMBER_STRING);
+
+		MUBoard_Util_Model::quitAbo($posting, $forum, $category);
+		if ($posting > 0) {
+			return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $posting)));
+		}
+		if ($forum > 0 && $view == 'display') {
+			return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'category')));
+		}
+
+		if ($forum > 0 && $view == 'view') {
+			return System::redirect(ModUtil::url($this->name, 'user', 'view' , array('ot' => 'category')));
+		}
+	}
 }
