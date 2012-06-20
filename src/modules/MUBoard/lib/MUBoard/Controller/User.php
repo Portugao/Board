@@ -17,71 +17,110 @@
  */
 class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 {
-/**
-     * This method provides a generic item detail view.
-     *
-     * @param string  $ot           Treated object type.
-     * @param string  $tpl          Name of alternative template (for alternative display options, feeds and xml output)
-     * @param boolean $raw          Optional way to display a template instead of fetching it (needed for standalone output)
-     * @return mixed Output.
-     */
-    public function display($args)
-    {
-// DEBUG: permission check aspect starts
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission('MUBoard::', '::', ACCESS_READ));
-// DEBUG: permission check aspect ends
 
-        // parameter specifying which type of objects we are treating
-        $objectType = (isset($args['ot']) && !empty($args['ot'])) ? $args['ot'] : $this->request->getGet()->filter('ot', 'category', FILTER_SANITIZE_STRING);
-        $utilArgs = array('controller' => 'user', 'action' => 'display');
-        if (!in_array($objectType, MUBoard_Util_Controller::getObjectTypes('controllerAction', $utilArgs))) {
-            $objectType = MUBoard_Util_Controller::getDefaultObjectType('controllerAction', $utilArgs);
-        }
-        $repository = $this->entityManager->getRepository('MUBoard_Entity_' . ucfirst($objectType));
+	/**
+	 * This method provides a generic item list overview.
+	 *
+	 * @param string  $ot           Treated object type.
+	 * @param string  $sort         Sorting field.
+	 * @param string  $sortdir      Sorting direction.
+	 * @param int     $pos          Current pager position.
+	 * @param int     $num          Amount of entries to display.
+	 * @param string  $tpl          Name of alternative template (for alternative display options, feeds and xml output)
+	 * @param boolean $raw          Optional way to display a template instead of fetching it (needed for standalone output)
+	 * @return mixed Output.
+	 */
+	public function view($args)
+	{
+		$args['ot'] = $this->request->getGet()->filter('ot', 'category', FILTER_SANITIZE_STRING);
+		$type = $this->request->getGet()->filter('type', 'user', FILTER_SANITIZE_STRING);
+		$func = $this->request->getGet()->filter('func', 'view', FILTER_SANITIZE_STRING);
+		 
+		$sortdir = ModUtil::getVar('MUBoard', 'sortingPostings');
+		 
+		if (($args['ot'] == 'category' || $args['ot'] == 'forum' ) && $type == 'user') {
 
-        $idFields = ModUtil::apiFunc($this->name, 'selection', 'getIdFields', array('ot' => $objectType));
+			$args['sort'] = 'pos';
+			if ($sortdir == 'descending') {
+				$args['sortdir'] = 'desc';
+			}
+			else {
+				$args['sortdir'] = 'asc'; 
+			}
+		}
+		$this->view->assign('func', $func);
+		 
+		return parent::view($args);
+	}
 
-        // retrieve identifier of the object we wish to view
-        $idValues = MUBoard_Util_Controller::retrieveIdentifier($this->request, $args, $objectType, $idFields);
-        $hasIdentifier = MUBoard_Util_Controller::isValidIdentifier($idValues);
+	/**
+	 * This method provides a generic item detail view.
+	 *
+	 * @param string  $ot           Treated object type.
+	 * @param string  $tpl          Name of alternative template (for alternative display options, feeds and xml output)
+	 * @param boolean $raw          Optional way to display a template instead of fetching it (needed for standalone output)
+	 * @return mixed Output.
+	 */
+	public function display($args)
+	{
+		// DEBUG: permission check aspect starts
+		$this->throwForbiddenUnless(SecurityUtil::checkPermission('MUBoard::', '::', ACCESS_READ));
+		// DEBUG: permission check aspect ends
 
-        // check for unique permalinks (without id)
-        $hasSlug = false;
-        $slugTitle = '';
-        if ($hasIdentifier === false) {
-            $entityClass = 'MUBoard_Entity_' . ucfirst($objectType);
-            $objectTemp = new $entityClass();
-            $hasSlug = $objectTemp->get_hasUniqueSlug();
-            if ($hasSlug) {
-                $slugTitle = (isset($args['title']) && !empty($args['title'])) ? $args['title'] : $this->request->getGet()->filter('title', '', FILTER_SANITIZE_STRING);
-                $hasSlug = (!empty($slugTitle));
-            }
-        }
-        $hasIdentifier |= $hasSlug;
-        $this->throwNotFoundUnless($hasIdentifier, $this->__('Error! Invalid identifier received.'));
+		// parameter specifying which type of objects we are treating
+		$objectType = (isset($args['ot']) && !empty($args['ot'])) ? $args['ot'] : $this->request->getGet()->filter('ot', 'category', FILTER_SANITIZE_STRING);
+		$utilArgs = array('controller' => 'user', 'action' => 'display');
+		if (!in_array($objectType, MUBoard_Util_Controller::getObjectTypes('controllerAction', $utilArgs))) {
+			$objectType = MUBoard_Util_Controller::getDefaultObjectType('controllerAction', $utilArgs);
+		}
+		$repository = $this->entityManager->getRepository('MUBoard_Entity_' . ucfirst($objectType));
 
-        $entity = ModUtil::apiFunc($this->name, 'selection', 'getEntity', array('ot' => $objectType, 'id' => $idValues, 'slug' => $slugTitle));
-        $this->throwNotFoundUnless($entity != null, $this->__('No such item.'));
+		$idFields = ModUtil::apiFunc($this->name, 'selection', 'getIdFields', array('ot' => $objectType));
 
-        // build ModUrl instance for display hooks
-        $currentUrlArgs = array('ot' => $objectType);
-        foreach ($idFields as $idField) {
-            $currentUrlArgs[$idField] = $idValues[$idField];
-        }
-        
-        // add a call to the posting
-        if ($objectType == 'posting') {
-        	MUBoard_Util_Model::closeTicket($idValues);
-        }
-        
-        $currentUrlObject = new Zikula_ModUrl($this->name, 'user', 'display', ZLanguage::getLanguageCode(), $currentUrlArgs);
+		// retrieve identifier of the object we wish to view
+		$idValues = MUBoard_Util_Controller::retrieveIdentifier($this->request, $args, $objectType, $idFields);
+		$hasIdentifier = MUBoard_Util_Controller::isValidIdentifier($idValues);
 
-        // assign output data to view object.
-        $this->view->assign($objectType, $entity)
-                   ->assign('currentUrlObject', $currentUrlObject)
-                   ->assign($repository->getAdditionalTemplateParameters('controllerAction', $utilArgs));
+		// check for unique permalinks (without id)
+		$hasSlug = false;
+		$slugTitle = '';
+		if ($hasIdentifier === false) {
+			$entityClass = 'MUBoard_Entity_' . ucfirst($objectType);
+			$objectTemp = new $entityClass();
+			$hasSlug = $objectTemp->get_hasUniqueSlug();
+			if ($hasSlug) {
+				$slugTitle = (isset($args['title']) && !empty($args['title'])) ? $args['title'] : $this->request->getGet()->filter('title', '', FILTER_SANITIZE_STRING);
+				$hasSlug = (!empty($slugTitle));
+			}
+		}
+		$hasIdentifier |= $hasSlug;
+		$this->throwNotFoundUnless($hasIdentifier, $this->__('Error! Invalid identifier received.'));
 
-        // fetch and return the appropriate template
-        return MUBoard_Util_View::processTemplate($this->view, 'user', $objectType, 'display', $args);
-    }
+		$entity = ModUtil::apiFunc($this->name, 'selection', 'getEntity', array('ot' => $objectType, 'id' => $idValues, 'slug' => $slugTitle));
+		$this->throwNotFoundUnless($entity != null, $this->__('No such item.'));
+
+		// build ModUrl instance for display hooks
+		$currentUrlArgs = array('ot' => $objectType);
+		foreach ($idFields as $idField) {
+			$currentUrlArgs[$idField] = $idValues[$idField];
+		}
+
+		// add a call to the posting
+		if ($objectType == 'posting') {
+			MUBoard_Util_Model::addView($idValues);
+		}
+
+		$currentUrlObject = new Zikula_ModUrl($this->name, 'user', 'display', ZLanguage::getLanguageCode(), $currentUrlArgs);
+
+		$func = $this->request->getGet()->filter('func', 'view', FILTER_SANITIZE_STRING);
+		
+		// assign output data to view object.
+		$this->view->assign($objectType, $entity)
+		->assign('currentUrlObject', $currentUrlObject)
+		->assign('func', $func)
+		->assign($repository->getAdditionalTemplateParameters('controllerAction', $utilArgs));
+
+		// fetch and return the appropriate template
+		return MUBoard_Util_View::processTemplate($this->view, 'user', $objectType, 'display', $args);
+	}
 }
