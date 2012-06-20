@@ -131,7 +131,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 		return $count;
 			
 	}
-	
+
 	/**
 	 *
 	 * This method gets the number of answers for a posting
@@ -147,7 +147,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 		$posting = $repository->selectById($postingid);
 		// get answers of this posting
 		$children = $posting->getChildren();
-		
+
 		$count = count($children);
 			
 		return $count;
@@ -160,7 +160,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 	 */
 	public static function getLastPostingOfForum($forumid)
 	{
-		// get repositoy for Forum
+		// get repositoy for forum
 		$repository = MUBoard_Util_Model::getForumRepository();
 		// get forum by id
 		$forum = $repository->selectById($forumid);
@@ -175,38 +175,38 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 			}
 		}
 
-		// we get a repository
+		// we get a repository for posting
 		$repository2 = MUBoard_Util_Model::getPostingRepository();
 		// if postingid > 0, we have posting in the forum
 		if ($postingid > 0) {
-        // we get the last posting
-		$lastposting = $repository2->selectById($postingid);
-		// we check if last posting is parent or answer
-		$parent = $lastposting->getParent_id();
-		if ($parent != NULL) {
-		$issue = $repository2->selectById($parent);
-		$issuetitle = $issue->getTitle();
-		$id = $issue->getId();			
-		}
-		else {
-			$issuetitle = $lastposting->getTitle();
-			$id = $lastposting->getId();
-		}
-		$url = ModUtil::url('MUBoard', 'user', 'display', array('ot' => 'posting', 'id' => $id));
-		
-		$createdDate = $lastposting->getCreatedDate();
-		$date = DateUtil::formatDatetime($createdDate, 'datetimelong');
-		$uname = UserUtil::getVar('uname', $lastposting['createdUserId']);
-		$out = "<div class=''>";
-		$out .= __('Last posting by ');	
-		$out .= $uname;
-		$out .= "<br />";
-		$out .= __('on ');
-		$out .= $date . "<br />";	
-		$out .= __('Issue: ');
-		$out .= "<a href='" . $url;
-		$out .= "'>" . $issuetitle . "</a>" ;
-		$out .= "</div>";		
+			// we get the last posting
+			$lastposting = $repository2->selectById($postingid);
+			// we check if last posting is parent or answer
+			$parent = $lastposting->getParent_id();
+			if ($parent != NULL) {
+				$issue = $repository2->selectById($parent);
+				$issuetitle = $issue->getTitle();
+				$id = $issue->getId();
+			}
+			else {
+				$issuetitle = $lastposting->getTitle();
+				$id = $lastposting->getId();
+			}
+			$url = ModUtil::url('MUBoard', 'user', 'display', array('ot' => 'posting', 'id' => $id));
+
+			$createdDate = $lastposting->getCreatedDate();
+			$date = DateUtil::formatDatetime($createdDate, 'datetimelong');
+			$uname = UserUtil::getVar('uname', $lastposting['createdUserId']);
+			$out = "<div class=''>";
+			$out .= __('Last posting by ');
+			$out .= $uname;
+			$out .= "<br />";
+			$out .= __('on ');
+			$out .= $date . "<br />";
+			$out .= __('Issue: ');
+			$out .= "<a href='" . $url;
+			$out .= "'>" . $issuetitle . "</a>" ;
+			$out .= "</div>";
 		}
 		else {
 			$out = __('No postings available!');
@@ -216,5 +216,102 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 			
 	}
 
+	/**
+	 *
+	 * This method gets the state of the category abo
+	 */
+	public static function getStateOfCategoryAbo($categroyid)
+	{
+		// get repositoy for Categories
+		$repository = MUBoard_Util_Model::getAboRepository();
+		// get actual userid
+		$userid = UserUtil::getVar('uid');
+		// look for abo
+		$where = 'tbl.catid = \'' . DataUtil::formatForStore($categoryid) . '\'';
+		$where .= ' AND ';
+		$where .= 'tbl.userid = \'' . DataUtil::formatForStore($userid) . '\'';
+		$abo = $repository->selectWhere($where);
 
+		if (!$abo) {
+			$url = ModUtil::url('MUBoard', 'admin', 'take', array('ot' => 'abo', 'category' => $categroyid));
+			$out =  "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
+            <img src='/images/icons/extrasmall/mail_post_to.png' />
+            </a>";
+		}
+
+		if ($abo) {
+			$url = ModUtil::url('MUBoard', 'admin', 'quit', array('ot' => 'abo', 'category' => $categroyid));
+			$out = "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
+            <img src='/images/icons/extrasmall/mail_get.png' />
+            </a>";
+		}
+			
+		return $out;
+	}
+	
+	/**
+	 *
+	 * This method gets the state of the forum abo
+	 */
+	public static function getStateOfForumAbo($forumid, $func)
+	{
+		// get repositoy for Categories
+		$repository = MUBoard_Util_Model::getAboRepository();
+		// get actual userid
+		$userid = UserUtil::getVar('uid');
+		// look for abo
+		$where = 'tbl.forumid = \'' . DataUtil::formatForStore($forumid) . '\'';
+		$where .= ' AND ';
+		$where .= 'tbl.userid = \'' . DataUtil::formatForStore($userid) . '\'';
+		$abo = $repository->selectWhere($where);
+
+		if (!$abo) {
+			$url = ModUtil::url('MUBoard', 'admin', 'take', array('ot' => 'abo', 'forum' => $forumid, 'view' => $func));
+			$out =  "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
+            <img src='/images/icons/extrasmall/mail_post_to.png' />
+            </a>";
+		}
+
+		if ($abo) {
+			$url = ModUtil::url('MUBoard', 'admin', 'quit', array('ot' => 'abo', 'forum' => $forumid, 'view' => $func));
+			$out = "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
+            <img src='/images/icons/extrasmall/mail_get.png' />
+            </a>";
+		}
+			
+		return $out;
+	}
+
+	/**
+	 *
+	 * This method gets the state of the posting abo
+	 */
+	public static function getStateOfPostingAbo($postingid)
+	{
+		// get repositoy for Categories
+		$repository = MUBoard_Util_Model::getAboRepository();
+		// get actual userid
+		$userid = UserUtil::getVar('uid');
+		// look for abo
+		$where = 'tbl.postingid = \'' . DataUtil::formatForStore($postingid) . '\'';
+		$where .= ' AND ';
+		$where .= 'tbl.userid = \'' . DataUtil::formatForStore($userid) . '\'';
+		$abo = $repository->selectWhere($where);
+
+		if (!$abo) {
+			$url = ModUtil::url('MUBoard', 'admin', 'take', array('ot' => 'abo', 'posting' => $postingid));
+			$out =  "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
+            <img src='/images/icons/extrasmall/mail_post_to.png' />
+            </a>";
+		}
+
+		if ($abo) {
+			$url = ModUtil::url('MUBoard', 'admin', 'quit', array('ot' => 'abo', 'posting' => $postingid));
+			$out = "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
+            <img src='/images/icons/extrasmall/mail_get.png' />
+            </a>";
+		}
+			
+		return $out;
+	}
 }
