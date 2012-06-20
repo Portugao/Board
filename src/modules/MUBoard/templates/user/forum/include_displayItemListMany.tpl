@@ -18,6 +18,23 @@
     <div class="muboard-user-category-header-lastposting">
     {$item.id|muboardGetLastPosting:$item.id}
     </div>
+    <div class="muboard-user-posting-header-infos">
+    {* <a id="muboard-user-posting-header-infos-close" href="{modurl modname='muboard' type='admin' func='take' ot='abo' posting=$posting.id}">
+    <img src="/images/icons/extrasmall/mail_get.png" />
+    </a> *}
+    {$item.id|muboardGetStateOfForumAbo:$func}
+    {if $posting.state eq 1}
+    {checkpermissionblock component='MUBoard::' instance='.*' level="ACCESS_ADMIN"}
+    <a id="muboard-user-posting-header-infos-close" href="{modurl modname='muboard' type='admin' func='close' ot='posting' id=$item.id}">             
+    {/checkpermissionblock}          
+    {$posting.state|yesno:true}
+    {checkpermissionblock component='MUBoard::' instance='.*' level="ACCESS_ADMIN"}
+    </a>            
+    {/checkpermissionblock}    
+    {else}
+    {$posting.state|yesno:true}
+    {/if}                
+    </div>
 </div>
 </div>
 

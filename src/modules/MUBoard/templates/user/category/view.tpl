@@ -105,8 +105,9 @@
         </tr>
     {/foreach}
 
-    </tbody>
-</table>
+ {*   </tbody>
+</table> *}
+
 
     {if !isset($showAllEntries) || $showAllEntries ne 1}
         {pager rowcount=$pager.numitems limit=$pager.itemsperpage display='page'}
@@ -118,5 +119,10 @@
     {/foreach}
 </div>
 </div>
+        
+    <div class="z-informationmsg z-formnote" style="float: left; width: 96%;">
+    {gt text='Number of issues'} <div class="muboard-user-category-header-statistic issues">5</div> 
+    {gt text='Number of postings'} <div class="muboard-user-category-header-statistic postings">3</div>
+    </div>
 {include file='user/footer.tpl'}
 

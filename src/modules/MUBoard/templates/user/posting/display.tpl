@@ -11,16 +11,13 @@
 {* <div class="muboardRightBox">
 <h3>{gt text='Posting'}</h3> *}
 {checkpermissionblock component='MUBoard:Posting:' instance="`$posting.id`::" level="ACCESS_OVERVIEW"}
-    <div class="muboard-user-posting">
+    <div id="top" class="muboard-user-posting">
         <div class="muboard-user-posting-header">
             <div class="muboard-user-posting-header-title">
                 <h2>
                      {gt text='Posting:'} {$posting.title|notifyfilters:'muboard.filterhook.categories'}
                 </h2>
                 {gt text='Created: '}{$posting.createdDate|dateformat:datetimelong}
-            </div>
-            <div class="muboard-user-posting-header-infos">
-                
             </div>
             <div class="muboard-user-posting-header-action">
                 {if count($posting._actions) gt 0}
@@ -32,7 +29,25 @@
                     {/foreach}
                     {/strip}</p>
                 {/if}
+            </div>            
+            <div class="muboard-user-posting-header-infos">
+            {* <a id="muboard-user-posting-header-infos-close" href="{modurl modname='muboard' type='admin' func='take' ot='abo' posting=$posting.id}">
+            <img src="/images/icons/extrasmall/mail_get.png" />
+            </a> *}
+            {$posting.id|muboardGetStateOfPostingAbo:$posting.id}
+            {if $posting.state eq 1}
+            {checkpermissionblock component='MUBoard::' instance='.*' level="ACCESS_ADMIN"}
+            <a id="muboard-user-posting-header-infos-close" href="{modurl modname='muboard' type='admin' func='close' ot='posting' id=$posting.id}">             
+            {/checkpermissionblock}          
+            {$posting.state|yesno:true}
+            {checkpermissionblock component='MUBoard::' instance='.*' level="ACCESS_ADMIN"}
+            </a>            
+            {/checkpermissionblock}    
+            {else}
+            {$posting.state|yesno:true}
+            {/if}                
             </div>
+
         </div>
         <div class="muboard-user-posting-user">
         <div class="muboard-user-posting-avatar">
@@ -145,8 +160,9 @@
 
     {/foreach}
     {pager rowcount=$pager.numitems limit=$pager.itemsperpage display='page'}
+    {if $posting.state eq 1}
     {modfunc modname='MUBoard' type='user' func='edit' ot='posting'}
-    
+    {/if}    
     
 {* {if isset($posting.parent) && $posting.parent ne null}
     {include file='user/posting/include_displayItemListOne.tpl' item=$posting.parent}
