@@ -26,6 +26,7 @@ Implemented Classes
 *lib/MUBoard/Entity/Forum.php
 *lib/MUBoard/Entity/Posting.php
 *lib/MUBoard/Form/Handler/User/Posting/Edit.php
+*lib/MUBoard/Util/Controller.php
 *lib/MUBoard/Util/Model.php
 *lib/MUBoard/Util/View.php
 
