@@ -42,13 +42,19 @@ class MUBoard_Controller_Admin extends MUBoard_Controller_Base_Admin
 		$posting = $request->getGet()->filter('posting', 0, FILTER_SANITIZE_NUMBER_INT);
 		$forum = $request->getGet()->filter('forum', 0, FILTER_SANITIZE_NUMBER_INT);
 		$category = $request->getGet()->filter('category', 0, FILTER_SANITIZE_NUMBER_INT);
+		$view = $request->getGet()->filter('view', 'view', FILTER_SANITIZE_STRING);
+		$cat = $request->getGet()->filter('cat', 0, FILTER_SANITIZE_NUMBER_INT);
 
 		MUBoard_Util_Model::takeAbo($posting, $forum, $category);
 		if ($posting > 0) {
 			return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $posting)));
 		}
-		if ($forum > 0) {
-			return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $posting)));
+		if ($forum > 0 && $view == 'display') {
+			return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'category', 'id' => $cat)));
+		}
+
+		if ($forum > 0 && $view == 'view') {
+			return System::redirect(ModUtil::url($this->name, 'user', 'view' , array('ot' => 'category')));
 		}
 	}
 
@@ -62,14 +68,15 @@ class MUBoard_Controller_Admin extends MUBoard_Controller_Base_Admin
 		$posting = $request->getGet()->filter('posting', 0, FILTER_SANITIZE_NUMBER_INT);
 		$forum = $request->getGet()->filter('forum', 0, FILTER_SANITIZE_NUMBER_INT);
 		$category = $request->getGet()->filter('category', 0, FILTER_SANITIZE_NUMBER_INT);
-		$view = $request->getGet()->filter('view', 'view', FILTER_SANITIZE_NUMBER_STRING);
+		$view = $request->getGet()->filter('view', 'view', FILTER_SANITIZE_STRING);
+		$cat = $request->getGet()->filter('cat', 0, FILTER_SANITIZE_NUMBER_INT);		
 
 		MUBoard_Util_Model::quitAbo($posting, $forum, $category);
 		if ($posting > 0) {
 			return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $posting)));
 		}
 		if ($forum > 0 && $view == 'display') {
-			return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'category')));
+			return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'category', 'id' => $cat)));
 		}
 
 		if ($forum > 0 && $view == 'view') {
