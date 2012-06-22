@@ -255,6 +255,10 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 	 */
 	public static function getStateOfForumAbo($forumid, $func)
 	{
+		
+		$request = new Zikula_Request_Http();	
+		$cat = $request->getGet()->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
+		
 		// get repositoy for Categories
 		$repository = MUBoard_Util_Model::getAboRepository();
 		// get actual userid
@@ -266,14 +270,14 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 		$abo = $repository->selectWhere($where);
 
 		if (!$abo) {
-			$url = ModUtil::url('MUBoard', 'admin', 'take', array('ot' => 'abo', 'forum' => $forumid, 'view' => $func));
+			$url = ModUtil::url('MUBoard', 'admin', 'take', array('ot' => 'abo', 'forum' => $forumid, 'view' => $func, 'cat' => $cat));
 			$out =  "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
             <img src='/images/icons/extrasmall/mail_post_to.png' />
             </a>";
 		}
 
 		if ($abo) {
-			$url = ModUtil::url('MUBoard', 'admin', 'quit', array('ot' => 'abo', 'forum' => $forumid, 'view' => $func));
+			$url = ModUtil::url('MUBoard', 'admin', 'quit', array('ot' => 'abo', 'forum' => $forumid, 'view' => $func, 'cat' => $cat));
 			$out = "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
             <img src='/images/icons/extrasmall/mail_get.png' />
             </a>";
@@ -287,7 +291,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 	 * This method gets the state of the posting abo
 	 */
 	public static function getStateOfPostingAbo($postingid)
-	{
+	{		
 		// get repositoy for Categories
 		$repository = MUBoard_Util_Model::getAboRepository();
 		// get actual userid
