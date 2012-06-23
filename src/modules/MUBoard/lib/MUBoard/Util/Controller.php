@@ -16,5 +16,13 @@
  */
 class MUBoard_Util_Controller extends MUBoard_Util_Base_Controller
 {
-    // feel free to add your own convenience methods here
+
+	/**
+	 * Helper method to handle the mailing for abos of postings forums
+	 */
+	
+	public static function aboMailing()
+	{
+		
+	}
 }
