@@ -216,6 +216,68 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 			
 	}
 
+
+	/**
+	 * This method gets the number of postings of an user
+	 */
+	public static function getNumberOfPostingsOfUser($userid) {
+
+		// get a repository for pstings
+		$repository = MUBoard_Util_Model::getPostingRepository();
+		// count Postings
+		$where = 'tbl.createdUserId = \'' . DataUtil::formatForStore($userid) . '\'';
+		$count = $repository->selectCount($where);
+
+		return $count;
+	}
+
+	/**
+	 * This method gets if an issue is open or closed
+	 */
+
+	public static function getStateOfPosting($postingid) {
+
+		//get repository for Postings
+		$repository = MUBoard_Util_Model::getPostingRepository();
+		// get posting
+		$posting = $repository->selectById($postingid);
+		$state = $posting->getState();
+
+		if (SecurityUtil::checkPermission('MUBoard::', '::', ACCESS_ADMIN)) {
+
+			if ($state == 1) {
+				$url = ModUtil::url('MUBoard', 'admin', 'close', array('ot' => 'posting', 'id' => $postingid));
+				$title = __('Issue is open! You have permissions to close this issue!');
+				$out =  "<a title='{$title}' id='muboard-user-posting-header-infos-abo' href='{$url}'>
+            <img src='/images/icons/extrasmall/button_ok.png' />
+            </a>";
+			}
+
+			if ($state == 0) {
+				$url = ModUtil::url('MUBoard', 'admin', 'open', array('ot' => 'posting', 'id' => $postingid));
+				$title = __('Issue is closed. You have permissions to reopen this issue!');
+				$out =  "<a title='{$title}' id='muboard-user-posting-header-infos-abo' href='{$url}'>
+            <img src='/images/icons/extrasmall/button_cancel.png' />
+            </a>";
+			}
+
+		}
+		else {
+			if ($state == 1) {
+				$title = __('Issue is open!');
+				$out =  "<img title='{$title}' src='/images/icons/extrasmall/button_ok.png' />";
+			}
+
+			if ($state == 0) {
+				$title = __('Issue is closed!');
+				$out = "<img title='{$title}' src='/images/icons/extrasmall/button_cancel.png' />";
+			}
+
+		}
+
+		return $out;
+	}
+
 	/**
 	 *
 	 * This method gets the state of the category abo
@@ -248,17 +310,17 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 			
 		return $out;
 	}
-	
+
 	/**
 	 *
 	 * This method gets the state of the forum abo
 	 */
 	public static function getStateOfForumAbo($forumid, $func)
 	{
-		
-		$request = new Zikula_Request_Http();	
+
+		$request = new Zikula_Request_Http();
 		$cat = $request->getGet()->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
-		
+
 		// get repositoy for Categories
 		$repository = MUBoard_Util_Model::getAboRepository();
 		// get actual userid
@@ -291,7 +353,11 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 	 * This method gets the state of the posting abo
 	 */
 	public static function getStateOfPostingAbo($postingid)
-	{		
+	{
+		$request = new Zikula_Request_Http();
+		// get objecttype
+		$ot = $request->getGet()->filter('ot', 'category', FILTER_SANITIZE_STRING);
+		$forumid = $request->getGet()->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
 		// get repositoy for Categories
 		$repository = MUBoard_Util_Model::getAboRepository();
 		// get actual userid
@@ -302,20 +368,37 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 		$where .= 'tbl.userid = \'' . DataUtil::formatForStore($userid) . '\'';
 		$abo = $repository->selectWhere($where);
 
-		if (!$abo) {
-			$url = ModUtil::url('MUBoard', 'admin', 'take', array('ot' => 'abo', 'posting' => $postingid));
-			$out =  "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
+		if ($ot == 'posting') {
+			if (!$abo) {
+				$url = ModUtil::url('MUBoard', 'admin', 'take', array('ot' => 'abo', 'posting' => $postingid, 'object' => $ot));
+				$out =  "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
             <img src='/images/icons/extrasmall/mail_post_to.png' />
             </a>";
-		}
+			}
 
-		if ($abo) {
-			$url = ModUtil::url('MUBoard', 'admin', 'quit', array('ot' => 'abo', 'posting' => $postingid));
-			$out = "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
+			if ($abo) {
+				$url = ModUtil::url('MUBoard', 'admin', 'quit', array('ot' => 'abo', 'posting' => $postingid, 'object' => $ot));
+				$out = "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
             <img src='/images/icons/extrasmall/mail_get.png' />
             </a>";
+			}
 		}
-			
+		if ($ot == 'forum') {
+			if (!$abo) {
+				$url = ModUtil::url('MUBoard', 'admin', 'take', array('ot' => 'abo', 'posting' => $postingid, 'object' => $ot, 'forum' => $forumid));
+				$out =  "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
+            <img src='/images/icons/extrasmall/mail_post_to.png' />
+            </a>";
+			}
+
+			if ($abo) {
+				$url = ModUtil::url('MUBoard', 'admin', 'quit', array('ot' => 'abo', 'posting' => $postingid, 'object' => $ot,'forum' => $forumid));
+				$out = "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
+            <img src='/images/icons/extrasmall/mail_get.png' />
+            </a>";
+			}
+		}
+
 		return $out;
 	}
 }
