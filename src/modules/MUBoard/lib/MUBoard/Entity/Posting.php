@@ -105,7 +105,7 @@ class MUBoard_Entity_Posting extends MUBoard_Entity_Base_Posting
                         'url' => array('type' => 'user', 'func' => 'edit', 'arguments' => array('ot' => 'posting')),
                         'icon' => 'save',
                         'linkTitle' => __('Create new issue', $dom),
-                        'linkText' => __('Create', $dom)
+                        'linkText' => __('', $dom)
                     );                	
                     /*$this->_actions[] = array(
                         'url' => array('type' => 'user', 'func' => 'edit', 'arguments' => array('ot' => 'posting', 'id' => $this['id'])),
@@ -132,7 +132,7 @@ class MUBoard_Entity_Posting extends MUBoard_Entity_Base_Posting
                         'url' => array('type' => 'user', 'func' => 'view', 'arguments' => array('ot' => 'category')),
                         'icon' => 'back',
                         'linkTitle' => __('Back to forum overview', $dom),
-                        'linkText' => __('Back to forum overview', $dom)
+                        'linkText' => __('', $dom)
                     );
             }
         }
