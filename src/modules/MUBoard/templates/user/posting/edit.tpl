@@ -21,8 +21,11 @@
 {muboardform enctype='multipart/form-data' cssClass='z-form'}
     {* add validation summary and a <div> element for styling the form *}
     {muboardFormFrame}
-    {formsetinitialfocus inputId='parent_id'}
-
+    {if $func eq 'edit'}
+    {formsetinitialfocus inputId='title'}    
+    {else}
+    {formsetinitialfocus inputId='text'}
+    {/if}
     <fieldset>
         <legend>{gt text='Content'}</legend>
         {if $func ne 'display'}
@@ -202,10 +205,14 @@
         {/if}
         {/if}
     </fieldset>
-    
+    {if $func eq 'edit'}
     <input id="muboardForum_ForumItemList" type="hidden" value="{$forum}" name="muboardForum_ForumItemList">
     <input id="muboardForum_ForumMode" type="hidden" value="{$forum}" name="muboardForum_ForumMode">
-    
+    {/if}
+    {if $func eq 'display'}
+    <input id="muboardForum_ForumItemList" type="hidden" value="{$forumid}" name="muboardForum_ForumItemList">
+    <input id="muboardForum_ForumMode" type="hidden" value="0" name="muboardForum_ForumMode">
+    {/if}    
     {if $func eq 'edit'}
     	<input type="hidden" id="muboardPosting_ParentItemList" name="muboardPosting_ParentItemList" value="0">
     	<input type="hidden" id="muboardPosting_ParentMode" name="muboardPosting_ParentMode" value="0">    
