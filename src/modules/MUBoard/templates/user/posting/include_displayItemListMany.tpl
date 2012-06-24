@@ -9,11 +9,15 @@
     <a href="{modurl modname='MUBoard' type='user' func='display' ot='posting' id=$item.id}">
         {$item.title}
     </a><br />
-    {$item.text}
+    {gt text='Writer:'} {usergetvar name=uname uid=$item.createdUserId}
 </div>
 <div class="muboard-user-forum-right">
 <div class="muboard-user-category-header-statistic children">{$item.id|muboardGetNumberOfAnswersOfPosting:$item.id}</div>
 <div class="muboard-user-category-header-statistic calls">{$item.invocations}</div>
+<div class="muboard-user-posting-header-infos">
+    {$item.id|muboardGetStateOfPostingAbo:$func}
+    {$item.id|muboardGetStateOfPosting}                
+</div>
 </div>
 </div>
 {/if}
