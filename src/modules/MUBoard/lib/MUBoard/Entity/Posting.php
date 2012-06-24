@@ -175,6 +175,11 @@ class MUBoard_Entity_Posting extends MUBoard_Entity_Base_Posting
      */
     public function postPersistCallback()
     {
+    	$args['id'] = $this->getId();
+    	//$args['parent'] = $this->getParent_id(); doesnot work bug in MOST TODO
+    	$args['title'] = $this->getTitle();
+    	$args['text'] = $this->getText();
+    	MUBoard_Util_Base_Abonnements::aboMailing($args);
         $this->performPostPersistCallback();
     }
 
