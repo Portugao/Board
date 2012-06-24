@@ -15,7 +15,7 @@
         <div class="muboard-user-posting-header">
             <div class="muboard-user-posting-header-title">
                 <h2>
-                     {gt text='Posting:'} {$posting.title|notifyfilters:'muboard.filterhook.categories'}
+                     {gt text='Issue:'} {$posting.title|notifyfilters:'muboard.filterhook.categories'}
                 </h2>
                 {gt text='Created: '}{$posting.createdDate|dateformat:datetimelong}
             </div>
@@ -35,23 +35,19 @@
             <img src="/images/icons/extrasmall/mail_get.png" />
             </a> *}
             {$posting.id|muboardGetStateOfPostingAbo:$posting.id}
-            {if $posting.state eq 1}
-            {checkpermissionblock component='MUBoard::' instance='.*' level="ACCESS_ADMIN"}
-            <a id="muboard-user-posting-header-infos-close" href="{modurl modname='muboard' type='admin' func='close' ot='posting' id=$posting.id}">             
-            {/checkpermissionblock}          
-            {$posting.state|yesno:true}
-            {checkpermissionblock component='MUBoard::' instance='.*' level="ACCESS_ADMIN"}
-            </a>            
-            {/checkpermissionblock}    
-            {else}
-            {$posting.state|yesno:true}
-            {/if}                
+            {$posting.id|muboardGetStateOfPosting}    
             </div>
 
         </div>
         <div class="muboard-user-posting-user">
         <div class="muboard-user-posting-avatar">
-        {useravatar uid=$posting.createdUserId}
+        {useravatar uid=$posting.createdUserId size=60}<br />
+        {usergetvar name=uname uid=$posting.createdUserId}
+        </div>
+        <div class="muboard-user-posting-datas">
+        {gt text='Registered:'} {usergetvar name=user_regdate uid=$posting.createdUserId assign=regdate}{$regdate|dateformat:datebrief}<br />
+        {gt text='Last visit:'} {usergetvar name=lastlogin uid=$posting.createdUserId assign=lastlogin}{$lastlogin|dateformat:datebrief}<br />
+        {gt text='Postings:'} {$posting.createdUserId|muboardGetNumberOfPostingsOfUser}
         </div>
         </div>
         <div class="muboard-user-posting-content">
@@ -76,10 +72,14 @@
         <div class="muboard-user-posting">
         <div class="muboard-user-posting-user">
         <div class="muboard-user-posting-avatar">
-        {useravatar uid=$childPosting.createdUserId}
+        {useravatar uid=$childPosting.createdUserId size=60}<br />
+        {usergetvar name=uname uid=$childPosting.createdUserId}
         </div>
-        <div class="muboard-user-posting-avatar">
+        <div class="muboard-user-posting-datas">
 
+        {gt text='Registered:'} {usergetvar name=user_regdate uid=$childPosting.createdUserId assign=regdate}{$regdate|dateformat:datebrief}<br />
+        {gt text='Last visit:'} {usergetvar name=lastlogin uid=$childPosting.createdUserId assign=lastlogin}{$lastlogin|dateformat:datebrief}<br />
+        {gt text='Postings:'} {$childPosting.createdUserId|muboardGetNumberOfPostingsOfUser}
         </div>
         </div>
         <div class="muboard-user-posting-content">
@@ -160,9 +160,11 @@
 
     {/foreach}
     {pager rowcount=$pager.numitems limit=$pager.itemsperpage display='page'}
+    {checkpermissionblock component='MUBoard::' instance=".*" level="ACCESS_EDIT"}
     {if $posting.state eq 1}
     {modfunc modname='MUBoard' type='user' func='edit' ot='posting'}
-    {/if}    
+    {/if}   
+    {/checkpermissionblock} 
     
 {* {if isset($posting.parent) && $posting.parent ne null}
     {include file='user/posting/include_displayItemListOne.tpl' item=$posting.parent}
