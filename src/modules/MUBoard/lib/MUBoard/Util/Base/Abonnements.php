@@ -16,6 +16,135 @@
 class MUBoard_Util_Base_Abonnements extends Zikula_AbstractBase
 {
 
+
+	/**
+	 * Helper method to handle the mailing for abos of postings and forums
+	 */
+
+	public static function aboMailing($args)
+	{
+		$id = $args['id'];
+		$parent = $args['parent'];
+		$title = $args['title'];
+		if ($title = '') {
+			$title = __('No title');
+		}
+		$text = $args['text'];
+
+		// we get a repository for abos
+		$repository = MUBoard_Util_Model::getAboRepository();
+
+		// we get a repository for forums
+		$repository2 = MUBoard_Util_Model::getForumRepository();
+		// we get a repository for postings
+		$repository3 = MUBoard_Util_Model::getPostingRepository();
+		// we get the just saved posting
+		$savedPosting = $repository3->selectById($id);
+		$parentPosting = $savedPosting->getParent();
+		if ($parentPosting) {
+		$parent = $parentPosting->getId();
+		}
+		else {
+			$parent = 0;
+		}
+		$createdUserId = $savedPosting->getCreatedUserId();
+		// we check if new issue or answer
+		if ($parent == 0) {
+			// no check for posting abo
+			// check for forum abo
+			// we look for forum of posting
+			// if forum available we check for abos
+
+			$forum = $savedPosting->getForum();
+			$forumid = $forum->getId();
+
+		}
+		else {
+			
+			
+			$forum = $savedPosting->getForum();
+			$forumid = $forum->getId();
+				
+		}
+
+		// we get serviceManager and handler
+		$serviceManager = ServiceUtil::getManager();
+		$handler = new Zikula_Form_View($serviceManager, 'MUBoard');
+
+		// We build the url for the email message
+		$host = System::serverGetVar('HTTP_HOST') . '/';
+		// workaround because of bug in MOST or doctrine2 TODO
+		if ($parent == 0) {
+			$url = 'http://' . $host . ModUtil::url('MUTicket', 'user', 'display', array('ot' => 'posting', 'id' => $id));
+		}
+		else {
+			$url = 'http://' . $host . ModUtil::url('MUBoard', 'user', 'display', array('ot' => 'posting', 'id' => $parent));
+		}
+
+		// We get the name of the site
+		$from = ModUtil::getVar('ZConfig', 'sitename') . ' ';
+		// We get the adminmail
+		$fromaddress = ModUtil::getVar('ZConfig', 'adminmail');
+
+
+		$toaddress = MUBoard_Util_Base_Abonnements::getForumAbos($forumid, $createdUserId);
+		foreach ($toaddress as $adress) {
+			$messagecontent = MUBoard_Util_Base_Abonnements::getMailContent($from, $fromaddress, $adress, $entry, $ticketcategory, $title, $text, $url , $kind);
+			ModUtil::apiFunc('Mailer', 'user', 'sendmessage', $messagecontent);
+		}
+		//$messagecontent = MUBoard_Util_Base_Abonnements::getMailContent($from, $fromaddress, $toaddress, $entry, $ticketcategory, $title, $text, $url , $kind);
+
+		// We send a mail if an email address is saved
+		/*if ($toaddress != '') {
+
+			if (!ModUtil::apiFunc('Mailer', 'user', 'sendmessage', $messagecontent)) {
+				LogUtil::registerError($handler->__('Unable to send message'));
+			}
+		}*/
+
+		// Formating of status text
+
+		$message = $handler->__('Your posting was saved!');
+
+		LogUtil::registerStatus($message);
+	}
+
+	/**
+	 * This method get the abos of the relevant forum and return the mailadresses
+	 * @param integer $forumid         id of relevant forum if available
+	 * @param interger $userId         userid of the user created the posting
+	 */
+
+	protected static function getForumAbos($forumid, $userId) {
+
+		// we get a repository for abos
+		$repository = MUBoard_Util_Model::getAboRepository();
+		$where = 'tbl.forumid = \'' . DataUtil::formatForStore($forumid) . '\'';
+		$where .= ' AND ';
+		$where .= 'tbl.createdUserId != \'' . DataUtil::formatForStore($userId) . '\'';
+		$forumabos = $repository->selectWhere($where);
+		foreach ($forumabos as $forumabo) {
+			//if ($forumabo['createdUserId'] != $userid) {
+				$userids[] = $forumabo['createdUserId'];
+			//}
+		}
+		foreach ($userids as $userid) {
+			$mailadresses[] = UserUtil::getVar('email', $userid);
+		}
+
+		return $mailadresses;
+
+	}
+
+	/**
+	 *
+	 */
+
+	protected static function getPostingAbos() {
+
+	}
+
+
 	/**
 	 *
 	 * This method handles the modvars after persist of an entity
@@ -136,23 +265,20 @@ class MUBoard_Util_Base_Abonnements extends Zikula_AbstractBase
 	public function getMailContent($from, $fromaddress, $toaddress, $entry, $ticketcategory, $title, $text, $url, $kind) {
 
 		$serviceManager = ServiceUtil::getManager();
-		$handler = new Zikula_Form_View($serviceManager, 'MUTicket');
+		$handler = new Zikula_Form_View($serviceManager, 'MUBoard');
 
 		$messagecontent = array();
 		$messagecontent['from'] = $from;
 		$messagecontent['fromaddress'] = $fromaddress;
-		/*$messagecontent['toname'] = 'Webmaster';*/
+
 		$messagecontent['toaddress'] = $toaddress;
 		$messagecontent['subject'] = $entry . $from . $ticketcategory;
-		if ($kind == 'Customer') {
-			$messagecontent['body'] = $handler->__('Another entry was created by an user on '). '<h2>' . $from . '</h2>';
-		}
-		else {
-			$messagecontent['body'] = $handler->__('There is an answer to your ticket of the support on '). '<h2>' . $from . '</h2>';
-		}
-		$messagecontent['body'] .= $handler->__('Title of ticket') . '<br />' . $title . '<br /><br />';
+
+		$messagecontent['body'] = $handler->__('Another posting was created by an user on '). '<h2>' . $from . '</h2>';
+
+		$messagecontent['body'] .= $handler->__('Title of posting') . '<br />' . $title . '<br /><br />';
 		$messagecontent['body'] .= $handler->__('Text') . '<br />' . $text . '<br /><br />';
-		$messagecontent['body'] .= $handler->__('Visit this ticket:') . '<br />';
+		$messagecontent['body'] .= $handler->__('Visit this issue:') . '<br />';
 		$messagecontent['body'] .= '<a href="' . $url . '">' . $url . '</a><br />';
 		if ($editurl != '') {
 			$messagecontent .= $handler->__('Moderate this entry:') .
