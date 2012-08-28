@@ -35,11 +35,17 @@ Additional Files
 customisations.txt
 
 *templates/plugins/block.muboardform.php
-*templates/plugins/modifier.muboardGetLAstPosting.php
+*templates/plugins/modifier.muboardGetLastPosting.php
+*templates/plugins/modifier.muboardGetNumberOfAnswers.php
 *templates/plugins/modifier.muboardGetNumberOfIssuesOfCategory.php
 *templates/plugins/modifier.muboardGetNumberOfIssuesOfForum.php
 *templates/plugins/modifier.muboardGetNumberOfPostingsOfCategory.php
 *templates/plugins/modifier.muboardGetNumberOfPostingsOfForum.php
+*templates/plugins/modifier.muboardGetNumberOfPostingsOfUser.php
+*templates/plugins/modifier.muboardGetStateOfCategoryAbo.php
+*templates/plugins/modifier.muboardGetStateOfForumAbo.php
+*templates/plugins/modifier.muboardGetStateOfPosting.php
+*templates/plugins/modifier.muboardGetStateOfPostingAbo.php
 
 
 
