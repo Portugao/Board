@@ -260,6 +260,18 @@ button.muboardInlineButton {
     width: 45%;
 }
 
+.muboard-user-forum-left-icon {
+    float: left;
+    width: 15%;
+    border: 0 1%;
+}
+
+.muboard-user-forum-left-right {
+    float: left;
+    width: 75%;
+    border: 0 1%;
+}
+
 .muboard-user-forum-right {
     float: right;
     width: 45%;
@@ -275,11 +287,18 @@ button.muboardInlineButton {
     border-radius: 5px;
 }
 
+.muboard-user-posting-parent {
+    margin: 10px 0 0 0;
+    float: left;
+    width: 100%;
+    background: #ddd;
+    border-radius: 5px;
+}
+
 .muboard-user-posting-header {
-    background: #eee;
     padding: 1%;
     border-radius: 5px 5px 0 0;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ccc;
     float: left;
     width: 98%;
 }
