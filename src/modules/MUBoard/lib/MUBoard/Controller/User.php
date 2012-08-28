@@ -19,6 +19,22 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 {
 
 	/**
+	 * This method is the default function, and is called whenever the application's
+	 * User area is called without defining arguments.
+	 *
+	 * @return mixed Output.
+	 */
+	public function main($args)
+	{
+		// DEBUG: permission check aspect starts
+		$this->throwForbiddenUnless(SecurityUtil::checkPermission('MUBoard::', '::', ACCESS_OVERVIEW));
+		// DEBUG: permission check aspect ends
+
+		// return main template
+		return System::redirect(ModUtil::url($this->name, 'user', 'view', array('ot' => 'category')));
+	}
+
+	/**
 	 * This method provides a generic item list overview.
 	 *
 	 * @param string  $ot           Treated object type.
@@ -35,9 +51,11 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 		$args['ot'] = $this->request->getGet()->filter('ot', 'category', FILTER_SANITIZE_STRING);
 		$type = $this->request->getGet()->filter('type', 'user', FILTER_SANITIZE_STRING);
 		$func = $this->request->getGet()->filter('func', 'view', FILTER_SANITIZE_STRING);
-		 
+
+		$lastlogin = UserUtil::getVar('lastlogin', $uid);
+			
 		$sortdir = ModUtil::getVar('MUBoard', 'sortingPostings');
-		 
+			
 		if (($args['ot'] == 'category' || $args['ot'] == 'forum' ) && $type == 'user') {
 
 			$args['sort'] = 'pos';
@@ -45,11 +63,12 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 				$args['sortdir'] = 'desc';
 			}
 			else {
-				$args['sortdir'] = 'asc'; 
+				$args['sortdir'] = 'asc';
 			}
 		}
-		$this->view->assign('func', $func);
-		 
+		$this->view->assign('func', $func)
+		->assign('lastlogin', $lastlogin);
+			
 		return parent::view($args);
 	}
 
@@ -99,6 +118,43 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 		$entity = ModUtil::apiFunc($this->name, 'selection', 'getEntity', array('ot' => $objectType, 'id' => $idValues, 'slug' => $slugTitle));
 		$this->throwNotFoundUnless($entity != null, $this->__('No such item.'));
 
+		if($objectType == 'posting') {
+			$postingid = $entity['id'];
+
+			$postingsWhere .= 'tbl.parent = \'' . DataUtil::formatForStore($postingid) . '\'';
+
+			$order = ModUtil::getVar($this->name, 'sortingPostings');
+
+			if ($order == 'descending') {
+				$sdir = 'desc';
+			}
+			else {
+				$sdir = 'asc';
+			}
+
+			$selectionArgs = array(
+            'ot' => 'posting',
+            'where' => $postingsWhere,
+            'orderBy' => 'createdDate' . ' ' . $sdir
+			);
+
+			// the current offset which is used to calculate the pagination
+			$currentPage = (int)(isset($args['pos']) && !empty($args['pos'])) ? $args['pos'] : $this->request->getGet()->filter('pos', 1, FILTER_VALIDATE_INT);
+
+			// the number of items displayed on a page for pagination
+			$resultsPerPage = (int)(isset($args['num']) && !empty($args['num'])) ? $args['num'] : $this->request->getGet()->filter('num', 0, FILTER_VALIDATE_INT);
+			if ($resultsPerPage == 0) {
+				$csv = (int)(isset($args['usecsv']) && !empty($args['usecsv'])) ? $args['usecsv'] : $this->request->getGet()->filter('usecsvext', 0, FILTER_VALIDATE_INT);
+				$resultsPerPage = ($csv == 1) ? 999999 : $this->getVar('pagesize', 10);
+			}
+
+			$selectionArgs['currentPage'] = $currentPage;
+			$selectionArgs['resultsPerPage'] = $resultsPerPage;
+			list($entities, $objectCount) = ModUtil::apiFunc($this->name, 'selection', 'getEntitiesPaginated', $selectionArgs);
+
+
+		}
+
 		// build ModUrl instance for display hooks
 		$currentUrlArgs = array('ot' => $objectType);
 		foreach ($idFields as $idField) {
@@ -113,12 +169,17 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 		$currentUrlObject = new Zikula_ModUrl($this->name, 'user', 'display', ZLanguage::getLanguageCode(), $currentUrlArgs);
 
 		$func = $this->request->getGet()->filter('func', 'view', FILTER_SANITIZE_STRING);
-		
+
 		// assign output data to view object.
 		$this->view->assign($objectType, $entity)
+		->assign('postings', $entities)
 		->assign('currentUrlObject', $currentUrlObject)
 		->assign('func', $func)
 		->assign($repository->getAdditionalTemplateParameters('controllerAction', $utilArgs));
+
+		$this->view->assign('currentPage', $currentPage)
+		->assign('pager', array('numitems'     => $objectCount,
+                    'itemsperpage' => $resultsPerPage));
 
 		// fetch and return the appropriate template
 		return MUBoard_Util_View::processTemplate($this->view, 'user', $objectType, 'display', $args);
