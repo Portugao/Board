@@ -401,4 +401,33 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 
 		return $out;
 	}
+	
+	/**
+	 *
+	 * This method gives back if new postings are in the
+	 * forum since last login and show the relevant icon
+	 */
+	public static function PostingsSinceLastLogin($forumid, $lastlogin)
+	{
+		// get repositoy for Forum
+		$repository = MUBoard_Util_Model::getForumRepository();
+		// get forum by id
+		$forum = $repository->selectById($forumid);
+		// get forums of this category
+		$postings = $forum->getPosting();
+		
+		$state = 0;
+		
+		foreach ($postings as $posting) {
+			if ($lastlogin < $posting['createdDate']) {
+			$state = 1;
+			}
+		}
+		if ($state == 1) {
+			$out = 'Yes'; 
+		}
+			
+		return $out;
+			
+	}
 }
