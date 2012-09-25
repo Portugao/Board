@@ -6,6 +6,9 @@
         <option value="category"{if $objectType eq 'category'} selected="selected"{/if}>{gt text='Categories'}</option>
         <option value="forum"{if $objectType eq 'forum'} selected="selected"{/if}>{gt text='Forums'}</option>
         <option value="posting"{if $objectType eq 'posting'} selected="selected"{/if}>{gt text='Postings'}</option>
+        <option value="abo"{if $objectType eq 'abo'} selected="selected"{/if}>{gt text='Abos'}</option>
+        <option value="user"{if $objectType eq 'user'} selected="selected"{/if}>{gt text='Users'}</option>
+        <option value="rank"{if $objectType eq 'rank'} selected="selected"{/if}>{gt text='Ranks'}</option>
     </select>
 </div>
 
