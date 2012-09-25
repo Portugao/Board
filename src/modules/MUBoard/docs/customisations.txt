@@ -22,6 +22,7 @@ Implemented Classes
 
 *lib/MUBoard/Api/Admin.php
 *lib/MUBoard/Api/User.php
+*lib/MUBoard/Controller/Admin.php
 *lib/MUBoard/Controller/User.php
 *lib/MUBoard/Entity/Forum.php
 *lib/MUBoard/Entity/Posting.php
@@ -36,7 +37,7 @@ customisations.txt
 
 *templates/plugins/block.muboardform.php
 *templates/plugins/modifier.muboardGetLastPosting.php
-*templates/plugins/modifier.muboardGetNumberOfAnswers.php
+*templates/plugins/modifier.muboardGetNumberOfAnswersOfPosting.php
 *templates/plugins/modifier.muboardGetNumberOfIssuesOfCategory.php
 *templates/plugins/modifier.muboardGetNumberOfIssuesOfForum.php
 *templates/plugins/modifier.muboardGetNumberOfPostingsOfCategory.php
