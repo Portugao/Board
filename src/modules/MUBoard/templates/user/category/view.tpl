@@ -121,8 +121,8 @@
 </div>
         
     <div class="z-informationmsg z-formnote" style="float: left; width: 96%;">
-    {gt text='Number of issues'} <div class="muboard-user-category-header-statistic issues">3</div> 
-    {gt text='Number of postings'} <div class="muboard-user-category-header-statistic postings">5</div>
+    <div class="muboard-user-legend"><span>{gt text='Number of issues'}</span><span class="muboard-user-category-footer-statistic issues">3</span></div> 
+    <div class="muboard-user-legend"><span>{gt text='Number of postings'}</span><span class="muboard-user-category-footer-statistic postings">5</span></div>
     </div>
 {include file='user/footer.tpl'}
 
