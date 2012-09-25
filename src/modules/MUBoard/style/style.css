@@ -185,7 +185,7 @@ button.muboardInlineButton {
 }
 
 .muboard-user-legend {
-    width: 180px; 
+    width: 180px;
     float: left;
 }
 
@@ -209,10 +209,10 @@ button.muboardInlineButton {
 }
 
 /* .muboard-user-category-header {
-    background: #eee;
-    padding: 5px;
-    border-radius: 5px 5px 0 0;
-    border-bottom: 1px solid #ddd;
+background: #eee;
+padding: 5px;
+border-radius: 5px 5px 0 0;
+border-bottom: 1px solid #ddd;
 } */
 
 .muboard-user-category-content {
@@ -385,7 +385,5 @@ button.muboardInlineButton {
     border: 3px solid #fff;
     border-radius: 5px;
 }
-
-
 
 
