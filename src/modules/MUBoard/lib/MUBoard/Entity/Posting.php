@@ -148,9 +148,7 @@ class MUBoard_Entity_Posting extends MUBoard_Entity_Base_Posting
      * @return void.
      */
     public function postLoadCallback()
-    {
-
-    	
+    {	
         $this->performPostLoadCallback();
     }
 

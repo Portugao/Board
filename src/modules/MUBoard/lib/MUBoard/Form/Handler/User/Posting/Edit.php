@@ -74,7 +74,7 @@ class MUBoard_Form_Handler_User_Posting_Edit extends MUBoard_Form_Handler_User_P
      */
     protected function getDefaultReturnUrl($args, $obj)
     {
-    	$parentid = $this->request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
+    	$parentid = $this->request->getPost()->filter('muboardPosting_ParentItemList', 0, FILTER_SANITIZE_NUMBER_INT);
     	
         // redirect to the list of postings
         $viewArgs = array('ot' => $this->objectType);

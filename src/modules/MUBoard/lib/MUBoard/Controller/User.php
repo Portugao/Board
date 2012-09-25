@@ -15,6 +15,7 @@
 /**
  * This is the User controller class providing navigation and interaction functionality.
  */
+use Doctrine\DBAL\Types\StringType;
 class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 {
 
@@ -52,7 +53,8 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 		$type = $this->request->getGet()->filter('type', 'user', FILTER_SANITIZE_STRING);
 		$func = $this->request->getGet()->filter('func', 'view', FILTER_SANITIZE_STRING);
 
-		$lastlogin = UserUtil::getVar('lastlogin', $uid);
+		$lastlogin = (string) UserUtil::getVar('lastlogin', $uid);
+		LogUtil::registerStatus($lastlogin);
 			
 		$sortdir = ModUtil::getVar('MUBoard', 'sortingPostings');
 			
