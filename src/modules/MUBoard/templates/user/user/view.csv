@@ -1,0 +1,6 @@
+{* purpose of this template: users view csv view in user area *}
+{muboardTemplateHeaders contentType='text/comma-separated-values; charset=iso-8859-15' asAttachment=true filename='Users.csv'}
+"{gt text='Userid'}";"{gt text='Number postings'}";"{gt text='Rank user'}";"{gt text='Last visit'}""{gt text='Rank'}"
+{foreach item='user' from=$items}
+"{$user.userid|replace:"\"":""}";"{$user.numberPostings|replace:"\"":""}";"{$user.rankUser|replace:"\"":""}";"{$user.lastVisit|dateformat:'datetimebrief'}"{if isset($user.Rank) && $user.Rank ne null}{$user.Rank.name|default:""}{/if}{/foreach}
+

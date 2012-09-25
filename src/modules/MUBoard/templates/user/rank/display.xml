@@ -1,0 +1,4 @@
+{* purpose of this template: ranks display xml view in user area *}
+{muboardTemplateHeaders contentType='text/xml'}<?xml version="1.0" encoding="{charset}" ?>
+{getbaseurl assign='baseurl'}
+{include file='user/rank/include.xml' item=$rank}

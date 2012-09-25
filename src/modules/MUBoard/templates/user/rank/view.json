@@ -1,0 +1,8 @@
+{* purpose of this template: ranks view json view in user area *}
+{muboardTemplateHeaders contentType='application/json'}
+[
+{foreach item='item' from=$items name='ranks'}
+    {if not $smarty.foreach.ranks.first},{/if}
+    {$item->toJson()}
+{/foreach}
+]

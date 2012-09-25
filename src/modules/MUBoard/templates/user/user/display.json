@@ -1,0 +1,3 @@
+{* purpose of this template: users display json view in user area *}
+{muboardTemplateHeaders contentType='application/json'}
+{$user->toJson()}
