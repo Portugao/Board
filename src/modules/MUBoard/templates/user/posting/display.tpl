@@ -11,7 +11,7 @@
 {* <div class="muboardRightBox">
 <h3>{gt text='Posting'}</h3> *}
 {checkpermissionblock component='MUBoard:Posting:' instance="`$posting.id`::" level="ACCESS_OVERVIEW"}
-    <div id="top" class="muboard-user-posting">
+    <div id="top" class="muboard-user-posting-parent ">
         <div class="muboard-user-posting-header">
             <div class="muboard-user-posting-header-title">
                 <h2>
@@ -20,7 +20,8 @@
                 {gt text='Created: '}{$posting.createdDate|dateformat:datetimelong}
             </div>
             <div class="muboard-user-posting-header-action">
-                {if count($posting._actions) gt 0}
+            {gt text='Category:'} <a title="{gt text='Back to'} {$posting.forum.category.title}" href="{modurl modname='MUBoard' type='user' func='display' ot='category' id=$posting.forum.category.id}">{$posting.forum.category.title}</a><br />{gt text='Forum:'} <a title="{gt text='Back to'} {$posting.forum.title}" href="{modurl modname='MUBoard' type='user' func='display' ot='forum' id=$posting.forum.id}">{$posting.forum.title}</a>
+              {*  {if count($posting._actions) gt 0}
                     <p>{strip}
                     {foreach item='option' from=$posting._actions}
                          <a href="{$option.url.type|muboardActionUrl:$option.url.func:$option.url.arguments}" title="{$option.linkTitle|safetext}" class="z-icon-es-{$option.icon}">
@@ -28,7 +29,7 @@
                          </a>
                     {/foreach}
                     {/strip}</p>
-                {/if}
+                {/if} *}
             </div>            
             <div class="muboard-user-posting-header-infos">
             {* <a id="muboard-user-posting-header-infos-close" href="{modurl modname='muboard' type='admin' func='take' ot='abo' posting=$posting.id}">
@@ -68,7 +69,7 @@
         </div>   
     </div>
     {/checkpermissionblock}
-    {foreach item='childPosting' from=$posting.children}
+    {foreach item='childPosting' from=$postings}
         <div class="muboard-user-posting">
         <div class="muboard-user-posting-user">
         <div class="muboard-user-posting-avatar">
@@ -87,7 +88,7 @@
         {$childPosting.createdDate|dateformat:datetimelong}
         </div>
         <div class="muboard-user-posting-content-text">
-        {$childPosting.text}
+        {$childPosting.text|notifyfilters:'muboard.filter_hooks.postings'}
         </div>
         {if $childPosting.firstImage ne ''}        
         <div class="muboard-user-posting-content-image">
