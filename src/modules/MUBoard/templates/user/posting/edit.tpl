@@ -39,6 +39,16 @@
             {formtextinput group='posting' id='text' mandatory=true __title='Enter the text of the posting' textMode='multiline' rows='6' cols='50' cssClass='required'}
             {muboardValidationError id='text' class='required'}
         </div>
+        
+    {* include display hooks *}
+        {notifydisplayhooks eventname='muboard.ui_hooks.postings.form_edit' id='hallo' assign='hooks'}
+
+        {foreach key='hookName' item='hook' from=$hooks}
+            <div class="z-formrow">
+                {$hook}
+            </div>
+        {/foreach}
+        
         <div class="z-formrow" style="display: none;">
             {formlabel for='invocations' __text='Invocations'}
             {formintinput group='posting' id='invocations' mandatory=false __title='Enter the invocations of the posting' maxLength=11 cssClass=' validate-digits'}
@@ -225,23 +235,6 @@
     {* {if $mode ne 'create'}
         {include file='user/include_standardfields_edit.tpl' obj=$posting}
     {/if} *}
-
-    {* include display hooks *}
-    {if $mode eq 'create'}
-        {notifydisplayhooks eventname='muboard.ui_hooks.postings.form_edit' id=null assign='hooks'}
-    {else}
-        {notifydisplayhooks eventname='muboard.ui_hooks.postings.form_edit' id=$posting.id assign='hooks'}
-    {/if}
-    {if is_array($hooks) && isset($hooks[0])}
-        <fieldset>
-            <legend>{gt text='Hooks'}</legend>
-            {foreach key='hookName' item='hook' from=$hooks}
-            <div class="z-formrow">
-                {$hook}
-            </div>
-            {/foreach}
-        </fieldset>
-    {/if}
 
     {* include return control *}
     {* {if $mode eq 'create'}
