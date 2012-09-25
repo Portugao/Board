@@ -169,12 +169,26 @@ button.muboardInlineButton {
     border-bottom: 1px solid #999;
 }
 
+.muboard-user-category-footer-statistic {
+    padding: 5px 10px;
+    margin: 5px 0 0 10px;
+    float: left;
+    border-radius: 5px;
+    border-bottom: 1px solid #999;
+}
+
 .muboard-user-category-header-lastposting {
     font-size: 0.9em;
     padding: 5px 0;
     margin: 5px 0 0 10px;
     float: left;
 }
+
+.muboard-user-legend {
+    width: 180px; 
+    float: left;
+}
+
 
 .issues {
     background: #c63;
@@ -371,5 +385,7 @@ button.muboardInlineButton {
     border: 3px solid #fff;
     border-radius: 5px;
 }
+
+
 
 
