@@ -68,6 +68,10 @@
                     {formlabel for='pagesize' __text='Pagesize'}
                     {formintinput id='pagesize' group='config' maxLength=255 width=20em __title='Enter this setting. Only digits are allowed.'}
                 </div>
+                <div class="z-formrow">
+                    {formlabel for='standardIcon' __text='Standard icon' class='muboardFormTooltips' title=$toolTip}
+                    {formtextinput id='standardIcon' group='config' maxLength=255 width=20em __title='Enter this setting.'}
+                </div>
             </fieldset>
 
             <div class="z-buttons z-formbuttons">
