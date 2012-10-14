@@ -43,19 +43,12 @@
             {muboardValidationError id='numberOfIcons' class='validate-digits'}
         </div>
         <div class="z-formrow">
-            {assign var='mandatorySym' value='1'}
-            {if $mode ne 'create'}
-                {assign var='mandatorySym' value='0'}
-            {/if}
-            {formlabel for='uploadImage' __text='Upload image' mandatorysym=$mandatorySym}<br />{* break required for Google Chrome *}
-{if $mode eq 'create'}
-            {formuploadinput group='rank' id='uploadImage' mandatory=true readOnly=false cssClass='required'}
-{else}
+            {formlabel for='uploadImage' __text='Upload image'}<br />{* break required for Google Chrome *}
             {formuploadinput group='rank' id='uploadImage' mandatory=false readOnly=false cssClass=''}
-{/if}
 
             <div class="z-formnote">{gt text='Allowed file extensions:'} gif, jpeg, jpg, png</div>
             {if $mode ne 'create'}
+                {if $rank.uploadImage ne ''}
                   <div class="z-formnote">
                       {gt text='Current file'}:
                       <a href="{$rank.uploadImageFullPathUrl}" title="{$rank.name|replace:"\"":""}"{if $rank.uploadImageMeta.isImage} rel="imageviewer[rank]"{/if}>
@@ -66,13 +59,16 @@
                       {/if}
                       </a>
                   </div>
+                  <div class="z-formnote">
+                      {formcheckbox group='rank' id='uploadImageDeleteFile' readOnly=false __title='Delete upload image ?'}
+                      {formlabel for='uploadImageDeleteFile' __text='Delete existing file'}
+                  </div>
+                {/if}
             {/if}
-            {muboardValidationError id='uploadImage' class='required'}
         </div>
         <div class="z-formrow">
-            {formlabel for='special' __text='Special' mandatorysym='1'}
-            {formcheckbox group='rank' id='special' readOnly=false __title='special ?' cssClass='required'}
-            {muboardValidationError id='special' class='required'}
+            {formlabel for='special' __text='Special'}
+            {formcheckbox group='rank' id='special' readOnly=false __title='special ?' cssClass=''}
         </div>
     </fieldset>
 
@@ -137,6 +133,7 @@
 /* <![CDATA[ */
     var editImage = '<img src="{{$editImageArray.src}}" width="16" height="16" alt="" />';
     var removeImage = '<img src="{{$deleteImageArray.src}}" width="16" height="16" alt="" />';
+    var relationHandler = new Array();
 
     document.observe('dom:loaded', function() {
 

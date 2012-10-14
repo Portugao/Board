@@ -6,11 +6,16 @@
 
 <div class="muboard-user-forum">
 <div class="muboard-user-forum-left">
+<div class="muboard-user-forum-left-icon">
+{$item.id|muboardPostingsSinceLastLogin:$coredata.lastlogin}
+</div>
+<div class="muboard-user-forum-left-right">
     {gt text='Forum:'}
     <a href="{modurl modname='MUBoard' type='user' func='display' ot='forum' id=$item.id}">
      {$item.title}
     </a><br />
     {$item.description}
+</div>
 </div>
 <div class="muboard-user-forum-right">
     <div class="muboard-user-category-header-statistic issues">{$item.id|muboardGetNumberOfIssuesOfForum:$item.id}</div>

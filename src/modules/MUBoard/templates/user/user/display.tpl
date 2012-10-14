@@ -7,35 +7,36 @@
 <div class="z-frontendcontainer">
     <h2>{$templateTitle|notifyfilters:'muboard.filter_hooks.users.filter'}</h2>
 
-{if !isset($smarty.get.theme) || $smarty.get.theme ne 'Printer'}
-<div class="muboardRightBox">
-<h3>{gt text='Rank'}</h3>
-
-{if isset($user.rank) && $user.rank ne null}
-    {include file='user/rank/include_displayItemListOne.tpl' item=$user.rank}
-{/if}
-
-{if !isset($user.rank) || $user.rank eq null}
-{checkpermission component='MUBoard::' instance='.*' level='ACCESS_ADMIN' assign='authAdmin'}
-{if $authAdmin || (isset($uid) && isset($user.createdUserId) && $user.createdUserId eq $uid)}
-<p class="manageLink">
-    {gt text='Create rank' assign='createTitle'}
-    <a href="{modurl modname='MUBoard' type='user' func='edit' ot='rank' user="`$user.id`" returnTo='userDisplayUser'}" title="{$createTitle}" class="z-icon-es-add">
-        {$createTitle}
-    </a>
-</p>
-{/if}
-{/if}
-</div>
-{/if}
 
 <dl id="MUBoard_body">
     <dt>{gt text='Number postings'}</dt>
     <dd>{$user.numberPostings}</dd>
-    <dt>{gt text='Rank user'}</dt>
-    <dd>{$user.rankUser}</dd>
     <dt>{gt text='Last visit'}</dt>
     <dd>{$user.lastVisit|dateformat:'datetimebrief'}</dd>
+    <dt>{gt text='Rank'}</dt>
+    <dd>
+    {if isset($user.Rank) && $user.Rank ne null}
+      {if !isset($smarty.get.theme) || $smarty.get.theme ne 'Printer'}
+        <a href="{modurl modname='MUBoard' type='user' func='display' ot='rank' id=$user.Rank.id}">
+            {$user.Rank.name|default:""}
+        </a>
+        <a id="rankItem{$user.Rank.id}Display" href="{modurl modname='MUBoard' type='user' func='display' ot='rank' id=$user.Rank.id theme='Printer' forcelongurl=true}" title="{gt text='Open quick view window'}" style="display: none">
+            {icon type='view' size='extrasmall' __alt='Quick view'}
+        </a>
+        <script type="text/javascript" charset="utf-8">
+        /* <![CDATA[ */
+            document.observe('dom:loaded', function() {
+                muboardInitInlineWindow($('rankItem{{$user.Rank.id}}Display'), '{{$user.Rank.name|replace:"'":""}}');
+            });
+        /* ]]> */
+        </script>
+      {else}
+        {$user.Rank.name|default:""}
+      {/if}
+    {else}
+        {gt text='No set.'}
+    {/if}
+    </dd>
 </dl>
 
 {if !isset($smarty.get.theme) || $smarty.get.theme ne 'Printer'}
@@ -55,7 +56,6 @@
     {$hook}
 {/foreach}
 
-<br style="clear: right" />
 {/if}
 
 </div>

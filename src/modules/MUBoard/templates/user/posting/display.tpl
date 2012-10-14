@@ -46,9 +46,10 @@
         {usergetvar name=uname uid=$posting.createdUserId}
         </div>
         <div class="muboard-user-posting-datas">
-        {gt text='Registered:'} {usergetvar name=user_regdate uid=$posting.createdUserId assign=regdate}{$regdate|dateformat:datebrief}<br />
+        {* {gt text='Registered:'} {usergetvar name=user_regdate uid=$posting.createdUserId assign=regdate}{$regdate|dateformat:datebrief}<br />
         {gt text='Last visit:'} {usergetvar name=lastlogin uid=$posting.createdUserId assign=lastlogin}{$lastlogin|dateformat:datebrief}<br />
-        {gt text='Postings:'} {$posting.createdUserId|muboardGetNumberOfPostingsOfUser}
+        {gt text='Postings:'} {$posting.createdUserId|muboardGetNumberOfPostingsOfUser} *}
+        {$posting.createdUserId|muboardGetUserRank}
         </div>
         </div>
         <div class="muboard-user-posting-content">
@@ -77,10 +78,10 @@
         {usergetvar name=uname uid=$childPosting.createdUserId}
         </div>
         <div class="muboard-user-posting-datas">
-
-        {gt text='Registered:'} {usergetvar name=user_regdate uid=$childPosting.createdUserId assign=regdate}{$regdate|dateformat:datebrief}<br />
+        {* {gt text='Registered:'} {usergetvar name=user_regdate uid=$childPosting.createdUserId assign=regdate}{$regdate|dateformat:datebrief}<br />
         {gt text='Last visit:'} {usergetvar name=lastlogin uid=$childPosting.createdUserId assign=lastlogin}{$lastlogin|dateformat:datebrief}<br />
-        {gt text='Postings:'} {$childPosting.createdUserId|muboardGetNumberOfPostingsOfUser}
+        {gt text='Postings:'} {$childPosting.createdUserId|muboardGetNumberOfPostingsOfUser} *}
+        {$childPosting.createdUserId|muboardGetUserRank}
         </div>
         </div>
         <div class="muboard-user-posting-content">

@@ -53,7 +53,13 @@
             {formlabel for='invocations' __text='Invocations'}
             {formintinput group='posting' id='invocations' mandatory=false __title='Enter the invocations of the posting' maxLength=11 cssClass=' validate-digits'}
             {muboardValidationError id='invocations' class='validate-digits'}
-        </div>
+        </div> 
+        <input type="hidden" id="state" name="state" value="1">
+        {* <div class="z-formrow" style="display: none;">
+            {formlabel for='state' __text='Invocations'}
+            {formintinput group='posting' id='state' mandatory=false __title='Enter the invocations of the posting' maxLength=11 cssClass=' validate-digits'}
+            {muboardValidationError id='state' class='validate-digits'}
+        </div> *}
         {if $uploadImages eq 1}
         {if $numberImages eq 1 || $numberImages eq 2 || $numberImages eq 3}
         <div class="z-formrow">
