@@ -16,41 +16,51 @@
  */
 class MUBoard_Api_Admin extends MUBoard_Api_Base_Admin
 {
-    /**
-     * get available Admin panel links
-     *
-     * @return array Array of admin links
-     */
-    public function getlinks()
-    {
-        $links = array();
+	/**
+	 * get available Admin panel links
+	 *
+	 * @return array Array of admin links
+	 */
+	public function getlinks()
+	{
+		$links = array();
 
-        if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_READ)) {
-            $links[] = array('url' => ModUtil::url($this->name, 'user', 'main'),
+		if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_READ)) {
+			$links[] = array('url' => ModUtil::url($this->name, 'user', 'main'),
                              'text' => $this->__('Frontend'),
                              'title' => $this->__('Switch to user area.'),
                              'class' => 'z-icon-es-home');
-        }
-        if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
-            $links[] = array('url' => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'category')),
+		}
+		if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
+			$links[] = array('url' => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'category')),
                              'text' => $this->__('Categories'),
                              'title' => $this->__('Category list'));
-        }
-        if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
-            $links[] = array('url' => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'forum')),
+		}
+		if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
+			$links[] = array('url' => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'forum')),
                              'text' => $this->__('Forums'),
                              'title' => $this->__('Forum list'));
-        }
-        /*if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
-            $links[] = array('url' => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'posting')),
-                             'text' => $this->__('Postings'),
-                             'title' => $this->__('Posting list'));
-        }*/
-        if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
-            $links[] = array('url' => ModUtil::url($this->name, 'admin', 'config'),
+		}
+		/*if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
+		 $links[] = array('url' => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'posting')),
+		 'text' => $this->__('Postings'),
+		 'title' => $this->__('Posting list'));
+		 }*/
+		if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
+			$links[] = array('url'   => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'user')),
+                'text'  => $this->__('Users'),
+                'title' => $this->__('User list'));
+		}
+		if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
+			$links[] = array('url'   => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'rank')),
+                'text'  => $this->__('Ranks'),
+                'title' => $this->__('Rank list'));
+		}
+		if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
+			$links[] = array('url' => ModUtil::url($this->name, 'admin', 'config'),
                              'text' => $this->__('Configuration'),
                              'title' => $this->__('Manage settings for this application'));
-        }
-        return $links;
-    }
+		}
+		return $links;
+	}
 }

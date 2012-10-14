@@ -246,4 +246,34 @@ class MUBoard_Util_Model extends MUBoard_Util_Base_Model
 
 		return $repository;
 	}
+	
+	/**
+	 *
+	 This method is for getting a repository for user
+	 *
+	 */
+
+	public static function getUserRepository() {
+
+		$serviceManager = ServiceUtil::getManager();
+		$entityManager = $serviceManager->getService('doctrine.entitymanager');
+		$repository = $entityManager->getRepository('MUBoard_Entity_User');
+
+		return $repository;
+	}
+	
+	/**
+	 *
+	 This method is for getting a repository for rank
+	 *
+	 */
+
+	public static function getRankRepository() {
+
+		$serviceManager = ServiceUtil::getManager();
+		$entityManager = $serviceManager->getService('doctrine.entitymanager');
+		$repository = $entityManager->getRepository('MUBoard_Entity_Rank');
+
+		return $repository;
+	}
 }

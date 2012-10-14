@@ -31,6 +31,11 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 		$this->throwForbiddenUnless(SecurityUtil::checkPermission('MUBoard::', '::', ACCESS_OVERVIEW));
 		// DEBUG: permission check aspect ends
 
+		// get actual time
+		$nowtime = DateUtil::getDatetime();
+		// set sessionvar with calling time
+		SessionUtil::setVar('muboardonline', $nowtime);
+
 		// return main template
 		return System::redirect(ModUtil::url($this->name, 'user', 'view', array('ot' => 'category')));
 	}
@@ -52,9 +57,6 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 		$args['ot'] = $this->request->getGet()->filter('ot', 'category', FILTER_SANITIZE_STRING);
 		$type = $this->request->getGet()->filter('type', 'user', FILTER_SANITIZE_STRING);
 		$func = $this->request->getGet()->filter('func', 'view', FILTER_SANITIZE_STRING);
-
-		$lastlogin = (string) UserUtil::getVar('lastlogin', $uid);
-		LogUtil::registerStatus($lastlogin);
 			
 		$sortdir = ModUtil::getVar('MUBoard', 'sortingPostings');
 			
@@ -68,6 +70,15 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 				$args['sortdir'] = 'asc';
 			}
 		}
+
+		// get actual time
+		$nowtime = DateUtil::getDatetime();
+		// set sessionvar with calling time
+		SessionUtil::setVar('muboardonline', $nowtime);
+		
+		$lastlogin = SessionUtil::getVar('muboardonline');
+		LogUtil::registerStatus($lastlogin);
+
 		$this->view->assign('func', $func)
 		->assign('lastlogin', $lastlogin);
 			
@@ -167,6 +178,11 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 		if ($objectType == 'posting') {
 			MUBoard_Util_Model::addView($idValues);
 		}
+
+		// get actual time
+		$nowtime = DateUtil::getDatetime();
+		// set sessionvar with calling time
+		SessionUtil::setVar('muboardonline', $nowtime);
 
 		$currentUrlObject = new Zikula_ModUrl($this->name, 'user', 'display', ZLanguage::getLanguageCode(), $currentUrlArgs);
 

@@ -16,5 +16,28 @@
  */
 class MUBoard_Api_Search extends MUBoard_Api_Base_Search
 {
-    // feel free to add own api methods here
+    /**
+* Search plugin info
+*/
+    public function info()
+    {
+        return array('title' => 'MUBoard',
+            'functions' => array('muboard' => 'search'));
+    }
+    
+    /**
+* Search form component
+*/
+    public function options($args)
+    {
+        if (SecurityUtil::checkPermission('MUBoard::', '::', ACCESS_READ)) {
+            // Create output object - this object will store all of our output so that
+            // we can return it easily when required
+            $render = Zikula_View::getInstance('MUBoard');
+            $render->assign('active', !isset($args['active']) || isset($args['active']['MUBoard']));
+            return $render->fetch('search/options.tpl');
+        }
+
+        return '';
+    }
 }

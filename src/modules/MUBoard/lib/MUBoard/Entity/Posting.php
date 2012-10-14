@@ -173,6 +173,9 @@ class MUBoard_Entity_Posting extends MUBoard_Entity_Base_Posting
      */
     public function postPersistCallback()
     {
+    	$createdUserId = $this->getCreatedUserId();
+    	MUBoard_Util_View::actualUser($createdUserId, 2);
+    	
     	$args['id'] = $this->getId();
     	//$args['parent'] = $this->getParent_id(); doesnot work bug in MOST TODO
     	$args['title'] = $this->getTitle();

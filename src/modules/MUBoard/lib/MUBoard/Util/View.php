@@ -232,6 +232,29 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 	}
 
 	/**
+	 * This method checks if user must edit this posting - creater of the issue
+	 */
+	public static function getStateOfEditOfIssue($postingid) {
+
+		//get repository for Postings
+		$repository = MUBoard_Util_Model::getPostingRepository();
+		// get posting
+		$posting = $repository->selectById($postingid);
+		$createdUserId = $posting->getCreatedUserId();
+		$userid = UserUtil::getVar('uid');
+
+		if ($createdUserId == $userid) {
+			$url = ModUtil::url('MUBoard', 'user', 'edit', array('ot' => 'posting', 'id' => $postingid));
+			$title = __('You have permissions to edit this issue!');
+			$out = "<a title='{$title}' id='muboard-user-posting-header-infos-edit-creater' href='{$url}'>
+            <img src='/images/icons/extrasmall/xedit.png' />
+            </a>";
+		}
+		
+		return $out;
+	}
+
+	/**
 	 * This method gets if an issue is open or closed
 	 */
 
@@ -401,33 +424,113 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 
 		return $out;
 	}
-	
+
 	/**
-	 *
 	 * This method gives back if new postings are in the
 	 * forum since last login and show the relevant icon
 	 */
 	public static function PostingsSinceLastLogin($forumid, $lastlogin)
 	{
+		$dom = ZLanguage::getModuleDomain('MUBoard');
+
 		// get repositoy for Forum
 		$repository = MUBoard_Util_Model::getForumRepository();
 		// get forum by id
 		$forum = $repository->selectById($forumid);
 		// get forums of this category
 		$postings = $forum->getPosting();
-		
+
 		$state = 0;
-		
+
 		foreach ($postings as $posting) {
 			if ($lastlogin < $posting['createdDate']) {
-			$state = 1;
+				$state = 1;
+				break;
 			}
 		}
+
 		if ($state == 1) {
-			$out = 'Yes'; 
+			$out = __('Yes', $dom);
+		}
+		else {
+			$out = __('No', $dom);
 		}
 			
 		return $out;
 			
+	}
+
+	/**
+	 *
+	 *
+	 */
+	public static function actualUser($userid, $kind = 1) {
+
+		$userrepository = MUBoard_Util_Model::getUserRepository();
+		$where = 'tbl.userid = \'' . DataUtil::formatForStore($userid) . '\'';
+		$user = $userrepository->selectWhere($where);
+		if (count($user) == 1) {
+			$user = $user[0];
+			$serviceManager = ServiceUtil::getManager();
+			$entityManager = $serviceManager->getService('doctrine.entitymanager');
+
+			if ($kind == 1) {
+				$user->setLastVisit(DateUtil::getDatetime());
+			}
+			if ($kind == 2) {
+				$user->setNumberPostings($user->getNumberPostings() + 1);
+			}
+			$entityManager->flush();
+		}
+		else {
+			$serviceManager = ServiceUtil::getManager();
+			$entityManager = $serviceManager->getService('doctrine.entitymanager');
+			$user = new MUBoard_Entity_User();
+			$user->setLastVisit(DateUtil::getDatetime());
+			$user->setUserid($userid);
+
+			$entityManager->persist($user);
+			$entityManager->flush();
+
+		}
+
+	}
+
+	/**
+	 *
+	 */
+	public static function getUserRank($id) {
+
+		$dom = ZLanguage::getModuleDomain('MUBoard');
+
+		// we get a repository for ranks
+		$userrepository = MUBoard_Util_Model::getUserRepository();
+		// get infos of the relevant user
+		$where = 'tbl.userid = \'' . DataUtil::formatForStore($id) . '\'';
+		$user = $userrepository->selectWhere($where);
+		if (count($user) == 1) {
+			$user = $user[0];
+		}
+
+		$userregDate = UserUtil::getVar('user_regdate', $id);
+		$userregDate = DateUtil::formatDatetime($userregDate, 'datebrief');
+		$lastVisit = DateUtil::formatDatetime($user['lastVisit'], 'datebrief');
+
+		$out = __('Registered: ', $dom) . $userregDate . '<br />';
+		$out .= __('Last Visit: ', $dom) . $lastVisit . '<br />';
+		$out .= __('Postings: ', $dom) . $user['numberPostings'] . '<br />';
+		$out .= __('Rank: ') . $user['rank']['name'] . '<br />';
+		if ($user['rank']['special'] == 0) {
+			$imagepath = ModUtil::getVar('MUBoard', 'standardIcon');
+			for ($i = 0; $i < $user['rank']['numberOfIcons']; $i++) {
+				$out .= "<img src='" . $imagepath . "' />";
+			}
+		}
+		else {
+			$out .= '<img src="$user.rank.uploadImage|muboardImageThumb:$user.rank.uploadImageFullPath:250:150" width="250" height="150" />';
+		}
+		$out .= "<br />";
+
+		return $out;
 	}
 }

@@ -27,19 +27,19 @@ class MUBoard_Form_Handler_User_Posting_Edit extends MUBoard_Form_Handler_User_P
 	public function initialize(Zikula_Form_View $view)
 	{
 		parent::initialize($view);
-		 
+			
 		// we get form for edit form to create a new issue
 		$forum = $this->request->query->filter('forum', 0, FILTER_SANITIZE_NUMBER_INT);
 		// we get forumid for edit form to answer to an issue
 		$parentid = $this->request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
 
 		if ($parentid > 0) {
-		// build posting repository
-		$repository = MUBoard_Util_Model::getPostingRepository();
+			// build posting repository
+			$repository = MUBoard_Util_Model::getPostingRepository();
 
-		$entity = $repository->selectById($parentid);
-		$forumOfEntity = $entity->getForum();
-		$forumid = $forumOfEntity['id'];
+			$entity = $repository->selectById($parentid);
+			$forumOfEntity = $entity->getForum();
+			$forumid = $forumOfEntity['id'];
 		}
 		else {
 			$forumid = 0;
@@ -47,13 +47,13 @@ class MUBoard_Form_Handler_User_Posting_Edit extends MUBoard_Form_Handler_User_P
 
 		// set mode to create
 		$this->mode = 'create';
-		 
+			
 		// get modvars
 		$uploadImages = ModUtil::getVar('MUBoard', 'uploadImages');
 		$uploadFiles = ModUtil::getVar('MUBoard', 'uploadFiles');
 		$numberImages = ModUtil::getVar('MUBoard', 'numberImages');
 		$numberFiles = ModUtil::getVar('MUBoard', 'numberFiles');
-		 
+			
 		// we assign to template
 		$this->view->assign('uploadImages', $uploadImages)
 		->assign('uploadFiles', $uploadFiles)
@@ -67,23 +67,29 @@ class MUBoard_Form_Handler_User_Posting_Edit extends MUBoard_Form_Handler_User_P
 		return true;
 
 	}
-	
-    /**
-     * Get the default redirect url. Required if no returnTo parameter has been supplied.
-     * This method is called in handleCommand so we know which command has been performed.
-     */
-    protected function getDefaultReturnUrl($args, $obj)
-    {
-    	$parentid = $this->request->getPost()->filter('muboardPosting_ParentItemList', 0, FILTER_SANITIZE_NUMBER_INT);
-    	
-        // redirect to the list of postings
-        $viewArgs = array('ot' => $this->objectType);
-        $url = ModUtil::url($this->name, 'user', 'view', $viewArgs);
 
-        if ($args['commandName'] != 'delete' && !($this->mode == 'create' && $args['commandName'] == 'cancel')) {
-            // redirect to the detail page of treated posting
-            $url = ModUtil::url($this->name, 'user', 'display', array('ot' => 'posting', 'id' => $parentid));
-        }
-        return $url;
-    }
+	/**
+	 * Get the default redirect url. Required if no returnTo parameter has been supplied.
+	 * This method is called in handleCommand so we know which command has been performed.
+	 */
+	protected function getDefaultReturnUrl($args, $obj)
+	{
+		$parentid = $this->request->getPost()->filter('muboardPosting_ParentItemList', 0, FILTER_SANITIZE_NUMBER_INT);
+		 
+		// redirect to the list of postings
+		$viewArgs = array('ot' => $this->objectType);
+		$url = ModUtil::url($this->name, 'user', 'view', $viewArgs);
+
+		if ($args['commandName'] != 'delete' && !($this->mode == 'create' && $args['commandName'] == 'cancel')) {
+			// redirect to the detail page of treated posting
+			if ($parentid > 0) {
+				$url = ModUtil::url($this->name, 'user', 'display', array('ot' => 'posting', 'id' => $parentid));
+			}
+			else {
+				$url = ModUtil::url($this->name, 'user', 'display', array('ot' => 'posting', 'id' => $this->idValues['id']));
+						 
+			}
+		}
+		return $url;
+	}
 }
