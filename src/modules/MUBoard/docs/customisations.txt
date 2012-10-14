@@ -21,6 +21,7 @@ Implemented Classes
 
 
 *lib/MUBoard/Api/Admin.php
+*lib/MUBoard/Api/Search.php
 *lib/MUBoard/Api/User.php
 *lib/MUBoard/Controller/Admin.php
 *lib/MUBoard/Controller/User.php
@@ -47,6 +48,8 @@ customisations.txt
 *templates/plugins/modifier.muboardGetStateOfForumAbo.php
 *templates/plugins/modifier.muboardGetStateOfPosting.php
 *templates/plugins/modifier.muboardGetStateOfPostingAbo.php
+
+*templates/search/options.tpl
 
 
 
