@@ -48,13 +48,13 @@
             {muboardValidationError id='numberOfIcons' class='validate-digits'}
         </div>
         <div class="z-formrow">
-            {assign var='mandatorySym' value='1'}
-            {if $mode ne 'create'}
+          {*  {assign var='mandatorySym' value='1'}
+            {if $mode ne 'create'} *}
                 {assign var='mandatorySym' value='0'}
-            {/if}
+           {* {/if} *}
             {formlabel for='uploadImage' __text='Upload image' mandatorysym=$mandatorySym}<br />{* break required for Google Chrome *}
 {if $mode eq 'create'}
-            {formuploadinput group='rank' id='uploadImage' mandatory=true readOnly=false cssClass='required'}
+            {formuploadinput group='rank' id='uploadImage' mandatory=true readOnly=false cssClass=''}
 {else}
             {formuploadinput group='rank' id='uploadImage' mandatory=false readOnly=false cssClass=''}
 {/if}
@@ -72,12 +72,12 @@
                       </a>
                   </div>
             {/if}
-            {muboardValidationError id='uploadImage' class='required'}
+           {* {muboardValidationError id='uploadImage' class=''} *}
         </div>
         <div class="z-formrow">
-            {formlabel for='special' __text='Special' mandatorysym='1'}
-            {formcheckbox group='rank' id='special' readOnly=false __title='special ?' cssClass='required'}
-            {muboardValidationError id='special' class='required'}
+            {formlabel for='special' __text='Special' mandatorysym='0'}
+            {formcheckbox group='rank' id='special' readOnly=false __title='special ?' cssClass=''}
+            {muboardValidationError id='special' class=''}
         </div>
     </fieldset>
 

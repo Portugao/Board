@@ -34,7 +34,6 @@
     <colgroup>
         <col id="cuserid" />
         <col id="cnumberpostings" />
-        <col id="crankuser" />
         <col id="clastvisit" />
         <col id="crank" />
         <col id="citemactions" />
@@ -46,9 +45,6 @@
         </th>
         <th id="hnumberpostings" scope="col" class="z-right">
             {sortlink __linktext='Number postings' sort='numberPostings' currentsort=$sort sortdir=$sdir all=$all modname='MUBoard' type='admin' func='view' ot='user'}
-        </th>
-        <th id="hrankuser" scope="col" class="z-right">
-            {sortlink __linktext='Rank user' sort='rankUser' currentsort=$sort sortdir=$sdir all=$all modname='MUBoard' type='admin' func='view' ot='user'}
         </th>
         <th id="hlastvisit" scope="col" class="z-left">
             {sortlink __linktext='Last visit' sort='lastVisit' currentsort=$sort sortdir=$sdir all=$all modname='MUBoard' type='admin' func='view' ot='user'}
@@ -68,9 +64,6 @@
         </td>
         <td headers="hnumberpostings" class="z-right">
             {$user.numberPostings}
-        </td>
-        <td headers="hrankuser" class="z-right">
-            {$user.rankUser}
         </td>
         <td headers="hlastvisit" class="z-left">
             {$user.lastVisit|dateformat:'datetimebrief'}
@@ -108,7 +101,7 @@
     </tr>
     {foreachelse}
         <tr class="z-admintableempty">
-          <td class="z-left" colspan="6">
+          <td class="z-left" colspan="4">
             {gt text='No users found.'}
           </td>
         </tr>

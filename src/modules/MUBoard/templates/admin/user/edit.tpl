@@ -39,12 +39,6 @@
             {muboardValidationError id='numberPostings' class='validate-digits'}
         </div>
         <div class="z-formrow">
-            {formlabel for='rankUser' __text='Rank user' mandatorysym='1'}
-            {formintinput group='user' id='rankUser' mandatory=true __title='Enter the rank user of the user' maxLength=11 cssClass='required validate-digits'}
-            {muboardValidationError id='rankUser' class='required'}
-            {muboardValidationError id='rankUser' class='validate-digits'}
-        </div>
-        <div class="z-formrow">
             {formlabel for='lastVisit' __text='Last visit' mandatorysym='1'}
             {if $mode ne 'create'}
                 {formdateinput group='user' id='lastVisit' mandatory=true __title='Enter the last visit of the user' includeTime=true cssClass='required'}
@@ -55,6 +49,7 @@
         </div>
     </fieldset>
 
+    {include file='admin/rank/include_selectEditOne.tpl' relItem=$user aliasName='rank' idPrefix='muboardRank_Rank'}
 
     {* include display hooks *}
     {if $mode eq 'create'}
@@ -113,8 +108,16 @@
     var editImage = '<img src="{{$editImageArray.src}}" width="16" height="16" alt="" />';
     var removeImage = '<img src="{{$deleteImageArray.src}}" width="16" height="16" alt="" />';
     var relationHandler = new Array();
+    var newItem = new Object();
+    newItem['ot'] = 'rank';
+    newItem['alias'] = 'Rank';
+    newItem['prefix'] = 'muboardRank_RankSelectorDoNew';
+    newItem['acInstance'] = null;
+    newItem['windowInstance'] = null;
+    relationHandler.push(newItem);
 
     document.observe('dom:loaded', function() {
+        muboardInitRelationItemsForm('rank', 'muboardRank_Rank', true);
 
         muboardAddCommonValidationRules('user', '{{if $mode eq 'create'}}{{else}}{{$user.id}}{{/if}}');
 

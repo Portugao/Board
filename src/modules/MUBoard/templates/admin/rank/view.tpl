@@ -80,6 +80,7 @@
             {$rank.numberOfIcons}
         </td>
         <td headers="huploadimage" class="z-left">
+            {if $rank.uploadImage ne ''}
               <a href="{$rank.uploadImageFullPathURL}" title="{$rank.name|replace:"\"":""}"{if $rank.uploadImageMeta.isImage} rel="imageviewer[rank]"{/if}>
               {if $rank.uploadImageMeta.isImage}
                   <img src="{$rank.uploadImage|muboardImageThumb:$rank.uploadImageFullPath:32:20}" width="32" height="20" alt="{$rank.name|replace:"\"":""}" />
@@ -87,10 +88,23 @@
                   {gt text='Download'} ({$rank.uploadImageMeta.size|muboardGetFileSize:$rank.uploadImageFullPath:false:false})
               {/if}
               </a>
+            {else}&nbsp;{/if}
 
         </td>
         <td headers="hspecial" class="z-center">
-            {$rank.special|yesno:true}
+            {assign var='itemid' value=$rank.id}
+            <a id="togglespecial{$itemid}" href="javascript:void(0);" style="display: none">
+            {if $rank.special}
+                {icon type='ok' size='extrasmall' __alt='Yes' id="yesspecial_`$itemid`" __title="This setting is enabled. Click here to disable it."}
+                {icon type='cancel' size='extrasmall' __alt='No' id="nospecial_`$itemid`" __title="This setting is disabled. Click here to enable it." style="display: none;"}
+            {else}
+                {icon type='ok' size='extrasmall' __alt='Yes' id="yesspecial_`$itemid`" __title="This setting is enabled. Click here to disable it." style="display: none;"}
+                {icon type='cancel' size='extrasmall' __alt='No' id="nospecial_`$itemid`" __title="This setting is disabled. Click here to enable it."}
+            {/if}
+            </a>
+            <noscript><div id="noscriptspecial{$itemid}">
+                {$rank.special|yesno:true}            </div></noscript>
+
         </td>
         <td headers="hitemactions" class="z-right z-nowrap z-w02">
             {if count($rank._actions) gt 0}
@@ -121,3 +135,13 @@
 </div>
 {include file='admin/footer.tpl'}
 
+<script type="text/javascript" charset="utf-8">
+/* <![CDATA[ */
+    document.observe('dom:loaded', function() {
+    {{foreach item='rank' from=$items}}
+        {{assign var='itemid' value=$rank.id}}
+        muboardInitToggle('rank', 'special', '{{$itemid}}');
+    {{/foreach}}
+    });
+/* ]]> */
+</script>
