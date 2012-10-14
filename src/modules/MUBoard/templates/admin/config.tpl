@@ -49,6 +49,16 @@
                 </div>
                 </div>
                 <div class="z-formrow">
+                    {formlabel for='editPostings' __text='Edit postings'}
+                    {formcheckbox id='editPostings' group='config'}
+                </div>
+                <div id="editoptions" style="display: none;">
+                <div class="z-formrow">
+                    {formlabel for='editTime' __text='Edit time' class='muboardFormTooltips' title=$toolTip}
+                    {formintinput id='editTime' group='config' maxLength=255 width=20em __title='Enter this setting. Only digits are allowed.'}
+                </div>
+                </div>
+                <div class="z-formrow">
                     {formlabel for='latestPostings' __text='Latest postings'}
                     {formintinput id='latestPostings' group='config' maxLength=255 width=20em __title='Enter this setting. Only digits are allowed.'}
                 </div>
@@ -72,6 +82,10 @@
                     {formlabel for='standardIcon' __text='Standard icon' class='muboardFormTooltips' title=$toolTip}
                     {formtextinput id='standardIcon' group='config' maxLength=255 width=20em __title='Enter this setting.'}
                 </div>
+                <div class="z-formrow">
+                    {formlabel for='specialIcon' __text='Special icon' class='muboardFormTooltips' title=$toolTip}
+                    {formtextinput id='specialIcon' group='config' maxLength=255 width=20em __title='Enter this setting.'}
+                </div>
             </fieldset>
 
             <div class="z-buttons z-formbuttons">
@@ -92,7 +106,11 @@
 
         if(MU(".z-formrow > #uploadFiles").is(':checked')) {
             MU("#fileoptions").css({display: 'block'});
-            }
+        }
+
+        if(MU(".z-formrow > #editPostings").is(':checked')) {
+            MU("#editoptions").css({display: 'block'});
+        }
         
     	MU(".z-formrow > #uploadImages").click( function() {
         if(MU(this).is(':checked')) {
@@ -110,6 +128,16 @@
             }
             else {
             	MU("#fileoptions").slideUp('slow');
+            }
+
+        }); 
+
+    	MU(".z-formrow > #editPostings").click( function() {
+            if(MU(this).is(':checked')) {
+            	MU("#editoptions").slideDown('slow');
+            }
+            else {
+            	MU("#editoptions").slideUp('slow');
             }
 
         });        
