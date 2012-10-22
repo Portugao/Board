@@ -18,6 +18,19 @@
 use Doctrine\DBAL\Types\StringType;
 class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 {
+	
+    /**
+     * Post initialise.
+     *
+     * Run after construction.
+     *
+     * @return void
+     */
+    protected function postInitialize()
+    {
+        // Set caching to true by default.
+        $this->view->setCaching(Zikula_View::CACHE_DISABLED);
+    }
 
 	/**
 	 * This method is the default function, and is called whenever the application's
@@ -75,9 +88,8 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 		$nowtime = DateUtil::getDatetime();
 		// set sessionvar with calling time
 		SessionUtil::setVar('muboardonline', $nowtime);
-		
+
 		$lastlogin = SessionUtil::getVar('muboardonline');
-		LogUtil::registerStatus($lastlogin);
 
 		$this->view->assign('func', $func)
 		->assign('lastlogin', $lastlogin);
@@ -187,12 +199,14 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 		$currentUrlObject = new Zikula_ModUrl($this->name, 'user', 'display', ZLanguage::getLanguageCode(), $currentUrlArgs);
 
 		$func = $this->request->getGet()->filter('func', 'view', FILTER_SANITIZE_STRING);
+		$editPostings = ModUtil::getVar($this->name, 'editPostings');
 
 		// assign output data to view object.
 		$this->view->assign($objectType, $entity)
 		->assign('postings', $entities)
 		->assign('currentUrlObject', $currentUrlObject)
 		->assign('func', $func)
+		->assign('editPostings', $editPostings)
 		->assign($repository->getAdditionalTemplateParameters('controllerAction', $utilArgs));
 
 		$this->view->assign('currentPage', $currentPage)
