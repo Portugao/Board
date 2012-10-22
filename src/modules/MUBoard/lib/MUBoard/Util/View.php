@@ -240,17 +240,38 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 		$repository = MUBoard_Util_Model::getPostingRepository();
 		// get posting
 		$posting = $repository->selectById($postingid);
+		// check if issue or anser
+		$parent = $posting->getParent();
+		// get userid of user created this posting
 		$createdUserId = $posting->getCreatedUserId();
+		// get created Date
+		$createdDate = $posting->getCreatedDate();
+		$createdDate = $createdDate->getTimestamp();
+
+		// get userid of loggedin user
+		$actualTime = DateUtil::getDatetime();
+		// get modvar editTime
+		$editTime = ModUtil::getVar('MUBoard', 'editTime');
+
+		$diffTime = DateUtil::getDatetimeDiff($createdDate, $actualTime);
+		$diffTimeHours = $diffTime['d'] * 24 + $diffTime['h'];
+
 		$userid = UserUtil::getVar('uid');
 
-		if ($createdUserId == $userid) {
-			$url = ModUtil::url('MUBoard', 'user', 'edit', array('ot' => 'posting', 'id' => $postingid));
+		if ($createdUserId == $userid && ($diffTimeHours < $editTime || $parent == NULL) ) {
+			$serviceManager = ServiceUtil::getManager();
+			// generate an auth key to use in urls
+			$csrftoken = SecurityUtil::generateCsrfToken($serviceManager, true);
+			$url = ModUtil::url('MUBoard', 'user', 'edit', array('ot' => 'posting', 'id' => $postingid, 'token' => $csrftoken));
 			$title = __('You have permissions to edit this issue!');
 			$out = "<a title='{$title}' id='muboard-user-posting-header-infos-edit-creater' href='{$url}'>
             <img src='/images/icons/extrasmall/xedit.png' />
             </a>";
 		}
-		
+		else {
+			$out = '';
+		}
+
 		return $out;
 	}
 
@@ -428,36 +449,62 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 	/**
 	 * This method gives back if new postings are in the
 	 * forum since last login and show the relevant icon
+	 * @param itemid          id of the relevant item
+	 * @param kind            1 we check for forums, 2 we check for issues
 	 */
-	public static function PostingsSinceLastLogin($forumid, $lastlogin)
+	public static function PostingsSinceLastLogin($itemid, $kind = 1)
 	{
 		$dom = ZLanguage::getModuleDomain('MUBoard');
 
-		// get repositoy for Forum
-		$repository = MUBoard_Util_Model::getForumRepository();
-		// get forum by id
-		$forum = $repository->selectById($forumid);
-		// get forums of this category
-		$postings = $forum->getPosting();
+		if ($kind == 1) {
+			// get repositoy for Forum
+			$repository = MUBoard_Util_Model::getForumRepository();
+			// get forum by id
+			$forum = $repository->selectById($itemid);
+			$forumid = $forum->getId();
 
-		$state = 0;
+			$forumids = SessionUtil::getVar('muboardforumids');
 
-		foreach ($postings as $posting) {
-			if ($lastlogin < $posting['createdDate']) {
-				$state = 1;
-				break;
+			if ($forumids) {
+
+				if (in_array($forumid, $forumids)) {
+					$out = self::getOut();
+				}
+				else {
+					$out = self::getOut(2);
+				}
 			}
-		}
+			else {
+				$out = self::getOut(2);
+			}
 
-		if ($state == 1) {
-			$out = __('Yes', $dom);
 		}
-		else {
-			$out = __('No', $dom);
-		}
+		
+		if ($kind == 2) {
+			// get repository for Posting
+			$repository = MUBoard_Util_Model::getPostingRepository();
+			// get postingid
+			$posting = $repository->selectById($itemid);
+			$postingid = $posting->getId();
 			
+			$postingids = SessionUtil::getVar('muboardpostingids');
+
+			if ($postingids) {
+				if (in_array($postingid, $postingids)) {
+					$out = __('Yes', $dom);
+				}
+				else {
+					$out = __('No', $dom);
+				}
+			}
+			else {
+				$out = __('No', $dom);
+			}		
+		}
+		
 		return $out;
 			
+
 	}
 
 	/**
@@ -481,6 +528,48 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 				$user->setNumberPostings($user->getNumberPostings() + 1);
 			}
 			$entityManager->flush();
+
+			$rank = $user->getRank();
+			if (isset($rank)) {
+				$rankid = $rank->getId();
+			}
+
+			if (isset($rankid)) {
+				$rankrepository = MUBoard_Util_Model::getRankRepository();
+				$rank = $rankrepository->selectById($rankid);
+				$rankspecial = $rank->getSpecial();
+				$rankMaxPostings = $rank->getMaxPostings();
+				// check if it is a special rank
+				if ($rankspecial == 1) {
+					// nothing to do
+				}
+				// is no special rank
+				else {
+					$numberPostings = $user->getNumberPostings();
+					if ($numberPostings > $rankMaxPostings) {
+						$where = 'tbl.minPostings <= \'' . DataUtil::formatForStore($numberPostings) . '\'';
+						$where .= ' AND ';
+						$where = 'tbl.maxPostings >= \'' . DataUtil::formatForStore($numberPostings) . '\'';
+
+						$rank = $rankrepository->selectWhere($where);
+						$newRank = $rankrepository->selectById($rank[0]['id']);
+						if (count($newRank == 1)) {
+							$user->setRank($newRank);
+							$entityManager->flush();
+						}
+					}
+				}
+			}
+			else {
+				$rankrepository = MUBoard_Util_Model::getRankRepository();
+				$where = 'tbl.minPostings = 0';
+				$rank = $rankrepository->selectWhere($where);
+				$firstRank = $rankrepository->selectById($rank[0]['id']);
+				if (isset($firstRank)) {
+					$user->setRank($firstRank);
+					$entityManager->flush();
+				}
+			}
 		}
 		else {
 			$serviceManager = ServiceUtil::getManager();
@@ -488,7 +577,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 			$user = new MUBoard_Entity_User();
 			$user->setLastVisit(DateUtil::getDatetime());
 			$user->setUserid($userid);
-
+			$user->setNumberPostings(0);
 			$entityManager->persist($user);
 			$entityManager->flush();
 
@@ -503,7 +592,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 
 		$dom = ZLanguage::getModuleDomain('MUBoard');
 
-		// we get a repository for ranks
+		// we get a repository for users
 		$userrepository = MUBoard_Util_Model::getUserRepository();
 		// get infos of the relevant user
 		$where = 'tbl.userid = \'' . DataUtil::formatForStore($id) . '\'';
@@ -531,6 +620,77 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 		}
 		$out .= "<br />";
 
+		return $out;
+	}
+
+	/**
+	 *
+	 */
+	public static function actualPostings($userid) {
+		if (UserUtil::isLoggedIn() == true) {
+			// we get a repository for users
+			$userrepository = MUBoard_Util_Model::getUserRepository();
+			$where = 'tbl.userid = \'' . DataUtil::formatForStore($userid) . '\'';
+			$user = $userrepository->selectWhere($where);
+			// we get the datetime of the last visit of muboard
+			$lastVisit = $user[0]['lastVisit'];
+			// we get the timestamp
+			$lastVisit = $lastVisit->getTimestamp();
+			// we format for
+			$lastVisit = date( 'Y-m-d H:i:s', $lastVisit);
+			LogUtil::registerStatus('Last Visit: ' . $lastVisit);
+			$date = DateUtil::getDatetime();
+			LogUtil::registerStatus('Date: ' . $date);
+
+			// we get a repository for postings
+			$postingrepository = MUBoard_Util_Model::getPostingRepository();
+			$where = 'tbl.createdDate > \'' . $lastVisit . '\'';
+			$postings = $postingrepository->selectWhere($where);
+			LogUtil::registerStatus(count($postings));
+			$forumids = array();
+			$postingids = array();
+
+			foreach ($postings as $posting) {
+				// get forum id
+				$forum = $posting->getForum();
+				$forumid = $forum->getId();
+				if (!in_array($forumid, $forumids)){
+					$forumids[] = $forumid;
+				}
+				// get posting id
+				$parent = $posting->getParent();
+				if (!is_null($parent)) {
+					$parentid = $parent->getId();
+					if ($parentid != NULL)
+					if (!in_array($parentid, $postingids)) {
+						$postingids[] = $parentid;
+					}
+				}
+				else {
+					$id = $posting->getId();
+					if (!in_array($id, $postingids)) {
+						$postingids[] = $id;
+					}
+
+				}
+			}
+				
+			SessionUtil::setVar('muboardforumids', $forumids);
+			SessionUtil::setVar('muboardpostingids', $postingids);
+		}
+	}
+	
+	/**
+	 * 
+	 */
+	protected static function getOut($kind = 1) {
+		
+		if ($kind == 1) {
+		$out = "<img src='/images/icons/small/folder_new.png' />";
+		}
+		else {
+			$out = "<img src='/images/icons/small/folder_blue.png' />";
+		}
 		return $out;
 	}
 }
