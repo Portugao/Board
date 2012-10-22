@@ -18,10 +18,10 @@
  *
  * @return out int
  */
-function smarty_modifier_muboardPostingsSinceLastLogin($forumid, $lastlogin)
+function smarty_modifier_muboardPostingsSinceLastLogin($itemid, $kind)
 {
 
-	$out = MUBoard_Util_View::PostingsSinceLastLogin($forumid, $lastlogin);
+	$out = MUBoard_Util_View::PostingsSinceLastLogin($itemid, $kind);
 
 	return $out;
 }

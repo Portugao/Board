@@ -280,6 +280,12 @@ border-bottom: 1px solid #ddd;
     border: 0 1%;
 }
 
+.muboard-user-forum-left-creater {
+    float: left;
+    width: 30%;
+    border: 0 1%;
+}
+
 .muboard-user-forum-left-right {
     float: left;
     width: 75%;
@@ -381,9 +387,17 @@ border-bottom: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
 }
 
+.muboard-user-posting-edit {
+    font-size: 0.9em;
+    float: right;
+
+}
+
 .muboard-user-posting-avatar img {
     border: 3px solid #fff;
     border-radius: 5px;
 }
+
+
 
 

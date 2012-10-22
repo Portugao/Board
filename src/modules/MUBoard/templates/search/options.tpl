@@ -1,4 +1,4 @@
 <div>
-<input type="checkbox" id="active_muboard" name="active[MUBoard]" value="1" {if $active}checked="checked"{/if} />
-<label for="active_muboard">{gt text='MUBoard' domain='module_muboard'}</label>
+<input type="checkbox" id="active_posting" name="active[posting]" value="1" {if $active}checked="checked"{/if} />
+<label for="active_posting">{gt text='Postings' domain='module_muboard'}</label>
 </div>
