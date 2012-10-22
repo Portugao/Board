@@ -16,6 +16,20 @@
  */
 class MUBoard_Controller_Admin extends MUBoard_Controller_Base_Admin
 {
+	
+    /**
+     * Post initialise.
+     *
+     * Run after construction.
+     *
+     * @return void
+     */
+    protected function postInitialize()
+    {
+        // Set caching to true by default.
+        $this->view->setCaching(Zikula_View::CACHE_DISABLED);
+    } 
+    
 	/**
 	 * Controller method to close a posting ( issue )
 	 */
