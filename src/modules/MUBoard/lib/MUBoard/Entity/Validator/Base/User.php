@@ -44,10 +44,10 @@ class MUBoard_Entity_Validator_Base_User extends MUBoard_Validator
             $errorInfo['message'] = __f('Error! Field value may only contain digits (%s).', array('numberPostings'), $dom);
             return $errorInfo;
         }
-        if (!$this->isNumberNotEmpty('numberPostings')) {
+       /* if (!$this->isNumberNotEmpty('numberPostings')) {
             $errorInfo['message'] = __f('Error! Field value must not be 0 (%s).', array('numberPostings'), $dom);
             return $errorInfo;
-        }
+        }*/
         if (!$this->isNumberNotLongerThan('numberPostings', 11)) {
             $errorInfo['message'] = __f('Error! Length of field value must not be higher than %2$s (%1$s).', array('numberPostings', 11), $dom);
             return $errorInfo;
