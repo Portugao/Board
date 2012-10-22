@@ -188,7 +188,8 @@ class MUBoard_Listener_UserLogin
 		$user = $event->getSubject();
 		$uid = $user['uid'];
 		 
-		MUBoard_Util_View::actualUser($uid);
+		MUBoard_Util_View::actualUser($uid, 3);
+		MUBoard_Util_View::actualPostings($uid);
 	}
 
 	/**
