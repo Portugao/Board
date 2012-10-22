@@ -16,28 +16,200 @@
  */
 class MUBoard_Api_Search extends MUBoard_Api_Base_Search
 {
-    /**
-* Search plugin info
-*/
-    public function info()
-    {
-        return array('title' => 'MUBoard',
+	/**
+	 * Search plugin info
+	 */
+	public function info()
+	{
+		return array('title' => 'MUBoard',
             'functions' => array('muboard' => 'search'));
-    }
-    
+	}
+
+	/**
+	 * Search form component
+	 */
+	/*public function options($args)
+	{
+		if (SecurityUtil::checkPermission('MUBoard::', '::', ACCESS_READ)) {
+			// Create output object - this object will store all of our output so that
+			// we can return it easily when required
+			$render = Zikula_View::getInstance('MUBoard');
+			$render->assign('active', !isset($args['active']) || isset($args['active']['MUBoard']));
+			return $render->fetch('search/options.tpl');
+		}
+
+		return '';
+	}*/
+	
     /**
-* Search form component
+* Display the search form.
+*
+* @param array $args List of arguments.
+*
+* @return string template output
 */
     public function options($args)
     {
-        if (SecurityUtil::checkPermission('MUBoard::', '::', ACCESS_READ)) {
-            // Create output object - this object will store all of our output so that
-            // we can return it easily when required
-            $render = Zikula_View::getInstance('MUBoard');
-            $render->assign('active', !isset($args['active']) || isset($args['active']['MUBoard']));
-            return $render->fetch('search/options.tpl');
+        if (!SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_READ)) {
+            return '';
         }
+    
+        $view = Zikula_View::getInstance($this->name);
+    
+        $view->assign('active_posting', (!isset($args['active_posting']) || isset($args['active']['active_posting'])));
+        /*$view->assign('active_mediaHandler', (!isset($args['active_mediaHandler']) || isset($args['active']['active_mediaHandler'])));
+        $view->assign('active_medium', (!isset($args['active_medium']) || isset($args['active']['active_medium'])));
+        $view->assign('active_thumbSize', (!isset($args['active_thumbSize']) || isset($args['active']['active_thumbSize'])));
+    */
+        return $view->fetch('search/options.tpl');
+    }
 
-        return '';
+   /**
+* Executes the actual search process.
+*
+* @param array $args List of arguments.
+*
+* @return boolean
+*/
+    public function search($args)
+    {
+        if (!SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_READ)) {
+            return '';
+        }
+    
+        // ensure that database information of Search module is loaded
+        ModUtil::dbInfoLoad('Search');
+    
+        // save session id as it is used when inserting search results below
+        $sessionId = session_id();
+    
+        // retrieve list of activated object types
+        //$searchTypes = isset($args['objectTypes']) ? (array)$args['objectTypes'] : (array)FormUtil::getPassedValue('search_mediarepository_types', array(), 'GETPOST');
+        $searchTypes[] = 'posting';
+        
+        $controllerHelper = new MUBoard_Util_Controller($this->serviceManager);
+        $utilArgs = array('api' => 'search', 'action' => 'search');
+        //$allowedTypes = $controllerHelper->getObjectTypes('api', $utilArgs);
+        $allowedTypes[] = 'posting';
+        $entityManager = ServiceUtil::getService('doctrine.entitymanager');
+        $currentPage = 1;
+        $resultsPerPage = 50;
+    
+      //  foreach ($searchTypes as $objectType) {
+           /* if (!in_array($objectType, $allowedTypes)) {
+                continue;
+            }*/
+    
+            $whereArray = array();
+            $languageField = null;
+            
+            $whereArray[] = 'title';
+            $whereArray[] = 'text';
+            
+            /*switch ($objectType) {
+                case 'repository':
+                    $whereArray[] = 'name';
+                    $whereArray[] = 'workDirectory';
+                    $whereArray[] = 'storageDirectory';
+                    $whereArray[] = 'cacheDirectory';
+                    $whereArray[] = 'uploadNamingPrefix';
+                    $whereArray[] = 'mailRecipient';
+                    break;
+                case 'mediaHandler':
+                    $whereArray[] = 'mimeType';
+                    $whereArray[] = 'fileType';
+                    $whereArray[] = 'foundMimeType';
+                    $whereArray[] = 'foundFileType';
+                    $whereArray[] = 'handlerName';
+                    $whereArray[] = 'title';
+                    $whereArray[] = 'image';
+                    break;
+                case 'medium':
+                    $whereArray[] = 'title';
+                    $whereArray[] = 'keywords';
+                    $whereArray[] = 'description';
+                    $whereArray[] = 'description2';
+                    $whereArray[] = 'dateTaken';
+                    $whereArray[] = 'placeTaken';
+                    $whereArray[] = 'notes';
+                    $whereArray[] = 'license';
+                    $whereArray[] = 'areamap';
+                    $whereArray[] = 'url';
+                    $whereArray[] = 'mediaHandler';
+                    $whereArray[] = 'fileUpload';
+                    break;
+                case 'thumbSize':
+                    $whereArray[] = 'name';
+                    break;
+            }*/
+            $where = Search_Api_User::construct_where($args, $whereArray, $languageField);
+    
+            $repository = $entityManager->getRepository($this->name . '_Entity_' . ucfirst($objectType));
+            $repository = MUBoard_Util_Model::getPostingRepository();
+            // get objects from database
+            list($entities, $objectCount) = $repository->selectWherePaginated($where, '', $currentPage, $resultsPerPage, false);
+    
+            if ($objectCount == 0) {
+                continue;
+            }
+    
+            $idFields = ModUtil::apiFunc($this->name, 'selection', 'getIdFields', array('ot' => $objectType));
+            $titleField = $repository->getTitleFieldName();
+            $descriptionField = $repository->getDescriptionFieldName();
+            foreach ($entities as $entity) {
+                $urlArgs = array('ot' => $objectType);
+                // create identifier for permission check
+                $instanceId = '';
+                foreach ($idFields as $idField) {
+                    $urlArgs[$idField] = $entity[$idField];
+                    if (!empty($instanceId)) {
+                        $instanceId .= '_';
+                    }
+                    $instanceId .= $entity[$idField];
+                }
+                $urlArgs['id'] = $instanceId;
+                if (isset($entity['slug'])) {
+                    $urlArgs['slug'] = $entity['slug'];
+                }
+    
+                if (!SecurityUtil::checkPermission($this->name . ':' . ucfirst($objectType) . ':', $instanceId . '::', ACCESS_OVERVIEW)) {
+                    continue;
+                }
+    
+                $title = ($titleField != '') ? $entity[$titleField] : $this->__('Item');
+                $description = ($descriptionField != '') ? $entity[$descriptionField] : '';
+                $created = (isset($entity['createdDate'])) ? $entity['createdDate'] : '';
+    
+                $searchItem = array(
+                    'title' => $title,
+                    'text' => $description,
+                    'extra' => serialize($urlArgs),
+                    'created' => $created,
+                    'module' => $this->name,
+                    'session' => $sessionId
+                );
+    
+                if (!DBUtil::insertObject($searchItem, 'search_result')) {
+                    return LogUtil::registerError($this->__('Error! Could not save the search results.'));
+                }
+            }
+      //  }
+    
+        return true;
+    }
+
+    /**
+* Assign URL to items.
+*
+* @param array $args List of arguments.
+*
+* @return boolean
+*/
+    public function search_check($args)
+    {
+        $datarow = &$args['datarow'];
+        $urlArgs = unserialize($datarow['extra']);
+        $datarow['url'] = ModUtil::url($this->name, 'user', 'display', $urlArgs);
+        return true;
     }
 }
