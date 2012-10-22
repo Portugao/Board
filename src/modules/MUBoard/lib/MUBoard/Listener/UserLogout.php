@@ -26,10 +26,10 @@ class MUBoard_Listener_UserLogout
      */
     public static function succeeded(Zikula_Event $event)
     {
-		$user = $event->getSubject();
+		/*$user = $event->getSubject();
 		$uid = $user['uid'];
 		 
-		MUBoard_Util_View::actualUser($uid);
+		MUBoard_Util_View::actualUser($uid);*/
     	
     }
 }
