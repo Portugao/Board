@@ -40,14 +40,14 @@ class MUBoard_Util_Base_Abonnements extends Zikula_AbstractBase
 		$repository3 = MUBoard_Util_Model::getPostingRepository();
 		// we get the just saved posting
 		$savedPosting = $repository3->selectById($id);
-		$parentPosting = $savedPosting->getParent();
-		if ($parentPosting) {
+		/*$parentPosting = $savedPosting->getParent();
+		if (!is_null($parentPosting)) {
 		$parent = $parentPosting->getId();
 		}
 		else {
 			$parent = 0;
 		}
-		$createdUserId = $savedPosting->getCreatedUserId();
+		
 		// we check if new issue or answer
 		if ($parent == 0) {
 			// no check for posting abo
@@ -59,13 +59,13 @@ class MUBoard_Util_Base_Abonnements extends Zikula_AbstractBase
 			$forumid = $forum->getId();
 
 		}
-		else {
-			
+		else { */
+		$createdUserId = $savedPosting->getCreatedUserId();	
 			
 			$forum = $savedPosting->getForum();
 			$forumid = $forum->getId();
 				
-		}
+		//}
 
 		// we get serviceManager and handler
 		$serviceManager = ServiceUtil::getManager();
