@@ -23,6 +23,10 @@ class MUBoard_Api_User extends MUBoard_Api_Base_User
      */
     public function getlinks()
     {
+    	$func = $this->request->query->filter('func', 'main', FILTER_SANITIZE_STRING);
+    	$ot = $this->request->query->filter('ot', 'category', FILTER_SANITIZE_STRING);
+    	$forum = $this->request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);   
+    	  	
         $links = array();
 
         if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
@@ -35,6 +39,11 @@ class MUBoard_Api_User extends MUBoard_Api_Base_User
             $links[] = array('url' => ModUtil::url($this->name, 'user', 'view', array('ot' => 'category')),
                              'text' => $this->__('Categories'),
                              'title' => $this->__('Category list'));
+        }
+        if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADD) && $func == 'display' && $ot == 'forum') {
+            $links[] = array('url' => ModUtil::url($this->name, 'user', 'edit', array('ot' => 'posting', 'forum' => $forum)),
+                             'text' => $this->__('New issue'),
+                             'title' => $this->__('Create a new issue'));
         }
         /*if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_READ)) {
             $links[] = array('url' => ModUtil::url($this->name, 'user', 'view', array('ot' => 'forum')),
