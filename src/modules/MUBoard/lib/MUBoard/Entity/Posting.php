@@ -149,6 +149,8 @@ class MUBoard_Entity_Posting extends MUBoard_Entity_Base_Posting
 	 */
 	public function postLoadCallback()
 	{
+		$uid = UserUtil::getVar('uid');
+		MUBoard_Util_View::modifyPostings($uid);
 		$this->performPostLoadCallback();
 	}
 
@@ -180,7 +182,11 @@ class MUBoard_Entity_Posting extends MUBoard_Entity_Base_Posting
 		MUBoard_Util_View::actualUser($createdUserId, 2);
 		 
 		$args['id'] = $this->getId();
-		//$args['parent'] = $this->getParent_id(); does not work bug in MOST TODO
+		$parent = $this->getParent(); // does not work bug in MOST TODO
+		if ($parent != NULL) {
+		$args['parent'] = $parent->getId();
+		}
+
 		$args['title'] = $this->getTitle();
 		$args['text'] = $this->getText();
 
