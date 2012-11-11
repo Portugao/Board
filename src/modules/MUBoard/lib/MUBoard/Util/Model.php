@@ -102,7 +102,7 @@ class MUBoard_Util_Model extends MUBoard_Util_Base_Model
 	public static function takeAbo($posting = 0, $forum = 0, $category = 0) {
 
 		// Security ckeck
-		if (SecurityUtil::checkPermission('MUBoard::', '::', ACCESS_COMMENT)) {
+		if (SecurityUtil::checkPermission('MUBoard::', '::', ACCESS_COMMENT) && UserUtil::isLoggedIn() == true) {
 
 			// get actual user id
 			$userid = UserUtil::getVar('uid');
@@ -148,7 +148,7 @@ class MUBoard_Util_Model extends MUBoard_Util_Base_Model
 	public static function quitAbo($posting = 0, $forum = 0, $category = 0) {
 
 		// Security ckeck
-		if (SecurityUtil::checkPermission('MUBoard::', '::', ACCESS_COMMENT)) {
+		if (SecurityUtil::checkPermission('MUBoard::', '::', ACCESS_COMMENT) && UserUtil::isLoggedIn() == true) {
 
 			// build posting repository
 			$repository = MUBoard_Util_Model::getAboRepository();
