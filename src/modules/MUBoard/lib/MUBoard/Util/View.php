@@ -367,6 +367,8 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 
 		// get repositoy for Categories
 		$repository = MUBoard_Util_Model::getAboRepository();
+		if (UserUtil::isLoggedIn() == true) {
+
 		// get actual userid
 		$userid = UserUtil::getVar('uid');
 		// look for abo
@@ -388,6 +390,10 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
             <img src='/images/icons/extrasmall/mail_get.png' />
             </a>";
 		}
+		}
+		else {
+			$out = '';
+		}
 			
 		return $out;
 	}
@@ -404,6 +410,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 		$forumid = $request->getGet()->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
 		// get repositoy for Categories
 		$repository = MUBoard_Util_Model::getAboRepository();
+		if (UserUtil::isLoggedIn() == true) {
 		// get actual userid
 		$userid = UserUtil::getVar('uid');
 		// look for abo
@@ -442,6 +449,10 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
             </a>";
 			}
 		}
+		}
+		else {
+			$out = '';
+		}
 
 		return $out;
 	}
@@ -463,11 +474,21 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 			$forum = $repository->selectById($itemid);
 			$forumid = $forum->getId();
 
-			$forumids = SessionUtil::getVar('muboardforumids');
+			// we get the saved postingids
+			$postingids = SessionUtil::getVar('muboardpostingids');
 
-			if ($forumids) {
+			if (count($postingids) > 0 && is_array($postingids)) {
+				$postingids = implode(",", $postingids);
 
-				if (in_array($forumid, $forumids)) {
+				// get repository for Posting
+				$repository2 = MUBoard_Util_Model::getPostingRepository();
+				$where = 'tbl.forum = \'' . DataUtil::formatForStore($itemid) . '\'';
+				$where .= ' AND ';
+				$where .= 'tbl.id IN (' . $postingids . ')';
+				$countpostings = $repository2->selectCount($where);
+				
+				if ($countpostings > 0) {
+
 					$out = self::getOut();
 				}
 				else {
@@ -479,29 +500,29 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 			}
 
 		}
-		
+
 		if ($kind == 2) {
 			// get repository for Posting
 			$repository = MUBoard_Util_Model::getPostingRepository();
 			// get postingid
 			$posting = $repository->selectById($itemid);
 			$postingid = $posting->getId();
-			
+
 			$postingids = SessionUtil::getVar('muboardpostingids');
 
 			if ($postingids) {
 				if (in_array($postingid, $postingids)) {
-					$out = __('Yes', $dom);
+					$out = self::getOut();
 				}
 				else {
-					$out = __('No', $dom);
+					$out = self::getOut(2);
 				}
 			}
 			else {
-				$out = __('No', $dom);
-			}		
+				$out = self::getOut(2);
+			}
 		}
-		
+
 		return $out;
 			
 
@@ -638,15 +659,14 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 			$lastVisit = $lastVisit->getTimestamp();
 			// we format for
 			$lastVisit = date( 'Y-m-d H:i:s', $lastVisit);
-			LogUtil::registerStatus('Last Visit: ' . $lastVisit);
+
 			$date = DateUtil::getDatetime();
-			LogUtil::registerStatus('Date: ' . $date);
 
 			// we get a repository for postings
 			$postingrepository = MUBoard_Util_Model::getPostingRepository();
 			$where = 'tbl.createdDate > \'' . $lastVisit . '\'';
 			$postings = $postingrepository->selectWhere($where);
-			LogUtil::registerStatus(count($postings));
+
 			$forumids = array();
 			$postingids = array();
 
@@ -674,19 +694,40 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 
 				}
 			}
-				
-			SessionUtil::setVar('muboardforumids', $forumids);
+
+			//SessionUtil::setVar('muboardforumids', $forumids);
 			SessionUtil::setVar('muboardpostingids', $postingids);
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
+	 */
+	public static function modifyPostings($userid) {
+		$view = new Zikula_Request_Http();
+		$postingid = $view->getGet()->filter('id', 0, FILTER_SANITIZE_STRING);
+		$postingids = SessionUtil::getVar('muboardpostingids');
+		if (count($postingids) > 0 && is_array($postingids)) {
+			if(in_array($postingid,$postingids)){
+				$pos=array_search($postingid,$postingids);
+				unset($postingids[$pos]);
+			}
+		}
+		if (count($postingids) > 0) {
+			SessionUtil::setVar('muboardpostingids', $postingids);
+		}
+		else {
+			SessionUtil::delVar('muboardpostingids');
+		}
+	}
+
+	/**
+	 * output for the method actualPostings
 	 */
 	protected static function getOut($kind = 1) {
-		
+
 		if ($kind == 1) {
-		$out = "<img src='/images/icons/small/folder_new.png' />";
+			$out = "<img src='/images/icons/small/folder_new.png' />";
 		}
 		else {
 			$out = "<img src='/images/icons/small/folder_blue.png' />";
