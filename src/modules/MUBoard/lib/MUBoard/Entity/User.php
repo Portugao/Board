@@ -36,7 +36,7 @@ class MUBoard_Entity_User extends MUBoard_Entity_Base_User
      * @return void.
      */
     public function postLoadCallback()
-    {
+    {    	
         $this->performPostLoadCallback();
     }
 
