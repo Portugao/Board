@@ -18,19 +18,19 @@
 use Doctrine\DBAL\Types\StringType;
 class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 {
-	
-    /**
-     * Post initialise.
-     *
-     * Run after construction.
-     *
-     * @return void
-     */
-    protected function postInitialize()
-    {
-        // Set caching to true by default.
-        $this->view->setCaching(Zikula_View::CACHE_DISABLED);
-    }
+
+	/**
+	 * Post initialise.
+	 *
+	 * Run after construction.
+	 *
+	 * @return void
+	 */
+	protected function postInitialize()
+	{
+		// Set caching to true by default.
+		$this->view->setCaching(Zikula_View::CACHE_DISABLED);
+	}
 
 	/**
 	 * This method is the default function, and is called whenever the application's
@@ -93,6 +93,12 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 
 		$this->view->assign('func', $func)
 		->assign('lastlogin', $lastlogin);
+
+		$dom = ZLanguage::getModuleDomain($this->name);
+
+		$sitename = ModUtil::getVar('ZConfig', 'sitename');
+
+		PageUtil::setVar('title', $sitename . ' - ' . __('Forum - Category Overview', $dom));
 			
 		return parent::view($args);
 	}
@@ -212,6 +218,22 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 		$this->view->assign('currentPage', $currentPage)
 		->assign('pager', array('numitems'     => $objectCount,
                     'itemsperpage' => $resultsPerPage));
+
+		$dom = ZLanguage::getModuleDomain($this->name);
+
+		// we set Pagetitle
+		$sitename = ModUtil::getVar('ZConfig' , 'sitename');
+		
+		if ($objectType == 'category') {
+			$titletobject = __('Forum - Category' , $dom);
+		}
+		if ($objectType == 'forum') {
+			$titletobject = __('Forum' , $dom);
+		}
+		if ($objectType == 'posting') {
+			$titletobject = 'Forum' . ' ' . $entity['forum']['title'] . ' - ' . __('Isssue' , $dom);
+		}
+		PageUtil::setVar('title', $sitename . ' - ' . $titletobject . ' ' . $entity['title']);
 
 		// fetch and return the appropriate template
 		return MUBoard_Util_View::processTemplate($this->view, 'user', $objectType, 'display', $args);
