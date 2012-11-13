@@ -7,7 +7,7 @@
 <div class="muboard-user-forum">
 <div class="muboard-user-forum-left">
 <div class="muboard-user-forum-left-icon">
-{$item.id|muboardPostingsSinceLastLogin:$coredata.lastlogin}
+{$item.id|muboardPostingsSinceLastLogin:1}
 </div>
 <div class="muboard-user-forum-left-right">
     {gt text='Forum:'}
