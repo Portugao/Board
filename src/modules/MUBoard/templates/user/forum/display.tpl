@@ -3,7 +3,7 @@
 <div class="muboard-forum muboard-display">
 {gt text='Forum' assign='templateTitle'}
 {assign var='templateTitle' value=$forum.title|default:$templateTitle}
-{pagesetvar name='title' value=$templateTitle|@html_entity_decode}
+{* {pagesetvar name='title' value=$templateTitle|@html_entity_decode} *}
 <div class="z-frontendcontainer">
    {* <h2>{$templateTitle|notifyfilters:'muboard.filter_hooks.forums.filter'}</h2> *}
 
@@ -19,7 +19,7 @@
             </h2>
         </div>
         <div class="muboard-user-category-header-statistic postings">{$forum.id|muboardGetNumberOfPostingsOfForum:$forum.id}</div>
-        <div class="muboard-user-forum-header-action">
+        {* <div class="muboard-user-forum-header-action">
         {if count($forum._actions) gt 0}
         <p>{strip}
         {foreach item='option' from=$forum._actions}
@@ -29,7 +29,7 @@
         {/foreach}
         {/strip}</p>
         {/if}
-        </div>        
+        </div>  *}      
         </div>
         <div class=muboard-user-forum-content>
         {if isset($forum.posting) && $forum.posting ne null}

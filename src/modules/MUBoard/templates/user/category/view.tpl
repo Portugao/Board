@@ -2,7 +2,7 @@
 <div class="muboard-category muboard-view">
 {include file='user/header.tpl'}
 {gt text='Forum - Category Overview' assign='templateTitle'}
-{pagesetvar name='title' value=$templateTitle}
+{* {pagesetvar name='title' value=$templateTitle} *}
 <div class="z-frontendcontainer">
     <h2>{$templateTitle}</h2>
 
