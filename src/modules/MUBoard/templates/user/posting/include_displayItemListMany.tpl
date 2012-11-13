@@ -6,10 +6,15 @@
 {if $item.parent_id eq NULL}
 <div class="muboard-user-forum">
 <div class="muboard-user-forum-left">
+<div class="muboard-user-forum-left-icon">
+{$item.id|muboardPostingsSinceLastLogin:2}
+</div>
+<div class="muboard-user-forum-left-creater">
     <a href="{modurl modname='MUBoard' type='user' func='display' ot='posting' id=$item.id}">
         {$item.title}
     </a><br />
     {gt text='Writer:'} {usergetvar name=uname uid=$item.createdUserId}
+</div>
 </div>
 <div class="muboard-user-forum-right">
 <div class="muboard-user-category-header-statistic children">{$item.id|muboardGetNumberOfAnswersOfPosting:$item.id}</div>

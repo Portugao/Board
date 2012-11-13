@@ -7,7 +7,7 @@
     <h2>{$templateTitle}</h2>
 
 
-    {checkpermissionblock component='MUBoard::' instance='.*' level="ACCESS_ADD"}
+  {*  {checkpermissionblock component='MUBoard::' instance='.*' level="ACCESS_ADD"}
         {gt text='Create posting' assign='createTitle'}
         <a href="{modurl modname='MUBoard' type='user' func='edit' ot='posting'}" title="{$createTitle}" class="z-icon-es-add">
             {$createTitle}
@@ -26,13 +26,13 @@
         <a href="{modurl modname='MUBoard' type='user' func='view' ot='posting' all=1}" title="{$linkTitle}" class="z-icon-es-view">
             {$linkTitle}
         </a>
-    {/if}
+    {/if} *}
 
 <table class="z-datatable">
     <colgroup>
-        <col id="cparent_id" />
-        <col id="ctitle" />
-        <col id="ctext" />
+       {* <col id="cparent_id" /> *}
+        <col id="cissue" />
+       {* <col id="ctext" />
         <col id="cinvocations" />
         <col id="cfirstimage" />
         <col id="csecondimage" />
@@ -40,19 +40,20 @@
         <col id="cfirstfile" />
         <col id="csecondfile" />
         <col id="cthirdfile" />
-        <col id="cparent" />
+        <col id="cparent" /> *}
+        
         <col id="cforum" />
         <col id="citemactions" />
     </colgroup>
     <thead>
     <tr>
-        <th id="hparent_id" scope="col" class="z-right">
+       {* <th id="hparent_id" scope="col" class="z-right">
             {sortlink __linktext='Parent_id' sort='parent_id' currentsort=$sort sortdir=$sdir all=$all modname='MUBoard' type='user' func='view' ot='posting'}
-        </th>
+        </th> *}
         <th id="htitle" scope="col" class="z-left">
-            {sortlink __linktext='Title' sort='title' currentsort=$sort sortdir=$sdir all=$all modname='MUBoard' type='user' func='view' ot='posting'}
+            {sortlink __linktext='Issue' sort='title' currentsort=$sort sortdir=$sdir all=$all modname='MUBoard' type='user' func='view' ot='posting'}
         </th>
-        <th id="htext" scope="col" class="z-left">
+       {* <th id="htext" scope="col" class="z-left">
             {sortlink __linktext='Text' sort='text' currentsort=$sort sortdir=$sdir all=$all modname='MUBoard' type='user' func='view' ot='posting'}
         </th>
         <th id="hinvocations" scope="col" class="z-right">
@@ -78,7 +79,7 @@
         </th>
         <th id="hparent" scope="col" class="z-left">
             {sortlink __linktext='Parent' sort='parent' currentsort=$sort sortdir=$sdir all=$all modname='MUBoard' type='user' func='view' ot='posting'}
-        </th>
+        </th> *}
         <th id="hforum" scope="col" class="z-left">
             {sortlink __linktext='Forum' sort='forum' currentsort=$sort sortdir=$sdir all=$all modname='MUBoard' type='user' func='view' ot='posting'}
         </th>
@@ -89,13 +90,13 @@
 
     {foreach item='posting' from=$items}
     <tr class="{cycle values='z-odd, z-even'}">
-        <td headers="hparent_id" class="z-right">
+       {* <td headers="hparent_id" class="z-right">
             {$posting.parent_id}
-        </td>
+        </td> *}
         <td headers="htitle" class="z-left">
             {$posting.title|notifyfilters:'muboard.filterhook.postings'}
         </td>
-        <td headers="htext" class="z-left">
+       {* <td headers="htext" class="z-left">
             {$posting.text}
         </td>
         <td headers="hinvocations" class="z-right">
@@ -191,13 +192,13 @@
             {else}
                 {gt text='Not set.'}
             {/if}
-        </td>
+        </td> *}
         <td headers="hforum" class="z-left">
             {if isset($posting.Forum) && $posting.Forum ne null}
                 <a href="{modurl modname='MUBoard' type='user' func='display' ot='forum' id=$posting.Forum.id}">
                     {$posting.Forum.title|default:""}
                 </a>
-                <a id="forumItem{$posting.id}_rel_{$posting.Forum.id}Display" href="{modurl modname='MUBoard' type='user' func='display' ot='forum' id=$posting.Forum.id theme='Printer' forcelongurl=true}" title="{gt text='Open quick view window'}" style="display: none">
+              {*  <a id="forumItem{$posting.id}_rel_{$posting.Forum.id}Display" href="{modurl modname='MUBoard' type='user' func='display' ot='forum' id=$posting.Forum.id theme='Printer' forcelongurl=true}" title="{gt text='Open quick view window'}" style="display: none">
                     {icon type='view' size='extrasmall' __alt='Quick view'}
                 </a>
                 <script type="text/javascript" charset="utf-8">
@@ -206,7 +207,7 @@
                         muboardInitInlineWindow($('forumItem{{$posting.id}}_rel_{{$posting.Forum.id}}Display'), '{{$posting.Forum.title|replace:"'":""}}');
                     });
                 /* ]]> */
-                </script>
+                </script> *}
             {else}
                 {gt text='Not set.'}
             {/if}
