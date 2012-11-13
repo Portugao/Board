@@ -115,7 +115,7 @@ abstract class MUBoard_Entity_Base_Forum extends Zikula_EntityAccess
     /**
      * Bidirectional - Many forum [forums] are linked by one category [category] (OWNING SIDE).
      *
-     * @ORM\ManyToOne(targetEntity="MUBoard_Entity_Category", inversedBy="forum", cascade={"all"})
+     * @ORM\ManyToOne(targetEntity="MUBoard_Entity_Category", inversedBy="forum")
      * @ORM\JoinTable(name="muboard_category")
      * @var MUBoard_Entity_Category $category.
      */
@@ -126,8 +126,9 @@ abstract class MUBoard_Entity_Base_Forum extends Zikula_EntityAccess
     /**
      * Bidirectional - One forum [forum] has many posting [postings] (INVERSE SIDE).
      *
-     * @ORM\OneToMany(targetEntity="MUBoard_Entity_Posting", mappedBy="forum", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="MUBoard_Entity_Posting", mappedBy="forum")
      * @ORM\JoinTable(name="muboard_forumposting")
+     * @ORM\OrderBy({"createdDate" = "DESC"})
      * @var MUBoard_Entity_Posting[] $posting.
      */
     protected $posting = null;
