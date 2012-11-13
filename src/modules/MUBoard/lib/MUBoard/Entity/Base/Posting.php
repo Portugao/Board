@@ -326,7 +326,7 @@ abstract class MUBoard_Entity_Base_Posting extends Zikula_EntityAccess
     /**
      * Bidirectional - Many posting [postings] are linked by one forum [forum] (OWNING SIDE).
      *
-     * @ORM\ManyToOne(targetEntity="MUBoard_Entity_Forum", inversedBy="posting", cascade={"all"})
+     * @ORM\ManyToOne(targetEntity="MUBoard_Entity_Forum", inversedBy="posting")
      * @ORM\JoinTable(name="muboard_forum")
      * @var MUBoard_Entity_Forum $forum.
      */

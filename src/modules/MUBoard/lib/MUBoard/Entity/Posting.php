@@ -101,13 +101,13 @@ class MUBoard_Entity_Posting extends MUBoard_Entity_Base_Posting
 			if (in_array($currentFunc, array('main', 'view', 'display'))) {
 				if (SecurityUtil::checkPermission('MUBoard::', '.*', ACCESS_EDIT)) {
 
-					$this->_actions[] = array(
-                        'url' => array('type' => 'user', 'func' => 'edit', 'arguments' => array('ot' => 'posting')),
-                        'icon' => 'save',
-                        'linkTitle' => __('Create new issue', $dom),
-                        'linkText' => __('', $dom)
-					);
 					/*$this->_actions[] = array(
+					 'url' => array('type' => 'user', 'func' => 'edit', 'arguments' => array('ot' => 'posting')),
+					 'icon' => 'save',
+					 'linkTitle' => __('Create new issue', $dom),
+					 'linkText' => __('', $dom)
+					 );
+					 $this->_actions[] = array(
 					 'url' => array('type' => 'user', 'func' => 'edit', 'arguments' => array('ot' => 'posting', 'id' => $this['id'])),
 					 'icon' => 'edit',
 					 'linkTitle' => __('Edit', $dom),
@@ -163,7 +163,7 @@ class MUBoard_Entity_Posting extends MUBoard_Entity_Base_Posting
 	 */
 	public function prePersistCallback()
 	{
-		$text = $this->getText();		
+		$text = $this->getText();
 		$text = str_replace('\n', '<br />', $text);
 		$this->setText($text);
 		$this->performPrePersistCallback();
@@ -180,19 +180,22 @@ class MUBoard_Entity_Posting extends MUBoard_Entity_Base_Posting
 	{
 		$createdUserId = $this->getCreatedUserId();
 		MUBoard_Util_View::actualUser($createdUserId, 2);
-		 
+			
 		$args['id'] = $this->getId();
 		$parent = $this->getParent(); // does not work bug in MOST TODO
 		if ($parent != NULL) {
-		$args['parent'] = $parent->getId();
+			$args['parent'] = $parent->getId();
+			$args['title'] = $parent->getTitle();
 		}
+		else {
 
-		$args['title'] = $this->getTitle();
+			$args['title'] = $this->getTitle();
+		}
 		$args['text'] = $this->getText();
 
 		MUBoard_Util_Base_Abonnements::aboMailing($args);
-		//$args['text'] = str_replace('\n', '<br />', $args['text']);
-		//$this->setText($args['text']);
+		$args['text'] = str_replace('\n', '<br />', $args['text']);
+		$this->setText($args['text']);
 		$this->performPostPersistCallback();
 	}
 
