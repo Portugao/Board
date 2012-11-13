@@ -24,10 +24,6 @@ class MUBoard_Listener_ModuleDispatch
 	 */
 	public static function postLoadGeneric(Zikula_Event $event)
 	{
-		if (UserUtil::isLoggedIn() == true) {
-			$uid = UserUtil::getVar('uid');
-			MUBoard_Util_View::actualUser($uid);// TODO workaround because of problems with logout listener
-		}
 	}
 
 	/**
