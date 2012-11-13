@@ -3,7 +3,7 @@
 <div class="muboard-posting muboard-display">
 {gt text='Posting' assign='templateTitle'}
 {assign var='templateTitle' value=$posting.title|default:$templateTitle}
-{pagesetvar name='title' value=$templateTitle|@html_entity_decode}
+{* {pagesetvar name='title' value=$templateTitle|@html_entity_decode} *}
 <div class="z-frontendcontainer">
    {* <h2>{$templateTitle|notifyfilters:'muboard.filter_hooks.postings.filter'}</h2> *}
 
@@ -36,7 +36,8 @@
             <img src="/images/icons/extrasmall/mail_get.png" />
             </a> *}
             {$posting.id|muboardGetStateOfPostingAbo:$posting.id}
-            {$posting.id|muboardGetStateOfPosting}    
+            {$posting.id|muboardGetStateOfPosting} 
+            {$posting.id|muboardGetStateOfEditOfIssue}    
             </div>
 
         </div>
@@ -86,7 +87,7 @@
         </div>
         <div class="muboard-user-posting-content">
         <div class="muboard-user-posting-created">
-        {$childPosting.createdDate|dateformat:datetimelong}
+        {$childPosting.createdDate|dateformat:datetimelong} {if $editPostings eq 1}<div class="muboard-user-posting-edit">{$childPosting.id|muboardGetStateOfEditOfIssue}</div>{/if}
         </div>
         <div class="muboard-user-posting-content-text">
         {$childPosting.text|notifyfilters:'muboard.filter_hooks.postings'}
@@ -162,7 +163,7 @@
 
     {/foreach}
     {pager rowcount=$pager.numitems limit=$pager.itemsperpage display='page'}
-    {checkpermissionblock component='MUBoard::' instance=".*" level="ACCESS_EDIT"}
+    {checkpermissionblock component='MUBoard::' instance=".*" level="ACCESS_ADD"}
     {if $posting.state eq 1}
     {modfunc modname='MUBoard' type='user' func='edit' ot='posting'}
     {/if}   

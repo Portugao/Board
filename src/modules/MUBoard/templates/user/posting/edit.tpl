@@ -15,7 +15,7 @@
     {gt text='Edit posting' assign='templateTitle'}
 {/if}
 <div class="muboard-posting muboard-edit">
-{pagesetvar name='title' value=$templateTitle}
+{* {pagesetvar name='title' value=$templateTitle} *}
 <div class="z-frontendcontainer">
     <h2>{$templateTitle}</h2>
 {muboardform enctype='multipart/form-data' cssClass='z-form'}
@@ -230,8 +230,13 @@
     <input id="muboardForum_ForumMode" type="hidden" value="0" name="muboardForum_ForumMode">
     {/if}    
     {if $func eq 'edit'}
-    	<input type="hidden" id="muboardPosting_ParentItemList" name="muboardPosting_ParentItemList" value="0">
+    {if isset($parentid)}
+    	<input type="hidden" id="muboardPosting_ParentItemList" name="muboardPosting_ParentItemList" value={$parentid}>
     	<input type="hidden" id="muboardPosting_ParentMode" name="muboardPosting_ParentMode" value="0">    
+    {else}
+    	<input type="hidden" id="muboardPosting_ParentItemList" name="muboardPosting_ParentItemList" value="0">
+    	<input type="hidden" id="muboardPosting_ParentMode" name="muboardPosting_ParentMode" value="0">            
+    {/if}  
     {/if}
     {if $func eq 'display'}
     	<input type="hidden" id="muboardPosting_ParentItemList" name="muboardPosting_ParentItemList" value="{$posting.id}">
