@@ -3,7 +3,7 @@
 <div class="muboard-category muboard-display">
 {gt text='Category' assign='templateTitle'}
 {assign var='templateTitle' value=$category.title|default:$templateTitle}
-{pagesetvar name='title' value=$templateTitle|@html_entity_decode}
+{* {pagesetvar name='title' value=$templateTitle|@html_entity_decode} *}
 <div class="z-frontendcontainer">
    {* <h2>{$templateTitle|notifyfilters:'muboard.filter_hooks.categories.filter'}</h2> *}
 
