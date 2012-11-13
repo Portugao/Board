@@ -242,6 +242,9 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 		$posting = $repository->selectById($postingid);
 		// check if issue or anser
 		$parent = $posting->getParent();
+		// get forum of posting
+		$forum = $posting->getForum();
+		$forumid = $forum->getId();
 		// get userid of user created this posting
 		$createdUserId = $posting->getCreatedUserId();
 		// get created Date
@@ -256,13 +259,18 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 		$diffTime = DateUtil::getDatetimeDiff($createdDate, $actualTime);
 		$diffTimeHours = $diffTime['d'] * 24 + $diffTime['h'];
 
+		if (UserUtil::isLoggedIn()== true) {
 		$userid = UserUtil::getVar('uid');
+		}
+		else {
+			$out = '';
+		}
 
 		if ($createdUserId == $userid && ($diffTimeHours < $editTime || $parent == NULL) ) {
 			$serviceManager = ServiceUtil::getManager();
 			// generate an auth key to use in urls
 			$csrftoken = SecurityUtil::generateCsrfToken($serviceManager, true);
-			$url = ModUtil::url('MUBoard', 'user', 'edit', array('ot' => 'posting', 'id' => $postingid, 'token' => $csrftoken));
+			$url = ModUtil::url('MUBoard', 'user', 'edit', array('ot' => 'posting', 'id' => $postingid, 'forum' => $forumid, 'token' => $csrftoken));
 			$title = __('You have permissions to edit this issue!');
 			$out = "<a title='{$title}' id='muboard-user-posting-header-infos-edit-creater' href='{$url}'>
             <img src='/images/icons/extrasmall/xedit.png' />
