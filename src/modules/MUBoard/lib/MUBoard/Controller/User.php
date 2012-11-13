@@ -94,6 +94,11 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 		$this->view->assign('func', $func)
 		->assign('lastlogin', $lastlogin);
 
+		if (UserUtil::isLoggedIn() == true && $type == 'user') {
+			$uid = UserUtil::getVar('uid');
+			MUBoard_Util_View::actualUser($uid);// TODO workaround because of problems with logout listener
+		}
+
 		$dom = ZLanguage::getModuleDomain($this->name);
 
 		$sitename = ModUtil::getVar('ZConfig', 'sitename');
@@ -204,6 +209,7 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 
 		$currentUrlObject = new Zikula_ModUrl($this->name, 'user', 'display', ZLanguage::getLanguageCode(), $currentUrlArgs);
 
+		$type = $this->request->getGet()->filter('type', 'admin', FILTER_SANITIZE_STRING);
 		$func = $this->request->getGet()->filter('func', 'view', FILTER_SANITIZE_STRING);
 		$editPostings = ModUtil::getVar($this->name, 'editPostings');
 
@@ -219,11 +225,16 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 		->assign('pager', array('numitems'     => $objectCount,
                     'itemsperpage' => $resultsPerPage));
 
+		if (UserUtil::isLoggedIn() == true && $type == 'user') {
+			$uid = UserUtil::getVar('uid');
+			MUBoard_Util_View::actualUser($uid);// TODO workaround because of problems with logout listener
+		}
+
 		$dom = ZLanguage::getModuleDomain($this->name);
 
 		// we set Pagetitle
 		$sitename = ModUtil::getVar('ZConfig' , 'sitename');
-		
+
 		if ($objectType == 'category') {
 			$titletobject = __('Forum - Category' , $dom);
 		}
