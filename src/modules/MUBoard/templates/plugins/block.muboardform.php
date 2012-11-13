@@ -24,30 +24,63 @@
  */
 function smarty_block_muboardform($params, $content, $view)
 {
-    if ($content) {
-        PageUtil::addVar('stylesheet', 'system/Theme/style/form/style.css');
-        $encodingHtml = (array_key_exists('enctype', $params) ? " enctype=\"$params[enctype]\"" : '');
-        $action = htmlspecialchars(System::getCurrentUri());
-        $classString = '';
-        if (isset($params['cssClass'])) {
-            $classString = "class=\"$params[cssClass]\" ";
-        }
-        
-        if(strpos($action,"func=display")!==false) {
-        	$action = 'index.php?module=muboard&amp;type=user&amp;func=edit&amp;ot=posting';
-        }
+	if ($content) {
+		PageUtil::addVar('stylesheet', 'system/Theme/style/form/style.css');
+		$encodingHtml = (array_key_exists('enctype', $params) ? " enctype=\"$params[enctype]\"" : '');
+		$action = htmlspecialchars(System::getCurrentUri());
+		$classString = '';
+		if (isset($params['cssClass'])) {
+			$classString = "class=\"$params[cssClass]\" ";
+		}
 
-        $view->postRender();
+		$request = new Zikula_Request_Http();
 
-        $formId = $view->getFormId();
-        $out = "
+		$id = $request->getGet()->filter('id',0, FILTER_SANITIZE_NUMBER_INT);
+		$forumid = $request->getGet()->filter('forum',0, FILTER_SANITIZE_NUMBER_INT);
+
+		// we check if the entrypoint is part of the url
+		$stripentrypoint = ModUtil::getVar('ZConfig', 'shorturlsstripentrypoint');
+
+		if(strpos($action,"func=display")!==false) {
+			$action = 'index.php?module=muboard&amp;type=user&amp;func=edit&amp;ot=posting';
+		}
+
+		if(strpos($action,"/muboard/")!==false && strpos($action, "/id/") === false) {
+			if ($stripentrypoint == 1) {
+				$action = 'muboard/edit/ot/posting';
+			}
+			elseif ($stripentrypoint == 0) {
+				$action = 'index.php/muboard/edit/ot/posting';
+			}
+		}
+		else {
+			if ($stripentrypoint == 1) {
+				$action = 'muboard/edit/ot/posting/id/' . $id;
+			}
+			elseif ($stripentrypoint == 0) {
+				$action = 'index.php/muboard/edit/ot/posting/id/' . $id;
+			}
+		}
+		if(strpos($action,"/muboard/")!==false && strpos($action, "/forum/") === true) {
+			if ($stripentrypoint == 1) {
+				$action = 'muboard/edit/ot/posting/id/' . $id . 'forum/' . $forumid;
+			}
+			elseif ($stripentrypoint == 0) {
+				$action = 'index.php/muboard/edit/ot/posting/id/' . $id . 'forum/' . $forumid;
+			}
+		}
+
+		$view->postRender();
+
+		$formId = $view->getFormId();
+		$out = "
 <form id=\"{$formId}\" {$classString}action=\"$action\" method=\"post\"{$encodingHtml}>
-    $content
+$content
     <div>
-        {$view->getStateHTML()}
-        {$view->getStateDataHTML()}
-        {$view->getIncludesHTML()}
-        {$view->getCsrfTokenHtml()}
+    {$view->getStateHTML()}
+    {$view->getStateDataHTML()}
+    {$view->getIncludesHTML()}
+    {$view->getCsrfTokenHtml()}
         <input type=\"hidden\" name=\"__formid\" id=\"form__id\" value=\"{$formId}\" />
         <input type=\"hidden\" name=\"FormEventTarget\" id=\"FormEventTarget\" value=\"\" />
         <input type=\"hidden\" name=\"FormEventArgument\" id=\"FormEventArgument\" value=\"\" />
@@ -68,6 +101,6 @@ function smarty_block_muboardform($params, $content, $view)
     </div>
 </form>
 ";
-        return $out;
-    }
+    return $out;
+	}
 }
