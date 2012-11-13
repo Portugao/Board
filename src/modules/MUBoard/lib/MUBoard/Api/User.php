@@ -45,6 +45,11 @@ class MUBoard_Api_User extends MUBoard_Api_Base_User
                              'text' => $this->__('New issue'),
                              'title' => $this->__('Create a new issue'));
         }
+        if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADD)) {
+            $links[] = array('url' => ModUtil::url($this->name, 'user', 'view', array('ot' => 'posting', 'time' => 'latestPostings')),
+                             'text' => $this->__('Latest issues'),
+                             'title' => $this->__('Look for latest issues'));
+        }
         /*if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_READ)) {
             $links[] = array('url' => ModUtil::url($this->name, 'user', 'view', array('ot' => 'forum')),
                              'text' => $this->__('Forums'),
