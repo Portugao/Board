@@ -30,6 +30,21 @@ class MUBoard_Controller_Admin extends MUBoard_Controller_Base_Admin
         $this->view->setCaching(Zikula_View::CACHE_DISABLED);
     } 
     
+    /**
+     * 
+     */
+    public function view($args)
+    {
+    	$ot = $this->request->query->filter('ot', 'category', FILTER_SANITIZE_STRING);
+    	
+    	//view of postings is blocked
+    	if ($ot == 'posting') {
+    		return System::redirect(ModUtil::url($this->name, 'admin', 'view'));
+    	}
+    	else {
+    		return parent::view($args);
+    	}
+    }    
 	/**
 	 * Controller method to close a posting ( issue )
 	 */
@@ -123,5 +138,21 @@ class MUBoard_Controller_Admin extends MUBoard_Controller_Base_Admin
 			if ($forum > 0 && $view == 'view') {
 				return System::redirect(ModUtil::url($this->name, 'user', 'view' , array('ot' => 'category')));
 			}
+	}
+	
+	/**
+	 * Controller method to mark a posting as solved ( issue )
+	 */
+
+	public function solved()
+	{
+
+		$request = new Zikula_Request_Http();
+		$id = $request->getGet()->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
+			
+		MUBoard_Util_Model::solvedPosting($id);
+			
+		return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $id)));
+			
 	}
 }
