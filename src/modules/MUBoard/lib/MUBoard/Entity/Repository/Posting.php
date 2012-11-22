@@ -58,18 +58,18 @@ class MUBoard_Entity_Repository_Posting extends MUBoard_Entity_Repository_Base_P
         }
         
         // TODO get actual postings
-      /*  if ($time == 'latestPostings') {
+        if ($time == 'latestPostings') {
         	$time = ModUtil::getVar('MUBoard', 'latestPostings');
         	$actualTime = DateUtil::getDatetime();
         	$actualTime = DateUtil::makeTimestamp($actualTime);
         	if ($where != '') {
         		$where .= ' AND ';
         	}
-        	$where .= 'tblChildren.createdDate > DATE_SUB(';
+        	$where .= 'tblChildren.createdDate > DATE_SUB(NOW()';
         	$where .= $actualTime;
-        	$where .= ', INTERVAL 12 DAY)';
+        	$where .= ',INTERVAL 12 DAYS)';
         	LogUtil::registerStatus($where);
-        } */ 
+        }
         
         if (!empty($where)) {
             $qb->where($where);

@@ -230,6 +230,24 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 
 		return $count;
 	}
+	
+	/**
+	 * This method gets if an issue is open or closed
+	 */
+
+	public static function getImportantOfPosting($postingid) {
+
+		$count = self::getAnswersOfPosting($postingid);
+
+			if ($count >= 20) {
+				$alt = __('Important issue!');
+				$out =  "<img alt='";
+				$out .= $alt;
+				$out .= "' src='/images/icons/extrasmall/important.png' />";
+			}
+
+		return $out;
+	}
 
 	/**
 	 * This method checks if user must edit this posting - creater of the issue

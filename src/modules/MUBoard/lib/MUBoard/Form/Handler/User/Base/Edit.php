@@ -181,9 +181,9 @@ class MUBoard_Form_Handler_User_Base_Edit extends Zikula_Form_AbstractHandler
 
             if ($this->hasPageLockSupport === true && ModUtil::available('PageLock')) {
                 // try to guarantee that only one person at a time can be editing this entity
-                ModUtil::apiFunc('PageLock', 'user', 'pageLock',
+              /*  ModUtil::apiFunc('PageLock', 'user', 'pageLock',
                     array('lockName'  => $this->name . $this->objectTypeCapital . $this->createCompositeIdentifier(),
-                    'returnUrl' => $this->getRedirectUrl(null, $entity)));
+                    'returnUrl' => $this->getRedirectUrl(null, $entity))); */
             }
         } else {
             if (!SecurityUtil::checkPermission($this->permissionComponent, '::', ACCESS_ADD)) {

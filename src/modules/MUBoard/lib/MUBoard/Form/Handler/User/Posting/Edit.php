@@ -27,26 +27,59 @@ class MUBoard_Form_Handler_User_Posting_Edit extends MUBoard_Form_Handler_User_P
 	public function initialize(Zikula_Form_View $view)
 	{
 		parent::initialize($view);
-			
+
+		// build posting repository
+		$repository = MUBoard_Util_Model::getPostingRepository();
+
+		// we get forumid for edit form to answer to an issue
+		$func = $this->request->query->filter('func', 'main', FILTER_SANITIZE_STRING);
 		// we get form for edit form to create a new issue
 		$forum = $this->request->query->filter('forum', 0, FILTER_SANITIZE_NUMBER_INT);
-		// we get forumid for edit form to answer to an issue
-		$parentid = $this->request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
+		if ($func == 'display') {
+			// we get forumid for edit form to answer to an issue
+			$parentid = $this->request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
 
-		if ($parentid > 0) {
-			// build posting repository
-			$repository = MUBoard_Util_Model::getPostingRepository();
+			if ($parentid > 0) {
 
-			$entity = $repository->selectById($parentid);
-			$forumOfEntity = $entity->getForum();
-			$forumid = $forumOfEntity['id'];
+				$entity = $repository->selectById($parentid);
+				$forumOfEntity = $entity->getForum();
+				$forumid = $forumOfEntity['id'];
+			}
+			else {
+				$forumid = 0;
+			}
 		}
 		else {
-			$forumid = 0;
+			$id = $this->request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
+			if ($id > 0) {
+				$entity = $repository->selectById($id);
+				$parent = $entity->getParent();
+				if ($parent) {
+					$parentid = $parent->getId();
+				}
+				else {
+					$parentid = 0;
+				}
+			}
+			$this->view->assign('parentid', $parentid);
 		}
 
-		// set mode to create
-		$this->mode = 'create';
+		if ($func == 'display') {
+			// set mode to create
+			$this->mode = 'create';
+		}
+		else {
+			if ($id > 0) {
+				// set mode to edit
+				$this->mode = 'edit';
+			}
+		}
+		// TODO rule of token
+		if ($this->mode == 'edit') {
+			$token = $this->request->query->filter('token');
+			//$controller = new Ziku
+			//Zikula_AbstractBase::checkCsrfToken('dsfssd');
+		}
 			
 		// get modvars
 		$uploadImages = ModUtil::getVar('MUBoard', 'uploadImages');
@@ -75,7 +108,7 @@ class MUBoard_Form_Handler_User_Posting_Edit extends MUBoard_Form_Handler_User_P
 	protected function getDefaultReturnUrl($args, $obj)
 	{
 		$parentid = $this->request->getPost()->filter('muboardPosting_ParentItemList', 0, FILTER_SANITIZE_NUMBER_INT);
-		 
+			
 		// redirect to the list of postings
 		$viewArgs = array('ot' => $this->objectType);
 		$url = ModUtil::url($this->name, 'user', 'view', $viewArgs);
@@ -85,11 +118,39 @@ class MUBoard_Form_Handler_User_Posting_Edit extends MUBoard_Form_Handler_User_P
 			if ($parentid > 0) {
 				$url = ModUtil::url($this->name, 'user', 'display', array('ot' => 'posting', 'id' => $parentid));
 			}
-			else {
+			if ($parentid == 0) {
 				$url = ModUtil::url($this->name, 'user', 'display', array('ot' => 'posting', 'id' => $this->idValues['id']));
-						 
+					
 			}
 		}
 		return $url;
+	}
+
+	/**
+	 * Command event handler.
+	 *
+	 * This event handler is called when a command is issued by the user.
+	 */
+	public function handleCommand(Zikula_Form_View $view, &$args)
+	{
+		$result = parent::handleCommand($view, $args);
+		if ($result === false) {
+			return $result;
+		}
+
+		if ($args['commandName'] == 'create') {
+
+			// we need the userid
+			$userid = UserUtil::getVar('uid');
+			// we need a userrepository
+			$repository = MUBoard_Util_Model::getUserRepository();
+			// we get the user entity
+			$boarduser = $repository->selectById($userid);
+
+			$userrank = $boarduser->getRank();
+
+		}
+
+		return $this->view->redirect($this->getRedirectUrl($args, $entity, $repeatCreateAction));
 	}
 }

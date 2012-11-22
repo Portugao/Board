@@ -69,6 +69,32 @@ class MUBoard_Util_Model extends MUBoard_Util_Base_Model
 	}
 
 	/**
+	 * This function closes a posting
+	 * @param id   id of the posting to close
+	 */
+
+	public static function solvedPosting($id) {
+
+		// Security ckeck
+		if (SecurityUtil::checkPermission('MUBoard::', '::', ACCESS_EDIT)) {
+
+			// build posting repository
+			$repository = MUBoard_Util_Model::getPostingRepository();
+
+			$entity = $repository->selectById($id);
+
+			$serviceManager = ServiceUtil::getManager();
+			$entityManager = $serviceManager->getService('doctrine.entitymanager');
+
+			$entity->setSolved(1);
+
+			$entityManager->flush();
+
+			return true;
+		}
+	}
+
+	/**
 	 * This function counts the call of a posting
 	 * @param id   id of the ticket to close
 	 */
@@ -246,7 +272,7 @@ class MUBoard_Util_Model extends MUBoard_Util_Base_Model
 
 		return $repository;
 	}
-	
+
 	/**
 	 *
 	 This method is for getting a repository for user
@@ -261,7 +287,7 @@ class MUBoard_Util_Model extends MUBoard_Util_Base_Model
 
 		return $repository;
 	}
-	
+
 	/**
 	 *
 	 This method is for getting a repository for rank
