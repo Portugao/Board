@@ -14,7 +14,7 @@
 /**
  * The muboardGetNumberOfIssuesOfCategory return the number of issues in a category.
  *
- * @param  int       $id      cat id
+ * @param  int       $out      number of postings
  *
  * @return id the number of issues
  */
