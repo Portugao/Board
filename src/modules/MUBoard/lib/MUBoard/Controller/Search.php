@@ -16,5 +16,37 @@
  */
 class MUBoard_Controller_Search extends MUBoard_Controller_Base_Search
 {
-    // feel free to add your own controller methods here
+
+	/**
+	 *
+	 */
+	public function moduleSearch($args)
+	{
+		$dom = ZLanguage::getModuleDomain('MUBoard');
+
+		$searchsubmit = $this->request->getPost()->filter('searchsubmit', 'none' , FILTER_SANITIZE_STRING);
+
+		if ($searchsubmit == 'none') {
+			// return search form template
+			return $this->searchRedirect();
+		}
+		else {
+
+			$searchstring = $this->request->getPost()->filter('searchstring', '', FILTER_SANITIZE_STRING);
+			if ($searchstring == '') {
+				$url = ModUtil::url($this->name, 'search', 'modulesearch');
+				return LogUtil::registerError(__('You have to enter a string!', $dom), null, $url);
+
+			}
+			else {
+				return ModUtil::apiFunc($this->name, 'search', 'moduleSearch', $args);
+
+			}
+		}
+	}
+
+	private function searchRedirect()
+	{
+		return $this->view->fetch('search/moduleSearch.tpl');
+	}
 }
