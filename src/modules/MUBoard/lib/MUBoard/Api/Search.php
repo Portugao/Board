@@ -218,10 +218,15 @@ class MUBoard_Api_Search extends MUBoard_Api_Base_Search
      * this function provides a module own search api
      */
     public function moduleSearch($args) {
+    	$searchstring = $args['searchstring'];
+    	$searchstring = '%' . searchstring . '%';
+    	
     	$serviceManager = ServiceUtil::getManager();
     	$view = new Zikula_View($serviceManager);
-    	//$args['where'] = $searchstring IN
-    	$entities = ModUtil::apiFunc($this->name, 'selction','getEntities', $args);
+    	$args['ot'] = 'posting';
+    	$args['where'] = 'tbl.title LIKE \'' . DataUtil::formatForStore($searchstring) . '\'';
+    	$entities = ModUtil::apiFunc($this->name, 'selection','getEntities', $args);
+    	$view->assign('entities', $entities);
     	return $view->fetch('search/moduleResult.tpl');
     }
 }

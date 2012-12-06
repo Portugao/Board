@@ -39,6 +39,7 @@ class MUBoard_Controller_Search extends MUBoard_Controller_Base_Search
 
 			}
 			else {
+				$args['searchstring'] = $searchstring;
 				return ModUtil::apiFunc($this->name, 'search', 'moduleSearch', $args);
 
 			}
