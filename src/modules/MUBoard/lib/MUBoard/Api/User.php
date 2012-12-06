@@ -50,6 +50,11 @@ class MUBoard_Api_User extends MUBoard_Api_Base_User
                              'text' => $this->__('Latest issues'),
                              'title' => $this->__('Look for latest issues'));
         }
+        if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_OVERVIEW)) {
+        	$links[] = array('url' => ModUtil::url($this->name, 'search', 'moduleSearch'),
+        			'text' => $this->__('Search issues'),
+        			'title' => $this->__('Look for relevant issues'));
+        }
         /*if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_READ)) {
             $links[] = array('url' => ModUtil::url($this->name, 'user', 'view', array('ot' => 'forum')),
                              'text' => $this->__('Forums'),
