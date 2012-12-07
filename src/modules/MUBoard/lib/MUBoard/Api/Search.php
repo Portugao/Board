@@ -1,4 +1,6 @@
 <?php
+use Doctrine\ORM\Query\AST\Functions\CurrentTimestampFunction;
+
 /**
  * MUBoard.
  *
@@ -242,33 +244,32 @@ class MUBoard_Api_Search extends MUBoard_Api_Base_Search
 		else {
 			if ($kind == 'latestPostings') {
 				$time = ModUtil::getVar('MUBoard', 'latestPostings');
-				$actualTime = DateUtil::getDatetime();
-				$actualTime = DateUtil::makeTimestamp($actualTime);
+
 				$args['where'] = 'tbl.createdDate > DATE_SUB(';
-				$args['where'] .= $actualTime;
+				$args['where'] .= 'CURRENT_TIMESTAMP()';
 				$args['where'] .= ',';
-				$args['where'] .= 1;
-				$args['where'] .= ', DAY)';
+				$args['where'] .= $time;
+				$args['where'] .= ', \'day\')';
 			}
 		}
 		$entities = ModUtil::apiFunc($this->name, 'selection','getEntities', $args);
+		
 		if ($entities == false) {
 			$message = __('Sorry! There is no entity for your search string. Please try another string!', $dom);
 		}
 		else {
 			$message = '';
 		}
-		if (count($entities) > 0) {
-			LogUtil::registerStatus(__('Congratulations! Your search has a result! We found ', $dom) . count($entities) . __(' issues!', $dom));
-		}
+
 		$resultedEntities = array();
 		foreach ($entities as $entity) {
-				
+
 			if ($entity['parent_id'] != NULL) {
-				$args['id'] = $entity['parent_id'];
-				$args['useJoins'] = false;
-				$parentEntity = ModUtil::apiFunc($this->name, 'selection', 'getEntity', $args);
-				if (array_search($parentEntity['id'], $resultedEntities) == false) {
+				if (array_search($entity['parent_id'], $resultedEntities) == false) {
+					LogUtil::registerStatus($entity['parent_id']);
+					$args['id'] = $entity['parent_id'];
+					$args['useJoins'] = false;
+					$parentEntity = ModUtil::apiFunc($this->name, 'selection', 'getEntity', $args);
 					$resultedEntities[] = $parentEntity;
 				}
 			}
@@ -277,6 +278,10 @@ class MUBoard_Api_Search extends MUBoard_Api_Base_Search
 					$resultedEntities[] = $entity;
 				}
 			}
+		}
+
+		if (count($resultedEntities) > 0) {
+			LogUtil::registerStatus(__('Congratulations! Your search has a result! We found ', $dom) . count($resultedEntities) . __(' issues!', $dom));
 		}
 
 		$view->assign('entities', $resultedEntities)
