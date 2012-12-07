@@ -27,28 +27,34 @@ class MUBoard_Controller_Search extends MUBoard_Controller_Base_Search
 		$searchsubmit = $this->request->getPost()->filter('searchsubmit', 'none' , FILTER_SANITIZE_STRING);
 		$searchoptions = $this->request->getPost()->filter('searchoptions', 'all' , FILTER_SANITIZE_STRING);
 		$searchplace = $this->request->getPost()->filter('searchplace', 'title' , FILTER_SANITIZE_STRING);
-		
-		// user has not entered a string
-		if ($searchsubmit == 'none') {
+
+		$kind = $this->request->query->filter('kind', 'none', FILTER_SANITIZE_STRING);
+
+		// user has not entered a string and there is 'none' as kind of search
+		if ($searchsubmit == 'none' && $kind == 'none') {
 			// return search form template
 			return $this->searchRedirect();
 		}
 		// user hat entered a string
 		else {
+			if ($searchsubmit != 'none' && $kind == 'none') {
+				$searchstring = $this->request->getPost()->filter('searchstring', '', FILTER_SANITIZE_STRING);
+				if ($searchstring == '') {
+					$url = ModUtil::url($this->name, 'search', 'modulesearch');
+					return LogUtil::registerError(__('You have to enter a string!', $dom), null, $url);
 
-			$searchstring = $this->request->getPost()->filter('searchstring', '', FILTER_SANITIZE_STRING);
-			if ($searchstring == '') {
-				$url = ModUtil::url($this->name, 'search', 'modulesearch');
-				return LogUtil::registerError(__('You have to enter a string!', $dom), null, $url);
+				}
+				else {
+					$args['searchstring'] = $searchstring;
+					$args['searchoptions'] = $searchoptions;
+					$args['searchplace'] = $searchplace;
+				}
 
 			}
-			else {
-				$args['searchstring'] = $searchstring;
-				$args['searchoptions'] = $searchoptions;
-				$args['searchplace'] = $searchplace;
-				return ModUtil::apiFunc($this->name, 'search', 'moduleSearch', $args);
-
+			if ($searchsubmit == 'none' && $kind != 'none') {
+				$args['kind'] = $kind;
 			}
+			return ModUtil::apiFunc($this->name, 'search', 'moduleSearch', $args);
 		}
 	}
 

@@ -226,14 +226,30 @@ class MUBoard_Api_Search extends MUBoard_Api_Base_Search
 
 		$searchoptions = $args['searchoptions'];
 		$searchplace = $args['searchplace'];
+
+		$kind = $args['kind'];
 			
 		$serviceManager = ServiceUtil::getManager();
 		$view = new Zikula_View($serviceManager);
 		$args['ot'] = 'posting';
-		$args['where'] = 'tbl.title LIKE \'' . DataUtil::formatForStore($searchstring) . '\'';
-		if ($searchplace == 'content') {
-			$args['where'] .= ' OR ';
-			$args['where'] .= 'tbl.text LIKE \'' . DataUtil::formatForStore($searchstring) . '\'';
+		if ($kind == 'none') {
+			$args['where'] = 'tbl.title LIKE \'' . DataUtil::formatForStore($searchstring) . '\'';
+			if ($searchplace == 'content') {
+				$args['where'] .= ' OR ';
+				$args['where'] .= 'tbl.text LIKE \'' . DataUtil::formatForStore($searchstring) . '\'';
+			}
+		}
+		else {
+			if ($kind == 'latestPostings') {
+				$time = ModUtil::getVar('MUBoard', 'latestPostings');
+				$actualTime = DateUtil::getDatetime();
+				$actualTime = DateUtil::makeTimestamp($actualTime);
+				$args['where'] = 'tbl.createdDate > DATE_SUB(';
+				$args['where'] .= $actualTime;
+				$args['where'] .= ',';
+				$args['where'] .= 1;
+				$args['where'] .= ', DAY)';
+			}
 		}
 		$entities = ModUtil::apiFunc($this->name, 'selection','getEntities', $args);
 		if ($entities == false) {
@@ -247,7 +263,7 @@ class MUBoard_Api_Search extends MUBoard_Api_Base_Search
 		}
 		$resultedEntities = array();
 		foreach ($entities as $entity) {
-			
+				
 			if ($entity['parent_id'] != NULL) {
 				$args['id'] = $entity['parent_id'];
 				$args['useJoins'] = false;
