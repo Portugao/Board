@@ -33,9 +33,7 @@ class MUBoard_Entity_Repository_Posting extends MUBoard_Entity_Repository_Base_P
     	
         $ot = $view->getGet()->filter('ot', 'category', FILTER_SANITIZE_STRING);
 		$type = $view->getGet()->filter('type', 'user', FILTER_SANITIZE_STRING);
-		$func = $view->getGet()->filter('func', 'view', FILTER_SANITIZE_STRING);
-		$time = $view->getGet()->filter('time', '', FILTER_SANITIZE_STRING);
-	
+		$func = $view->getGet()->filter('func', 'view', FILTER_SANITIZE_STRING);	
     	
         $selection = 'tbl';
         if ($useJoins === true) {
@@ -55,20 +53,6 @@ class MUBoard_Entity_Repository_Posting extends MUBoard_Entity_Repository_Base_P
         		$where .= ' AND ';
         	}
         	$where .= 'tbl.parent_id IS NULL';
-        }
-        
-        // TODO get actual postings
-        if ($time == 'latestPostings') {
-        	$time = ModUtil::getVar('MUBoard', 'latestPostings');
-        	$actualTime = DateUtil::getDatetime();
-        	$actualTime = DateUtil::makeTimestamp($actualTime);
-        	if ($where != '') {
-        		$where .= ' AND ';
-        	}
-        	$where .= 'tblChildren.createdDate > DATE_SUB(NOW()';
-        	$where .= $actualTime;
-        	$where .= ',INTERVAL 12 DAYS)';
-        	LogUtil::registerStatus($where);
         }
         
         if (!empty($where)) {
