@@ -17,5 +17,19 @@
  */
 class MUBoard_Form_Handler_Admin_Posting_Edit extends MUBoard_Form_Handler_Admin_Posting_Base_Edit
 {
-    // feel free to extend the base handler class here
+        /**
+     * Initialize form handler.
+     *
+     * This method takes care of all necessary initialisation of our data and form states.
+     *
+     * @return boolean False in case of initialization errors, otherwise true.
+     */
+    public function initialize(Zikula_Form_View $view) {
+    	
+    	$work = $this->request->query->filter('work', 'none', FILTER_SANITIZE_STRING);
+    	
+    	$this->view->assign('work', $work);
+    	
+    	return parent::initialize($view);
+    }
 }
