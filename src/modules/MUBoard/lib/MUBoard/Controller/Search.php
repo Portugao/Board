@@ -25,11 +25,15 @@ class MUBoard_Controller_Search extends MUBoard_Controller_Base_Search
 		$dom = ZLanguage::getModuleDomain('MUBoard');
 
 		$searchsubmit = $this->request->getPost()->filter('searchsubmit', 'none' , FILTER_SANITIZE_STRING);
-
+		$searchoptions = $this->request->getPost()->filter('searchoptions', 'all' , FILTER_SANITIZE_STRING);
+		$searchplace = $this->request->getPost()->filter('searchplace', 'title' , FILTER_SANITIZE_STRING);
+		
+		// user has not entered a string
 		if ($searchsubmit == 'none') {
 			// return search form template
 			return $this->searchRedirect();
 		}
+		// user hat entered a string
 		else {
 
 			$searchstring = $this->request->getPost()->filter('searchstring', '', FILTER_SANITIZE_STRING);
@@ -40,6 +44,8 @@ class MUBoard_Controller_Search extends MUBoard_Controller_Base_Search
 			}
 			else {
 				$args['searchstring'] = $searchstring;
+				$args['searchoptions'] = $searchoptions;
+				$args['searchplace'] = $searchplace;
 				return ModUtil::apiFunc($this->name, 'search', 'moduleSearch', $args);
 
 			}
