@@ -12,8 +12,7 @@
  */
 
 /**
- * The muboardGetLastPosting modifier return the state of a ticket with an image.
- *
+ * The muboardGetLastPosting modifier return the last posting of a forum
  * @param  int       $id      forum id
  *
  * @return string the output of last posting
@@ -21,8 +20,6 @@
 function smarty_modifier_muboardGetLastPosting($id)
 {
 	$out = MUBoard_Util_View::getLastPostingOfForum($id);
-
-
 
 	return $out;
 }
