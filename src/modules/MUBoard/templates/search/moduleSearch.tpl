@@ -8,7 +8,7 @@
 </div>
 <div class="z-formrow">
 <label for="searchoptions">{gt text='Search options'}</label>
-<select id="searchoptions">
+<select id="searchoptions" name="searchoptions">
 <option value="all">{gt text='All terms [AND]'}</option>
 <option value="single">{gt text='Single terms [OR]'}</option>
 <option value="correct">{gt text='Correct term'}</option>
@@ -16,7 +16,7 @@
 </div>
 <div class="z-formrow">
 <label for="searchplace">{gt text='Search place'}</label>
-<select id="searchplace">
+<select id="searchplace" name="searchplace">
 <option value="title">{gt text='Only in titles'}</option>
 <option value="content">{gt text='In titles and content'}</option>
 </select>
