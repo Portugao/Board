@@ -159,10 +159,11 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 		$entity = ModUtil::apiFunc($this->name, 'selection', 'getEntity', array('ot' => $objectType, 'id' => $idValues, 'slug' => $slugTitle));
 		$this->throwNotFoundUnless($entity != null, $this->__('No such item.'));
 
+		// we take the children postings of the parent issue
 		if($objectType == 'posting') {
 			$postingid = $entity['id'];
 
-			$postingsWhere .= 'tbl.parent = \'' . DataUtil::formatForStore($postingid) . '\'';
+			$postingsWhere = 'tbl.parent = \'' . DataUtil::formatForStore($postingid) . '\'';
 
 			$order = ModUtil::getVar($this->name, 'sortingPostings');
 
@@ -194,6 +195,45 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 			list($entities, $objectCount) = ModUtil::apiFunc($this->name, 'selection', 'getEntitiesPaginated', $selectionArgs);
 
 
+		}
+		
+		if($objectType == 'forum') {
+			$forumid = $entity['id'];
+		
+			$parentWhere = 'tbl.parent_id IS NULL'; 
+			$parentWhere .= ' AND ';
+			$parentWhere .= 'tbl.forum = \'' . DataUtil::formatForStore($forumid) . '\'';
+		
+			$order = ModUtil::getVar($this->name, 'sortingPostings');
+		
+			if ($order == 'descending') {
+				$sdir = 'desc';
+			}
+			else {
+				$sdir = 'asc';
+			}
+		
+			$selectionArgs = array(
+					'ot' => 'posting',
+					'where' => $parentWhere,
+					'orderBy' => 'createdDate' . ' ' . $sdir
+			);
+		
+			// the current offset which is used to calculate the pagination
+			$currentPage = (int)(isset($args['pos']) && !empty($args['pos'])) ? $args['pos'] : $this->request->getGet()->filter('pos', 1, FILTER_VALIDATE_INT);
+		
+			// the number of items displayed on a page for pagination
+			$resultsPerPage = (int)(isset($args['num']) && !empty($args['num'])) ? $args['num'] : $this->request->getGet()->filter('num', 0, FILTER_VALIDATE_INT);
+			if ($resultsPerPage == 0) {
+				$csv = (int)(isset($args['usecsv']) && !empty($args['usecsv'])) ? $args['usecsv'] : $this->request->getGet()->filter('usecsvext', 0, FILTER_VALIDATE_INT);
+				$resultsPerPage = ($csv == 1) ? 999999 : $this->getVar('pagesize', 10);
+			}
+		
+			$selectionArgs['currentPage'] = $currentPage;
+			$selectionArgs['resultsPerPage'] = $resultsPerPage;
+			list($entities, $objectCount) = ModUtil::apiFunc($this->name, 'selection', 'getEntitiesPaginated', $selectionArgs);
+		
+		
 		}
 
 		// build ModUrl instance for display hooks
@@ -241,13 +281,13 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 		$sitename = ModUtil::getVar('ZConfig' , 'sitename');
 
 		if ($objectType == 'category') {
-			$titletobject = __('Forum - Category' , $dom);
+			$titletobject = __('Forum - Category: ' , $dom);
 		}
 		if ($objectType == 'forum') {
-			$titletobject = __('Forum' , $dom);
+			$titletobject = __('Forum: ' , $dom);
 		}
 		if ($objectType == 'posting') {
-			$titletobject = 'Forum' . ' ' . $entity['forum']['title'] . ' - ' . __('Isssue' , $dom);
+			$titletobject = 'Forum: ' . ' ' . $entity['forum']['title'] . ' - ' . __('Issue: ' , $dom);
 		}
 		PageUtil::setVar('title', $sitename . ' - ' . $titletobject . ' ' . $entity['title']);
 
