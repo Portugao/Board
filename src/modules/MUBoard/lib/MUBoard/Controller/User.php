@@ -72,6 +72,11 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 		$func = $this->request->getGet()->filter('func', 'view', FILTER_SANITIZE_STRING);
 			
 		$sortdir = ModUtil::getVar('MUBoard', 'sortingPostings');
+		
+		//view of postings is blocked
+		if ($args['ot'] == 'posting') {
+			return System::redirect(ModUtil::url($this->name, 'user', 'view'));
+		}
 			
 		if (($args['ot'] == 'category' || $args['ot'] == 'forum' ) && $type == 'user') {
 
