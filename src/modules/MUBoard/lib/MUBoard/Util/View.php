@@ -269,7 +269,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 		$createdDate = $posting->getCreatedDate();
 		$createdDate = $createdDate->getTimestamp();
 
-		// get userid of loggedin user
+		// get the actual time
 		$actualTime = DateUtil::getDatetime();
 		// get modvar editTime
 		$editTime = ModUtil::getVar('MUBoard', 'editTime');
