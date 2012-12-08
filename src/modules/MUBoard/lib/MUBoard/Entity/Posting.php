@@ -41,16 +41,16 @@ class MUBoard_Entity_Posting extends MUBoard_Entity_Base_Posting
 		if ($currentType == 'admin') {
 			if (in_array($currentFunc, array('main', 'view'))) {
 				$this->_actions[] = array(
-                        'url' => array('type' => 'user', 'func' => 'display', 'arguments' => array('ot' => 'posting', 'id' => $this['id'])),
-                        'icon' => 'preview',
-                        'linkTitle' => __('Open preview page', $dom),
-                        'linkText' => __('Preview', $dom)
+						'url' => array('type' => 'user', 'func' => 'display', 'arguments' => array('ot' => 'posting', 'id' => $this['id'])),
+						'icon' => 'preview',
+						'linkTitle' => __('Open preview page', $dom),
+						'linkText' => __('Preview', $dom)
 				);
 				$this->_actions[] = array(
-                        'url' => array('type' => 'admin', 'func' => 'display', 'arguments' => array('ot' => 'posting', 'id' => $this['id'])),
-                        'icon' => 'display',
-                        'linkTitle' => str_replace('"', '', $this['title']),
-                        'linkText' => __('Details', $dom)
+						'url' => array('type' => 'admin', 'func' => 'display', 'arguments' => array('ot' => 'posting', 'id' => $this['id'])),
+						'icon' => 'display',
+						'linkTitle' => str_replace('"', '', $this['title']),
+						'linkText' => __('Details', $dom)
 				);
 			}
 
@@ -58,43 +58,43 @@ class MUBoard_Entity_Posting extends MUBoard_Entity_Base_Posting
 				if (SecurityUtil::checkPermission('MUBoard::', '.*', ACCESS_EDIT)) {
 
 					$this->_actions[] = array(
-                        'url' => array('type' => 'admin', 'func' => 'edit', 'arguments' => array('ot' => 'posting', 'id' => $this['id'])),
-                        'icon' => 'edit',
-                        'linkTitle' => __('Edit', $dom),
-                        'linkText' => __('Edit', $dom)
+							'url' => array('type' => 'admin', 'func' => 'edit', 'arguments' => array('ot' => 'posting', 'id' => $this['id'])),
+							'icon' => 'edit',
+							'linkTitle' => __('Edit', $dom),
+							'linkText' => __('Edit', $dom)
 					);
 					$this->_actions[] = array(
-                        'url' => array('type' => 'admin', 'func' => 'edit', 'arguments' => array('ot' => 'posting', 'astemplate' => $this['id'])),
-                        'icon' => 'saveas',
-                        'linkTitle' => __('Reuse for new item', $dom),
-                        'linkText' => __('Reuse', $dom)
+							'url' => array('type' => 'admin', 'func' => 'edit', 'arguments' => array('ot' => 'posting', 'astemplate' => $this['id'])),
+							'icon' => 'saveas',
+							'linkTitle' => __('Reuse for new item', $dom),
+							'linkText' => __('Reuse', $dom)
 					);
 				}
 				if (SecurityUtil::checkPermission('MUBoard::', '.*', ACCESS_DELETE)) {
 					$this->_actions[] = array(
-                        'url' => array('type' => 'admin', 'func' => 'delete', 'arguments' => array('ot' => 'posting', 'id' => $this['id'])),
-                        'icon' => 'delete',
-                        'linkTitle' => __('Delete', $dom),
-                        'linkText' => __('Delete', $dom)
+							'url' => array('type' => 'admin', 'func' => 'delete', 'arguments' => array('ot' => 'posting', 'id' => $this['id'])),
+							'icon' => 'delete',
+							'linkTitle' => __('Delete', $dom),
+							'linkText' => __('Delete', $dom)
 					);
 				}
 			}
 			if ($currentFunc == 'display') {
 				$this->_actions[] = array(
-                        'url' => array('type' => 'admin', 'func' => 'view', 'arguments' => array('ot' => 'posting')),
-                        'icon' => 'back',
-                        'linkTitle' => __('Back to overview', $dom),
-                        'linkText' => __('Back to overview', $dom)
+						'url' => array('type' => 'admin', 'func' => 'view', 'arguments' => array('ot' => 'posting')),
+						'icon' => 'back',
+						'linkTitle' => __('Back to overview', $dom),
+						'linkText' => __('Back to overview', $dom)
 				);
 			}
 		}
 		if ($currentType == 'user') {
 			if (in_array($currentFunc, array('main', 'view'))) {
 				$this->_actions[] = array(
-                        'url' => array('type' => 'user', 'func' => 'display', 'arguments' => array('ot' => 'posting', 'id' => $this['id'])),
-                        'icon' => 'display',
-                        'linkTitle' => str_replace('"', '', $this['title']),
-                        'linkText' => __('Details', $dom)
+						'url' => array('type' => 'user', 'func' => 'display', 'arguments' => array('ot' => 'posting', 'id' => $this['id'])),
+						'icon' => 'display',
+						'linkTitle' => str_replace('"', '', $this['title']),
+						'linkText' => __('Details', $dom)
 				);
 			}
 
@@ -103,36 +103,36 @@ class MUBoard_Entity_Posting extends MUBoard_Entity_Base_Posting
 
 					/*$this->_actions[] = array(
 					 'url' => array('type' => 'user', 'func' => 'edit', 'arguments' => array('ot' => 'posting')),
-					 'icon' => 'save',
-					 'linkTitle' => __('Create new issue', $dom),
-					 'linkText' => __('', $dom)
-					 );
-					 $this->_actions[] = array(
-					 'url' => array('type' => 'user', 'func' => 'edit', 'arguments' => array('ot' => 'posting', 'id' => $this['id'])),
-					 'icon' => 'edit',
-					 'linkTitle' => __('Edit', $dom),
-					 'linkText' => __('Edit', $dom)
-					 );
-					 $this->_actions[] = array(
-					 'url' => array('type' => 'user', 'func' => 'edit', 'arguments' => array('ot' => 'posting', 'astemplate' => $this['id'])),
-					 'icon' => 'saveas',
-					 'linkTitle' => __('Reuse for new item', $dom),
-					 'linkText' => __('Reuse', $dom)
-					 );*/
+							'icon' => 'save',
+							'linkTitle' => __('Create new issue', $dom),
+							'linkText' => __('', $dom)
+					);
+					$this->_actions[] = array(
+							'url' => array('type' => 'user', 'func' => 'edit', 'arguments' => array('ot' => 'posting', 'id' => $this['id'])),
+							'icon' => 'edit',
+							'linkTitle' => __('Edit', $dom),
+							'linkText' => __('Edit', $dom)
+					);
+					$this->_actions[] = array(
+							'url' => array('type' => 'user', 'func' => 'edit', 'arguments' => array('ot' => 'posting', 'astemplate' => $this['id'])),
+							'icon' => 'saveas',
+							'linkTitle' => __('Reuse for new item', $dom),
+							'linkText' => __('Reuse', $dom)
+					);*/
 				}
 			}
 			if ($currentFunc == 'display') {
 				$this->_actions[] = array(
-                        'url' => array('type' => 'user', 'func' => 'display', 'arguments' => array('ot' => 'forum', 'id' => $posting.Forum.id)),
-                        'icon' => 'back',
-                        'linkTitle' => __('Back to forum ', $dom) . $posting.Forum.title,
-                        'linkText' => __('Back to forum overview', $dom)
+						'url' => array('type' => 'user', 'func' => 'display', 'arguments' => array('ot' => 'forum', 'id' => $posting.Forum.id)),
+						'icon' => 'back',
+						'linkTitle' => __('Back to forum ', $dom) . $posting.Forum.title,
+						'linkText' => __('Back to forum overview', $dom)
 				);
 				$this->_actions[] = array(
-                        'url' => array('type' => 'user', 'func' => 'view', 'arguments' => array('ot' => 'category')),
-                        'icon' => 'back',
-                        'linkTitle' => __('Back to forum overview', $dom),
-                        'linkText' => __('', $dom)
+						'url' => array('type' => 'user', 'func' => 'view', 'arguments' => array('ot' => 'category')),
+						'icon' => 'back',
+						'linkTitle' => __('Back to forum overview', $dom),
+						'linkText' => __('', $dom)
 				);
 			}
 		}
@@ -244,6 +244,12 @@ class MUBoard_Entity_Posting extends MUBoard_Entity_Base_Posting
 	 */
 	public function postUpdateCallback()
 	{
+		$args['postingid'] = $this->getId();
+		$args['forum'] = $this->getForum();
+		$args['children'] = $this->getChildren();
+
+		ModUtil::apiFunc('MUBoard', 'admin', 'movetoforum', $args);
+
 		$this->performPostUpdateCallback();
 	}
 

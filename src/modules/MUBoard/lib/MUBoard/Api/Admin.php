@@ -27,40 +27,65 @@ class MUBoard_Api_Admin extends MUBoard_Api_Base_Admin
 
 		if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_READ)) {
 			$links[] = array('url' => ModUtil::url($this->name, 'user', 'main'),
-                             'text' => $this->__('Frontend'),
-                             'title' => $this->__('Switch to user area.'),
-                             'class' => 'z-icon-es-home');
+					'text' => $this->__('Frontend'),
+					'title' => $this->__('Switch to user area.'),
+					'class' => 'z-icon-es-home');
 		}
 		if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
 			$links[] = array('url' => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'category')),
-                             'text' => $this->__('Categories'),
-                             'title' => $this->__('Category list'));
+					'text' => $this->__('Categories'),
+					'title' => $this->__('Category list'));
 		}
 		if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
 			$links[] = array('url' => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'forum')),
-                             'text' => $this->__('Forums'),
-                             'title' => $this->__('Forum list'));
+					'text' => $this->__('Forums'),
+					'title' => $this->__('Forum list'));
 		}
 		/*if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
 		 $links[] = array('url' => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'posting')),
-		 'text' => $this->__('Postings'),
-		 'title' => $this->__('Posting list'));
-		 }*/
+		 		'text' => $this->__('Postings'),
+		 		'title' => $this->__('Posting list'));
+		}*/
 		if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
 			$links[] = array('url'   => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'user')),
-                'text'  => $this->__('Users'),
-                'title' => $this->__('User list'));
+					'text'  => $this->__('Users'),
+					'title' => $this->__('User list'));
 		}
 		if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
 			$links[] = array('url'   => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'rank')),
-                'text'  => $this->__('Ranks'),
-                'title' => $this->__('Rank list'));
+					'text'  => $this->__('Ranks'),
+					'title' => $this->__('Rank list'));
 		}
 		if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
 			$links[] = array('url' => ModUtil::url($this->name, 'admin', 'config'),
-                             'text' => $this->__('Configuration'),
-                             'title' => $this->__('Manage settings for this application'));
+					'text' => $this->__('Configuration'),
+					'title' => $this->__('Manage settings for this application'));
 		}
 		return $links;
+	}
+
+	/**
+	 * this function change the forum for the children of a posting
+	 * $args
+	 */
+	public function movetoforum($args)
+	{
+		$work = $this->request->query->filter('work', 'none', FILTER_SANITIZE_STRING);
+
+		$args['postingid'] = $this->getId();
+		$forum = $args['forum'];
+		$children = $args['children'];
+		if ($work == 'movetoforum') {
+			
+			$serviceManager = ServiceUtil::getManager();
+			$entityManager = $serviceManager->getService('doctrine.entitymanager');
+			
+			$postingrepository = MUBoard_Util_Model::getPostingRepository();
+			foreach ($children as $child) {
+				$posting = $postingrepository->selectById($child['id']);
+				$posting->setForum($forum);
+				$entityManager->flush();
+			}
+		}
 	}
 }
