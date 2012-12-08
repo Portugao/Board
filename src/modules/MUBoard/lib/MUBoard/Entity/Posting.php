@@ -26,6 +26,26 @@ use DoctrineExtensions\StandardFields\Mapping\Annotation as ZK;
  */
 class MUBoard_Entity_Posting extends MUBoard_Entity_Base_Posting
 {
+	
+	/**
+	 * Get list of allowed redirect codes.
+	 */
+	protected function getRedirectCodes()
+	{
+		$codes = parent::getRedirectCodes();
+		// admin list of forums
+		$codes[] = 'adminViewForum';
+		// admin display page of treated forum
+		$codes[] = 'adminDisplayForum';
+		// user list of forums
+		$codes[] = 'userViewForum';
+		// user display page of treated forum
+		$codes[] = 'userDisplayForum';
+		// user display page of treated issue
+		$codes[] = 'userDisplay';
+		return $codes;
+	}
+	
 	/**
 	 * Collect available actions for this entity.
 	 */
