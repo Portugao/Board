@@ -27,9 +27,9 @@ class MUBoard_Controller_Search extends MUBoard_Controller_Base_Search
 		$searchsubmit = $this->request->getPost()->filter('searchsubmit', 'none' , FILTER_SANITIZE_STRING);
 		$searchoptions = $this->request->getPost()->filter('searchoptions', 'all' , FILTER_SANITIZE_STRING);
 		$searchplace = $this->request->getPost()->filter('searchplace', 'title' , FILTER_SANITIZE_STRING);
+		$resultorder = $this->request->getPost()->filter('resultorder', 'none', FILTER_SANITIZE_STRING);
 
 		$kind = $this->request->query->filter('kind', 'none', FILTER_SANITIZE_STRING);
-		LogUtil::registerStatus('Kind: ' . $kind);
 
 		// user has not entered a string and there is 'none' as kind of search
 		if ($searchsubmit == 'none' && $kind == 'none') {
@@ -49,6 +49,7 @@ class MUBoard_Controller_Search extends MUBoard_Controller_Base_Search
 					$args['searchstring'] = $searchstring;
 					$args['searchoptions'] = $searchoptions;
 					$args['searchplace'] = $searchplace;
+					$args['resultorder'] = $resultorder;
 					$args['kind'] = $kind;
 				}
 			}

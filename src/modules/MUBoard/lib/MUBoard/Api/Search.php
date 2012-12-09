@@ -228,6 +228,8 @@ class MUBoard_Api_Search extends MUBoard_Api_Base_Search
 
 		$searchoptions = $args['searchoptions'];
 		$searchplace = $args['searchplace'];
+		
+		$resultorder = $args['resultorder'];
 
 		$kind = $args['kind'];
 			
@@ -240,6 +242,7 @@ class MUBoard_Api_Search extends MUBoard_Api_Base_Search
 				$args['where'] .= ' OR ';
 				$args['where'] .= 'tbl.text LIKE \'' . DataUtil::formatForStore($searchstring) . '\'';
 			}
+			$args['orderBy'] = 'title ' . $resultorder;
 		}
 		else {
 			if ($kind == 'latestPostings') {

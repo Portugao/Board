@@ -23,7 +23,7 @@
 </div>
 <div class="z-formrow">
 <label for="resultorder">{gt text='Order of results'}</label>
-<select id="resulorder">
+<select id="resultorder" name="resultorder">
 <option value="Asc">{gt text='Ascending'}</option>
 <option value="Desc">{gt text='Descending'}</option>
 </select>
