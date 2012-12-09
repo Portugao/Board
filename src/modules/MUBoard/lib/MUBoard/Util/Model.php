@@ -93,6 +93,32 @@ class MUBoard_Util_Model extends MUBoard_Util_Base_Model
 			return true;
 		}
 	}
+	
+	/**
+	 * This function closes a posting
+	 * @param id   id of the posting to close
+	 */
+	
+	public static function unsolvedPosting($id) {
+	
+		// Security ckeck
+		if (SecurityUtil::checkPermission('MUBoard::', '::', ACCESS_EDIT)) {
+	
+			// build posting repository
+			$repository = MUBoard_Util_Model::getPostingRepository();
+	
+			$entity = $repository->selectById($id);
+	
+			$serviceManager = ServiceUtil::getManager();
+			$entityManager = $serviceManager->getService('doctrine.entitymanager');
+	
+			$entity->setSolved(0);
+	
+			$entityManager->flush();
+	
+			return true;
+		}
+	}
 
 	/**
 	 * This function counts the call of a posting
