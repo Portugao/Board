@@ -18,5 +18,67 @@
  */
 class MUBoard_Entity_Repository_Forum extends MUBoard_Entity_Repository_Base_Forum
 {
-    // feel free to add your own methods here, like for example reusable DQL queries
+    /**
+     * Build a generic Doctrine query supporting WHERE and ORDER BY
+     *
+     * @param string  $where    The where clause to use when retrieving the collection (optional) (default='').
+     * @param string  $orderBy  The order-by clause to use when retrieving the collection (optional) (default='').
+     * @param boolean $useJoins Whether to include joining related objects (optional) (default=true).
+     *
+     * @return Doctrine\ORM\Query query instance to be further processed
+     */
+    protected function _intBaseQuery($where = '', $orderBy = '', $useJoins = true)
+    {
+    	$view = new Zikula_Request_Http();
+    	$ot = $view->request->filter('ot', 'category', FILTER_SANITIZE_STRING);
+    	$func = $view->request->filter('func', 'main', FILTER_SANITIZE_STRING);
+    	
+        $selection = 'tbl';
+        if ($useJoins === true) {
+        	if ($ot == 'forum' && $func == 'display') {
+        		$selection .= ', tblCategory';
+        	}
+        	else {
+            $selection .= $this->addJoinsToSelection();
+        	}
+        }
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select($selection)
+           ->from('MUBoard_Entity_Forum', 'tbl');
+
+        if ($useJoins === true) {
+        	if ($ot == 'forum' && $func == 'display') {
+        	
+        	}
+        	else {        	
+            $this->addJoinsToFrom($qb);
+        	}
+        }
+
+        if (!empty($where)) {
+            $qb->where($where);
+        }
+
+        // add order by clause
+        if (!empty($orderBy)) {
+            $qb->add('orderBy', 'tbl.' . $orderBy);
+        }
+
+        $query = $qb->getQuery();
+
+// TODO - see https://github.com/zikula/core/issues/118
+        // use FilterUtil to support generic filtering
+        //$fu = new FilterUtil('MUBoard', $this);
+
+        // you could set explicit filters at this point, something like
+        // $fu->setFilter('type:eq:' . $args['type'] . ',id:eq:' . $args['id']);
+        // supported operators: eq, ne, like, lt, le, gt, ge, null, notnull
+
+        // process request input filters and add them to the query.
+        //$fu->enrichQuery($query);
+
+
+        return $query;
+    }
 }
