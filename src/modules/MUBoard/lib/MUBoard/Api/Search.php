@@ -265,16 +265,15 @@ class MUBoard_Api_Search extends MUBoard_Api_Base_Search
 		foreach ($entities as $entity) {
 
 			if ($entity['parent_id'] != NULL) {
-				if (array_search($entity['parent_id'], $resultedEntities) == false) {
-					LogUtil::registerStatus($entity['parent_id']);
 					$args['id'] = $entity['parent_id'];
 					$args['useJoins'] = false;
 					$parentEntity = ModUtil::apiFunc($this->name, 'selection', 'getEntity', $args);
+					if (!in_array($parentEntity, $resultedEntities)) {
 					$resultedEntities[] = $parentEntity;
-				}
+					}
 			}
 			if ($entity['parent_id'] == NULL) {
-				if (array_search($entity['id'], $resultedEntities) == false) {
+				if (!in_array($entity, $resultedEntities)) {
 					$resultedEntities[] = $entity;
 				}
 			}
