@@ -349,6 +349,24 @@ border-bottom: 1px solid #ddd;
     width: 35%;
 }
 
+.muboard-user-posting-header-action-category {
+    padding: 5px 10px;
+    margin: 5px 0 0 10px;
+    float: left;
+    font-size: 1.2em;
+    border-radius: 5px;
+    border-bottom: 1px solid #999;
+}
+
+.muboard-user-posting-header-action-forum {
+    padding: 5px 10px;
+    margin: 5px 0 0 10px;
+    float: left;
+    font-size: 1.2em;
+    border-radius: 5px;
+    border-bottom: 1px solid #999;
+}
+
 .muboard-user-posting-header-infos {
     float: right;
     padding: 0;
@@ -413,6 +431,7 @@ border-bottom: 1px solid #ddd;
     border: 3px solid #fff;
     border-radius: 5px;
 }
+
 
 
 
