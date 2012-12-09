@@ -155,4 +155,20 @@ class MUBoard_Controller_Admin extends MUBoard_Controller_Base_Admin
 		return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $id)));
 			
 	}
+	
+	/**
+	 * Controller method to mark a posting as solved ( issue )
+	 */
+	
+	public function unsolved()
+	{
+	
+		$request = new Zikula_Request_Http();
+		$id = $request->getGet()->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
+			
+		MUBoard_Util_Model::unsolvedPosting($id);
+			
+		return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $id)));
+			
+	}
 }
