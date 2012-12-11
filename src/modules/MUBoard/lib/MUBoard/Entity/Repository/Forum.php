@@ -29,6 +29,8 @@ class MUBoard_Entity_Repository_Forum extends MUBoard_Entity_Repository_Base_For
      */
     protected function _intBaseQuery($where = '', $orderBy = '', $useJoins = true)
     {
+    	$useJoins = false;
+    	
     	$view = new Zikula_Request_Http();
     	$ot = $view->request->filter('ot', 'category', FILTER_SANITIZE_STRING);
     	$func = $view->request->filter('func', 'main', FILTER_SANITIZE_STRING);
@@ -36,7 +38,7 @@ class MUBoard_Entity_Repository_Forum extends MUBoard_Entity_Repository_Base_For
         $selection = 'tbl';
         if ($useJoins === true) {
         	if ($ot == 'forum' && $func == 'display') {
-        		$selection .= ', tblCategory';
+        		$selection .= ', tblCategory, tblPosting';
         	}
         	else {
             $selection .= $this->addJoinsToSelection();
