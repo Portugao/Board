@@ -188,6 +188,11 @@ button.muboardInlineButton {
     float: left;
 }
 
+.muboard-user-legend span  {
+    float: right;
+    margin: 0 0 0 10px;
+}
+
 
 .issues {
     background: #c63;
@@ -200,11 +205,13 @@ button.muboardInlineButton {
 .children {
     background: #369;
     color: #eee;
+    width: 5%;
 }
 
 .calls {
     background: #cc6;
     color: #eee;
+    width: 5%;
 }
 
 /* .muboard-user-category-header {
@@ -233,6 +240,7 @@ border-bottom: 1px solid #ddd;
 
 .last-posting {
     font-size: 0.9em;
+    width: 60%;
 }
 
 /*********Forums*****************/
@@ -298,7 +306,7 @@ border-bottom: 1px solid #ddd;
 
 .muboard-user-forum-left {
     float: left;
-    width: 45%;
+    width: 35%;
 }
 
 .muboard-user-forum-left-icon {
@@ -327,7 +335,7 @@ border-bottom: 1px solid #ddd;
 
 .muboard-user-forum-right {
     float: right;
-    width: 45%;
+    width: 55%;
 }
 
 /*********POSTINGS**************/
@@ -448,6 +456,9 @@ border-bottom: 1px solid #ddd;
     border: 3px solid #fff;
     border-radius: 5px;
 }
+
+
+
 
 
 
