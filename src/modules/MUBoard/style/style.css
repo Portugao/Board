@@ -292,7 +292,13 @@ border-bottom: 1px solid #ddd;
 
 .muboard-user-forum-left-icon {
     float: left;
-    width: 15%;
+    width: 10%;
+    border: 0 1%;
+}
+
+.muboard-user-forum-left-solved {
+    float: left;
+    width: 10%;
     border: 0 1%;
 }
 
@@ -431,6 +437,8 @@ border-bottom: 1px solid #ddd;
     border: 3px solid #fff;
     border-radius: 5px;
 }
+
+
 
 
 
