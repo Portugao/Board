@@ -302,53 +302,6 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 	}
 
 	/**
-	 * This method gets if an issue is open or closed
-	 */
-
-	public static function getStateOfPosting($postingid) {
-
-		//get repository for Postings
-		$repository = MUBoard_Util_Model::getPostingRepository();
-		// get posting
-		$posting = $repository->selectById($postingid);
-		$state = $posting->getState();
-
-		if (SecurityUtil::checkPermission('MUBoard::', '::', ACCESS_ADMIN)) {
-
-			if ($state == 1) {
-				$url = ModUtil::url('MUBoard', 'admin', 'close', array('ot' => 'posting', 'id' => $postingid));
-				$title = __('Issue is open! You have permissions to close this issue!');
-				$out =  "<a title='{$title}' id='muboard-user-posting-header-infos-abo' href='{$url}'>
-            <img src='/images/icons/extrasmall/button_ok.png' />
-            </a>";
-			}
-
-			if ($state == 0) {
-				$url = ModUtil::url('MUBoard', 'admin', 'open', array('ot' => 'posting', 'id' => $postingid));
-				$title = __('Issue is closed. You have permissions to reopen this issue!');
-				$out =  "<a title='{$title}' id='muboard-user-posting-header-infos-abo' href='{$url}'>
-            <img src='/images/icons/extrasmall/button_cancel.png' />
-            </a>";
-			}
-
-		}
-		else {
-			if ($state == 1) {
-				$title = __('Issue is open!');
-				$out =  "<img title='{$title}' src='/images/icons/extrasmall/button_ok.png' />";
-			}
-
-			if ($state == 0) {
-				$title = __('Issue is closed!');
-				$out = "<img title='{$title}' src='/images/icons/extrasmall/button_cancel.png' />";
-			}
-
-		}
-
-		return $out;
-	}
-
-	/**
 	 *
 	 * This method gets the state of the category abo
 	 */
