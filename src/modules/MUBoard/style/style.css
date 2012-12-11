@@ -224,6 +224,17 @@ border-bottom: 1px solid #ddd;
     padding: 5px 1%;
 }
 
+.muboard-category-legend {
+    float: left;
+    border-radius: 5px;
+    width: 94%;
+    background: #333;
+}
+
+.last-posting {
+    font-size: 0.9em;
+}
+
 /*********Forums*****************/
 
 .muboard-user-forum {
@@ -437,6 +448,10 @@ border-bottom: 1px solid #ddd;
     border: 3px solid #fff;
     border-radius: 5px;
 }
+
+
+
+
 
 
 
