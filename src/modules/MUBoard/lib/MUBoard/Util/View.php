@@ -153,6 +153,52 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 		return $count;
 			
 	}
+	
+	/**
+	 *
+	 * This method gets the last answer to an issue
+	 */
+	public static function getLastAnswer($id)
+	{
+		// get repositoy for posting
+		$repository = MUBoard_Util_Model::getPostingRepository();
+		// get posting by id
+		$posting = $repository->selectById($id);
+		// getchildren of this posting
+		$children = $posting->getChildren();
+		// we look for the last posting
+		$childid = 0;
+	
+		foreach ($children as $child) {
+			if ($child['id'] > $childid) {
+				$childid = $child['id'];
+			}
+		}
+
+		// if childid > 0, we have child for the issue
+		if ($childid > 0) {
+			// we get the last posting
+			$lastposting = $repository->selectById($childid);
+
+			$url = ModUtil::url('MUBoard', 'user', 'display', array('ot' => 'posting', 'id' => $id));
+	
+			$createdDate = $lastposting->getCreatedDate();
+			$date = DateUtil::formatDatetime($createdDate, 'datetimelong');
+			$uname = UserUtil::getVar('uname', $lastposting['createdUserId']);
+			$out .= __('Last posting by ');
+			$out .= $uname;
+			$out .= "<br />";
+			$out .= __('on ');
+			$out .= $date;
+
+		}
+		else {
+			$out = __('No postings available!');
+		}
+			
+		return $out;
+			
+	}
 
 	/**
 	 *
@@ -197,7 +243,6 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 			$createdDate = $lastposting->getCreatedDate();
 			$date = DateUtil::formatDatetime($createdDate, 'datetimelong');
 			$uname = UserUtil::getVar('uname', $lastposting['createdUserId']);
-			$out = "<div class=''>";
 			$out .= __('Last posting by ');
 			$out .= $uname;
 			$out .= "<br />";
@@ -205,8 +250,8 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 			$out .= $date . "<br />";
 			$out .= __('Issue: ');
 			$out .= "<a href='" . $url;
-			$out .= "'>" . $issuetitle . "</a>" ;
-			$out .= "</div>";
+			$out .= "'>" . $issuetitle . "</a>";
+
 		}
 		else {
 			$out = __('No postings available!');
