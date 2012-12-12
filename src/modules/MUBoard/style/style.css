@@ -232,10 +232,13 @@ border-bottom: 1px solid #ddd;
 }
 
 .muboard-category-legend {
-    float: left;
+    background: none repeat scroll 0 0 #CCCCCC;
     border-radius: 5px;
-    width: 94%;
-    background: #333;
+    border-top: 1px solid #999999;
+    clear: both;
+    float: left;
+    padding: 5px 1% !important;
+    width: 98%;
 }
 
 .last-posting {
@@ -288,6 +291,15 @@ border-bottom: 1px solid #ddd;
     font-size: 1.2em;
     border-radius: 5px;
     border-bottom: 1px solid #999;
+}
+
+.muboard-user-forum-header-infos {
+    padding: 5px 10px;
+    margin: 5px 10px 0 10px;
+    float: right;
+    font-size: 1.2em;
+    border-radius: 5px;
+    border-bottom: 1px solid #999;  
 }
 
 .muboard-user-forum-header-action {
@@ -456,6 +468,8 @@ border-bottom: 1px solid #ddd;
     border: 3px solid #fff;
     border-radius: 5px;
 }
+
+
 
 
 
