@@ -120,7 +120,7 @@
 </div>
 </div>
         
-    <div class="z-informationmsg z-formnote" style="float: left; width: 96%;">
+    <div class="z-informationmsg z-formnote muboard-category-legend">
     <div class="muboard-user-legend"><span>{gt text='Number of issues'}</span><span class="muboard-user-category-footer-statistic issues">3</span></div> 
     <div class="muboard-user-legend"><span>{gt text='Number of postings'}</span><span class="muboard-user-category-footer-statistic postings">5</span></div>
     </div>

@@ -23,8 +23,8 @@
     {muboardFormFrame}
     {if $func eq 'edit'}
     {formsetinitialfocus inputId='title'}    
-    {else}
-    {formsetinitialfocus inputId='text'}
+   {* {else}
+    {formsetinitialfocus inputId='text'} *}
     {/if}
     <fieldset>
         <legend>{gt text='Content'}</legend>
@@ -39,16 +39,7 @@
             {formtextinput group='posting' id='text' mandatory=true __title='Enter the text of the posting' textMode='multiline' rows='6' cols='50' cssClass='required'}
             {muboardValidationError id='text' class='required'}
         </div>
-        
-    {* include display hooks *}
-        {notifydisplayhooks eventname='muboard.ui_hooks.postings.form_edit' id='hallo' assign='hooks'}
 
-        {foreach key='hookName' item='hook' from=$hooks}
-            <div class="z-formrow">
-                {$hook}
-            </div>
-        {/foreach}
-        
         <div class="z-formrow" style="display: none;">
             {formlabel for='invocations' __text='Invocations'}
             {formintinput group='posting' id='invocations' mandatory=false __title='Enter the invocations of the posting' maxLength=11 cssClass=' validate-digits'}
@@ -221,26 +212,40 @@
         {/if}
         {/if}
     </fieldset>
+    
+            
+        {* include display hooks *}
+        {notifydisplayhooks eventname='muboard.ui_hooks.postings.form_edit' id=null assign='hooks'}
+        {if $func eq 'edit' || $func eq 'display'}
+        {foreach key='hookName' item='hook' from=$hooks}
+            {if $hookName ne 'Tag'}
+            <div class="z-formrow">
+                {$hook}
+            </div>
+            {/if}
+        {/foreach}
+        {/if}
+    
     {if $func eq 'edit'}
-    <input id="muboardForum_ForumItemList" type="hidden" value="{$forum}" name="muboardForum_ForumItemList">
-    <input id="muboardForum_ForumMode" type="hidden" value="{$forum}" name="muboardForum_ForumMode">
+    <input id="muboardForum_ForumItemList" type="hidden" value="{$forum}" name="muboardForum_ForumItemList" />
+    <input id="muboardForum_ForumMode" type="hidden" value="{$forum}" name="muboardForum_ForumMode" />
     {/if}
     {if $func eq 'display'}
-    <input id="muboardForum_ForumItemList" type="hidden" value="{$forumid}" name="muboardForum_ForumItemList">
-    <input id="muboardForum_ForumMode" type="hidden" value="0" name="muboardForum_ForumMode">
+    <input id="muboardForum_ForumItemList" type="hidden" value="{$forumid}" name="muboardForum_ForumItemList" />
+    <input id="muboardForum_ForumMode" type="hidden" value="0" name="muboardForum_ForumMode" />
     {/if}    
     {if $func eq 'edit'}
     {if isset($parentid)}
-    	<input type="hidden" id="muboardPosting_ParentItemList" name="muboardPosting_ParentItemList" value={$parentid}>
-    	<input type="hidden" id="muboardPosting_ParentMode" name="muboardPosting_ParentMode" value="0">    
+    	<input type="hidden" id="muboardPosting_ParentItemList" name="muboardPosting_ParentItemList" value={$parentid} />
+    	<input type="hidden" id="muboardPosting_ParentMode" name="muboardPosting_ParentMode" value="0" />    
     {else}
-    	<input type="hidden" id="muboardPosting_ParentItemList" name="muboardPosting_ParentItemList" value="0">
-    	<input type="hidden" id="muboardPosting_ParentMode" name="muboardPosting_ParentMode" value="0">            
+    	<input type="hidden" id="muboardPosting_ParentItemList" name="muboardPosting_ParentItemList" value="0" />
+    	<input type="hidden" id="muboardPosting_ParentMode" name="muboardPosting_ParentMode" value="0" />            
     {/if}  
     {/if}
     {if $func eq 'display'}
-    	<input type="hidden" id="muboardPosting_ParentItemList" name="muboardPosting_ParentItemList" value="{$posting.id}">
-    	<input type="hidden" id="muboardPosting_ParentMode" name="muboardPosting_ParentMode" value="0">
+    	<input type="hidden" id="muboardPosting_ParentItemList" name="muboardPosting_ParentItemList" value="{$posting.id}" />
+    	<input type="hidden" id="muboardPosting_ParentMode" name="muboardPosting_ParentMode" value="0" />
     {/if}
 
     {* {if $mode ne 'create'}

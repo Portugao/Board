@@ -10,40 +10,67 @@
 {if !isset($smarty.get.theme) || $smarty.get.theme ne 'Printer'}
 {* <div class="muboardRightBox">
 <h3>{gt text='Posting'}</h3> *}
+{checkpermissionblock component='MUBoard:Category:' instance="`$posting.forum.category.id`::" level="ACCESS_OVERVIEW"}
 {checkpermissionblock component='MUBoard:Posting:' instance="`$posting.id`::" level="ACCESS_OVERVIEW"}
     <div id="top" class="muboard-user-posting-parent ">
         <div class="muboard-user-posting-header">
             <div class="muboard-user-posting-header-title">
                 <h2>
-                     {gt text='Issue:'} {$posting.title|notifyfilters:'muboard.filterhook.categories'}
+                    {gt text='Issue:'} {$posting.title|notifyfilters:'muboard.filterhook.categories'}
+                    {if $posting.solved eq 0}
+                    {if $posting.createdUserId eq $coredata.user.uid}
+                    {gt text='Mark this issue as solved!' assign='linkText'}
+                    {assign var='linkTitle' value=$linkText}
+                    <a title="{$linkTitle}" href="{modurl modname='MUBoard' type='admin' func='solved' ot='posting' id=$posting.id}">
+                    <img src="images/icons/extrasmall/redled.png" />
+                    </a>
+                    {else}
+                    <img src="images/icons/extrasmall/redled.png" />
+                    {/if}
+                    {/if}
+                    {if $posting.solved eq 1}
+                    {if $posting.createdUserId eq $coredata.user.uid}
+                    {gt text='This issue is marked as solved! Mark it as unsolved! ' assign='linkText'}
+                    {assign var='linkTitle' value=$linkText}
+                    <a title="{$linkTitle}" href="{modurl modname='MUBoard' type='admin' func='unsolved' ot='posting' id=$posting.id}">                    
+                    <img alt="{$linkTitle}" src="images/icons/extrasmall/greenled.png" />
+                    </a>
+                    {else}
+                    <img alt="{$linkTitle}" src="images/icons/extrasmall/greenled.png" />
+                    {/if}
+                    {/if}
                 </h2>
                 {gt text='Created: '}{$posting.createdDate|dateformat:datetimelong}
             </div>
             <div class="muboard-user-posting-header-action">
-            {gt text='Category:'} <a title="{gt text='Back to'} {$posting.forum.category.title}" href="{modurl modname='MUBoard' type='user' func='display' ot='category' id=$posting.forum.category.id}">{$posting.forum.category.title}</a><br />{gt text='Forum:'} <a title="{gt text='Back to'} {$posting.forum.title}" href="{modurl modname='MUBoard' type='user' func='display' ot='forum' id=$posting.forum.id}">{$posting.forum.title}</a>
-              {*  {if count($posting._actions) gt 0}
-                    <p>{strip}
-                    {foreach item='option' from=$posting._actions}
-                         <a href="{$option.url.type|muboardActionUrl:$option.url.func:$option.url.arguments}" title="{$option.linkTitle|safetext}" class="z-icon-es-{$option.icon}">
-                             {$option.linkText|safetext}
-                         </a>
-                    {/foreach}
-                    {/strip}</p>
-                {/if} *}
+            <div class="muboard-user-posting-header-action-category">{gt text='Category:'} <a title="{gt text='Back to'} {$posting.forum.category.title}" href="{modurl modname='MUBoard' type='user' func='display' ot='category' id=$posting.forum.category.id}">{$posting.forum.category.title}</a></div>
+            <div class="muboard-user-posting-header-action-forum">{gt text='Forum:'} <a title="{gt text='Back to'} {$posting.forum.title}" href="{modurl modname='MUBoard' type='user' func='display' ot='forum' id=$posting.forum.id}">{$posting.forum.title}</a></div>
+            {notifydisplayhooks eventname='muboard.ui_hooks.postings.display_view' id=$posting.id urlobject=$currentUrlObject assign='hooks'}
+            {foreach key='hookname' item='hook' from=$hooks}
+                {$hook}
+            {/foreach}
             </div>            
             <div class="muboard-user-posting-header-infos">
             {* <a id="muboard-user-posting-header-infos-close" href="{modurl modname='muboard' type='admin' func='take' ot='abo' posting=$posting.id}">
             <img src="/images/icons/extrasmall/mail_get.png" />
             </a> *}
             {$posting.id|muboardGetStateOfPostingAbo:$posting.id}
-            {$posting.id|muboardGetStateOfPosting} 
+            {if $posting.state eq 1}
+            <a title="{gt text='Issue is open! You have permissions to close this issue!'}" id="muboard-user-posting-header-infos-abo" href="{modurl modname='MUBoard' type='admin' func='close' ot='posting' id=$posting.id}">
+                <img src='/images/icons/extrasmall/button_ok.png' />
+            </a>
+            {else}
+            <a title="{gt text='Issue is closed. You have permissions to reopen this issue!'}" id="muboard-user-posting-header-infos-abo" href="{modurl modname='MUBoard' type='admin' func='open' ot='posting' id=$posting.id}">
+            <img src='/images/icons/extrasmall/button_cancel.png' />
+            </a>
+            {/if}    
             {$posting.id|muboardGetStateOfEditOfIssue}    
             </div>
 
         </div>
         <div class="muboard-user-posting-user">
         <div class="muboard-user-posting-avatar">
-        {useravatar uid=$posting.createdUserId size=60}<br />
+        {useravatar uid=$posting.createdUserId size=80}<br />
         {usergetvar name=uname uid=$posting.createdUserId}
         </div>
         <div class="muboard-user-posting-datas">
@@ -55,7 +82,8 @@
         </div>
         <div class="muboard-user-posting-content">
         <div class="muboard-user-posting-content-text">
-        {$posting.text}
+        {$posting.text|notifyfilters:'muboard.filter_hooks.postings.filter'|safehtml}
+        {* {$posting.text} *}
         </div>
         <div class="muboard-user-posting-content-image">
         {if $posting.firstImage ne ''}
@@ -70,7 +98,6 @@
         </div>
         </div>   
     </div>
-    {/checkpermissionblock}
     {foreach item='childPosting' from=$postings}
         <div class="muboard-user-posting">
         <div class="muboard-user-posting-user">
@@ -90,8 +117,9 @@
         {$childPosting.createdDate|dateformat:datetimelong} {if $editPostings eq 1}<div class="muboard-user-posting-edit">{$childPosting.id|muboardGetStateOfEditOfIssue}</div>{/if}
         </div>
         <div class="muboard-user-posting-content-text">
-        {$childPosting.text|notifyfilters:'muboard.filter_hooks.postings'}
+        {$childPosting.text|notifyfilters:'muboard.filter_hooks.postings.filter'|safehtml}
         </div>
+        <div class="muboard-user-posting-content-bottom"><a class="muboard-user-posting-content-links" href="{$siteurl}#theme_header"><img alt="{gt text=''}" src="images/icons/extrasmall/1uparrow.png" /></a></div>
         {if $childPosting.firstImage ne ''}        
         <div class="muboard-user-posting-content-image">
         <a href="{$childPosting.firstImageFullPathURL}" title="{$childPosting.title|replace:"\"":""}"{if $childPosting.firstImageMeta.isImage} rel="imageviewer[posting]"{/if}>
@@ -156,18 +184,19 @@
         {gt text='Download'} ({$posting.thirdFileMeta.size|muboardGetFileSize:$posting.thirdFileFullPath:false:false})
         {/if}
         </a>
-        </div>
+     </div>
         {else}&nbsp;{/if}            
         </div>
         </div>
-
     {/foreach}
     {pager rowcount=$pager.numitems limit=$pager.itemsperpage display='page'}
     {checkpermissionblock component='MUBoard::' instance=".*" level="ACCESS_ADD"}
+    {checkpermissionblock component='MUBoard:Category:' instance="`$posting.forum.category.id`::" level="ACCESS_ADD"}
     {if $posting.state eq 1}
     {modfunc modname='MUBoard' type='user' func='edit' ot='posting'}
     {/if}   
-    {/checkpermissionblock} 
+    {/checkpermissionblock}
+    {/checkpermissionblock}  
     
 {* {if isset($posting.parent) && $posting.parent ne null}
     {include file='user/posting/include_displayItemListOne.tpl' item=$posting.parent}
@@ -184,6 +213,8 @@
 </p>
 {/if}
 {/if}*}
+{/checkpermissionblock}
+{/checkpermissionblock}
 </div>
 {/if}
 
@@ -312,21 +343,6 @@
   {*  {include file='user/include_standardfields_display.tpl' obj=$posting} *}
 
 {if !isset($smarty.get.theme) || $smarty.get.theme ne 'Printer'}
-{* {if count($posting._actions) gt 0}
-    <p>{strip}
-    {foreach item='option' from=$posting._actions}
-        <a href="{$option.url.type|muboardActionUrl:$option.url.func:$option.url.arguments}" title="{$option.linkTitle|safetext}" class="z-icon-es-{$option.icon}">
-            {$option.linkText|safetext}
-        </a>
-    {/foreach}
-    {/strip}</p>
-{/if} *}
-
-{* include display hooks *}
-{notifydisplayhooks eventname='muboard.ui_hooks.postings.display_view' id=$posting.id urlobject=$currentUrlObject assign='hooks'}
-{foreach key='hookname' item='hook' from=$hooks}
-    {$hook}
-{/foreach}
 
 <br style="clear: right" />
 {/if}

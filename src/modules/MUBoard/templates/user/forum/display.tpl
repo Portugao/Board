@@ -12,13 +12,16 @@
 <h3>{gt text='Postings'}</h3> *}
 
     <div class="muboard-user-forum-display">
+    {checkpermissionblock component='MUBoard:Category:' instance="`$forum.category.id`::" level="ACCESS_OVERVIEW"}
         <div class="muboard-user-forum-header">
         <div class="muboard-user-forum-header-title">
             <h2>
             {gt text='Forum:'} {$forum.title|notifyfilters:'muboard.filterhook.categories'}
             </h2>
         </div>
-        <div class="muboard-user-category-header-statistic postings">{$forum.id|muboardGetNumberOfPostingsOfForum:$forum.id}</div>
+        <div class="muboard-user-forum-header-statistic postings">{$forum.id|muboardGetNumberOfPostingsOfForum:$forum.id}</div>
+        <div class="muboard-user-forum-header-category"><a href="{modurl modname='MUBoard' type='user' func='display' ot='category' id=$forum.category.id}">{gt text='Category:'} {$forum.category.title}</a></div>
+        <div class="muboard-user-forum-header-infos">{$forum.id|muboardGetStateOfForumAbo:$func}</div>
         {* <div class="muboard-user-forum-header-action">
         {if count($forum._actions) gt 0}
         <p>{strip}
@@ -33,9 +36,11 @@
         </div>
         <div class=muboard-user-forum-content>
         {if isset($forum.posting) && $forum.posting ne null}
-             {include file='user/posting/include_displayItemListMany.tpl' items=$forum.posting}
+             {include file='user/posting/include_displayItemListMany.tpl' items=$postings}
         {/if}
         </div>   
+        {pager rowcount=$pager.numitems limit=$pager.itemsperpage display='page'}
+    {/checkpermissionblock}
     </div>
 
 {* {checkpermission component='MUBoard::' instance='.*' level='ACCESS_ADMIN' assign='authAdmin'}
