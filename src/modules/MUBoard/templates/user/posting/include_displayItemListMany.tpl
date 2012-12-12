@@ -9,6 +9,30 @@
 <div class="muboard-user-forum-left-icon">
 {$item.id|muboardPostingsSinceLastLogin:2}
 </div>
+<div class="muboard-user-forum-left-solved">
+{if $item.solved eq 0}
+    {if $item.createdUserId eq $coredata.user.uid}
+        {gt text='Mark this issue as solved!' assign='linkText'}
+        {assign var='linkTitle' value=$linkText}
+            <a title="{$linkTitle}" href="{modurl modname='MUBoard' type='admin' func='solved' ot='posting' id=$item.id}">
+            <img src="images/icons/extrasmall/redled.png" />
+            </a>
+     {else}
+         <img src="images/icons/extrasmall/redled.png" />
+     {/if}
+     {/if}
+     {if $item.solved eq 1}
+     {if $item.createdUserId eq $coredata.user.uid}
+         {gt text='This issue is marked as solved! Mark it as unsolved! ' assign='linkText'}
+         {assign var='linkTitle' value=$linkText}
+             <a title="{$linkTitle}" href="{modurl modname='MUBoard' type='admin' func='unsolved' ot='posting' id=$item.id}">                    
+             <img alt="{$linkTitle}" src="images/icons/extrasmall/greenled.png" />
+             </a>
+     {else}
+          <img alt="{$linkTitle}" src="images/icons/extrasmall/greenled.png" />
+     {/if}                  
+     {/if}
+</div>
 <div class="muboard-user-forum-left-creater">
     <a href="{modurl modname='MUBoard' type='user' func='display' ot='posting' id=$item.id}">
         {$item.title}
@@ -19,9 +43,22 @@
 <div class="muboard-user-forum-right">
 <div class="muboard-user-category-header-statistic children">{$item.id|muboardGetNumberOfAnswersOfPosting:$item.id}</div>
 <div class="muboard-user-category-header-statistic calls">{$item.invocations}</div>
+<div class="muboard-user-category-header-statistic last-posting">{$item.id|muboardGetLastAnswer}</div>
 <div class="muboard-user-posting-header-infos">
+    {checkpermissionblock component='MUBoard::' instance='.*' level="ACCESS_ADMIN"}
+    <a title="{gt text='Move issue to another forum!'}" href="{modurl modname='MUBoard' type='admin' func='edit' ot='posting' id=$item.id work='movetoforum'}"><img src="/images/icons/extrasmall/1rightarrow.png" /></a>
+    {/checkpermissionblock}
     {$item.id|muboardGetStateOfPostingAbo:$func}
-    {$item.id|muboardGetStateOfPosting}                
+    {* {$item.id|muboardGetStateOfPosting}  *}
+    {if $item.state eq 1}
+        <a title="{gt text='Issue is open! You have permissions to close this issue!'}" id="muboard-user-posting-header-infos-abo" href="{modurl modname='MUBoard' type='admin' func='close' ot='posting' id=$item.id}">
+            <img src='/images/icons/extrasmall/button_ok.png' />
+        </a>
+    {else}
+         <a title="{gt text='Issue is closed. You have permissions to reopen this issue!'}" id="muboard-user-posting-header-infos-abo" href="{modurl modname='MUBoard' type='admin' func='open' ot='posting' id=$item.id}">
+            <img src='/images/icons/extrasmall/button_cancel.png' />
+        </a>
+    {/if}              
 </div>
 </div>
 </div>
