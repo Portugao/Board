@@ -421,15 +421,26 @@ border-bottom: 1px solid #ddd;
 }
 
 .muboard-user-posting-content {
+    position: relative;
     float: right;
     width: 74%;
     border-left: 1px solid #ddd;
+}
+
+.muboard-user-posting-content-links {
+    float: right;
+    padding: 0 10px 0 0;
 }
 
 .muboard-user-posting-content-text {
     float: left;
     width: 98%;
     padding: 10px 1%;
+}
+
+.muboard-user-posting-content-bottom {
+    position: relative;
+    float: left;
 }
 
 .muboard-user-posting-content-image {
@@ -468,6 +479,16 @@ border-bottom: 1px solid #ddd;
     border: 3px solid #fff;
     border-radius: 5px;
 }
+
+.muboard-user-posting-search-results {
+    padding: 10px;  
+}
+
+
+
+
+
+
 
 
 
