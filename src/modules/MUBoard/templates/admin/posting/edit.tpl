@@ -13,6 +13,10 @@
     {gt text='Edit posting' assign='templateTitle'}
     {assign var='adminPageIcon' value='edit'}
 {/if}
+{if $work eq 'movetoforum'}
+    {gt text='Move issue to another forum' assign='templateTitle'}
+    {assign var='adminPageIcon' value='edit'}
+{/if}
 <div class="muboard-posting muboard-edit">
 {pagesetvar name='title' value=$templateTitle}
 <div class="z-admin-content-pagetitle">
@@ -26,6 +30,7 @@
 
     <fieldset>
         <legend>{gt text='Content'}</legend>
+        {if $work ne 'movetoforum'}
         <div class="z-formrow">
             {formlabel for='title' __text='Title'}
             {formtextinput group='posting' id='title' mandatory=false readOnly=false __title='Enter the title of the posting' textMode='singleline' maxLength=255 cssClass=''}
@@ -189,7 +194,10 @@
     {if $mode ne 'create'}
         {include file='admin/include_standardfields_edit.tpl' obj=$posting}
     {/if}
+    {/if}
+    {if $work ne 'movetoforum'}
     {include file='admin/posting/include_selectOne.tpl' relItem=$posting aliasName='parent' idPrefix='muboardPosting_Parent'}
+    {/if}
     {include file='admin/forum/include_selectEditOne.tpl' relItem=$posting aliasName='forum' idPrefix='muboardForum_Forum'}
 
     {* include display hooks *}
@@ -249,6 +257,7 @@
     var editImage = '<img src="{{$editImageArray.src}}" width="16" height="16" alt="" />';
     var removeImage = '<img src="{{$deleteImageArray.src}}" width="16" height="16" alt="" />';
     var relationHandler = new Array();
+    {{if $work ne 'movetoforum'}}
     var newItem = new Object();
     newItem['ot'] = 'posting';
     newItem['alias'] = 'Parent';
@@ -256,6 +265,7 @@
     newItem['acInstance'] = null;
     newItem['windowInstance'] = null;
     relationHandler.push(newItem);
+    {{/if}}    
     var newItem = new Object();
     newItem['ot'] = 'forum';
     newItem['alias'] = 'Forum';
@@ -265,7 +275,9 @@
     relationHandler.push(newItem);
 
     document.observe('dom:loaded', function() {
+        {{if $work ne 'movetoforum'}}
         muboardInitRelationItemsForm('posting', 'muboardPosting_Parent', false);
+        {{/if}}
         muboardInitRelationItemsForm('forum', 'muboardForum_Forum', true);
 
         muboardAddCommonValidationRules('posting', '{{if $mode eq 'create'}}{{else}}{{$posting.id}}{{/if}}');
