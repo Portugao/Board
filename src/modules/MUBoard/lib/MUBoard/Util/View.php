@@ -240,6 +240,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 			}
 			$url = ModUtil::url('MUBoard', 'user', 'display', array('ot' => 'posting', 'id' => $id));
 
+			$out = '';
 			$createdDate = $lastposting->getCreatedDate();
 			$date = DateUtil::formatDatetime($createdDate, 'datetimelong');
 			$uname = UserUtil::getVar('uname', $lastposting['createdUserId']);
