@@ -45,10 +45,12 @@
             <div class="muboard-user-posting-header-action">
             <div class="muboard-user-posting-header-action-category">{gt text='Category:'} <a title="{gt text='Back to'} {$posting.forum.category.title}" href="{modurl modname='MUBoard' type='user' func='display' ot='category' id=$posting.forum.category.id}">{$posting.forum.category.title}</a></div>
             <div class="muboard-user-posting-header-action-forum">{gt text='Forum:'} <a title="{gt text='Back to'} {$posting.forum.title}" href="{modurl modname='MUBoard' type='user' func='display' ot='forum' id=$posting.forum.id}">{$posting.forum.title}</a></div>
+            <div class="muboard-user-posting-header-hooks">
             {notifydisplayhooks eventname='muboard.ui_hooks.postings.display_view' id=$posting.id urlobject=$currentUrlObject assign='hooks'}
             {foreach key='hookname' item='hook' from=$hooks}
                 {$hook}
             {/foreach}
+            </div>
             </div>            
             <div class="muboard-user-posting-header-infos">
             {* <a id="muboard-user-posting-header-infos-close" href="{modurl modname='muboard' type='admin' func='take' ot='abo' posting=$posting.id}">
@@ -119,7 +121,6 @@
         <div class="muboard-user-posting-content-text">
         {$childPosting.text|notifyfilters:'muboard.filter_hooks.postings.filter'|safehtml}
         </div>
-        <div class="muboard-user-posting-content-bottom"><a class="muboard-user-posting-content-links" href="{$siteurl}#theme_header"><img alt="{gt text=''}" src="images/icons/extrasmall/1uparrow.png" /></a></div>
         {if $childPosting.firstImage ne ''}        
         <div class="muboard-user-posting-content-image">
         <a href="{$childPosting.firstImageFullPathURL}" title="{$childPosting.title|replace:"\"":""}"{if $childPosting.firstImageMeta.isImage} rel="imageviewer[posting]"{/if}>
@@ -187,6 +188,8 @@
      </div>
         {else}&nbsp;{/if}            
         </div>
+                <div class="muboard-user-posting-content-bottom"><a class="muboard-user-posting-content-links" href="{$siteurl}#theme_header"><img alt="{gt text=''}" src="images/icons/extrasmall/1uparrow.png" /></a></div>
+       
         </div>
     {/foreach}
     {pager rowcount=$pager.numitems limit=$pager.itemsperpage display='page'}
