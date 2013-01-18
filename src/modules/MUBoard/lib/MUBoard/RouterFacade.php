@@ -21,7 +21,7 @@ class MUBoard_RouterFacade extends MUBoard_Base_RouterFacade
      */
     function __construct()
     {
-        $displayDefaultEnding = System::getVar('shorturlsext', '');
+        $displayDefaultEnding = System::getVar('shorturlsext', 'html');
         $this->requirements = array(
             'func'          => '\w+',
             'ot'            => '\w+',

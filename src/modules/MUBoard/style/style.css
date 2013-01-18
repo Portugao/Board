@@ -409,6 +409,11 @@ border-bottom: 1px solid #ddd;
     padding: 0;
 }
 
+.muboard-user-posting-header-hooks {
+    clear:both;
+    padding: 5px 10px;  
+}
+
 #muboard-user-posting-header-infos-close {
     width: 30px;
     padding: 5px;
@@ -482,6 +487,7 @@ border-bottom: 1px solid #ddd;
 .muboard-user-posting-search-results {
     padding: 10px;  
 }
+
 
 
 
