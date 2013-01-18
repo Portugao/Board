@@ -439,8 +439,7 @@ border-bottom: 1px solid #ddd;
 }
 
 .muboard-user-posting-content-bottom {
-    position: relative;
-    float: left;
+  
 }
 
 .muboard-user-posting-content-image {
@@ -483,6 +482,7 @@ border-bottom: 1px solid #ddd;
 .muboard-user-posting-search-results {
     padding: 10px;  
 }
+
 
 
 
