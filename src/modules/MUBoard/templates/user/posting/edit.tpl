@@ -45,7 +45,7 @@
             {formintinput group='posting' id='invocations' mandatory=false __title='Enter the invocations of the posting' maxLength=11 cssClass=' validate-digits'}
             {muboardValidationError id='invocations' class='validate-digits'}
         </div> 
-        <input type="hidden" id="state" name="state" value="1">
+        <input type="hidden" id="state" name="state" value="1" />
         {* <div class="z-formrow" style="display: none;">
             {formlabel for='state' __text='Invocations'}
             {formintinput group='posting' id='state' mandatory=false __title='Enter the invocations of the posting' maxLength=11 cssClass=' validate-digits'}
@@ -213,19 +213,6 @@
         {/if}
     </fieldset>
     
-            
-        {* include display hooks *}
-        {notifydisplayhooks eventname='muboard.ui_hooks.postings.form_edit' id=null assign='hooks'}
-        {if $func eq 'edit' || $func eq 'display'}
-        {foreach key='hookName' item='hook' from=$hooks}
-            {if $hookName ne 'Tag'}
-            <div class="z-formrow">
-                {$hook}
-            </div>
-            {/if}
-        {/foreach}
-        {/if}
-    
     {if $func eq 'edit'}
     <input id="muboardForum_ForumItemList" type="hidden" value="{$forum}" name="muboardForum_ForumItemList" />
     <input id="muboardForum_ForumMode" type="hidden" value="{$forum}" name="muboardForum_ForumMode" />
@@ -264,6 +251,7 @@
     {/if} *}
 
     {* include possible submit actions *}
+    <div class="muboard-posting-edit-action">
     <div class="z-buttons z-formbuttons">
     {if $mode eq 'edit'}
         {formbutton id='btnUpdate' commandName='update' __text='Update posting' class='z-bt-save'}
@@ -281,6 +269,22 @@
         {formbutton id='btnUpdate' commandName='update' __text='OK' class='z-bt-ok'}
     {/if}
         {formbutton id='btnCancel' commandName='cancel' __text='Cancel' class='z-bt-cancel'}
+    </div>
+    <div class="muboard-posting-edit-hooks">
+            
+        {* include display hooks *}
+        {notifydisplayhooks eventname='muboard.ui_hooks.postings.form_edit' id=null assign='hooks'}
+        {if $func eq 'edit' || $func eq 'display'}
+        {foreach key='hookName' item='hook' from=$hooks}
+            {if $hookName ne 'Tag'}
+            <div class="z-formrow">
+                {$hook}
+            </div>
+            {/if}
+        {/foreach}
+        {/if}    
+    </div>  
+    </div>  
     </div>
   {/muboardFormFrame}
 {/muboardform}
