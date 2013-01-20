@@ -352,6 +352,30 @@ border-bottom: 1px solid #ddd;
 
 /*********POSTINGS**************/
 
+.muboard-posting-edit-action {
+    margin: 10px 0 0 0;
+    float: left;
+    width: 100%;
+    background: #eee;
+    border-radius: 5px;
+}
+
+.muboard-posting-edit-action .z-formbuttons {
+    margin: 0 10px;
+    width: 35%;
+    float: left;
+    background: #eee;
+    border-radius: 5px;
+}
+
+.muboard-posting-edit-hooks {
+    margin: 0 10px;
+    float: right;
+    width: 55%;
+    background: #eee;
+    border-radius: 5px;
+}
+
 .muboard-user-posting {
     margin: 10px 0 0 0;
     float: left;
@@ -444,7 +468,8 @@ border-bottom: 1px solid #ddd;
 }
 
 .muboard-user-posting-content-bottom {
-  
+    float: left;
+    width: 100%;
 }
 
 .muboard-user-posting-content-image {
@@ -476,7 +501,6 @@ border-bottom: 1px solid #ddd;
 .muboard-user-posting-edit {
     font-size: 0.9em;
     float: right;
-
 }
 
 .muboard-user-posting-avatar img {
@@ -487,6 +511,10 @@ border-bottom: 1px solid #ddd;
 .muboard-user-posting-search-results {
     padding: 10px;  
 }
+
+
+
+
 
 
 
