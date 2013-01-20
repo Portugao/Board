@@ -185,7 +185,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 			$createdDate = $lastposting->getCreatedDate();
 			$date = DateUtil::formatDatetime($createdDate, 'datetimelong');
 			$uname = UserUtil::getVar('uname', $lastposting['createdUserId']);
-			$out .= __('Last posting by ');
+			$out .= __('Last answer by ');
 			$out .= $uname;
 			$out .= "<br />";
 			$out .= __('on ');
@@ -193,7 +193,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 
 		}
 		else {
-			$out = __('No postings available!');
+			$out = __('No answer available!');
 		}
 			
 		return $out;
