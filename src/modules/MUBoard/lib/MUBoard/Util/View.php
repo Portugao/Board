@@ -153,7 +153,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 		return $count;
 			
 	}
-	
+
 	/**
 	 *
 	 * This method gets the last answer to an issue
@@ -168,7 +168,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 		$children = $posting->getChildren();
 		// we look for the last posting
 		$childid = 0;
-	
+
 		foreach ($children as $child) {
 			if ($child['id'] > $childid) {
 				$childid = $child['id'];
@@ -181,7 +181,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 			$lastposting = $repository->selectById($childid);
 
 			$url = ModUtil::url('MUBoard', 'user', 'display', array('ot' => 'posting', 'id' => $id));
-	
+
 			$createdDate = $lastposting->getCreatedDate();
 			$date = DateUtil::formatDatetime($createdDate, 'datetimelong');
 			$uname = UserUtil::getVar('uname', $lastposting['createdUserId']);
@@ -276,7 +276,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 
 		return $count;
 	}
-	
+
 	/**
 	 * This method gets if an issue is open or closed
 	 */
@@ -285,12 +285,12 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 
 		$count = self::getAnswersOfPosting($postingid);
 
-			if ($count >= 20) {
-				$alt = __('Important issue!');
-				$out =  "<img alt='";
-				$out .= $alt;
-				$out .= "' src='/images/icons/extrasmall/important.png' />";
-			}
+		if ($count >= 20) {
+			$alt = __('Important issue!');
+			$out =  "<img alt='";
+			$out .= $alt;
+			$out .= "' src='/images/icons/extrasmall/important.png' />";
+		}
 
 		return $out;
 	}
@@ -324,7 +324,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 		$diffTimeHours = $diffTime['d'] * 24 + $diffTime['h'];
 
 		if (UserUtil::isLoggedIn()== true) {
-		$userid = UserUtil::getVar('uid');
+			$userid = UserUtil::getVar('uid');
 		}
 		else {
 			$out = '';
@@ -337,8 +337,8 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 			$url = ModUtil::url('MUBoard', 'user', 'edit', array('ot' => 'posting', 'id' => $postingid, 'forum' => $forumid, 'token' => $csrftoken));
 			$title = __('You have permissions to edit this issue!');
 			$out = "<a title='{$title}' id='muboard-user-posting-header-infos-edit-creater' href='{$url}'>
-            <img src='/images/icons/extrasmall/xedit.png' />
-            </a>";
+			<img src='/images/icons/extrasmall/xedit.png' />
+			</a>";
 		}
 		else {
 			$out = '';
@@ -366,15 +366,15 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 		if (!$abo) {
 			$url = ModUtil::url('MUBoard', 'admin', 'take', array('ot' => 'abo', 'category' => $categroyid));
 			$out =  "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
-            <img src='/images/icons/extrasmall/mail_post_to.png' />
-            </a>";
+			<img src='/images/icons/extrasmall/mail_post_to.png' />
+			</a>";
 		}
 
 		if ($abo) {
 			$url = ModUtil::url('MUBoard', 'admin', 'quit', array('ot' => 'abo', 'category' => $categroyid));
 			$out = "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
-            <img src='/images/icons/extrasmall/mail_get.png' />
-            </a>";
+			<img src='/images/icons/extrasmall/mail_get.png' />
+			</a>";
 		}
 			
 		return $out;
@@ -394,27 +394,27 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 		$repository = MUBoard_Util_Model::getAboRepository();
 		if (UserUtil::isLoggedIn() == true) {
 
-		// get actual userid
-		$userid = UserUtil::getVar('uid');
-		// look for abo
-		$where = 'tbl.forumid = \'' . DataUtil::formatForStore($forumid) . '\'';
-		$where .= ' AND ';
-		$where .= 'tbl.userid = \'' . DataUtil::formatForStore($userid) . '\'';
-		$abo = $repository->selectWhere($where);
+			// get actual userid
+			$userid = UserUtil::getVar('uid');
+			// look for abo
+			$where = 'tbl.forumid = \'' . DataUtil::formatForStore($forumid) . '\'';
+			$where .= ' AND ';
+			$where .= 'tbl.userid = \'' . DataUtil::formatForStore($userid) . '\'';
+			$abo = $repository->selectWhere($where);
 
-		if (!$abo) {
-			$url = ModUtil::url('MUBoard', 'admin', 'take', array('ot' => 'abo', 'forum' => $forumid, 'view' => $func, 'cat' => $cat));
-			$out =  "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
-            <img src='/images/icons/extrasmall/mail_post_to.png' />
-            </a>";
-		}
+			if (!$abo) {
+				$url = ModUtil::url('MUBoard', 'admin', 'take', array('ot' => 'abo', 'forum' => $forumid, 'view' => $func, 'cat' => $cat));
+				$out =  "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
+				<img src='/images/icons/extrasmall/mail_post_to.png' />
+				</a>";
+			}
 
-		if ($abo) {
-			$url = ModUtil::url('MUBoard', 'admin', 'quit', array('ot' => 'abo', 'forum' => $forumid, 'view' => $func, 'cat' => $cat));
-			$out = "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
-            <img src='/images/icons/extrasmall/mail_get.png' />
-            </a>";
-		}
+			if ($abo) {
+				$url = ModUtil::url('MUBoard', 'admin', 'quit', array('ot' => 'abo', 'forum' => $forumid, 'view' => $func, 'cat' => $cat));
+				$out = "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
+				<img src='/images/icons/extrasmall/mail_get.png' />
+				</a>";
+			}
 		}
 		else {
 			$out = '';
@@ -436,44 +436,44 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 		// get repositoy for Categories
 		$repository = MUBoard_Util_Model::getAboRepository();
 		if (UserUtil::isLoggedIn() == true) {
-		// get actual userid
-		$userid = UserUtil::getVar('uid');
-		// look for abo
-		$where = 'tbl.postingid = \'' . DataUtil::formatForStore($postingid) . '\'';
-		$where .= ' AND ';
-		$where .= 'tbl.userid = \'' . DataUtil::formatForStore($userid) . '\'';
-		$abo = $repository->selectWhere($where);
+			// get actual userid
+			$userid = UserUtil::getVar('uid');
+			// look for abo
+			$where = 'tbl.postingid = \'' . DataUtil::formatForStore($postingid) . '\'';
+			$where .= ' AND ';
+			$where .= 'tbl.userid = \'' . DataUtil::formatForStore($userid) . '\'';
+			$abo = $repository->selectWhere($where);
 
-		if ($ot == 'posting') {
-			if (!$abo) {
-				$url = ModUtil::url('MUBoard', 'admin', 'take', array('ot' => 'abo', 'posting' => $postingid, 'object' => $ot));
-				$out =  "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
-            <img src='/images/icons/extrasmall/mail_post_to.png' />
-            </a>";
-			}
+			if ($ot == 'posting') {
+				if (!$abo) {
+					$url = ModUtil::url('MUBoard', 'admin', 'take', array('ot' => 'abo', 'posting' => $postingid, 'object' => $ot));
+					$out =  "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
+					<img src='/images/icons/extrasmall/mail_post_to.png' />
+					</a>";
+				}
 
-			if ($abo) {
-				$url = ModUtil::url('MUBoard', 'admin', 'quit', array('ot' => 'abo', 'posting' => $postingid, 'object' => $ot));
-				$out = "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
-            <img src='/images/icons/extrasmall/mail_get.png' />
-            </a>";
+				if ($abo) {
+					$url = ModUtil::url('MUBoard', 'admin', 'quit', array('ot' => 'abo', 'posting' => $postingid, 'object' => $ot));
+					$out = "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
+					<img src='/images/icons/extrasmall/mail_get.png' />
+					</a>";
+				}
 			}
-		}
-		if ($ot == 'forum') {
-			if (!$abo) {
-				$url = ModUtil::url('MUBoard', 'admin', 'take', array('ot' => 'abo', 'posting' => $postingid, 'object' => $ot, 'forum' => $forumid));
-				$out =  "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
-            <img src='/images/icons/extrasmall/mail_post_to.png' />
-            </a>";
-			}
+			if ($ot == 'forum') {
+				if (!$abo) {
+					$url = ModUtil::url('MUBoard', 'admin', 'take', array('ot' => 'abo', 'posting' => $postingid, 'object' => $ot, 'forum' => $forumid));
+					$out =  "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
+					<img src='/images/icons/extrasmall/mail_post_to.png' />
+					</a>";
+				}
 
-			if ($abo) {
-				$url = ModUtil::url('MUBoard', 'admin', 'quit', array('ot' => 'abo', 'posting' => $postingid, 'object' => $ot,'forum' => $forumid));
-				$out = "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
-            <img src='/images/icons/extrasmall/mail_get.png' />
-            </a>";
+				if ($abo) {
+					$url = ModUtil::url('MUBoard', 'admin', 'quit', array('ot' => 'abo', 'posting' => $postingid, 'object' => $ot,'forum' => $forumid));
+					$out = "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
+					<img src='/images/icons/extrasmall/mail_get.png' />
+					</a>";
+				}
 			}
-		}
 		}
 		else {
 			$out = '';
@@ -511,7 +511,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 				$where .= ' AND ';
 				$where .= 'tbl.id IN (' . $postingids . ')';
 				$countpostings = $repository2->selectCount($where);
-				
+
 				if ($countpostings > 0) {
 
 					$out = self::getOut();
@@ -652,7 +652,12 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 		$lastVisit = DateUtil::formatDatetime($user['lastVisit'], 'datebrief');
 
 		$out = __('Registered: ', $dom) . $userregDate . '<br />';
-		$out .= __('Last Visit: ', $dom) . $lastVisit . '<br />';
+		if (UserUtil::isLoggedIn() == false) { // TODO we have to really check if the user is online
+			$out .= __('Last Visit: ', $dom) . $lastVisit . '<br />';
+		}
+		else {
+			$out .= '<span class="muboard-online">' . __('Online', $dom) . '</span><br />';
+		}
 		$out .= __('Postings: ', $dom) . $user['numberPostings'] . '<br />';
 		$out .= __('Rank: ') . $user['rank']['name'] . '<br />';
 		if ($user['rank']['special'] == 0) {
@@ -707,7 +712,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 				if (!is_null($parent)) {
 					$parentid = $parent->getId();
 					if ($parentid != NULL)
-					if (!in_array($parentid, $postingids)) {
+						if (!in_array($parentid, $postingids)) {
 						$postingids[] = $parentid;
 					}
 				}
