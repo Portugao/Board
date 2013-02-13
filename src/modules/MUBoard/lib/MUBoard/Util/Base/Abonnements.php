@@ -26,9 +26,9 @@ class MUBoard_Util_Base_Abonnements extends Zikula_AbstractBase
 		$id = $args['id'];
 		$parent = $args['parent'];
 		$title = $args['title'];
-		if ($title = '') {
+		/*if ($title = '') {
 			$title = __('No title');
-		}
+		}*/
 		$text = $args['text'];
 
 		// we get a repository for abos
@@ -75,7 +75,7 @@ class MUBoard_Util_Base_Abonnements extends Zikula_AbstractBase
 		$host = System::serverGetVar('HTTP_HOST') . '/';
 		// workaround because of bug in MOST or doctrine2 TODO
 		if ($parent == 0) {
-			$url = 'http://' . $host . ModUtil::url('MUTicket', 'user', 'display', array('ot' => 'posting', 'id' => $id));
+			$url = 'http://' . $host . ModUtil::url('MUBoard', 'user', 'display', array('ot' => 'posting', 'id' => $id));
 		}
 		else {
 			$url = 'http://' . $host . ModUtil::url('MUBoard', 'user', 'display', array('ot' => 'posting', 'id' => $parent));
@@ -111,8 +111,8 @@ class MUBoard_Util_Base_Abonnements extends Zikula_AbstractBase
 
 	/**
 	 * This method get the abos of the relevant forum and return the mailadresses
-	 * @param integer $forumid         id of relevant forum if available
-	 * @param interger $userId         userid of the user created the posting
+	 * @param int $forumid         id of relevant forum if available
+	 * @param int $userId         userid of the user created the posting
 	 */
 
 	protected static function getForumAbos($forumid, $userId) {
@@ -176,28 +176,6 @@ class MUBoard_Util_Base_Abonnements extends Zikula_AbstractBase
 		// Get actual userid
 		$userid = $this->getCreatedUserId();
 
-		// Get supporter ids
-		$supporteruids = MUTicket_Util_Model::getExistingSupporterUids();
-
-		// Check if is array
-		if (is_array($supporteruids)) {
-			// Check if user is a supporter
-			if (in_array($userid, $supporteruids)) {
-				$kind = 'Supporter';
-			}
-			else {
-				$kind = 'Customer';
-			}
-		}
-		else {
-			if ($userid == $supporteruids) {
-				$kind ='Supporter';
-			}
-			else {
-				$kind ='Customer';
-			}
-		}
-
 		if (!$parentid ) {
 			$entry = $handler->__('A new ticket on ');
 		}
@@ -214,10 +192,10 @@ class MUBoard_Util_Base_Abonnements extends Zikula_AbstractBase
 		$host = System::serverGetVar('HTTP_HOST') . '/';
 		// workaround because of bug in MOST or doctrine2 TODO
 		if (!$parentid) {
-			$url = 'http://' . $host . ModUtil::url('MUTicket', 'user', 'view', array('ot' => 'ticket'));
+			$url = 'http://' . $host . ModUtil::url('MUBoard', 'user', 'display', array('ot' => 'ticket', 'id' => $id));
 		}
 		else {
-			$url = 'http://' . $host . ModUtil::url('MUTicket', 'user', 'display', array('ot' => 'ticket', 'id' => $parentid));
+			$url = 'http://' . $host . ModUtil::url('MUBoard', 'user', 'display', array('ot' => 'posting', 'id' => $parentid));
 		}
 
 		// We get the name of the site

@@ -194,7 +194,9 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 			$selectionArgs['resultsPerPage'] = $resultsPerPage;
 			list($entities, $objectCount) = ModUtil::apiFunc($this->name, 'selection', 'getEntitiesPaginated', $selectionArgs);
 
-
+			// we check if the user may see the form to answer to posting
+			$mayEdit = MUBoard_Util_Controller::mayEdit($id);
+			$this->view->assign('mayEdit', $mayEdit);
 		}
 		
 		if($objectType == 'forum') {
@@ -232,8 +234,7 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 			$selectionArgs['currentPage'] = $currentPage;
 			$selectionArgs['resultsPerPage'] = $resultsPerPage;
 			list($entities, $objectCount) = ModUtil::apiFunc($this->name, 'selection', 'getEntitiesPaginated', $selectionArgs);
-		
-		
+					
 		}
 
 		// build ModUrl instance for display hooks
@@ -257,7 +258,7 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 		$type = $this->request->getGet()->filter('type', 'admin', FILTER_SANITIZE_STRING);
 		$func = $this->request->getGet()->filter('func', 'view', FILTER_SANITIZE_STRING);
 		$editPostings = ModUtil::getVar($this->name, 'editPostings');
-
+		
 		// assign output data to view object.
 		$this->view->assign($objectType, $entity)
 		->assign('postings', $entities)

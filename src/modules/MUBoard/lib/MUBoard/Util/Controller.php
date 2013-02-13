@@ -16,5 +16,28 @@
  */
 class MUBoard_Util_Controller extends MUBoard_Util_Base_Controller
 {
-    // feel free to add your own convenience methods here
+	/**
+	 *
+	 */
+	public static function mayEdit($id) {
+         
+		return SecurityUtil::checkPermission('MUBoard::', '::', ACCESS_ADD);
+	}
+	
+	public static function rulePermissions($access) {
+		
+		$view = new Zikula_Request_Http();
+		$objectType = $view->getGet()->filter('ot', 'category', FILTER_SANITIZE_STRING);
+		$objectId = $view->getGet()->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
+		
+		$permission = SecurityUtil::checkPermission($this->name . '::', '::', $access);
+		
+		if ($objectType == 'category') {
+			$permission = SecurityUtil::checkPermission($this->name . ':Category:', $objectId, $access);
+		}
+		
+		return $permission;
+		
+	}
+	
 }

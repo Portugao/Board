@@ -2,6 +2,7 @@
 
 <dl>
 {foreach item='item' from=$items}
+{checkpermissionblock component='MUBoard:Category:' instance="`$item.forum.category.id`::" level="ACCESS_OVERVIEW"}
 {if $item.parent_id eq NULL}
     <h6>{usergetvar name='uname' uid=$createdUserId} {gt text='opened issue:'} {$item.title} | {$item.createdDate|dateformat:datebrief}</h6>
 {else}
@@ -15,6 +16,7 @@
     {else}
         <dd><a href="{modurl modname='MUBoard' type='user' func='display' ot=$objectType id=$item.parent_id}">{gt text='Read more'}</a></dd>
     {/if}
+{/checkpermissionblock}
 {foreachelse}
     <dt>{gt text='No entries found.'}</dt>
 {/foreach}

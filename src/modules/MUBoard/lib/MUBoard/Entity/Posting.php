@@ -203,7 +203,8 @@ class MUBoard_Entity_Posting extends MUBoard_Entity_Base_Posting
 			
 		$args['id'] = $this->getId();
 		$parent = $this->getParent(); // does not work bug in MOST TODO
-		if ($parent != NULL) {
+
+		if (isset($parent)) {
 			$args['parent'] = $parent->getId();
 			$args['title'] = $parent->getTitle();
 		}
