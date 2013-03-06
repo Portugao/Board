@@ -84,7 +84,7 @@
         </div>
         <div class="muboard-user-posting-content">
         <div class="muboard-user-posting-content-text">
-        {$posting.text|notifyfilters:'muboard.filter_hooks.postings.filter'|safehtml}
+        {$posting.text|notifyfilters:'muboard.filter_hooks.postings.filter'|safehtml|nl2br}
         {* {$posting.text} *}
         </div>
         <div class="muboard-user-posting-content-image">
@@ -191,6 +191,7 @@
         <div class="muboard-user-posting-content-bottom"><a class="muboard-user-posting-content-links" href="{$siteurl}#theme_header"><img alt="{gt text=''}" src="images/icons/extrasmall/1uparrow.png" /></a></div>     
         </div>
     {/foreach}
+    <div id="muboard-user-preview"></div>
     {pager rowcount=$pager.numitems limit=$pager.itemsperpage display='page'}
     {if $mayEdit eq true}
     {checkpermissionblock component='MUBoard::' instance=".*" level="ACCESS_ADD"}

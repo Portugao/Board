@@ -278,7 +278,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 	}
 
 	/**
-	 * This method gets if an issue is open or closed
+	 * This method gets how important an issue is
 	 */
 
 	public static function getImportantOfPosting($postingid) {
