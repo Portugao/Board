@@ -4,6 +4,8 @@
 {/if}
 {pageaddvar name='javascript' value='modules/MUBoard/javascript/MUBoard_editFunctions.js'}
 {pageaddvar name='javascript' value='modules/MUBoard/javascript/MUBoard_validation.js'}
+{pageaddvar name='javascript' value='jquery'}
+{pageaddvar name='javascript' value='jquery-ui'}
 
 {if $mode eq 'edit'}
     {gt text='Edit posting' assign='templateTitle'}
@@ -265,6 +267,7 @@
     {else}
         {formbutton id='btnCreate' commandName='create' __text='Save answer' class='z-bt-ok'}
     {/if}
+        {formbutton id='btnPreview' commandName='preview' __text='Preview' class='z-bt-ok'}
     {else}
         {formbutton id='btnUpdate' commandName='update' __text='OK' class='z-bt-ok'}
     {/if}
@@ -344,6 +347,28 @@
 
         Zikula.UI.Tooltips($$('.muboardFormTooltips'));
     });
+    
+    var MU = jQuery.noConflict();
+    
+    MU(document).ready( function() { 
+       MU("#{{$__formid}}").submit(function(e) {
+       MU("#btnPreview").click(function() {
+           e.preventDefault();
+           var url = "index.php?module=muboard&type=ajax&func=preview&theme=printer";
+           var datas = MU(this).serialize();
+           var datatyp = 'html';
+           var datawork = function(answer) {
+               MU("#muboard-user-preview").html("<div id='work'><img src='images/ajax/indicator.white.gif' /></div>");
+               if (answer) {
+                   MU("#muboard-user-preview").html(answer); 
+               }
+           }
+           MU("#muboard-user-preview").html("<div id='work'><img src='images/ajax/indicator.white.gif' /></div>");
+           MU.get(url, datas, datawork, datatyp);
+
+       }); 
+       }); 
+   });  
 
 /* ]]> */
 </script>

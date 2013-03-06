@@ -516,32 +516,9 @@ border-bottom: 1px solid #ddd;
 	color: #ff3333;
 }
 
+/*******JQuery-----------------*/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#muboard-user-preview .muboard-user-posting {
+     background: #eeffee url(/modules/MUBoard/images/preview.png) 50% 0 repeat-y !important; 
+}
 

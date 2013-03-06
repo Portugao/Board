@@ -16,5 +16,51 @@
  */
 class MUBoard_Api_Ajax extends MUBoard_Api_Base_Ajax
 {
-    // feel free to add own api methods here
+	public function preview() {
+		
+		include_once 'lib/viewplugins/function.useravatar.php';
+		
+		$dom = ZLanguage::getModuleDomain('MUBoard');
+		
+		$text = $this->request->getGet()->filter('text', '', FILTER_SANITIZE_STRING);
+		$text = nl2br($text);
+		
+		$uid = UserUtil::getVar('uid');
+		$uname = UserUtil::getVar('uname', $uid);
+		
+		$userRank = MUBoard_Util_View::getUserRank($uid);
+
+		$date = DateUtil::getDatetime(null,'datetimelong');
+		
+		$params['uid'] = $uid;
+		$params['size'] = 60;
+		$avatar = smarty_function_useravatar($params);
+		
+		$out = "";
+		$out .= "<div class='muboard-user-posting muboard-preview'>";
+		$out .= "<div class='muboard-user-posting-user'>";
+		$out .= "<div class='muboard-user-posting-avatar'>";
+		$out .= $avatar . "<br />";
+		$out .= $uname;		
+		$out .= "</div>";
+		$out .= "<div class='muboard-user-posting-datas'>";
+		$out .= $userRank;		
+		$out .= "</div>";		
+		$out .= "</div>";
+		
+		$out .= "<div class='muboard-user-posting-content'>";
+		$out .= "<div class='muboard-user-posting-created'>";
+		$out .= $date;
+		$out .= "</div>";
+		$out .= "<div class='muboard-user-posting-content-text'>";
+		$out .= $text;			
+		$out .= "</div>";
+	
+		$out .= "</div>";
+		
+
+		$out .= "</div>";
+
+		return $out;
+	}
 }

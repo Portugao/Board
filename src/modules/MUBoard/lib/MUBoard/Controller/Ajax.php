@@ -16,5 +16,11 @@
  */
 class MUBoard_Controller_Ajax extends MUBoard_Controller_Base_Ajax
 {
-    // feel free to add your own controller methods here
+    /**
+     * Input data processing called by handleCommand method.
+     */
+    public function preview()
+    {    	
+    	return ModUtil::apiFunc('MUBoard', 'ajax', 'preview');
+    }
 }
