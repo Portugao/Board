@@ -92,7 +92,7 @@ class MUBoard_Base_Installer extends Zikula_AbstractInstaller
         $this->setVar('numberFiles', array('1'));
         $this->setVar('editPostings', false);
         $this->setVar('editTime', 6);
-        $this->setVar('latestPostings', 24);
+        $this->setVar('latestPostings', 1);
         $this->setVar('sortingPostings', array('descending'));
         $this->setVar('iconSet', array('1'));
         $this->setVar('template', array('normal'));
