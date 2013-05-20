@@ -13,7 +13,6 @@
 
     {form cssClass='z-form'}
 
-
         {* add validation summary and a <div> element for styling the form *}
         {muboardFormFrame}
         {formsetinitialfocus inputId='uploadImages'}
