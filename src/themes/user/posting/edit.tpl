@@ -7,6 +7,8 @@
 {pageaddvar name='javascript' value='jquery'}
 {pageaddvar name='javascript' value='jquery-ui'}
 
+<div id="muboard-user-preview" style="display: none;"></div>
+
 {if $mode eq 'edit'}
     {gt text='Edit posting' assign='templateTitle'}
 {elseif $mode eq 'create' && $func ne 'display'}
@@ -30,7 +32,7 @@
     {/if}
     <fieldset>
         <legend>{gt text='Content'}</legend>
-        {if $func ne 'display'}
+        {if $func ne 'display' && $mode ne 'edit'}
         <div class="z-formrow">
             {formlabel for='title' __text='Title' mandatorysym='1'}
             {formtextinput group='posting' id='title' mandatory=false readOnly=false __title='Enter the title of the posting' textMode='singleline' maxLength=255 cssClass=''}
@@ -58,7 +60,7 @@
         <div class="z-formrow">
             {formlabel for='firstImage' __text='First image'}<br />{* break required for Google Chrome *}
             {formuploadinput group='posting' id='firstImage' mandatory=false readOnly=false cssClass=''}
-
+            <div class="z-formnote">{gt text='Allowed file size:'} {$maxSize} </div>
             <div class="z-formnote">{gt text='Allowed file extensions:'} gif, jpeg, jpg, png</div>
             {if $mode ne 'create'}
                 {if $posting.firstImage ne ''}
@@ -84,7 +86,7 @@
         <div class="z-formrow">
             {formlabel for='secondImage' __text='Second image'}<br />{* break required for Google Chrome *}
             {formuploadinput group='posting' id='secondImage' mandatory=false readOnly=false cssClass=''}
-
+            <div class="z-formnote">{gt text='Allowed file size:'} {$maxSize} </div>
             <div class="z-formnote">{gt text='Allowed file extensions:'} gif, jpeg, jpg, png</div>
             {if $mode ne 'create'}
                 {if $posting.secondImage ne ''}
@@ -110,7 +112,7 @@
         <div class="z-formrow">
             {formlabel for='thirdImage' __text='Third image'}<br />{* break required for Google Chrome *}
             {formuploadinput group='posting' id='thirdImage' mandatory=false readOnly=false cssClass=''}
-
+            <div class="z-formnote">{gt text='Allowed file size:'} {$maxSize} </div>
             <div class="z-formnote">{gt text='Allowed file extensions:'} gif, jpeg, jpg, png</div>
             {if $mode ne 'create'}
                 {if $posting.thirdImage ne ''}
@@ -351,23 +353,36 @@
     var MU = jQuery.noConflict();
     
     MU(document).ready( function() { 
-       MU("#{{$__formid}}").submit(function(e) {
+
+
        MU("#btnPreview").click(function() {
-           e.preventDefault();
+       MU("#{{$__formid}}").submit(function(e) {
+       e.preventDefault();
            var url = "index.php?module=muboard&type=ajax&func=preview&theme=printer";
            var datas = MU(this).serialize();
            var datatyp = 'html';
            var datawork = function(answer) {
-               MU("#muboard-user-preview").html("<div id='work'><img src='images/ajax/indicator.white.gif' /></div>");
                if (answer) {
-                   MU("#muboard-user-preview").html(answer); 
+                   MU("#muboard-user-preview").html(answer).slideDown(3000); 
                }
            }
-           MU("#muboard-user-preview").html("<div id='work'><img src='images/ajax/indicator.white.gif' /></div>");
+           MU("#muboard-user-preview").html("<div id='work'><img src='images/ajax/indicator.white.gif' /></div>").slideDown("slow");
            MU.get(url, datas, datawork, datatyp);
+           return false;
 
+       });
+       
+       MU("#btnCreate").click(function(f) {
+
+       });  
+
+       MU("#btnCancel").click(function(g) {
+           g.preventDefault();
+           MU("#muboard-user-preview").slideUp(3000);
        }); 
-       }); 
+       
+       });
+       
    });  
 
 /* ]]> */
