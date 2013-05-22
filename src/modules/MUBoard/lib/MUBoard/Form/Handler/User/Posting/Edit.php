@@ -80,6 +80,9 @@ class MUBoard_Form_Handler_User_Posting_Edit extends MUBoard_Form_Handler_User_P
 			//$controller = new Ziku
 			//Zikula_AbstractBase::checkCsrfToken('dsfssd');
 		}
+		
+		// get text for the picture upload fields
+		$maxSize = MUBoard_Util_Controller::maxSize();
 			
 		// get modvars
 		$uploadImages = ModUtil::getVar('MUBoard', 'uploadImages');
@@ -89,6 +92,7 @@ class MUBoard_Form_Handler_User_Posting_Edit extends MUBoard_Form_Handler_User_P
 			
 		// we assign to template
 		$this->view->assign('uploadImages', $uploadImages)
+		->assign('maxSize', $maxSize)
 		->assign('uploadFiles', $uploadFiles)
 		->assign('numberImages', $numberImages)
 		->assign('numberFiles', $numberFiles)
