@@ -183,6 +183,10 @@ class MUBoard_Entity_Posting extends MUBoard_Entity_Base_Posting
 	 */
 	public function prePersistCallback()
 	{
+	    $logggedin = UserUtil::isLoggedIn();
+	    if ($logggedin == false) {
+	        $this->setCreatedUserId(1);
+	    }
 		$text = $this->getText();
 		$text = str_replace('\n', '<br />', $text);
 		$this->setText($text);
