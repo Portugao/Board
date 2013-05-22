@@ -73,7 +73,12 @@
         <div class="muboard-user-posting-user">
         <div class="muboard-user-posting-avatar">
         {useravatar uid=$posting.createdUserId size=80}<br />
+        {if $posting.createdUserId > 1}
         {usergetvar name=uname uid=$posting.createdUserId}
+        {else}
+        {gt text='Guest' assign=username}
+        {$username}
+        {/if}
         </div>
         <div class="muboard-user-posting-datas">
         {* {gt text='Registered:'} {usergetvar name=user_regdate uid=$posting.createdUserId assign=regdate}{$regdate|dateformat:datebrief}<br />
@@ -119,7 +124,7 @@
         {$childPosting.createdDate|dateformat:datetimelong} {if $editPostings eq 1}<div class="muboard-user-posting-edit">{$childPosting.id|muboardGetStateOfEditOfIssue}</div>{/if}
         </div>
         <div class="muboard-user-posting-content-text">
-        {$childPosting.text|notifyfilters:'muboard.filter_hooks.postings.filter'|safehtml}
+        {$childPosting.text|notifyfilters:'muboard.filter_hooks.postings.filter'|nl2br|safehtml}
         </div>
         {if $childPosting.firstImage ne ''}        
         <div class="muboard-user-posting-content-image">
@@ -191,7 +196,7 @@
         <div class="muboard-user-posting-content-bottom"><a class="muboard-user-posting-content-links" href="{$siteurl}#theme_header"><img alt="{gt text=''}" src="images/icons/extrasmall/1uparrow.png" /></a></div>     
         </div>
     {/foreach}
-    <div id="muboard-user-preview"></div>
+    
     {pager rowcount=$pager.numitems limit=$pager.itemsperpage display='page'}
     {if $mayEdit eq true}
     {checkpermissionblock component='MUBoard::' instance=".*" level="ACCESS_ADD"}
