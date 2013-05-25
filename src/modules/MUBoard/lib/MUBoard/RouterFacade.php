@@ -21,7 +21,7 @@ class MUBoard_RouterFacade extends MUBoard_Base_RouterFacade
      */
     function __construct()
     {
-        $displayDefaultEnding = System::getVar('shorturlsext', 'html');
+        $displayDefaultEnding = System::getVar('shorturlsext', '');
         $this->requirements = array(
             'func'          => '\w+',
             'ot'            => '\w+',
@@ -39,6 +39,48 @@ class MUBoard_RouterFacade extends MUBoard_Base_RouterFacade
     }
     
     /**
+     * Initialise the url routes for this application.
+     *
+     * @return Zikula_Routing_UrlRouter The router instance treating all initialised routes
+     */
+    protected function initUrlRoutes()
+    {
+    	$fieldRequirements = $this->requirements;
+    	$isDefaultModule = (System::getVar('shorturlsdefaultmodule', '') == 'MUBoard');
+    
+    	$defaults = array();
+    	$modulePrefix = '';
+    	if (!$isDefaultModule) {
+    		$defaults['module'] = 'MUBoard';
+    		$modulePrefix = ':module/';
+    	}
+    
+    	$defaults['func'] = 'view';
+    	$viewFolder = 'view';
+    	// normal views (e.g. orders/ or customers.xml)
+    	$this->router->set('va', new Zikula_Routing_UrlRoute($modulePrefix . $viewFolder . '/:ot:viewending', $defaults, $fieldRequirements));
+    	
+    	$defaults['func'] = 'search';
+    	$viewFolder = 'search';
+    	// normal views (e.g. orders/ or customers.xml)
+    	$this->router->set('se', new Zikula_Routing_UrlRoute($modulePrefix . $viewFolder . '/:ot:viewending', $defaults, $fieldRequirements));
+    	 
+    
+    	// TODO filter views (e.g. /orders/customer/mr-smith.csv)
+    	// $this->initRouteForEachSlugType('vn', $modulePrefix . $viewFolder . '/:ot/:filterot/', ':viewending', $defaults, $fieldRequirements);
+    
+    	$defaults['func'] = 'display';
+    	// normal display pages including the group folder corresponding to the object type
+    	$this->initRouteForEachSlugType('dn', $modulePrefix . ':ot/', ':displayending', $defaults, $fieldRequirements);
+    
+    	// additional rules for the leading object type (where ot is omitted)
+    	$defaults['ot'] = 'category';
+    	$this->initRouteForEachSlugType('dl', $modulePrefix . '', ':displayending', $defaults, $fieldRequirements);
+    
+    	return $this->router;
+    }
+    
+    /**
      * Helper function to route permalinks for different slug types.
      */
     protected function initRouteForEachSlugType($prefix, $patternStart, $patternEnd, $defaults, $fieldRequirements)
@@ -46,7 +88,7 @@ class MUBoard_RouterFacade extends MUBoard_Base_RouterFacade
     	// entities with unique slug (slug only)
     	$this->router->set($prefix . 'a', new Zikula_Routing_UrlRoute($patternStart . ':title.' . $patternEnd, $defaults, $fieldRequirements));
     	// entities with non-unique slug (slug and id)
-    	$this->router->set($prefix . 'b', new Zikula_Routing_UrlRoute($patternStart . ':title.:id.' . $patternEnd, $defaults, $fieldRequirements));
+    	$this->router->set($prefix . 'b', new Zikula_Routing_UrlRoute($patternStart . ':title.:id' . $patternEnd, $defaults, $fieldRequirements));
     	// entities without slug (id)
     	$this->router->set($prefix . 'c', new Zikula_Routing_UrlRoute($patternStart . 'id.:id.' . $patternEnd, $defaults, $fieldRequirements));
     }
