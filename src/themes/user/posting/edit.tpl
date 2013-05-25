@@ -379,7 +379,7 @@
 
        MU("#btnCancel").click(function(g) {
            g.preventDefault();
-           MU("#muboard-user-preview").slideUp(3000);
+           MU("#muboard-user-preview").slideUp(2000);
        }); 
        
        });
