@@ -279,7 +279,11 @@
     <div class="muboard-posting-edit-hooks">
             
         {* include display hooks *}
+        {if $mode eq 'create'}
         {notifydisplayhooks eventname='muboard.ui_hooks.postings.form_edit' id=null assign='hooks'}
+        {else}
+        {notifydisplayhooks eventname='muboard.ui_hooks.postings.form_edit' id=$posting.id assign='hooks'}
+        {/if}
         {if $func eq 'edit' || $func eq 'display'}
         {foreach key='hookName' item='hook' from=$hooks}
             {if $hookName ne 'Tag'}
