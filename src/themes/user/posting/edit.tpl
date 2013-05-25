@@ -259,6 +259,7 @@
     <div class="z-buttons z-formbuttons">
     {if $mode eq 'edit'}
         {formbutton id='btnUpdate' commandName='update' __text='Update posting' class='z-bt-save'}
+        {formbutton id='btnPreview' commandName='preview' __text='Preview' class='z-bt-ok'}
       {if !$inlineUsage}
         {gt text='Really delete this posting?' assign='deleteConfirmMsg'}
         {formbutton id='btnDelete' commandName='delete' __text='Delete posting' class='z-bt-delete z-btred' confirmMessage=$deleteConfirmMsg}
