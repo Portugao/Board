@@ -24,6 +24,7 @@ class MUBoard_Api_Ajax extends MUBoard_Api_Base_Ajax
 		
 		$text = $this->request->getGet()->filter('text', '', FILTER_SANITIZE_STRING);
 		$text = nl2br($text);
+		$text = ModUtil::apiFunc('BBSmile', 'user', 'transform', array('text' => $text));
 		
 		$uid = UserUtil::getVar('uid');
 		$uname = UserUtil::getVar('uname', $uid);
@@ -46,19 +47,15 @@ class MUBoard_Api_Ajax extends MUBoard_Api_Base_Ajax
 		$out .= "<div class='muboard-user-posting-datas'>";
 		$out .= $userRank;		
 		$out .= "</div>";		
-		$out .= "</div>";
-		
+		$out .= "</div>";	
 		$out .= "<div class='muboard-user-posting-content'>";
 		$out .= "<div class='muboard-user-posting-created'>";
 		$out .= $date;
 		$out .= "</div>";
 		$out .= "<div class='muboard-user-posting-content-text'>";
 		$out .= $text;			
+		$out .= "</div>";	
 		$out .= "</div>";
-	
-		$out .= "</div>";
-		
-
 		$out .= "</div>";
 
 		return $out;

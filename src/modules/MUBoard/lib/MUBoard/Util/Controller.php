@@ -19,13 +19,13 @@ class MUBoard_Util_Controller extends MUBoard_Util_Base_Controller
 	/**
 	 *
 	 */
-	public static function mayEdit($id) {
-         
+	public static function mayEdit($id) 
+	{
 		return SecurityUtil::checkPermission('MUBoard::', '::', ACCESS_ADD);
 	}
 	
-	public static function rulePermissions($access) {
-		
+	public static function rulePermissions($access) 
+	{
 		$view = new Zikula_Request_Http();
 		$objectType = $view->getGet()->filter('ot', 'category', FILTER_SANITIZE_STRING);
 		$objectId = $view->getGet()->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
@@ -38,6 +38,43 @@ class MUBoard_Util_Controller extends MUBoard_Util_Base_Controller
 		
 		return $permission;
 		
+	}
+	
+	/**
+	 * Get allowed filesize
+	 */
+	
+	public static function maxSize()
+	{
+	
+	    $maxSize = ModUtil::getVar('MUBoard', 'allowedSizeOfImages');
+	     
+	    $dom = ZLanguage::getModuleDomain('MUBoard');
+	
+	    if ($maxSize > 0) {
+	
+	        $maxSizeKB = $maxSize / 1024;
+	
+	        if ($maxSizeKB < 1024) {
+	            $maxSizeKB = DataUtil::formatNumber($maxSizeKB);
+	
+	            $allowedSize = $maxSizeKB . ' KB';
+	            return $allowedSize;
+	
+	        }
+	
+	        $maxSizeMB = $maxSizeKB / 1024;
+	        $maxSizeMB = DataUtil::formatNumber($maxSizeMB);
+	
+	        $allowedSize = $maxSizeMB . ' MB';
+	        return $allowedSize;
+	
+	    }
+	    else {
+	        $allowedSize = __('No limit');
+	    }
+	
+	    return $allowedSize;
 	}
 	
 }
