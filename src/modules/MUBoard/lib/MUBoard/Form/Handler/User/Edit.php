@@ -90,4 +90,116 @@ class MUBoard_Form_Handler_User_Edit extends MUBoard_Form_Handler_User_Base_Edit
 		// everything okay, no initialization errors occured
 		return true;
 	}
+	
+	/**
+	 * Command event handler.
+	 *
+	 * This event handler is called when a command is issued by the user. Commands are typically something
+	 * that originates from a {@link Zikula_Form_Plugin_Button} plugin. The passed args contains different properties
+	 * depending on the command source, but you should at least find a <var>$args['commandName']</var>
+	 * value indicating the name of the command. The command name is normally specified by the plugin
+	 * that initiated the command.
+	 * @see Zikula_Form_Plugin_Button
+	 * @see Zikula_Form_Plugin_ImageButton
+	 */
+	public function HandleCommand(Zikula_Form_View $view, &$args)
+	{
+	    if ($args['commandName'] == 'delete') {
+	        if (!SecurityUtil::checkPermission($this->permissionComponent, '::', ACCESS_DELETE)) {
+	            return LogUtil::registerPermissionError();
+	        }
+	    }
+	
+	    if (!in_array($args['commandName'], array('delete', 'cancel'))) {
+	        // do forms validation including checking all validators on the page to validate their input
+	        if (!$this->view->isValid()) {
+	            return false;
+	        }
+	    }
+	
+	    $entityClass = $this->name . '_Entity_' . ucfirst($this->objectType);
+	    $repository = $this->entityManager->getRepository($entityClass);
+	    if ($this->hasTranslatableFields === true) {
+	        $transRepository = $this->entityManager->getRepository($entityClass . 'Translation');
+	    }
+	
+	    $result = $this->fetchInputData($view, $args);
+	    if ($result === false) {
+	        return $result;
+	    }
+	
+	    $hookAreaPrefix = 'muboard.ui_hooks.' . $this->objectTypeLowerMultiple;
+	
+	    // get treated entity reference from persisted member var
+	    $entity = $this->entityRef;
+	
+	    if (in_array($args['commandName'], array('create', 'update'))) {
+	        // event handling if user clicks on create or update
+	
+	        // Let any hooks perform additional validation actions
+	        $hook = new Zikula_ValidationHook($hookAreaPrefix . '.validate_edit', new Zikula_Hook_ValidationProviders());
+	        $validators = $this->notifyHooks($hook)->getValidators();
+	        if ($validators->hasErrors()) {
+	            return LogUtil::registerError($this->__('The validation of the hooked security module was incorrect. Please try again.'), null, ModUtil::url($this->name, 'user', 'view'));	            
+	            //return false;
+	        }
+	
+	        $this->performUpdate($args);
+	
+	        $success = true;
+	        if ($args['commandName'] == 'create') {
+	            // store new identifier
+	            foreach ($this->idFields as $idField) {
+	                $this->idValues[$idField] = $entity[$idField];
+	                // check if the insert has worked, might become obsolete due to exception usage
+	                if (!$this->idValues[$idField]) {
+	                    $success = false;
+	                    break;
+	                }
+	            }
+	        } else if ($args['commandName'] == 'update') {
+	        }
+	        $this->addDefaultMessage($args, $success);
+	
+	        // Let any hooks know that we have created or updated an item
+	        $urlArgs = array('ot' => $this->objectType);
+	        $urlArgs = $this->addIdentifiersToUrlArgs($urlArgs);
+	        $url = new Zikula_ModUrl($this->name, 'user', 'display', ZLanguage::getLanguageCode(), $urlArgs);
+	        $hook = new Zikula_ProcessHook($hookAreaPrefix . '.process_edit', $this->createCompositeIdentifier(), $url);
+	        $this->notifyHooks($hook);
+	    } else if ($args['commandName'] == 'delete') {
+	        // event handling if user clicks on delete
+	
+	        // Let any hooks perform additional validation actions
+	        $hook = new Zikula_ValidationHook($hookAreaPrefix . '.validate_delete', new Zikula_Hook_ValidationProviders());
+	        $validators = $this->notifyHooks($hook)->getValidators();
+	        if ($validators->hasErrors()) {
+	            return false;
+	        }
+	
+	        // delete entity
+	        $this->entityManager->remove($entity);
+	        $this->entityManager->flush();
+	
+	        $this->addDefaultMessage($args, true);
+	
+	        // Let any hooks know that we have deleted an item
+	        $hook = new Zikula_ProcessHook($hookAreaPrefix . '.process_delete', $this->createCompositeIdentifier());
+	        $this->notifyHooks($hook);
+	    } else if ($args['commandName'] == 'cancel') {
+	        // event handling if user clicks on cancel
+	    }
+	
+	    if ($args['commandName'] != 'cancel') {
+	        // clear view cache to reflect our changes
+	        $this->view->clear_cache();
+	    }
+	
+	    if ($this->hasPageLockSupport === true && $this->mode == 'edit') {
+	        ModUtil::apiFunc('PageLock', 'user', 'releaseLock',
+	        array('lockName' => $this->name . $this->objectTypeCapital . $this->createCompositeIdentifier()));
+	    }
+	
+	    return $this->view->redirect($this->getRedirectUrl($args, $entity, $repeatCreateAction));
+	}
 }
