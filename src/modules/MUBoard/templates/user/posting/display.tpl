@@ -73,7 +73,12 @@
         <div class="muboard-user-posting-user">
         <div class="muboard-user-posting-avatar">
         {useravatar uid=$posting.createdUserId size=80}<br />
+        {if $posting.createdUserId > 1}
         {usergetvar name=uname uid=$posting.createdUserId}
+        {else}
+        {gt text='Guest' assign=username}
+        {$username}
+        {/if}
         </div>
         <div class="muboard-user-posting-datas">
         {* {gt text='Registered:'} {usergetvar name=user_regdate uid=$posting.createdUserId assign=regdate}{$regdate|dateformat:datebrief}<br />
@@ -84,7 +89,7 @@
         </div>
         <div class="muboard-user-posting-content">
         <div class="muboard-user-posting-content-text">
-        {$posting.text|notifyfilters:'muboard.filter_hooks.postings.filter'|safehtml}
+        {$posting.text|notifyfilters:'muboard.filter_hooks.postings.filter'|safehtml|nl2br}
         {* {$posting.text} *}
         </div>
         <div class="muboard-user-posting-content-image">
@@ -119,7 +124,7 @@
         {$childPosting.createdDate|dateformat:datetimelong} {if $editPostings eq 1}<div class="muboard-user-posting-edit">{$childPosting.id|muboardGetStateOfEditOfIssue}</div>{/if}
         </div>
         <div class="muboard-user-posting-content-text">
-        {$childPosting.text|notifyfilters:'muboard.filter_hooks.postings.filter'|safehtml}
+        {$childPosting.text|notifyfilters:'muboard.filter_hooks.postings.filter'|nl2br|safehtml}
         </div>
         {if $childPosting.firstImage ne ''}        
         <div class="muboard-user-posting-content-image">
@@ -188,11 +193,12 @@
      </div>
         {else}&nbsp;{/if}            
         </div>
-                <div class="muboard-user-posting-content-bottom"><a class="muboard-user-posting-content-links" href="{$siteurl}#theme_header"><img alt="{gt text=''}" src="images/icons/extrasmall/1uparrow.png" /></a></div>
-       
+        <div class="muboard-user-posting-content-bottom"><a class="muboard-user-posting-content-links" href="{$siteurl}#theme_header"><img alt="{gt text=''}" src="images/icons/extrasmall/1uparrow.png" /></a></div>     
         </div>
     {/foreach}
+    
     {pager rowcount=$pager.numitems limit=$pager.itemsperpage display='page'}
+    {if $mayEdit eq true}
     {checkpermissionblock component='MUBoard::' instance=".*" level="ACCESS_ADD"}
     {checkpermissionblock component='MUBoard:Category:' instance="`$posting.forum.category.id`::" level="ACCESS_ADD"}
     {if $posting.state eq 1}
@@ -200,6 +206,7 @@
     {/if}   
     {/checkpermissionblock}
     {/checkpermissionblock}  
+    {/if}
     
 {* {if isset($posting.parent) && $posting.parent ne null}
     {include file='user/posting/include_displayItemListOne.tpl' item=$posting.parent}
