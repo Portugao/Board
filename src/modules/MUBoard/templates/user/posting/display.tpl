@@ -57,6 +57,7 @@
             <img src="/images/icons/extrasmall/mail_get.png" />
             </a> *}
             {$posting.id|muboardGetStateOfPostingAbo:$posting.id}
+            {checkpermissionblock component='MUBoard::' instance='.*' level="ACCESS_ADMIN"} 
             {if $posting.state eq 1}
             <a title="{gt text='Issue is open! You have permissions to close this issue!'}" id="muboard-user-posting-header-infos-abo" href="{modurl modname='MUBoard' type='admin' func='close' ot='posting' id=$posting.id}">
                 <img src='/images/icons/extrasmall/button_ok.png' />
@@ -65,7 +66,8 @@
             <a title="{gt text='Issue is closed. You have permissions to reopen this issue!'}" id="muboard-user-posting-header-infos-abo" href="{modurl modname='MUBoard' type='admin' func='open' ot='posting' id=$posting.id}">
             <img src='/images/icons/extrasmall/button_cancel.png' />
             </a>
-            {/if}    
+            {/if}
+            {/checkpermissionblock}                
             {$posting.id|muboardGetStateOfEditOfIssue}    
             </div>
 

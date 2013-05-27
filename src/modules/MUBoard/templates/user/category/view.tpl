@@ -65,7 +65,7 @@
         <div class="muboard-user-category-header-statistic postings">{$category.id|muboardGetNumberOfPostingsOfCategory:$category.id}</div>
         </div>
         <div class=muboard-user-category-content>
-            {if isset($category.forum) && $category.forum ne null}
+            {if isset($category.forum) && $category.forum ne null && count($category.forum) > 0}
             {include file='user/forum/include_displayItemListMany.tpl' items=$category.forum}
             {else}
             {gt text='There are no forums in this category!'}

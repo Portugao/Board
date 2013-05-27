@@ -279,7 +279,11 @@
     <div class="muboard-posting-edit-hooks">
             
         {* include display hooks *}
+        {if $mode eq 'create'}
         {notifydisplayhooks eventname='muboard.ui_hooks.postings.form_edit' id=null assign='hooks'}
+        {else}
+        {notifydisplayhooks eventname='muboard.ui_hooks.postings.form_edit' id=$posting.id assign='hooks'}
+        {/if}
         {if $func eq 'edit' || $func eq 'display'}
         {foreach key='hookName' item='hook' from=$hooks}
             {if $hookName ne 'Tag'}
@@ -367,19 +371,19 @@
                    MU("#muboard-user-preview").html(answer).slideDown(3000); 
                }
            }
-           MU("#muboard-user-preview").html("<div id='work'><img src='images/ajax/indicator.white.gif' /></div>").slideDown("slow");
+           MU("#muboard-user-preview").html("<div id='work'><img src='images/ajax/indicator.white.gif' /></div>").slideDown(1000);
            MU.get(url, datas, datawork, datatyp);
            return false;
 
        });
        
-       MU("#btnCreate").click(function(f) {
+       MU("#btnCreate").click(function() {
 
        });  
 
        MU("#btnCancel").click(function(g) {
            g.preventDefault();
-           MU("#muboard-user-preview").slideUp(3000);
+           MU("#muboard-user-preview").slideUp(2000);
        }); 
        
        });

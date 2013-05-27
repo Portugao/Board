@@ -67,7 +67,9 @@
                       {if $rank.uploadImageMeta.isImage}
                           <img src="{$rank.uploadImage|muboardImageThumb:$rank.uploadImageFullPath:80:50}" width="80" height="50" alt="{$rank.name|replace:"\"":""}" />
                       {else}
+                          {if $rank.uploadImage ne ''}
                           {gt text='Download'} ({$rank.uploadImageMeta.size|muboardGetFileSize:$rank.uploadImageFullPath:false:false})
+                          {/if}
                       {/if}
                       </a>
                   </div>
