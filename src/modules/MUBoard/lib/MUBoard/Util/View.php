@@ -583,7 +583,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 
                             $rank = $rankrepository->selectWhere($where);
                             $newRank = $rankrepository->selectById($rank[0]['id']);
-                            if (count($newRank == 1)) {
+                            if (count($newRank) == 1) {
                                 $user->setRank($newRank);
                                 $entityManager->flush();
                             }
