@@ -27,15 +27,24 @@ class MUBoard_Api_Ajax extends MUBoard_Api_Base_Ajax
 		$text = ModUtil::apiFunc('BBSmile', 'user', 'transform', array('text' => $text));
 		
 		$uid = UserUtil::getVar('uid');
+		if ($uid > 1) {
 		$uname = UserUtil::getVar('uname', $uid);
+		} else {
+		    $uname = __('Guest', $dom);
+		}
 		
 		$userRank = MUBoard_Util_View::getUserRank($uid);
 
 		$date = DateUtil::getDatetime(null,'datetimelong');
 		
+		if ($uid > 1) {
 		$params['uid'] = $uid;
 		$params['size'] = 60;
 		$avatar = smarty_function_useravatar($params);
+		}
+		else {
+		    $avatar = '';
+		}
 		
 		$out = "";
 		$out .= "<div class='muboard-user-posting muboard-preview'>";
