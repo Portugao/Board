@@ -152,12 +152,16 @@ button.muboardInlineButton {
 }
 
 .muboard-user-category-header-title {
-    background: #ddd;
-    padding: 2px 10px;
-    margin: 10px 0 0 20px;
     float: left;
+    width: 30%;
+}
+
+.muboard-user-category-header-title h2 {
+    background: #ddd !important ;
+    padding: 10px 5px !important;
+    margin: 10px 0 0 20px;
     border-radius: 5px 5px 0 0;
-    border-bottom: 1px solid #999;
+    border-bottom: 1px solid #999;   	
 }
 
 .muboard-user-category-header-statistic {
@@ -184,7 +188,7 @@ button.muboardInlineButton {
 }
 
 .muboard-user-legend {
-    width: 180px;
+    margin: 0 0 0 20px;
     float: left;
 }
 
@@ -348,6 +352,22 @@ border-bottom: 1px solid #ddd;
 .muboard-user-forum-right {
     float: right;
     width: 55%;
+}
+
+.muboard-user-forum-footer-statistic {
+    padding: 5px 10px;
+    margin: 5px 0 0 10px;
+    float: left;
+    border-radius: 5px;
+    border-bottom: 1px solid #999;
+}
+
+.answers {
+    background: #369;
+}
+
+.invocations {
+    background: #cc6;
 }
 
 /*********POSTINGS**************/
