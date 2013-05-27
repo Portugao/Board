@@ -582,10 +582,12 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
                             $where = 'tbl.maxPostings >= \'' . DataUtil::formatForStore($numberPostings) . '\'';
 
                             $rank = $rankrepository->selectWhere($where);
-                            $newRank = $rankrepository->selectById($rank[0]['id']);
-                            if (count($newRank) == 1) {
-                                $user->setRank($newRank);
-                                $entityManager->flush();
+                            if ($rank) {
+                                $newRank = $rankrepository->selectById($rank[0]['id']);
+                                if (count($newRank) == 1) {
+                                    $user->setRank($newRank);
+                                    $entityManager->flush();
+                                }
                             }
                         }
                     }
@@ -593,10 +595,12 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
                     $rankrepository = MUBoard_Util_Model::getRankRepository();
                     $where = 'tbl.minPostings = 0';
                     $rank = $rankrepository->selectWhere($where);
-                    $firstRank = $rankrepository->selectById($rank[0]['id']);
-                    if (isset($firstRank)) {
-                        $user->setRank($firstRank);
-                        $entityManager->flush();
+                    if ($rank) {
+                        $firstRank = $rankrepository->selectById($rank[0]['id']);
+                        if (isset($firstRank)) {
+                            $user->setRank($firstRank);
+                            $entityManager->flush();
+                        }
                     }
                 }
             } else {
