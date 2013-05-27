@@ -49,14 +49,14 @@ class MUBoard_Entity_Repository_Forum extends MUBoard_Entity_Repository_Base_For
         $qb->select($selection)
            ->from('MUBoard_Entity_Forum', 'tbl');
 
-        if ($useJoins === true) {
+      /*  if ($useJoins === true) {
         	if ($ot == 'forum' && $func == 'display') {
         	
         	}
         	else {        	
             $this->addJoinsToFrom($qb);
         	}
-        }
+        } */
 
         if (!empty($where)) {
             $qb->where($where);
@@ -82,5 +82,30 @@ class MUBoard_Entity_Repository_Forum extends MUBoard_Entity_Repository_Base_For
 
 
         return $query;
+    }
+    
+    /**
+     * Helper method to add join selections.
+     *
+     * @return String Enhancement for select clause.
+     */
+    protected function addJoinsToSelection()
+    {
+        $selection = ', tblCategory';
+        return $selection;
+    }
+    
+    /**
+     * Helper method to add joins to from clause.
+     *
+     * @param Doctrine\ORM\QueryBuilder $qb query builder instance used to create the query.
+     *
+     * @return String Enhancement for from clause.
+     */
+    protected function addJoinsToFrom(QueryBuilder $qb)
+    {
+        $qb->leftJoin('tbl.category', 'tblCategory');
+       // $qb->leftJoin('tbl.posting', 'tblPosting');
+        return $qb;
     }
 }
