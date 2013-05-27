@@ -109,5 +109,9 @@
 
 </div> *}
 </div>
+    <div class="z-informationmsg z-formnote muboard-category-legend">
+    <div class="muboard-user-legend"><span>{gt text='Number of answers'}</span><span class="muboard-user-forum-footer-statistic answers">3</span></div> 
+    <div class="muboard-user-legend"><span>{gt text='Number of invocations'}</span><span class="muboard-user-forum-footer-statistic invocations">5</span></div>
+    </div>
 {include file='user/footer.tpl'}
 
