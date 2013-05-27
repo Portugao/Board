@@ -371,13 +371,13 @@
                    MU("#muboard-user-preview").html(answer).slideDown(3000); 
                }
            }
-           MU("#muboard-user-preview").html("<div id='work'><img src='images/ajax/indicator.white.gif' /></div>").slideDown("slow");
+           MU("#muboard-user-preview").html("<div id='work'><img src='images/ajax/indicator.white.gif' /></div>").slideDown(1000);
            MU.get(url, datas, datawork, datatyp);
            return false;
 
        });
        
-       MU("#btnCreate").click(function(f) {
+       MU("#btnCreate").click(function() {
 
        });  
 
