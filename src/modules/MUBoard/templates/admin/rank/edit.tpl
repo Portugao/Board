@@ -54,7 +54,7 @@
            {* {/if} *}
             {formlabel for='uploadImage' __text='Upload image' mandatorysym=$mandatorySym}<br />{* break required for Google Chrome *}
 {if $mode eq 'create'}
-            {formuploadinput group='rank' id='uploadImage' mandatory=true readOnly=false cssClass=''}
+            {formuploadinput group='rank' id='uploadImage' mandatory=false readOnly=false cssClass=''}
 {else}
             {formuploadinput group='rank' id='uploadImage' mandatory=false readOnly=false cssClass=''}
 {/if}
