@@ -15,7 +15,7 @@
     {if $item.parent_id eq NULL}
     <dd><a href="{modurl modname='MUBoard' type='user' func='display' ot=$objectType id=$item.id}">{gt text='Read more'}</a></dd>
     {else}
-        <dd><a href="{modurl modname='MUBoard' type='user' func='display' ot=$objectType id=$item.parent_id}">{gt text='Read more'}</a></dd>
+        <dd><a href="{modurl modname='MUBoard' type='user' func='display' ot=$objectType id=$item.parent_id}/#{$item.id}">{gt text='Read more'}</a></dd>
     {/if}
 {foreachelse}
     <dt>{gt text='No entries found.'}</dt>
