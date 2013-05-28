@@ -53,26 +53,32 @@
                 {assign var='mandatorySym' value='0'}
            {* {/if} *}
             {formlabel for='uploadImage' __text='Upload image' mandatorysym=$mandatorySym}<br />{* break required for Google Chrome *}
-{if $mode eq 'create'}
-            {formuploadinput group='rank' id='uploadImage' mandatory=false readOnly=false cssClass=''}
-{else}
-            {formuploadinput group='rank' id='uploadImage' mandatory=false readOnly=false cssClass=''}
-{/if}
+            {if $mode eq 'create'}
+                 {formuploadinput group='rank' id='uploadImage' mandatory=false readOnly=false cssClass=''}
+            {else}
+                {formuploadinput group='rank' id='uploadImage' mandatory=false readOnly=false cssClass=''}
+            {/if}
 
             <div class="z-formnote">{gt text='Allowed file extensions:'} gif, jpeg, jpg, png</div>
             {if $mode ne 'create'}
-                  <div class="z-formnote">
-                      {gt text='Current file'}:
-                      <a href="{$rank.uploadImageFullPathUrl}" title="{$rank.name|replace:"\"":""}"{if $rank.uploadImageMeta.isImage} rel="imageviewer[rank]"{/if}>
-                      {if $rank.uploadImageMeta.isImage}
-                          <img src="{$rank.uploadImage|muboardImageThumb:$rank.uploadImageFullPath:80:50}" width="80" height="50" alt="{$rank.name|replace:"\"":""}" />
-                      {else}
-                          {if $rank.uploadImage ne ''}
-                          {gt text='Download'} ({$rank.uploadImageMeta.size|muboardGetFileSize:$rank.uploadImageFullPath:false:false})
-                          {/if}
-                      {/if}
-                      </a>
-                  </div>
+                {if $rank.uploadImage ne ''}
+                    <div class="z-formnote">
+                        {gt text='Current file'}:
+                            <a href="{$rank.uploadImageFullPathUrl}" title="{$rank.name|replace:"\"":""}"{if $rank.uploadImageMeta.isImage} rel="imageviewer[rank]"{/if}>
+                            {if $rank.uploadImageMeta.isImage}
+                                <img src="{$rank.uploadImage|muboardImageThumb:$rank.uploadImageFullPath:80:50}" width="80" height="50" alt="{$rank.name|replace:"\"":""}" />
+                            {else}
+                                {if $rank.uploadImage ne ''}
+                                    {gt text='Download'} ({$rank.uploadImageMeta.size|muboardGetFileSize:$rank.uploadImageFullPath:false:false})
+                                {/if}
+                            {/if}
+                            </a>
+                    </div>
+                    <div class="z-formnote">
+                      {formcheckbox group='rank' id='uploadImageDeleteFile' readOnly=false __title='Delete this image ?'}
+                      {formlabel for='imageUploadDeleteFile' __text='Delete existing file'}
+                    </div>
+                {/if}
             {/if}
            {* {muboardValidationError id='uploadImage' class=''} *}
         </div>
