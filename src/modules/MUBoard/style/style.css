@@ -214,7 +214,6 @@ button.muboardInlineButton {
 
 .calls {
     background: #cc6;
-    color: #eee;
     width: 5%;
 }
 
@@ -368,6 +367,7 @@ border-bottom: 1px solid #ddd;
 
 .answers {
     background: #369;
+    color: #eee;
 }
 
 .invocations {
