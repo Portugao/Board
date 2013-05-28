@@ -1,0 +1,2329 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MUBoard\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-05-26 09:05+0000\n"
+"PO-Revision-Date: 2013-05-28 12:35+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: templates/plugins/function.muboardValidationError.php:36
+msgid "This is a required field."
+msgstr ""
+
+#: templates/plugins/function.muboardValidationError.php:37
+msgid "Please enter a valid number in this field."
+msgstr ""
+
+#: templates/plugins/function.muboardValidationError.php:38
+msgid ""
+"Please use numbers only in this field. please avoid spaces or other "
+"characters such as dots or commas."
+msgstr ""
+
+#: templates/plugins/function.muboardValidationError.php:39
+msgid "Please use letters only (a-z) in this field."
+msgstr ""
+
+#: templates/plugins/function.muboardValidationError.php:40
+msgid ""
+"Please use only letters (a-z) or numbers (0-9) only in this field. No spaces "
+"or other characters are allowed."
+msgstr ""
+
+#: templates/plugins/function.muboardValidationError.php:41
+msgid "Please enter a valid date."
+msgstr ""
+
+#: templates/plugins/function.muboardValidationError.php:42
+msgid "Please enter a valid email address. For example yourname@example.com ."
+msgstr ""
+
+#: templates/plugins/function.muboardValidationError.php:43
+msgid "Please enter a valid URL."
+msgstr ""
+
+#: templates/plugins/function.muboardValidationError.php:44
+msgid ""
+"Please use this date format: dd/mm/yyyy. For example 17/03/2010 for the 17th "
+"of March, 2010."
+msgstr ""
+
+#: templates/plugins/function.muboardValidationError.php:45
+msgid "Please enter a valid $ amount. For example $100.00 ."
+msgstr ""
+
+#: templates/plugins/function.muboardValidationError.php:46
+msgid "Please make a selection."
+msgstr ""
+
+#: templates/plugins/function.muboardValidationError.php:47
+msgid "Please select one of the above options."
+msgstr ""
+
+#: templates/plugins/function.muboardValidationError.php:50
+msgid "This value must not contain spaces."
+msgstr ""
+
+#: templates/plugins/function.muboardValidationError.php:51
+msgid "Please select a valid html colour code."
+msgstr ""
+
+#: templates/plugins/function.muboardValidationError.php:52
+#: templates/plugins/function.muboardValidationError.php:54
+#: templates/plugins/function.muboardValidationError.php:56
+msgid "Please select a value in the past."
+msgstr ""
+
+#: templates/plugins/function.muboardValidationError.php:53
+#: templates/plugins/function.muboardValidationError.php:55
+#: templates/plugins/function.muboardValidationError.php:57
+msgid "Please select a value in the future."
+msgstr ""
+
+#: templates/plugins/function.muboardValidationError.php:58
+msgid "This value is already assigned, but must be unique. Please change it."
+msgstr ""
+
+#: templates/plugins/function.muboardSelectorObjectTypes.php:29
+#: lib/MUBoard/Api/Base/User.php:36 lib/MUBoard/Api/Base/Admin.php:36
+#: lib/MUBoard/Api/User.php:40 lib/MUBoard/Api/Admin.php:36
+#: templates/block/itemlist_modify.tpl:6
+msgid "Categories"
+msgstr "Kategorien"
+
+#: templates/plugins/function.muboardSelectorObjectTypes.php:30
+#: lib/MUBoard/Api/Base/User.php:41 lib/MUBoard/Api/Base/Admin.php:41
+#: lib/MUBoard/Api/Admin.php:41 templates/admin/category/display.tpl:14
+#: templates/user/category/display.tpl:12
+#: templates/block/itemlist_modify.tpl:7
+msgid "Forums"
+msgstr ""
+
+#: templates/plugins/function.muboardSelectorObjectTypes.php:31
+#: lib/MUBoard/Api/Base/User.php:46 lib/MUBoard/Api/Base/Admin.php:46
+#: templates/admin/forum/display.tpl:14 templates/user/forum/display.tpl:12
+#: templates/search/options.tpl:3 templates/block/itemlist_modify.tpl:8
+msgid "Postings"
+msgstr ""
+
+#: templates/plugins/function.muboardSelectorTemplates.php:29
+#: templates/block/itemlist_modify.tpl:29
+msgid "Only item titles"
+msgstr ""
+
+#: templates/plugins/function.muboardSelectorTemplates.php:30
+#: templates/block/itemlist_modify.tpl:30
+msgid "With description"
+msgstr ""
+
+#: templates/plugins/function.muboardTemplateHeaders.php:31
+#, php-format
+msgid "%1$s: missing parameter '%2$s'"
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Forum/Base/Edit.php:146
+#: lib/MUBoard/Form/Handler/User/Forum/Base/Edit.php:146
+msgid "Done! Forum created."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Forum/Base/Edit.php:149
+#: lib/MUBoard/Form/Handler/User/Forum/Base/Edit.php:149
+msgid "Done! Forum updated."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Forum/Base/Edit.php:152
+#: lib/MUBoard/Form/Handler/User/Forum/Base/Edit.php:152
+msgid "Done! Forum deleted."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Base/Edit.php:280
+#: lib/MUBoard/Form/Handler/Admin/Base/Edit.php:309
+#: lib/MUBoard/Form/Handler/User/Base/Edit.php:280
+#: lib/MUBoard/Form/Handler/User/Base/Edit.php:309
+#: lib/MUBoard/Controller/Base/User.php:192
+#: lib/MUBoard/Controller/Base/Admin.php:179
+#: lib/MUBoard/Controller/Base/Admin.php:259
+#: lib/MUBoard/Controller/Base/Ajax.php:145
+#: lib/MUBoard/Controller/User.php:160
+msgid "No such item."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Base/Edit.php:539
+#: lib/MUBoard/Form/Handler/User/Base/Edit.php:539
+msgid "Done! Item created."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Base/Edit.php:541
+#: lib/MUBoard/Form/Handler/User/Base/Edit.php:541
+msgid "Error! Creation attempt failed."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Base/Edit.php:546
+#: lib/MUBoard/Form/Handler/User/Base/Edit.php:546
+msgid "Done! Item updated."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Base/Edit.php:548
+#: lib/MUBoard/Form/Handler/User/Base/Edit.php:548
+msgid "Error! Update attempt failed."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Base/Edit.php:553
+#: lib/MUBoard/Form/Handler/User/Base/Edit.php:553
+#: lib/MUBoard/Controller/Base/Admin.php:269
+msgid "Done! Item deleted."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Base/Edit.php:555
+#: lib/MUBoard/Form/Handler/User/Base/Edit.php:555
+msgid "Error! Deletion attempt failed."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Base/Config.php:133
+msgid "Error! Failed to set configuration variables."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Base/Config.php:136
+msgid "Done! Module configuration updated."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Rank/Base/Edit.php:139
+#: lib/MUBoard/Form/Handler/User/Rank/Base/Edit.php:139
+msgid "Done! Rank created."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Rank/Base/Edit.php:142
+#: lib/MUBoard/Form/Handler/User/Rank/Base/Edit.php:142
+msgid "Done! Rank updated."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Rank/Base/Edit.php:145
+#: lib/MUBoard/Form/Handler/User/Rank/Base/Edit.php:145
+msgid "Done! Rank deleted."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Posting/Base/Edit.php:149
+#: lib/MUBoard/Form/Handler/User/Posting/Base/Preview.php:145
+#: lib/MUBoard/Form/Handler/User/Posting/Base/Edit.php:149
+msgid "Done! Posting created."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Posting/Base/Edit.php:152
+#: lib/MUBoard/Form/Handler/User/Posting/Base/Preview.php:148
+#: lib/MUBoard/Form/Handler/User/Posting/Base/Edit.php:152
+msgid "Done! Posting updated."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Posting/Base/Edit.php:155
+#: lib/MUBoard/Form/Handler/User/Posting/Base/Preview.php:151
+#: lib/MUBoard/Form/Handler/User/Posting/Base/Edit.php:155
+msgid "Done! Posting deleted."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/User/Base/Edit.php:145
+#: lib/MUBoard/Form/Handler/User/User/Base/Edit.php:145
+msgid "Done! User created."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/User/Base/Edit.php:148
+#: lib/MUBoard/Form/Handler/User/User/Base/Edit.php:148
+msgid "Done! User updated."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/User/Base/Edit.php:151
+#: lib/MUBoard/Form/Handler/User/User/Base/Edit.php:151
+msgid "Done! User deleted."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Category/Base/Edit.php:137
+#: lib/MUBoard/Form/Handler/User/Category/Base/Edit.php:137
+msgid "Done! Category created."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Category/Base/Edit.php:140
+#: lib/MUBoard/Form/Handler/User/Category/Base/Edit.php:140
+msgid "Done! Category updated."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Category/Base/Edit.php:143
+#: lib/MUBoard/Form/Handler/User/Category/Base/Edit.php:143
+msgid "Done! Category deleted."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Abo/Base/Edit.php:136
+#: lib/MUBoard/Form/Handler/User/Abo/Base/Edit.php:136
+msgid "Done! Abo created."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Abo/Base/Edit.php:139
+#: lib/MUBoard/Form/Handler/User/Abo/Base/Edit.php:139
+msgid "Done! Abo updated."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Abo/Base/Edit.php:142
+#: lib/MUBoard/Form/Handler/User/Abo/Base/Edit.php:142
+msgid "Done! Abo deleted."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/User/Edit.php:143
+msgid ""
+"The validation of the hooked security module was incorrect. Please try again."
+msgstr ""
+
+#: lib/MUBoard/Form/Plugin/ColourInput.php:99
+msgid "Close"
+msgstr ""
+
+#: lib/MUBoard/Form/Plugin/ColourInput.php:143
+msgid "Error! Invalid colour."
+msgstr ""
+
+#: lib/MUBoard/ContentType/Base/ItemList.php:38
+#: lib/MUBoard/Block/Base/ItemList.php:142
+msgid "MUBoard items"
+msgstr ""
+
+#: lib/MUBoard/ContentType/Base/ItemList.php:44
+msgid "Display MUBoard items."
+msgstr ""
+
+#: lib/MUBoard/Base/Installer.php:28 lib/MUBoard/Base/Installer.php:35
+#: lib/MUBoard/Base/Installer.php:42 lib/MUBoard/Base/Installer.php:49
+#: lib/MUBoard/Base/Installer.php:56 lib/MUBoard/Base/Installer.php:63
+#: lib/MUBoard/Base/Installer.php:70
+#, php-format
+msgid ""
+"The upload folder \"%s\" does not exist. Please create it before installing "
+"this application."
+msgstr ""
+
+#: lib/MUBoard/Base/Installer.php:31 lib/MUBoard/Base/Installer.php:38
+#: lib/MUBoard/Base/Installer.php:45 lib/MUBoard/Base/Installer.php:52
+#: lib/MUBoard/Base/Installer.php:59 lib/MUBoard/Base/Installer.php:66
+#: lib/MUBoard/Base/Installer.php:73
+#, php-format
+msgid ""
+"The upload folder \"%s\" is not writable. Please change permissions "
+"accordingly before installing this application."
+msgstr ""
+
+#: lib/MUBoard/Base/Installer.php:81 lib/MUBoard/Base/Installer.php:166
+msgid "Doctrine Exception: "
+msgstr ""
+
+#: lib/MUBoard/Base/Installer.php:83
+#, php-format
+msgid "An error was encountered while creating the tables for the %s module."
+msgstr ""
+
+#: lib/MUBoard/Base/Installer.php:159
+#, php-format
+msgid ""
+"An error was encountered while removing stored object workflows for the %s "
+"module."
+msgstr ""
+
+#: lib/MUBoard/Base/Installer.php:168
+#, php-format
+msgid "An error was encountered while dropping the tables for the %s module."
+msgstr ""
+
+#: lib/MUBoard/Base/UploadHandler.php:81 lib/MUBoard/UploadHandler.php:77
+msgid "Error! Could not move your file to the destination folder."
+msgstr ""
+
+#: lib/MUBoard/Base/UploadHandler.php:107 lib/MUBoard/UploadHandler.php:104
+msgid "Error! No file found."
+msgstr ""
+
+#: lib/MUBoard/Base/UploadHandler.php:118 lib/MUBoard/UploadHandler.php:141
+msgid ""
+"Error! This file type is not allowed. Please choose another file format."
+msgstr ""
+
+#: lib/MUBoard/Base/UploadHandler.php:127 lib/MUBoard/UploadHandler.php:151
+msgid "Error! This file type seems not to be a valid image."
+msgstr ""
+
+#: lib/MUBoard/Base/Version.php:25 lib/MUBoard/Version.php:25
+#: templates/user/header.tpl:13
+msgid "MUBoard"
+msgstr ""
+
+#: lib/MUBoard/Base/Version.php:27
+msgid "MUBoard module generated by ModuleStudio 0.5.4."
+msgstr ""
+
+#. ! url version of name, should be in lowercase without space
+#: lib/MUBoard/Base/Version.php:29 lib/MUBoard/Version.php:29
+msgid "muboard"
+msgstr ""
+
+#: lib/MUBoard/Base/Version.php:74
+msgid "muboard Categories Display Hooks"
+msgstr ""
+
+#: lib/MUBoard/Base/Version.php:91
+msgid "muboard Categories Filter Hooks"
+msgstr ""
+
+#: lib/MUBoard/Base/Version.php:96
+msgid "muboard Forums Display Hooks"
+msgstr ""
+
+#: lib/MUBoard/Base/Version.php:113
+msgid "muboard Forums Filter Hooks"
+msgstr ""
+
+#: lib/MUBoard/Base/Version.php:118
+msgid "muboard Postings Display Hooks"
+msgstr ""
+
+#: lib/MUBoard/Base/Version.php:135
+msgid "muboard Postings Filter Hooks"
+msgstr ""
+
+#: lib/MUBoard/Base/Version.php:140
+msgid "muboard Abos Display Hooks"
+msgstr ""
+
+#: lib/MUBoard/Base/Version.php:157
+msgid "muboard Abos Filter Hooks"
+msgstr ""
+
+#: lib/MUBoard/Base/Version.php:162
+msgid "muboard Users Display Hooks"
+msgstr ""
+
+#: lib/MUBoard/Base/Version.php:179
+msgid "muboard Users Filter Hooks"
+msgstr ""
+
+#: lib/MUBoard/Base/Version.php:184
+msgid "muboard Ranks Display Hooks"
+msgstr ""
+
+#: lib/MUBoard/Base/Version.php:201
+msgid "muboard Ranks Filter Hooks"
+msgstr ""
+
+#: lib/MUBoard/Block/Base/ItemList.php:37
+msgid ""
+"Notice: This block will not be displayed until you activate the MUBoard "
+"module."
+msgstr ""
+
+#: lib/MUBoard/Block/Base/ItemList.php:41
+msgid "Item list"
+msgstr ""
+
+#: lib/MUBoard/Block/Base/ItemList.php:42
+msgid "Show a list of MUBoard items based on different criteria."
+msgstr ""
+
+#: lib/MUBoard/UploadHandler.php:119
+#, php-format
+msgid ""
+"Error! Your file %s is too big. Please keep it smaller than %s kilobytes."
+msgstr ""
+
+#: lib/MUBoard/UploadHandler.php:127
+#, php-format
+msgid "Error! Your file is too big. Please keep it smaller than %s megabytes."
+msgstr ""
+
+#: lib/MUBoard/Version.php:27
+msgid "MUBoard - a small forum module"
+msgstr ""
+
+#: lib/MUBoard/Util/Base/Abonnements.php:107
+msgid "Your posting was saved!"
+msgstr ""
+
+#: lib/MUBoard/Util/Base/Abonnements.php:180
+msgid "A new ticket on "
+msgstr ""
+
+#: lib/MUBoard/Util/Base/Abonnements.php:184
+msgid "An answer to your ticket on "
+msgstr ""
+
+#: lib/MUBoard/Util/Base/Abonnements.php:187
+msgid "An answer to a ticket on "
+msgstr ""
+
+#: lib/MUBoard/Util/Base/Abonnements.php:220
+msgid "Unable to send message"
+msgstr ""
+
+#: lib/MUBoard/Util/Base/Abonnements.php:226
+msgid "Your ticket was saved and an email sent to our support!"
+msgstr ""
+
+#: lib/MUBoard/Util/Base/Abonnements.php:229
+msgid "Your support answer was saved and an email sent to the customer!"
+msgstr ""
+
+#: lib/MUBoard/Util/Base/Abonnements.php:255
+msgid "Another posting was created by an user on "
+msgstr ""
+
+#: lib/MUBoard/Util/Base/Abonnements.php:257
+msgid "Title of posting"
+msgstr ""
+
+#: lib/MUBoard/Util/Base/Abonnements.php:258
+#: templates/admin/posting/display.tpl:37 templates/admin/posting/view.tpl:58
+#: templates/admin/posting/edit.tpl:39 templates/admin/posting/view.csv:3
+#: templates/user/posting/display.tpl:234 templates/user/posting/view.tpl:57
+#: templates/user/posting/edit.tpl:42 templates/user/posting/view.csv:3
+msgid "Text"
+msgstr ""
+
+#: lib/MUBoard/Util/Base/Abonnements.php:259
+msgid "Visit this issue:"
+msgstr "Dieses Thema aufrufen:"
+
+#: lib/MUBoard/Util/Base/Abonnements.php:262
+msgid "Moderate this entry:"
+msgstr "Diesen Eintrag moderieren:"
+
+#: lib/MUBoard/Util/Base/View.php:178
+msgid "Bytes"
+msgstr ""
+
+#: lib/MUBoard/Util/Base/View.php:181
+msgid "KB"
+msgstr ""
+
+#: lib/MUBoard/Util/Base/View.php:185
+msgid "MB"
+msgstr ""
+
+#: lib/MUBoard/Util/Base/View.php:189
+msgid "GB"
+msgstr ""
+
+#: lib/MUBoard/Util/Base/Image.php:140
+#, php-format
+msgid "An error occured during thumbnail creation: %s"
+msgstr ""
+
+#: lib/MUBoard/Util/View.php:187
+msgid "Last answer by "
+msgstr ""
+
+#: lib/MUBoard/Util/View.php:190 lib/MUBoard/Util/View.php:247
+msgid "on "
+msgstr ""
+
+#: lib/MUBoard/Util/View.php:194
+msgid "No answer available!"
+msgstr ""
+
+#: lib/MUBoard/Util/View.php:244
+msgid "Last posting by "
+msgstr ""
+
+#: lib/MUBoard/Util/View.php:249 lib/MUBoard/Controller/User.php:291
+msgid "Issue: "
+msgstr "Thema:"
+
+#: lib/MUBoard/Util/View.php:254
+msgid "No postings available!"
+msgstr ""
+
+#: lib/MUBoard/Util/View.php:283
+msgid "Important issue!"
+msgstr "Wichtiges Thema!"
+
+#: lib/MUBoard/Util/View.php:331
+msgid "You have permissions to edit this issue!"
+msgstr ""
+
+#: lib/MUBoard/Util/View.php:644
+msgid "Registered: "
+msgstr ""
+
+#: lib/MUBoard/Util/View.php:646
+msgid "Last Visit: "
+msgstr ""
+
+#: lib/MUBoard/Util/View.php:648
+msgid "Online"
+msgstr ""
+
+#: lib/MUBoard/Util/View.php:651 lib/MUBoard/Util/View.php:654
+msgid "Postings: "
+msgstr ""
+
+#: lib/MUBoard/Util/View.php:657 lib/MUBoard/Util/View.php:659
+msgid "Rank: "
+msgstr ""
+
+#: lib/MUBoard/Util/Controller.php:74
+msgid "No limit"
+msgstr ""
+
+#: lib/MUBoard/Entity/Validator/Base/Abo.php:32
+#: lib/MUBoard/Entity/Validator/Base/Abo.php:40
+#: lib/MUBoard/Entity/Validator/Base/Abo.php:52
+#: lib/MUBoard/Entity/Validator/Base/Abo.php:60
+#: lib/MUBoard/Entity/Validator/Base/Abo.php:68
+#: lib/MUBoard/Entity/Validator/Base/Forum.php:48
+#: lib/MUBoard/Entity/Validator/Base/Posting.php:44
+#: lib/MUBoard/Entity/Validator/Base/Category.php:48
+#: lib/MUBoard/Entity/Validator/Base/Rank.php:40
+#: lib/MUBoard/Entity/Validator/Base/Rank.php:48
+#: lib/MUBoard/Entity/Validator/Base/Rank.php:56
+#: lib/MUBoard/Entity/Validator/Base/User.php:32
+#: lib/MUBoard/Entity/Validator/Base/User.php:44
+#, php-format
+msgid "Error! Field value may only contain digits (%s)."
+msgstr ""
+
+#: lib/MUBoard/Entity/Validator/Base/Abo.php:36
+#: lib/MUBoard/Entity/Validator/Base/Abo.php:48
+#: lib/MUBoard/Entity/Validator/Base/Abo.php:56
+#: lib/MUBoard/Entity/Validator/Base/Abo.php:64
+#: lib/MUBoard/Entity/Validator/Base/Abo.php:72
+#: lib/MUBoard/Entity/Validator/Base/Forum.php:32
+#: lib/MUBoard/Entity/Validator/Base/Forum.php:40
+#: lib/MUBoard/Entity/Validator/Base/Forum.php:56
+#: lib/MUBoard/Entity/Validator/Base/Posting.php:32
+#: lib/MUBoard/Entity/Validator/Base/Posting.php:36
+#: lib/MUBoard/Entity/Validator/Base/Posting.php:48
+#: lib/MUBoard/Entity/Validator/Base/Posting.php:60
+#: lib/MUBoard/Entity/Validator/Base/Posting.php:64
+#: lib/MUBoard/Entity/Validator/Base/Posting.php:68
+#: lib/MUBoard/Entity/Validator/Base/Posting.php:72
+#: lib/MUBoard/Entity/Validator/Base/Posting.php:76
+#: lib/MUBoard/Entity/Validator/Base/Posting.php:80
+#: lib/MUBoard/Entity/Validator/Base/Category.php:32
+#: lib/MUBoard/Entity/Validator/Base/Category.php:40
+#: lib/MUBoard/Entity/Validator/Base/Category.php:56
+#: lib/MUBoard/Entity/Validator/Base/Rank.php:32
+#: lib/MUBoard/Entity/Validator/Base/Rank.php:44
+#: lib/MUBoard/Entity/Validator/Base/Rank.php:52
+#: lib/MUBoard/Entity/Validator/Base/Rank.php:64
+#: lib/MUBoard/Entity/Validator/Base/Rank.php:68
+#: lib/MUBoard/Entity/Validator/Base/User.php:40
+#: lib/MUBoard/Entity/Validator/Base/User.php:52
+#, php-format
+msgid "Error! Length of field value must not be higher than %2$s (%1$s)."
+msgstr ""
+
+#: lib/MUBoard/Entity/Validator/Base/Abo.php:44
+#: lib/MUBoard/Entity/Validator/Base/Forum.php:52
+#: lib/MUBoard/Entity/Validator/Base/Category.php:52
+#: lib/MUBoard/Entity/Validator/Base/Rank.php:60
+#: lib/MUBoard/Entity/Validator/Base/User.php:36
+#, php-format
+msgid "Error! Field value must not be 0 (%s)."
+msgstr ""
+
+#: lib/MUBoard/Entity/Validator/Base/Forum.php:36
+#: lib/MUBoard/Entity/Validator/Base/Forum.php:44
+#: lib/MUBoard/Entity/Validator/Base/Posting.php:40
+#: lib/MUBoard/Entity/Validator/Base/Category.php:36
+#: lib/MUBoard/Entity/Validator/Base/Category.php:44
+#: lib/MUBoard/Entity/Validator/Base/Rank.php:36
+#, php-format
+msgid "Error! Field value must not be empty (%s)."
+msgstr ""
+
+#: lib/MUBoard/Entity/Validator/Base/Posting.php:52
+#: lib/MUBoard/Entity/Validator/Base/Posting.php:56
+#: lib/MUBoard/Entity/Validator/Base/Rank.php:72
+#, php-format
+msgid "Error! Field value must be a valid boolean (%s)."
+msgstr ""
+
+#: lib/MUBoard/Entity/Validator/Base/User.php:56
+#, php-format
+msgid "Error! Field value must be a valid datetime (%s)."
+msgstr ""
+
+#: lib/MUBoard/Entity/Forum.php:46 lib/MUBoard/Entity/Posting.php:66
+#: lib/MUBoard/Entity/Base/Abo.php:519 lib/MUBoard/Entity/Base/Forum.php:631
+#: lib/MUBoard/Entity/Base/Posting.php:1557
+#: lib/MUBoard/Entity/Base/Category.php:560
+#: lib/MUBoard/Entity/Base/Rank.php:746 lib/MUBoard/Entity/Base/User.php:447
+msgid "Open preview page"
+msgstr ""
+
+#: lib/MUBoard/Entity/Forum.php:47 lib/MUBoard/Entity/Posting.php:67
+#: lib/MUBoard/Entity/Base/Abo.php:520 lib/MUBoard/Entity/Base/Forum.php:632
+#: lib/MUBoard/Entity/Base/Posting.php:1558
+#: lib/MUBoard/Entity/Base/Category.php:561
+#: lib/MUBoard/Entity/Base/Rank.php:747 lib/MUBoard/Entity/Base/User.php:448
+#: templates/user/posting/edit.tpl:262 templates/user/posting/edit.tpl:273
+msgid "Preview"
+msgstr ""
+
+#: lib/MUBoard/Entity/Forum.php:53 lib/MUBoard/Entity/Forum.php:97
+#: lib/MUBoard/Entity/Posting.php:73 lib/MUBoard/Entity/Posting.php:117
+#: lib/MUBoard/Entity/Base/Abo.php:526 lib/MUBoard/Entity/Base/Abo.php:570
+#: lib/MUBoard/Entity/Base/Forum.php:638 lib/MUBoard/Entity/Base/Forum.php:682
+#: lib/MUBoard/Entity/Base/Posting.php:1564
+#: lib/MUBoard/Entity/Base/Posting.php:1608
+#: lib/MUBoard/Entity/Base/Category.php:567
+#: lib/MUBoard/Entity/Base/Category.php:611
+#: lib/MUBoard/Entity/Base/Rank.php:753 lib/MUBoard/Entity/Base/Rank.php:797
+#: lib/MUBoard/Entity/Base/User.php:454 lib/MUBoard/Entity/Base/User.php:498
+#: templates/admin/posting/display.tpl:8 templates/admin/abo/display.tpl:8
+#: templates/admin/rank/display.tpl:8 templates/admin/user/display.tpl:8
+#: templates/admin/forum/display.tpl:8 templates/admin/category/display.tpl:8
+msgid "Details"
+msgstr ""
+
+#: lib/MUBoard/Entity/Forum.php:63 lib/MUBoard/Entity/Forum.php:64
+#: lib/MUBoard/Entity/Posting.php:83 lib/MUBoard/Entity/Posting.php:84
+#: lib/MUBoard/Entity/Base/Abo.php:536 lib/MUBoard/Entity/Base/Abo.php:537
+#: lib/MUBoard/Entity/Base/Abo.php:580 lib/MUBoard/Entity/Base/Abo.php:581
+#: lib/MUBoard/Entity/Base/Forum.php:648 lib/MUBoard/Entity/Base/Forum.php:649
+#: lib/MUBoard/Entity/Base/Forum.php:692 lib/MUBoard/Entity/Base/Forum.php:693
+#: lib/MUBoard/Entity/Base/Posting.php:1574
+#: lib/MUBoard/Entity/Base/Posting.php:1575
+#: lib/MUBoard/Entity/Base/Posting.php:1618
+#: lib/MUBoard/Entity/Base/Posting.php:1619
+#: lib/MUBoard/Entity/Base/Category.php:577
+#: lib/MUBoard/Entity/Base/Category.php:578
+#: lib/MUBoard/Entity/Base/Category.php:621
+#: lib/MUBoard/Entity/Base/Category.php:622
+#: lib/MUBoard/Entity/Base/Rank.php:763 lib/MUBoard/Entity/Base/Rank.php:764
+#: lib/MUBoard/Entity/Base/Rank.php:807 lib/MUBoard/Entity/Base/Rank.php:808
+#: lib/MUBoard/Entity/Base/User.php:464 lib/MUBoard/Entity/Base/User.php:465
+#: lib/MUBoard/Entity/Base/User.php:508 lib/MUBoard/Entity/Base/User.php:509
+msgid "Edit"
+msgstr ""
+
+#: lib/MUBoard/Entity/Forum.php:69 lib/MUBoard/Entity/Posting.php:89
+#: lib/MUBoard/Entity/Base/Abo.php:542 lib/MUBoard/Entity/Base/Abo.php:586
+#: lib/MUBoard/Entity/Base/Forum.php:654 lib/MUBoard/Entity/Base/Forum.php:698
+#: lib/MUBoard/Entity/Base/Posting.php:1580
+#: lib/MUBoard/Entity/Base/Posting.php:1624
+#: lib/MUBoard/Entity/Base/Category.php:583
+#: lib/MUBoard/Entity/Base/Category.php:627
+#: lib/MUBoard/Entity/Base/Rank.php:769 lib/MUBoard/Entity/Base/Rank.php:813
+#: lib/MUBoard/Entity/Base/User.php:470 lib/MUBoard/Entity/Base/User.php:514
+msgid "Reuse for new item"
+msgstr ""
+
+#: lib/MUBoard/Entity/Forum.php:70 lib/MUBoard/Entity/Posting.php:90
+#: lib/MUBoard/Entity/Base/Abo.php:543 lib/MUBoard/Entity/Base/Abo.php:587
+#: lib/MUBoard/Entity/Base/Forum.php:655 lib/MUBoard/Entity/Base/Forum.php:699
+#: lib/MUBoard/Entity/Base/Posting.php:1581
+#: lib/MUBoard/Entity/Base/Posting.php:1625
+#: lib/MUBoard/Entity/Base/Category.php:584
+#: lib/MUBoard/Entity/Base/Category.php:628
+#: lib/MUBoard/Entity/Base/Rank.php:770 lib/MUBoard/Entity/Base/Rank.php:814
+#: lib/MUBoard/Entity/Base/User.php:471 lib/MUBoard/Entity/Base/User.php:515
+msgid "Reuse"
+msgstr ""
+
+#: lib/MUBoard/Entity/Forum.php:77 lib/MUBoard/Entity/Forum.php:78
+#: lib/MUBoard/Entity/Posting.php:97 lib/MUBoard/Entity/Posting.php:98
+#: lib/MUBoard/Entity/Base/Abo.php:550 lib/MUBoard/Entity/Base/Abo.php:551
+#: lib/MUBoard/Entity/Base/Forum.php:662 lib/MUBoard/Entity/Base/Forum.php:663
+#: lib/MUBoard/Entity/Base/Posting.php:1588
+#: lib/MUBoard/Entity/Base/Posting.php:1589
+#: lib/MUBoard/Entity/Base/Category.php:591
+#: lib/MUBoard/Entity/Base/Category.php:592
+#: lib/MUBoard/Entity/Base/Rank.php:777 lib/MUBoard/Entity/Base/Rank.php:778
+#: lib/MUBoard/Entity/Base/User.php:478 lib/MUBoard/Entity/Base/User.php:479
+#: templates/admin/posting/delete.tpl:7 templates/admin/posting/delete.tpl:20
+#: templates/admin/abo/delete.tpl:7 templates/admin/abo/delete.tpl:20
+#: templates/admin/rank/delete.tpl:7 templates/admin/rank/delete.tpl:20
+#: templates/admin/user/delete.tpl:7 templates/admin/user/delete.tpl:20
+#: templates/admin/forum/delete.tpl:7 templates/admin/forum/delete.tpl:20
+#: templates/admin/category/delete.tpl:7
+#: templates/admin/category/delete.tpl:20
+msgid "Delete"
+msgstr ""
+
+#: lib/MUBoard/Entity/Forum.php:122 lib/MUBoard/Entity/Forum.php:123
+#: templates/admin/posting/include_selectEditOne.tpl:16
+#: templates/user/posting/include_selectEditOne.tpl:16
+msgid "Create new posting"
+msgstr ""
+
+#: lib/MUBoard/Entity/Forum.php:128 lib/MUBoard/Entity/Posting.php:149
+#: lib/MUBoard/Entity/Posting.php:154
+msgid "Back to forum overview"
+msgstr ""
+
+#: lib/MUBoard/Entity/Forum.php:129
+msgid "Back to  forum overview"
+msgstr ""
+
+#: lib/MUBoard/Entity/Posting.php:106 lib/MUBoard/Entity/Posting.php:107
+#: lib/MUBoard/Entity/Base/Abo.php:559 lib/MUBoard/Entity/Base/Abo.php:560
+#: lib/MUBoard/Entity/Base/Abo.php:595 lib/MUBoard/Entity/Base/Abo.php:596
+#: lib/MUBoard/Entity/Base/Forum.php:671 lib/MUBoard/Entity/Base/Forum.php:672
+#: lib/MUBoard/Entity/Base/Forum.php:707 lib/MUBoard/Entity/Base/Forum.php:708
+#: lib/MUBoard/Entity/Base/Posting.php:1597
+#: lib/MUBoard/Entity/Base/Posting.php:1598
+#: lib/MUBoard/Entity/Base/Posting.php:1633
+#: lib/MUBoard/Entity/Base/Posting.php:1634
+#: lib/MUBoard/Entity/Base/Category.php:600
+#: lib/MUBoard/Entity/Base/Category.php:601
+#: lib/MUBoard/Entity/Base/Category.php:636
+#: lib/MUBoard/Entity/Base/Category.php:637
+#: lib/MUBoard/Entity/Base/Rank.php:786 lib/MUBoard/Entity/Base/Rank.php:787
+#: lib/MUBoard/Entity/Base/Rank.php:822 lib/MUBoard/Entity/Base/Rank.php:823
+#: lib/MUBoard/Entity/Base/User.php:487 lib/MUBoard/Entity/Base/User.php:488
+#: lib/MUBoard/Entity/Base/User.php:523 lib/MUBoard/Entity/Base/User.php:524
+msgid "Back to overview"
+msgstr ""
+
+#: lib/MUBoard/Entity/Posting.php:148
+msgid "Back to forum "
+msgstr ""
+
+#: lib/MUBoard/Api/Search.php:181 lib/MUBoard/Controller/Base/Ajax.php:96
+msgid "Item"
+msgstr ""
+
+#: lib/MUBoard/Api/Search.php:195
+msgid "Error! Could not save the search results."
+msgstr ""
+
+#: lib/MUBoard/Api/Search.php:261
+msgid ""
+"Sorry! There is no entity for your search string. Please try another string!"
+msgstr ""
+
+#: lib/MUBoard/Api/Search.php:286
+msgid "Congratulations! Your search has a result! We found "
+msgstr ""
+
+#: lib/MUBoard/Api/Search.php:286
+msgid " issues!"
+msgstr " Themen!"
+
+#: lib/MUBoard/Api/Base/Mailz.php:30
+msgid "3 newest categories"
+msgstr ""
+
+#: lib/MUBoard/Api/Base/Mailz.php:31
+msgid "A list of the three newest categories."
+msgstr ""
+
+#: lib/MUBoard/Api/Base/Mailz.php:36
+msgid "3 random categories"
+msgstr ""
+
+#: lib/MUBoard/Api/Base/Mailz.php:37
+msgid "A list of three random categories."
+msgstr ""
+
+#: lib/MUBoard/Api/Base/User.php:30 lib/MUBoard/Api/User.php:34
+msgid "Backend"
+msgstr ""
+
+#: lib/MUBoard/Api/Base/User.php:31 lib/MUBoard/Api/User.php:35
+msgid "Switch to administration area."
+msgstr ""
+
+#: lib/MUBoard/Api/Base/User.php:37 lib/MUBoard/Api/Base/Admin.php:37
+#: lib/MUBoard/Api/User.php:41 lib/MUBoard/Api/Admin.php:37
+#: templates/admin/category/view.tpl:4
+msgid "Category list"
+msgstr ""
+
+#: lib/MUBoard/Api/Base/User.php:42 lib/MUBoard/Api/Base/Admin.php:42
+#: lib/MUBoard/Api/Admin.php:42 templates/admin/forum/view.tpl:4
+#: templates/user/forum/view.tpl:4
+msgid "Forum list"
+msgstr ""
+
+#: lib/MUBoard/Api/Base/User.php:47 lib/MUBoard/Api/Base/Admin.php:47
+#: templates/admin/posting/view.tpl:4 templates/user/posting/view.tpl:4
+msgid "Posting list"
+msgstr ""
+
+#: lib/MUBoard/Api/Base/User.php:51 lib/MUBoard/Api/Base/Admin.php:51
+msgid "Abos"
+msgstr ""
+
+#: lib/MUBoard/Api/Base/User.php:52 lib/MUBoard/Api/Base/Admin.php:52
+#: templates/admin/abo/view.tpl:4 templates/user/abo/view.tpl:4
+msgid "Abo list"
+msgstr ""
+
+#: lib/MUBoard/Api/Base/User.php:56 lib/MUBoard/Api/Base/Admin.php:56
+#: lib/MUBoard/Api/Admin.php:51 templates/admin/rank/display.tpl:14
+#: templates/user/rank/display.tpl:12
+msgid "Users"
+msgstr ""
+
+#: lib/MUBoard/Api/Base/User.php:57 lib/MUBoard/Api/Base/Admin.php:57
+#: lib/MUBoard/Api/Admin.php:52 templates/admin/user/view.tpl:4
+#: templates/user/user/view.tpl:4
+msgid "User list"
+msgstr ""
+
+#: lib/MUBoard/Api/Base/User.php:61 lib/MUBoard/Api/Base/Admin.php:61
+#: lib/MUBoard/Api/Admin.php:56
+msgid "Ranks"
+msgstr ""
+
+#: lib/MUBoard/Api/Base/User.php:62 lib/MUBoard/Api/Base/Admin.php:62
+#: lib/MUBoard/Api/Admin.php:57 templates/admin/rank/view.tpl:4
+#: templates/user/rank/view.tpl:4
+msgid "Rank list"
+msgstr ""
+
+#: lib/MUBoard/Api/Base/Admin.php:30 lib/MUBoard/Api/Admin.php:30
+msgid "Frontend"
+msgstr ""
+
+#: lib/MUBoard/Api/Base/Admin.php:31 lib/MUBoard/Api/Admin.php:31
+msgid "Switch to user area."
+msgstr ""
+
+#: lib/MUBoard/Api/Base/Admin.php:66 lib/MUBoard/Api/Admin.php:61
+msgid "Configuration"
+msgstr ""
+
+#: lib/MUBoard/Api/Base/Admin.php:67 lib/MUBoard/Api/Admin.php:62
+msgid "Manage settings for this application"
+msgstr ""
+
+#: lib/MUBoard/Api/User.php:45
+msgid "New issue"
+msgstr "Neues Thema"
+
+#: lib/MUBoard/Api/User.php:46
+msgid "Create a new issue"
+msgstr "Neues Thema erstellen"
+
+#: lib/MUBoard/Api/User.php:50
+msgid "Latest issues"
+msgstr "Aktuellste Themen"
+
+#: lib/MUBoard/Api/User.php:51
+msgid "Look for latest issues"
+msgstr "Schaue nach aktuellen Themen"
+
+#: lib/MUBoard/Api/User.php:55
+msgid "Search issues"
+msgstr ""
+
+#: lib/MUBoard/Api/User.php:56
+msgid "Look for relevant issues"
+msgstr ""
+
+#: lib/MUBoard/Controller/Search.php:45
+msgid "You have to enter a string!"
+msgstr ""
+
+#: lib/MUBoard/Controller/Base/User.php:189
+#: lib/MUBoard/Controller/Base/Admin.php:176
+#: lib/MUBoard/Controller/Base/Admin.php:256
+#: lib/MUBoard/Controller/User.php:157
+msgid "Error! Invalid identifier received."
+msgstr ""
+
+#: lib/MUBoard/Controller/Base/Ajax.php:139
+msgid "Error: invalid input."
+msgstr ""
+
+#: lib/MUBoard/Controller/User.php:111 templates/user/category/view.tpl:4
+msgid "Forum - Category Overview"
+msgstr "Forum - Kategorieübersicht"
+
+#: lib/MUBoard/Controller/User.php:285
+msgid "Forum - Category: "
+msgstr ""
+
+#: lib/MUBoard/Controller/User.php:288 templates/search/moduleResult.tpl:10
+msgid "Forum: "
+msgstr ""
+
+#: templates/admin/config.tpl:7 templates/admin/config.tpl:10
+msgid "Settings"
+msgstr ""
+
+#: templates/admin/config.tpl:20
+msgid "Here you can manage all basic settings for this application."
+msgstr ""
+
+#: templates/admin/config.tpl:23
+msgid "Upload images"
+msgstr ""
+
+#: templates/admin/config.tpl:28
+msgid "Allowed size of images"
+msgstr ""
+
+#: templates/admin/config.tpl:29 templates/admin/config.tpl:43
+#: templates/admin/config.tpl:57 templates/admin/config.tpl:62
+#: templates/admin/config.tpl:78
+msgid "Enter this setting. Only digits are allowed."
+msgstr ""
+
+#: templates/admin/config.tpl:32
+msgid "Number images"
+msgstr ""
+
+#: templates/admin/config.tpl:37
+msgid "Upload files"
+msgstr ""
+
+#: templates/admin/config.tpl:42
+msgid "Allowed size of files"
+msgstr ""
+
+#: templates/admin/config.tpl:46
+msgid "Number files"
+msgstr ""
+
+#: templates/admin/config.tpl:51
+msgid "Edit postings"
+msgstr ""
+
+#: templates/admin/config.tpl:56
+msgid "Edit time"
+msgstr ""
+
+#: templates/admin/config.tpl:61 templates/admin/posting/view.rss:11
+#: templates/admin/posting/view.atom:4 templates/user/posting/view.rss:11
+#: templates/user/posting/view.atom:4
+msgid "Latest postings"
+msgstr ""
+
+#: templates/admin/config.tpl:65
+msgid "Sorting postings"
+msgstr ""
+
+#: templates/admin/config.tpl:69
+msgid "Icon set"
+msgstr ""
+
+#: templates/admin/config.tpl:73
+msgid "Template"
+msgstr ""
+
+#: templates/admin/config.tpl:77
+msgid "Pagesize"
+msgstr ""
+
+#: templates/admin/config.tpl:81
+msgid "Standard icon"
+msgstr ""
+
+#: templates/admin/config.tpl:82 templates/admin/config.tpl:86
+msgid "Enter this setting."
+msgstr ""
+
+#: templates/admin/config.tpl:85
+msgid "Special icon"
+msgstr ""
+
+#: templates/admin/config.tpl:91
+msgid "Update configuration"
+msgstr ""
+
+#: templates/admin/config.tpl:92
+#: templates/admin/posting/include_selectOne.tpl:15
+#: templates/admin/posting/edit.tpl:244 templates/admin/posting/delete.tpl:22
+#: templates/admin/posting/include_selectEditOne.tpl:15
+#: templates/admin/abo/edit.tpl:97 templates/admin/abo/delete.tpl:22
+#: templates/admin/rank/edit.tpl:129 templates/admin/rank/delete.tpl:22
+#: templates/admin/rank/include_selectEditOne.tpl:15
+#: templates/admin/user/edit.tpl:95 templates/admin/user/delete.tpl:22
+#: templates/admin/forum/edit.tpl:93 templates/admin/forum/delete.tpl:22
+#: templates/admin/forum/include_selectEditOne.tpl:15
+#: templates/admin/category/edit.tpl:92 templates/admin/category/delete.tpl:22
+#: templates/admin/category/include_selectEditOne.tpl:15
+#: templates/user/posting/include_selectOne.tpl:15
+#: templates/user/posting/edit.tpl:277
+#: templates/user/posting/include_selectEditOne.tpl:15
+#: templates/user/abo/edit.tpl:92 templates/user/rank/edit.tpl:120
+#: templates/user/rank/include_selectEditOne.tpl:15
+#: templates/user/user/edit.tpl:90 templates/user/forum/edit.tpl:88
+#: templates/user/forum/include_selectEditOne.tpl:15
+#: templates/user/category/edit.tpl:87
+#: templates/user/category/include_selectEditOne.tpl:15
+msgid "Cancel"
+msgstr ""
+
+#: templates/admin/posting/display.tpl:4
+#: templates/admin/posting/display.tpl:14
+#: templates/admin/posting/include_selectOne.tpl:3
+#: templates/admin/posting/include_selectEditOne.tpl:3
+#: templates/user/posting/display.tpl:4 templates/user/posting/display.tpl:12
+#: templates/user/posting/include_selectOne.tpl:3
+#: templates/user/posting/include_selectEditOne.tpl:3
+msgid "Posting"
+msgstr ""
+
+#: templates/admin/posting/display.tpl:24 templates/admin/posting/view.tpl:13
+#: templates/admin/posting/edit.tpl:10 templates/admin/posting/edit.tpl:240
+#: templates/admin/forum/display.tpl:23 templates/user/posting/display.tpl:219
+#: templates/user/posting/view.tpl:11 templates/user/posting/edit.tpl:15
+#: templates/user/posting/edit.tpl:269 templates/user/forum/display.tpl:49
+msgid "Create posting"
+msgstr ""
+
+#: templates/admin/posting/display.tpl:35 templates/admin/posting/view.tpl:52
+#: templates/admin/posting/view.csv:3 templates/user/posting/display.tpl:232
+#: templates/user/posting/view.tpl:51 templates/user/posting/view.csv:3
+msgid "Parent_id"
+msgstr ""
+
+#: templates/admin/posting/display.tpl:39 templates/admin/posting/view.tpl:61
+#: templates/admin/posting/edit.tpl:44 templates/admin/posting/view.csv:3
+#: templates/user/posting/display.tpl:236 templates/user/posting/view.tpl:60
+#: templates/user/posting/edit.tpl:48 templates/user/posting/edit.tpl:54
+#: templates/user/posting/view.csv:3
+msgid "Invocations"
+msgstr ""
+
+#: templates/admin/posting/display.tpl:41 templates/admin/posting/view.tpl:64
+#: templates/admin/posting/edit.tpl:49 templates/admin/posting/view.csv:3
+#: templates/user/posting/display.tpl:238 templates/user/posting/view.tpl:63
+#: templates/user/posting/edit.tpl:61 templates/user/posting/view.csv:3
+msgid "First image"
+msgstr ""
+
+#: templates/admin/posting/display.tpl:47
+#: templates/admin/posting/display.tpl:58
+#: templates/admin/posting/display.tpl:69
+#: templates/admin/posting/display.tpl:80
+#: templates/admin/posting/display.tpl:91
+#: templates/admin/posting/display.tpl:102
+#: templates/admin/posting/view.tpl:112 templates/admin/posting/view.tpl:124
+#: templates/admin/posting/view.tpl:136 templates/admin/posting/view.tpl:148
+#: templates/admin/posting/view.tpl:160 templates/admin/posting/view.tpl:172
+#: templates/admin/posting/edit.tpl:61 templates/admin/posting/edit.tpl:85
+#: templates/admin/posting/edit.tpl:109 templates/admin/posting/edit.tpl:133
+#: templates/admin/posting/edit.tpl:157 templates/admin/posting/edit.tpl:181
+#: templates/admin/rank/display.tpl:45 templates/admin/rank/view.tpl:88
+#: templates/admin/rank/edit.tpl:70 templates/user/posting/display.tpl:101
+#: templates/user/posting/display.tpl:135
+#: templates/user/posting/display.tpl:146
+#: templates/user/posting/display.tpl:157
+#: templates/user/posting/display.tpl:168
+#: templates/user/posting/display.tpl:179
+#: templates/user/posting/display.tpl:190
+#: templates/user/posting/display.tpl:244
+#: templates/user/posting/display.tpl:255
+#: templates/user/posting/display.tpl:266
+#: templates/user/posting/display.tpl:277
+#: templates/user/posting/display.tpl:288
+#: templates/user/posting/display.tpl:299 templates/user/posting/view.tpl:111
+#: templates/user/posting/view.tpl:123 templates/user/posting/view.tpl:135
+#: templates/user/posting/view.tpl:147 templates/user/posting/view.tpl:159
+#: templates/user/posting/view.tpl:171 templates/user/posting/edit.tpl:73
+#: templates/user/posting/edit.tpl:99 templates/user/posting/edit.tpl:125
+#: templates/user/posting/edit.tpl:153 templates/user/posting/edit.tpl:179
+#: templates/user/posting/edit.tpl:205 templates/user/rank/display.tpl:43
+#: templates/user/rank/view.tpl:86 templates/user/rank/edit.tpl:58
+msgid "Download"
+msgstr ""
+
+#: templates/admin/posting/display.tpl:52 templates/admin/posting/view.tpl:67
+#: templates/admin/posting/edit.tpl:73 templates/admin/posting/view.csv:3
+#: templates/user/posting/display.tpl:249 templates/user/posting/view.tpl:66
+#: templates/user/posting/edit.tpl:87 templates/user/posting/view.csv:3
+msgid "Second image"
+msgstr ""
+
+#: templates/admin/posting/display.tpl:63 templates/admin/posting/view.tpl:70
+#: templates/admin/posting/edit.tpl:97 templates/admin/posting/view.csv:3
+#: templates/user/posting/display.tpl:260 templates/user/posting/view.tpl:69
+#: templates/user/posting/edit.tpl:113 templates/user/posting/view.csv:3
+msgid "Third image"
+msgstr ""
+
+#: templates/admin/posting/display.tpl:74 templates/admin/posting/view.tpl:73
+#: templates/admin/posting/edit.tpl:121 templates/admin/posting/view.csv:3
+#: templates/user/posting/display.tpl:271 templates/user/posting/view.tpl:72
+#: templates/user/posting/edit.tpl:141 templates/user/posting/view.csv:3
+msgid "First file"
+msgstr ""
+
+#: templates/admin/posting/display.tpl:85 templates/admin/posting/view.tpl:76
+#: templates/admin/posting/edit.tpl:145 templates/admin/posting/view.csv:3
+#: templates/user/posting/display.tpl:282 templates/user/posting/view.tpl:75
+#: templates/user/posting/edit.tpl:167 templates/user/posting/view.csv:3
+msgid "Second file"
+msgstr ""
+
+#: templates/admin/posting/display.tpl:96 templates/admin/posting/view.tpl:79
+#: templates/admin/posting/edit.tpl:169 templates/admin/posting/view.csv:3
+#: templates/user/posting/display.tpl:293 templates/user/posting/view.tpl:78
+#: templates/user/posting/edit.tpl:193 templates/user/posting/view.csv:3
+msgid "Third file"
+msgstr ""
+
+#: templates/admin/posting/display.tpl:107 templates/admin/posting/view.tpl:82
+#: templates/admin/posting/view.csv:3 templates/user/posting/display.tpl:304
+#: templates/user/posting/view.tpl:81 templates/user/posting/view.csv:3
+msgid "Parent"
+msgstr ""
+
+#: templates/admin/posting/display.tpl:114
+#: templates/admin/posting/display.tpl:137
+#: templates/admin/posting/include_displayItemListMany.tpl:10
+#: templates/admin/posting/view.tpl:183 templates/admin/posting/view.tpl:201
+#: templates/admin/posting/include_displayItemListOne.tpl:7
+#: templates/admin/abo/include_displayItemListMany.tpl:10
+#: templates/admin/abo/include_displayItemListOne.tpl:7
+#: templates/admin/rank/include_displayItemListMany.tpl:10
+#: templates/admin/rank/include_displayItemListOne.tpl:7
+#: templates/admin/user/display.tpl:25
+#: templates/admin/user/include_displayItemListMany.tpl:10
+#: templates/admin/user/view.tpl:76
+#: templates/admin/user/include_displayItemListOne.tpl:7
+#: templates/admin/forum/display.tpl:44
+#: templates/admin/forum/include_displayItemListMany.tpl:10
+#: templates/admin/forum/view.tpl:76
+#: templates/admin/forum/include_displayItemListOne.tpl:7
+#: templates/admin/category/include_displayItemListMany.tpl:10
+#: templates/admin/category/include_displayItemListOne.tpl:7
+#: templates/user/posting/display.tpl:311
+#: templates/user/posting/display.tpl:334
+#: templates/user/posting/include_displayItemListMany.tpl:70
+#: templates/user/posting/view.tpl:182 templates/user/posting/view.tpl:200
+#: templates/user/posting/include_displayItemListOne.tpl:7
+#: templates/user/abo/include_displayItemListMany.tpl:10
+#: templates/user/abo/include_displayItemListOne.tpl:7
+#: templates/user/rank/include_displayItemListMany.tpl:10
+#: templates/user/rank/include_displayItemListOne.tpl:7
+#: templates/user/user/display.tpl:23
+#: templates/user/user/include_displayItemListMany.tpl:10
+#: templates/user/user/view.tpl:74
+#: templates/user/user/include_displayItemListOne.tpl:7
+#: templates/user/forum/display.tpl:70
+#: templates/user/forum/include_displayItemListMany.tpl:50
+#: templates/user/forum/view.tpl:74
+#: templates/user/forum/include_displayItemListOne.tpl:7
+#: templates/user/category/include_displayItemListMany.tpl:10
+#: templates/user/category/include_displayItemListOne.tpl:7
+msgid "Open quick view window"
+msgstr ""
+
+#: templates/admin/posting/display.tpl:115
+#: templates/admin/posting/display.tpl:138
+#: templates/admin/posting/include_displayItemListMany.tpl:11
+#: templates/admin/posting/view.tpl:184 templates/admin/posting/view.tpl:202
+#: templates/admin/posting/include_displayItemListOne.tpl:8
+#: templates/admin/abo/include_displayItemListMany.tpl:11
+#: templates/admin/abo/include_displayItemListOne.tpl:8
+#: templates/admin/rank/include_displayItemListMany.tpl:11
+#: templates/admin/rank/include_displayItemListOne.tpl:8
+#: templates/admin/user/display.tpl:26
+#: templates/admin/user/include_displayItemListMany.tpl:11
+#: templates/admin/user/view.tpl:77
+#: templates/admin/user/include_displayItemListOne.tpl:8
+#: templates/admin/forum/display.tpl:45
+#: templates/admin/forum/include_displayItemListMany.tpl:11
+#: templates/admin/forum/view.tpl:77
+#: templates/admin/forum/include_displayItemListOne.tpl:8
+#: templates/admin/category/include_displayItemListMany.tpl:11
+#: templates/admin/category/include_displayItemListOne.tpl:8
+#: templates/user/posting/display.tpl:312
+#: templates/user/posting/display.tpl:335
+#: templates/user/posting/include_displayItemListMany.tpl:71
+#: templates/user/posting/view.tpl:183 templates/user/posting/view.tpl:201
+#: templates/user/posting/include_displayItemListOne.tpl:8
+#: templates/user/abo/include_displayItemListMany.tpl:11
+#: templates/user/abo/include_displayItemListOne.tpl:8
+#: templates/user/rank/include_displayItemListMany.tpl:11
+#: templates/user/rank/include_displayItemListOne.tpl:8
+#: templates/user/user/display.tpl:24
+#: templates/user/user/include_displayItemListMany.tpl:11
+#: templates/user/user/view.tpl:75
+#: templates/user/user/include_displayItemListOne.tpl:8
+#: templates/user/forum/display.tpl:71
+#: templates/user/forum/include_displayItemListMany.tpl:51
+#: templates/user/forum/view.tpl:75
+#: templates/user/forum/include_displayItemListOne.tpl:8
+#: templates/user/category/include_displayItemListMany.tpl:11
+#: templates/user/category/include_displayItemListOne.tpl:8
+msgid "Quick view"
+msgstr ""
+
+#: templates/admin/posting/display.tpl:127
+#: templates/admin/posting/display.tpl:150 templates/admin/user/display.tpl:38
+#: templates/admin/forum/display.tpl:57 templates/user/posting/display.tpl:324
+#: templates/user/posting/display.tpl:347 templates/user/user/display.tpl:36
+#: templates/user/forum/display.tpl:83
+msgid "No set."
+msgstr ""
+
+#: templates/admin/posting/display.tpl:130 templates/admin/posting/view.tpl:85
+#: templates/admin/posting/view.csv:4 templates/admin/forum/display.tpl:4
+#: templates/admin/forum/include_selectEditOne.tpl:3
+#: templates/user/posting/display.tpl:327 templates/user/posting/view.tpl:84
+#: templates/user/posting/view.csv:4 templates/user/forum/display.tpl:4
+#: templates/user/forum/include_selectEditOne.tpl:3
+msgid "Forum"
+msgstr ""
+
+#: templates/admin/posting/view.rss:12 templates/admin/posting/view.atom:5
+#: templates/user/posting/view.rss:12 templates/user/posting/view.atom:5
+msgid "A direct feed showing the list of postings"
+msgstr ""
+
+#: templates/admin/posting/include_selectOne.tpl:6
+#: templates/admin/posting/include_selectEditOne.tpl:6
+#: templates/user/posting/include_selectOne.tpl:6
+#: templates/user/posting/include_selectEditOne.tpl:6
+msgid "Select posting"
+msgstr ""
+
+#: templates/admin/posting/include_selectOne.tpl:8
+#: templates/admin/posting/include_selectEditOne.tpl:8
+#: templates/user/posting/include_selectOne.tpl:8
+#: templates/user/posting/include_selectEditOne.tpl:8
+msgid "Find posting"
+msgstr ""
+
+#: templates/admin/posting/include_selectOne.tpl:10
+#: templates/admin/posting/include_selectEditOne.tpl:10
+#: templates/user/posting/include_selectOne.tpl:10
+#: templates/user/posting/include_selectEditOne.tpl:10
+msgid "Search posting"
+msgstr ""
+
+#: templates/admin/posting/include_selectOne.tpl:17
+#: templates/admin/posting/include_selectEditOne.tpl:18
+#: templates/admin/rank/include_selectEditOne.tpl:18
+#: templates/admin/forum/include_selectEditOne.tpl:18
+#: templates/admin/category/include_selectEditOne.tpl:18
+#: templates/user/posting/include_selectOne.tpl:17
+#: templates/user/posting/include_selectEditOne.tpl:18
+#: templates/user/rank/include_selectEditOne.tpl:18
+#: templates/user/forum/include_selectEditOne.tpl:18
+#: templates/user/category/include_selectEditOne.tpl:18
+msgid "This function requires JavaScript activated!"
+msgstr ""
+
+#: templates/admin/posting/view.tpl:21 templates/admin/abo/view.tpl:21
+#: templates/admin/rank/view.tpl:21 templates/admin/user/view.tpl:21
+#: templates/admin/forum/view.tpl:21 templates/admin/category/view.tpl:21
+#: templates/user/posting/view.tpl:19 templates/user/abo/view.tpl:19
+#: templates/user/rank/view.tpl:19 templates/user/user/view.tpl:19
+#: templates/user/forum/view.tpl:19 templates/user/category/view.tpl:19
+msgid "Back to paginated view"
+msgstr ""
+
+#: templates/admin/posting/view.tpl:27 templates/admin/abo/view.tpl:27
+#: templates/admin/rank/view.tpl:27 templates/admin/user/view.tpl:27
+#: templates/admin/forum/view.tpl:27 templates/admin/category/view.tpl:27
+#: templates/user/posting/view.tpl:25 templates/user/abo/view.tpl:25
+#: templates/user/rank/view.tpl:25 templates/user/user/view.tpl:25
+#: templates/user/forum/view.tpl:25 templates/user/category/view.tpl:25
+msgid "Show all entries"
+msgstr ""
+
+#: templates/admin/posting/view.tpl:55 templates/admin/posting/edit.tpl:35
+#: templates/admin/posting/view.csv:3 templates/admin/forum/view.tpl:44
+#: templates/admin/forum/edit.tpl:30 templates/admin/forum/view.csv:3
+#: templates/admin/category/view.tpl:43 templates/admin/category/edit.tpl:30
+#: templates/admin/category/view.csv:3 templates/user/posting/edit.tpl:37
+#: templates/user/posting/view.csv:3 templates/user/forum/view.tpl:42
+#: templates/user/forum/edit.tpl:25 templates/user/forum/view.csv:3
+#: templates/user/category/view.tpl:41 templates/user/category/edit.tpl:25
+#: templates/user/category/view.csv:3
+msgid "Title"
+msgstr ""
+
+#: templates/admin/posting/view.tpl:87 templates/admin/abo/view.tpl:55
+#: templates/admin/rank/view.tpl:63 templates/admin/user/view.tpl:55
+#: templates/admin/forum/view.tpl:55 templates/admin/category/view.tpl:51
+#: templates/user/posting/view.tpl:86 templates/user/abo/view.tpl:53
+#: templates/user/rank/view.tpl:61 templates/user/user/view.tpl:53
+#: templates/user/forum/view.tpl:53 templates/user/category/view.tpl:49
+msgid "Actions"
+msgstr ""
+
+#: templates/admin/posting/view.tpl:193 templates/admin/posting/view.tpl:211
+#: templates/admin/user/view.tpl:86 templates/admin/forum/view.tpl:86
+#: templates/user/posting/view.tpl:192 templates/user/posting/view.tpl:210
+#: templates/user/user/view.tpl:84 templates/user/forum/view.tpl:84
+msgid "Not set."
+msgstr ""
+
+#: templates/admin/posting/view.tpl:229 templates/user/posting/view.tpl:228
+#: templates/mailz/itemlist_Posting_html.tpl:11
+#: templates/mailz/itemlist_Posting_text.tpl:7
+msgid "No postings found."
+msgstr ""
+
+#: templates/admin/posting/edit.tpl:7 templates/admin/posting/edit.tpl:13
+#: templates/user/posting/edit.tpl:13 templates/user/posting/edit.tpl:19
+msgid "Edit posting"
+msgstr ""
+
+#: templates/admin/posting/edit.tpl:17
+msgid "Move issue to another forum"
+msgstr ""
+
+#: templates/admin/posting/edit.tpl:32 templates/admin/abo/edit.tpl:28
+#: templates/admin/rank/edit.tpl:28 templates/admin/user/edit.tpl:28
+#: templates/admin/forum/edit.tpl:28 templates/admin/category/edit.tpl:28
+#: templates/user/posting/edit.tpl:34 templates/user/abo/edit.tpl:23
+#: templates/user/rank/edit.tpl:23 templates/user/user/edit.tpl:23
+#: templates/user/forum/edit.tpl:23 templates/user/category/edit.tpl:23
+msgid "Content"
+msgstr ""
+
+#: templates/admin/posting/edit.tpl:36 templates/user/posting/edit.tpl:38
+msgid "Enter the title of the posting"
+msgstr ""
+
+#: templates/admin/posting/edit.tpl:40 templates/user/posting/edit.tpl:43
+msgid "Enter the text of the posting"
+msgstr ""
+
+#: templates/admin/posting/edit.tpl:45 templates/user/posting/edit.tpl:49
+#: templates/user/posting/edit.tpl:55
+msgid "Enter the invocations of the posting"
+msgstr ""
+
+#: templates/admin/posting/edit.tpl:52 templates/admin/posting/edit.tpl:76
+#: templates/admin/posting/edit.tpl:100 templates/admin/posting/edit.tpl:124
+#: templates/admin/posting/edit.tpl:148 templates/admin/posting/edit.tpl:172
+#: templates/admin/rank/edit.tpl:62 templates/user/posting/edit.tpl:64
+#: templates/user/posting/edit.tpl:90 templates/user/posting/edit.tpl:116
+#: templates/user/posting/edit.tpl:144 templates/user/posting/edit.tpl:170
+#: templates/user/posting/edit.tpl:196 templates/user/rank/edit.tpl:49
+msgid "Allowed file extensions:"
+msgstr ""
+
+#: templates/admin/posting/edit.tpl:56 templates/admin/posting/edit.tpl:80
+#: templates/admin/posting/edit.tpl:104 templates/admin/posting/edit.tpl:128
+#: templates/admin/posting/edit.tpl:152 templates/admin/posting/edit.tpl:176
+#: templates/admin/rank/edit.tpl:65 templates/user/posting/edit.tpl:68
+#: templates/user/posting/edit.tpl:94 templates/user/posting/edit.tpl:120
+#: templates/user/posting/edit.tpl:148 templates/user/posting/edit.tpl:174
+#: templates/user/posting/edit.tpl:200 templates/user/rank/edit.tpl:53
+msgid "Current file"
+msgstr "Aktuelle Datei"
+
+#: templates/admin/posting/edit.tpl:66 templates/user/posting/edit.tpl:78
+msgid "Delete first image ?"
+msgstr ""
+
+#: templates/admin/posting/edit.tpl:67 templates/admin/posting/edit.tpl:91
+#: templates/admin/posting/edit.tpl:115 templates/admin/posting/edit.tpl:139
+#: templates/admin/posting/edit.tpl:163 templates/admin/posting/edit.tpl:187
+#: templates/user/posting/edit.tpl:79 templates/user/posting/edit.tpl:105
+#: templates/user/posting/edit.tpl:131 templates/user/posting/edit.tpl:159
+#: templates/user/posting/edit.tpl:185 templates/user/posting/edit.tpl:211
+#: templates/user/rank/edit.tpl:64
+msgid "Delete existing file"
+msgstr "Datei löschen"
+
+#: templates/admin/posting/edit.tpl:90 templates/user/posting/edit.tpl:104
+msgid "Delete second image ?"
+msgstr ""
+
+#: templates/admin/posting/edit.tpl:114 templates/user/posting/edit.tpl:130
+msgid "Delete third image ?"
+msgstr ""
+
+#: templates/admin/posting/edit.tpl:138 templates/user/posting/edit.tpl:158
+msgid "Delete first file ?"
+msgstr ""
+
+#: templates/admin/posting/edit.tpl:162 templates/user/posting/edit.tpl:184
+msgid "Delete second file ?"
+msgstr ""
+
+#: templates/admin/posting/edit.tpl:186 templates/user/posting/edit.tpl:210
+msgid "Delete third file ?"
+msgstr ""
+
+#: templates/admin/posting/edit.tpl:211 templates/admin/abo/edit.tpl:64
+#: templates/admin/rank/edit.tpl:96 templates/admin/user/edit.tpl:62
+#: templates/admin/forum/edit.tpl:60 templates/admin/category/edit.tpl:59
+#: templates/user/abo/edit.tpl:59 templates/user/rank/edit.tpl:87
+#: templates/user/user/edit.tpl:57 templates/user/forum/edit.tpl:55
+#: templates/user/category/edit.tpl:54
+msgid "Hooks"
+msgstr ""
+
+#: templates/admin/posting/edit.tpl:223 templates/admin/abo/edit.tpl:76
+#: templates/admin/rank/edit.tpl:108 templates/admin/user/edit.tpl:74
+#: templates/admin/forum/edit.tpl:72 templates/admin/category/edit.tpl:71
+#: templates/user/posting/edit.tpl:249 templates/user/abo/edit.tpl:71
+#: templates/user/rank/edit.tpl:99 templates/user/user/edit.tpl:69
+#: templates/user/forum/edit.tpl:67 templates/user/category/edit.tpl:66
+msgid "Return control"
+msgstr ""
+
+#: templates/admin/posting/edit.tpl:225 templates/admin/abo/edit.tpl:78
+#: templates/admin/rank/edit.tpl:110 templates/admin/user/edit.tpl:76
+#: templates/admin/forum/edit.tpl:74 templates/admin/category/edit.tpl:73
+#: templates/user/posting/edit.tpl:251 templates/user/abo/edit.tpl:73
+#: templates/user/rank/edit.tpl:101 templates/user/user/edit.tpl:71
+#: templates/user/forum/edit.tpl:69 templates/user/category/edit.tpl:68
+msgid "Create another item after save"
+msgstr ""
+
+#: templates/admin/posting/edit.tpl:234 templates/user/posting/edit.tpl:261
+msgid "Update posting"
+msgstr ""
+
+#: templates/admin/posting/edit.tpl:236 templates/user/posting/edit.tpl:264
+msgid "Really delete this posting?"
+msgstr ""
+
+#: templates/admin/posting/edit.tpl:237 templates/admin/posting/delete.tpl:4
+#: templates/user/posting/edit.tpl:265
+msgid "Delete posting"
+msgstr ""
+
+#: templates/admin/posting/edit.tpl:242 templates/admin/abo/edit.tpl:95
+#: templates/admin/rank/edit.tpl:127 templates/admin/user/edit.tpl:93
+#: templates/admin/forum/edit.tpl:91 templates/admin/category/edit.tpl:90
+#: templates/user/posting/edit.tpl:275 templates/user/abo/edit.tpl:90
+#: templates/user/rank/edit.tpl:118 templates/user/user/edit.tpl:88
+#: templates/user/forum/edit.tpl:86 templates/user/category/edit.tpl:85
+msgid "OK"
+msgstr ""
+
+#: templates/admin/posting/delete.tpl:11
+msgid "Do you really want to delete this posting ?"
+msgstr ""
+
+#: templates/admin/posting/delete.tpl:18 templates/admin/abo/delete.tpl:18
+#: templates/admin/rank/delete.tpl:18 templates/admin/user/delete.tpl:18
+#: templates/admin/forum/delete.tpl:18 templates/admin/category/delete.tpl:18
+msgid "Confirmation prompt"
+msgstr ""
+
+#: templates/admin/posting/include_selectEditOne.tpl:16
+#: templates/admin/rank/include_selectEditOne.tpl:16
+#: templates/admin/forum/include_selectEditOne.tpl:16
+#: templates/admin/category/include_selectEditOne.tpl:16
+#: templates/user/posting/include_selectEditOne.tpl:16
+#: templates/user/rank/include_selectEditOne.tpl:16
+#: templates/user/forum/include_selectEditOne.tpl:16
+#: templates/user/category/include_selectEditOne.tpl:16
+msgid "Create"
+msgstr ""
+
+#: templates/admin/include_standardfields_edit.tpl:4
+#: templates/admin/include_standardfields_display.tpl:3
+#: templates/user/include_standardfields_edit.tpl:4
+#: templates/user/include_standardfields_display.tpl:3
+msgid "Creation and update"
+msgstr ""
+
+#: templates/admin/include_standardfields_edit.tpl:8
+#: templates/user/include_standardfields_edit.tpl:8
+#, php-format
+msgid "Created by %s"
+msgstr "Erstellt von %s"
+
+#: templates/admin/include_standardfields_edit.tpl:9
+#: templates/user/include_standardfields_edit.tpl:9
+#, php-format
+msgid "Created on %s"
+msgstr "Erstellt am %s"
+
+#: templates/admin/include_standardfields_edit.tpl:13
+#: templates/user/include_standardfields_edit.tpl:13
+#, php-format
+msgid "Updated by %s"
+msgstr "Aktualisiert von %s"
+
+#: templates/admin/include_standardfields_edit.tpl:14
+#: templates/user/include_standardfields_edit.tpl:14
+#, php-format
+msgid "Updated on %s"
+msgstr "Aktualisiert am %s"
+
+#: templates/admin/abo/display.tpl:4 templates/user/abo/display.tpl:4
+msgid "Abo"
+msgstr "Abo"
+
+#: templates/admin/abo/display.tpl:14 templates/admin/abo/view.tpl:47
+#: templates/admin/abo/edit.tpl:36 templates/admin/abo/view.csv:3
+#: templates/user/abo/display.tpl:12 templates/user/abo/view.tpl:45
+#: templates/user/abo/edit.tpl:31 templates/user/abo/view.csv:3
+msgid "Catid"
+msgstr ""
+
+#: templates/admin/abo/display.tpl:16 templates/admin/abo/view.tpl:50
+#: templates/admin/abo/edit.tpl:41 templates/admin/abo/view.csv:3
+#: templates/user/abo/display.tpl:14 templates/user/abo/view.tpl:48
+#: templates/user/abo/edit.tpl:36 templates/user/abo/view.csv:3
+msgid "Forumid"
+msgstr ""
+
+#: templates/admin/abo/display.tpl:18 templates/admin/abo/view.tpl:53
+#: templates/admin/abo/edit.tpl:46 templates/admin/abo/view.csv:3
+#: templates/user/abo/display.tpl:16 templates/user/abo/view.tpl:51
+#: templates/user/abo/edit.tpl:41 templates/user/abo/view.csv:3
+msgid "Postingid"
+msgstr ""
+
+#: templates/admin/abo/view.rss:11 templates/admin/abo/view.atom:4
+#: templates/user/abo/view.rss:11 templates/user/abo/view.atom:4
+msgid "Latest abos"
+msgstr ""
+
+#: templates/admin/abo/view.rss:12 templates/admin/abo/view.atom:5
+#: templates/user/abo/view.rss:12 templates/user/abo/view.atom:5
+msgid "A direct feed showing the list of abos"
+msgstr ""
+
+#: templates/admin/abo/view.tpl:13 templates/admin/abo/edit.tpl:10
+#: templates/admin/abo/edit.tpl:93 templates/user/abo/view.tpl:11
+#: templates/user/abo/edit.tpl:9 templates/user/abo/edit.tpl:88
+msgid "Create abo"
+msgstr ""
+
+#: templates/admin/abo/view.tpl:44 templates/admin/abo/edit.tpl:30
+#: templates/admin/abo/view.csv:3 templates/admin/user/view.tpl:44
+#: templates/admin/user/edit.tpl:30 templates/admin/user/view.csv:3
+#: templates/user/abo/view.tpl:42 templates/user/abo/edit.tpl:25
+#: templates/user/abo/view.csv:3 templates/user/user/view.tpl:42
+#: templates/user/user/edit.tpl:25 templates/user/user/view.csv:3
+msgid "Userid"
+msgstr "Benutzer Id"
+
+#: templates/admin/abo/view.tpl:89 templates/user/abo/view.tpl:87
+#: templates/mailz/itemlist_Abo_html.tpl:11
+#: templates/mailz/itemlist_Abo_text.tpl:7
+msgid "No abos found."
+msgstr ""
+
+#: templates/admin/abo/edit.tpl:7 templates/admin/abo/edit.tpl:13
+#: templates/user/abo/edit.tpl:7 templates/user/abo/edit.tpl:11
+msgid "Edit abo"
+msgstr ""
+
+#: templates/admin/abo/edit.tpl:31 templates/user/abo/edit.tpl:26
+msgid "Enter the userid of the abo"
+msgstr ""
+
+#: templates/admin/abo/edit.tpl:37 templates/user/abo/edit.tpl:32
+msgid "Enter the catid of the abo"
+msgstr ""
+
+#: templates/admin/abo/edit.tpl:42 templates/user/abo/edit.tpl:37
+msgid "Enter the forumid of the abo"
+msgstr ""
+
+#: templates/admin/abo/edit.tpl:47 templates/user/abo/edit.tpl:42
+msgid "Enter the postingid of the abo"
+msgstr ""
+
+#: templates/admin/abo/edit.tpl:87 templates/user/abo/edit.tpl:82
+msgid "Update abo"
+msgstr ""
+
+#: templates/admin/abo/edit.tpl:89 templates/user/abo/edit.tpl:84
+msgid "Really delete this abo?"
+msgstr ""
+
+#: templates/admin/abo/edit.tpl:90 templates/admin/abo/delete.tpl:4
+#: templates/user/abo/edit.tpl:85
+msgid "Delete abo"
+msgstr ""
+
+#: templates/admin/abo/delete.tpl:11
+msgid "Do you really want to delete this abo ?"
+msgstr ""
+
+#: templates/admin/rank/display.tpl:4
+#: templates/admin/rank/include_selectEditOne.tpl:3
+#: templates/admin/user/display.tpl:18 templates/admin/user/view.tpl:53
+#: templates/admin/user/view.csv:3 templates/user/rank/display.tpl:4
+#: templates/user/rank/include_selectEditOne.tpl:3
+#: templates/user/user/display.tpl:16 templates/user/user/view.tpl:51
+#: templates/user/user/view.csv:3
+msgid "Rank"
+msgstr ""
+
+#: templates/admin/rank/display.tpl:23 templates/admin/user/view.tpl:13
+#: templates/admin/user/edit.tpl:10 templates/admin/user/edit.tpl:91
+#: templates/user/rank/display.tpl:21 templates/user/user/view.tpl:11
+#: templates/user/user/edit.tpl:9 templates/user/user/edit.tpl:86
+msgid "Create user"
+msgstr ""
+
+#: templates/admin/rank/display.tpl:33 templates/admin/rank/view.tpl:49
+#: templates/admin/rank/edit.tpl:35 templates/admin/rank/view.csv:3
+#: templates/user/rank/display.tpl:31 templates/user/rank/view.tpl:47
+#: templates/user/rank/edit.tpl:30 templates/user/rank/view.csv:3
+msgid "Min postings"
+msgstr ""
+
+#: templates/admin/rank/display.tpl:35 templates/admin/rank/view.tpl:52
+#: templates/admin/rank/edit.tpl:40 templates/admin/rank/view.csv:3
+#: templates/user/rank/display.tpl:33 templates/user/rank/view.tpl:50
+#: templates/user/rank/edit.tpl:35 templates/user/rank/view.csv:3
+msgid "Max postings"
+msgstr ""
+
+#: templates/admin/rank/display.tpl:37 templates/admin/rank/view.tpl:55
+#: templates/admin/rank/edit.tpl:45 templates/admin/rank/view.csv:3
+#: templates/user/rank/display.tpl:35 templates/user/rank/view.tpl:53
+#: templates/user/rank/edit.tpl:40 templates/user/rank/view.csv:3
+msgid "Number of icons"
+msgstr ""
+
+#: templates/admin/rank/display.tpl:39 templates/admin/rank/view.tpl:58
+#: templates/admin/rank/edit.tpl:55 templates/admin/rank/view.csv:3
+#: templates/user/rank/display.tpl:37 templates/user/rank/view.tpl:56
+#: templates/user/rank/edit.tpl:46 templates/user/rank/view.csv:3
+msgid "Upload image"
+msgstr ""
+
+#: templates/admin/rank/display.tpl:50 templates/admin/rank/view.tpl:61
+#: templates/admin/rank/edit.tpl:78 templates/admin/rank/view.csv:3
+#: templates/user/rank/display.tpl:48 templates/user/rank/view.tpl:59
+#: templates/user/rank/edit.tpl:70 templates/user/rank/view.csv:3
+msgid "Special"
+msgstr ""
+
+#: templates/admin/rank/display.tpl:54 templates/admin/rank/display.tpl:57
+#: templates/admin/rank/view.tpl:98 templates/admin/rank/view.tpl:101
+#: templates/user/rank/display.tpl:52 templates/user/rank/display.tpl:55
+#: templates/user/rank/view.tpl:96 templates/user/rank/view.tpl:99
+msgid "Yes"
+msgstr ""
+
+#: templates/admin/rank/display.tpl:54 templates/admin/rank/display.tpl:57
+#: templates/admin/rank/view.tpl:98 templates/admin/rank/view.tpl:101
+#: templates/user/rank/display.tpl:52 templates/user/rank/display.tpl:55
+#: templates/user/rank/view.tpl:96 templates/user/rank/view.tpl:99
+msgid "This setting is enabled. Click here to disable it."
+msgstr ""
+
+#: templates/admin/rank/display.tpl:55 templates/admin/rank/display.tpl:58
+#: templates/admin/rank/view.tpl:99 templates/admin/rank/view.tpl:102
+#: templates/user/rank/display.tpl:53 templates/user/rank/display.tpl:56
+#: templates/user/rank/view.tpl:97 templates/user/rank/view.tpl:100
+msgid "No"
+msgstr ""
+
+#: templates/admin/rank/display.tpl:55 templates/admin/rank/display.tpl:58
+#: templates/admin/rank/view.tpl:99 templates/admin/rank/view.tpl:102
+#: templates/user/rank/display.tpl:53 templates/user/rank/display.tpl:56
+#: templates/user/rank/view.tpl:97 templates/user/rank/view.tpl:100
+msgid "This setting is disabled. Click here to enable it."
+msgstr ""
+
+#: templates/admin/rank/view.rss:11 templates/admin/rank/view.atom:4
+#: templates/user/rank/view.rss:11 templates/user/rank/view.atom:4
+msgid "Latest ranks"
+msgstr ""
+
+#: templates/admin/rank/view.rss:12 templates/admin/rank/view.atom:5
+#: templates/user/rank/view.rss:12 templates/user/rank/view.atom:5
+msgid "A direct feed showing the list of ranks"
+msgstr ""
+
+#: templates/admin/rank/view.tpl:13 templates/admin/rank/edit.tpl:10
+#: templates/admin/rank/edit.tpl:125 templates/user/rank/view.tpl:11
+#: templates/user/rank/edit.tpl:9 templates/user/rank/edit.tpl:116
+msgid "Create rank"
+msgstr ""
+
+#: templates/admin/rank/view.tpl:46 templates/admin/rank/edit.tpl:30
+#: templates/admin/rank/view.csv:3 templates/user/rank/view.tpl:44
+#: templates/user/rank/edit.tpl:25 templates/user/rank/view.csv:3
+msgid "Name"
+msgstr ""
+
+#: templates/admin/rank/view.tpl:124 templates/user/rank/view.tpl:122
+#: templates/mailz/itemlist_Rank_text.tpl:7
+#: templates/mailz/itemlist_Rank_html.tpl:11
+msgid "No ranks found."
+msgstr ""
+
+#: templates/admin/rank/edit.tpl:7 templates/admin/rank/edit.tpl:13
+#: templates/user/rank/edit.tpl:7 templates/user/rank/edit.tpl:11
+msgid "Edit rank"
+msgstr ""
+
+#: templates/admin/rank/edit.tpl:31 templates/user/rank/edit.tpl:26
+msgid "Enter the name of the rank"
+msgstr ""
+
+#: templates/admin/rank/edit.tpl:36 templates/user/rank/edit.tpl:31
+msgid "Enter the min postings of the rank"
+msgstr ""
+
+#: templates/admin/rank/edit.tpl:41 templates/user/rank/edit.tpl:36
+msgid "Enter the max postings of the rank"
+msgstr ""
+
+#: templates/admin/rank/edit.tpl:46 templates/user/rank/edit.tpl:41
+msgid "Enter the number of icons of the rank"
+msgstr ""
+
+#: templates/admin/rank/edit.tpl:79 templates/user/rank/edit.tpl:71
+msgid "special ?"
+msgstr ""
+
+#: templates/admin/rank/edit.tpl:119 templates/user/rank/edit.tpl:110
+msgid "Update rank"
+msgstr ""
+
+#: templates/admin/rank/edit.tpl:121 templates/user/rank/edit.tpl:112
+msgid "Really delete this rank?"
+msgstr ""
+
+#: templates/admin/rank/edit.tpl:122 templates/admin/rank/delete.tpl:4
+#: templates/user/rank/edit.tpl:113
+msgid "Delete rank"
+msgstr ""
+
+#: templates/admin/rank/delete.tpl:11
+msgid "Do you really want to delete this rank ?"
+msgstr ""
+
+#: templates/admin/rank/include_selectEditOne.tpl:6
+#: templates/user/rank/include_selectEditOne.tpl:6
+msgid "Select rank"
+msgstr ""
+
+#: templates/admin/rank/include_selectEditOne.tpl:8
+#: templates/user/rank/include_selectEditOne.tpl:8
+msgid "Find rank"
+msgstr ""
+
+#: templates/admin/rank/include_selectEditOne.tpl:10
+#: templates/user/rank/include_selectEditOne.tpl:10
+msgid "Search rank"
+msgstr ""
+
+#: templates/admin/rank/include_selectEditOne.tpl:16
+#: templates/user/rank/include_selectEditOne.tpl:16
+msgid "Create new rank"
+msgstr ""
+
+#: templates/admin/user/display.tpl:4 templates/user/user/display.tpl:4
+msgid "User"
+msgstr ""
+
+#: templates/admin/user/display.tpl:14 templates/admin/user/view.tpl:47
+#: templates/admin/user/edit.tpl:36 templates/admin/user/view.csv:3
+#: templates/user/user/display.tpl:12 templates/user/user/view.tpl:45
+#: templates/user/user/edit.tpl:31 templates/user/user/view.csv:3
+msgid "Number postings"
+msgstr ""
+
+#: templates/admin/user/display.tpl:16 templates/admin/user/view.tpl:50
+#: templates/admin/user/edit.tpl:42 templates/admin/user/view.csv:3
+#: templates/user/user/display.tpl:14 templates/user/user/view.tpl:48
+#: templates/user/user/edit.tpl:37 templates/user/user/view.csv:3
+msgid "Last visit"
+msgstr ""
+
+#: templates/admin/user/view.rss:11 templates/admin/user/view.atom:4
+#: templates/user/user/view.rss:11 templates/user/user/view.atom:4
+msgid "Latest users"
+msgstr ""
+
+#: templates/admin/user/view.rss:12 templates/admin/user/view.atom:5
+#: templates/user/user/view.rss:12 templates/user/user/view.atom:5
+msgid "A direct feed showing the list of users"
+msgstr ""
+
+#: templates/admin/user/view.tpl:104 templates/user/user/view.tpl:102
+#: templates/mailz/itemlist_User_html.tpl:11
+#: templates/mailz/itemlist_User_text.tpl:7
+msgid "No users found."
+msgstr ""
+
+#: templates/admin/user/edit.tpl:7 templates/admin/user/edit.tpl:13
+#: templates/user/user/edit.tpl:7 templates/user/user/edit.tpl:11
+msgid "Edit user"
+msgstr ""
+
+#: templates/admin/user/edit.tpl:31 templates/user/user/edit.tpl:26
+msgid "Enter the userid of the user"
+msgstr ""
+
+#: templates/admin/user/edit.tpl:37 templates/user/user/edit.tpl:32
+msgid "Enter the number postings of the user"
+msgstr ""
+
+#: templates/admin/user/edit.tpl:44 templates/admin/user/edit.tpl:46
+#: templates/user/user/edit.tpl:39 templates/user/user/edit.tpl:41
+msgid "Enter the last visit of the user"
+msgstr ""
+
+#: templates/admin/user/edit.tpl:85 templates/user/user/edit.tpl:80
+msgid "Update user"
+msgstr ""
+
+#: templates/admin/user/edit.tpl:87 templates/user/user/edit.tpl:82
+msgid "Really delete this user?"
+msgstr ""
+
+#: templates/admin/user/edit.tpl:88 templates/admin/user/delete.tpl:4
+#: templates/user/user/edit.tpl:83
+msgid "Delete user"
+msgstr ""
+
+#: templates/admin/user/delete.tpl:11
+msgid "Do you really want to delete this user ?"
+msgstr ""
+
+#: templates/admin/forum/display.tpl:33 templates/admin/forum/view.tpl:47
+#: templates/admin/forum/edit.tpl:35 templates/admin/forum/view.csv:3
+#: templates/admin/category/display.tpl:33
+#: templates/admin/category/view.tpl:46 templates/admin/category/edit.tpl:35
+#: templates/admin/category/view.csv:3 templates/user/forum/display.tpl:59
+#: templates/user/forum/view.tpl:45 templates/user/forum/edit.tpl:30
+#: templates/user/forum/view.csv:3 templates/user/category/display.tpl:47
+#: templates/user/category/view.tpl:44 templates/user/category/edit.tpl:30
+#: templates/user/category/view.csv:3
+msgid "Description"
+msgstr ""
+
+#: templates/admin/forum/display.tpl:35 templates/admin/forum/view.tpl:50
+#: templates/admin/forum/edit.tpl:40 templates/admin/forum/view.csv:3
+#: templates/admin/category/display.tpl:35
+#: templates/admin/category/view.tpl:49 templates/admin/category/edit.tpl:40
+#: templates/admin/category/view.csv:3 templates/user/forum/display.tpl:61
+#: templates/user/forum/view.tpl:48 templates/user/forum/edit.tpl:35
+#: templates/user/forum/view.csv:3 templates/user/category/display.tpl:49
+#: templates/user/category/view.tpl:47 templates/user/category/edit.tpl:35
+#: templates/user/category/view.csv:3
+msgid "Pos"
+msgstr ""
+
+#: templates/admin/forum/display.tpl:37 templates/admin/forum/view.tpl:53
+#: templates/admin/forum/view.csv:3 templates/admin/category/display.tpl:4
+#: templates/admin/category/include_selectEditOne.tpl:3
+#: templates/user/forum/display.tpl:63 templates/user/forum/view.tpl:51
+#: templates/user/forum/view.csv:3 templates/user/category/display.tpl:4
+#: templates/user/category/include_selectEditOne.tpl:3
+msgid "Category"
+msgstr ""
+
+#: templates/admin/forum/view.rss:11 templates/admin/forum/view.atom:4
+#: templates/user/forum/view.rss:11 templates/user/forum/view.atom:4
+msgid "Latest forums"
+msgstr ""
+
+#: templates/admin/forum/view.rss:12 templates/admin/forum/view.atom:5
+#: templates/user/forum/view.rss:12 templates/user/forum/view.atom:5
+msgid "A direct feed showing the list of forums"
+msgstr ""
+
+#: templates/admin/forum/view.tpl:13 templates/admin/forum/edit.tpl:10
+#: templates/admin/forum/edit.tpl:89 templates/admin/category/display.tpl:23
+#: templates/user/forum/view.tpl:11 templates/user/forum/edit.tpl:9
+#: templates/user/forum/edit.tpl:84 templates/user/category/display.tpl:37
+msgid "Create forum"
+msgstr ""
+
+#: templates/admin/forum/view.tpl:104 templates/user/forum/view.tpl:102
+#: templates/mailz/itemlist_Forum_html.tpl:11
+#: templates/mailz/itemlist_Forum_text.tpl:7
+msgid "No forums found."
+msgstr ""
+
+#: templates/admin/forum/edit.tpl:7 templates/admin/forum/edit.tpl:13
+#: templates/user/forum/edit.tpl:7 templates/user/forum/edit.tpl:11
+msgid "Edit forum"
+msgstr ""
+
+#: templates/admin/forum/edit.tpl:31 templates/user/forum/edit.tpl:26
+msgid "Enter the title of the forum"
+msgstr ""
+
+#: templates/admin/forum/edit.tpl:36 templates/user/forum/edit.tpl:31
+msgid "Enter the description of the forum"
+msgstr ""
+
+#: templates/admin/forum/edit.tpl:41 templates/user/forum/edit.tpl:36
+msgid "Enter the pos of the forum"
+msgstr ""
+
+#: templates/admin/forum/edit.tpl:83 templates/user/forum/edit.tpl:78
+msgid "Update forum"
+msgstr ""
+
+#: templates/admin/forum/edit.tpl:85 templates/user/forum/edit.tpl:80
+msgid "Really delete this forum?"
+msgstr ""
+
+#: templates/admin/forum/edit.tpl:86 templates/admin/forum/delete.tpl:4
+#: templates/user/forum/edit.tpl:81
+msgid "Delete forum"
+msgstr ""
+
+#: templates/admin/forum/delete.tpl:11
+msgid "Do you really want to delete this forum ?"
+msgstr ""
+
+#: templates/admin/forum/include_selectEditOne.tpl:6
+#: templates/user/forum/include_selectEditOne.tpl:6
+msgid "Select forum"
+msgstr "Wähle Forum"
+
+#: templates/admin/forum/include_selectEditOne.tpl:8
+#: templates/user/forum/include_selectEditOne.tpl:8
+msgid "Find forum"
+msgstr "Finde Forum"
+
+#: templates/admin/forum/include_selectEditOne.tpl:10
+#: templates/user/forum/include_selectEditOne.tpl:10
+msgid "Search forum"
+msgstr ""
+
+#: templates/admin/forum/include_selectEditOne.tpl:16
+#: templates/user/forum/include_selectEditOne.tpl:16
+msgid "Create new forum"
+msgstr ""
+
+#: templates/admin/category/view.rss:11 templates/admin/category/view.atom:4
+#: templates/user/category/view.rss:11 templates/user/category/view.atom:4
+msgid "Latest categories"
+msgstr ""
+
+#: templates/admin/category/view.rss:12 templates/admin/category/view.atom:5
+#: templates/user/category/view.rss:12 templates/user/category/view.atom:5
+msgid "A direct feed showing the list of categories"
+msgstr ""
+
+#: templates/admin/category/view.tpl:13 templates/admin/category/edit.tpl:10
+#: templates/admin/category/edit.tpl:88 templates/user/category/view.tpl:11
+#: templates/user/category/edit.tpl:9 templates/user/category/edit.tpl:83
+msgid "Create category"
+msgstr ""
+
+#: templates/admin/category/view.tpl:82 templates/user/category/view.tpl:103
+#: templates/mailz/itemlist_Category_text.tpl:7
+#: templates/mailz/itemlist_Category_html.tpl:11
+msgid "No categories found."
+msgstr ""
+
+#: templates/admin/category/edit.tpl:7 templates/admin/category/edit.tpl:13
+#: templates/user/category/edit.tpl:7 templates/user/category/edit.tpl:11
+msgid "Edit category"
+msgstr ""
+
+#: templates/admin/category/edit.tpl:31 templates/user/category/edit.tpl:26
+msgid "Enter the title of the category"
+msgstr ""
+
+#: templates/admin/category/edit.tpl:36 templates/user/category/edit.tpl:31
+msgid "Enter the description of the category"
+msgstr ""
+
+#: templates/admin/category/edit.tpl:41 templates/user/category/edit.tpl:36
+msgid "Enter the pos of the category"
+msgstr "Gib die Position der Kategorie ein"
+
+#: templates/admin/category/edit.tpl:82 templates/user/category/edit.tpl:77
+msgid "Update category"
+msgstr ""
+
+#: templates/admin/category/edit.tpl:84 templates/user/category/edit.tpl:79
+msgid "Really delete this category?"
+msgstr ""
+
+#: templates/admin/category/edit.tpl:85 templates/admin/category/delete.tpl:4
+#: templates/user/category/edit.tpl:80
+msgid "Delete category"
+msgstr ""
+
+#: templates/admin/category/delete.tpl:11
+msgid "Do you really want to delete this category ?"
+msgstr ""
+
+#: templates/admin/category/include_selectEditOne.tpl:6
+#: templates/user/category/include_selectEditOne.tpl:6
+msgid "Select category"
+msgstr ""
+
+#: templates/admin/category/include_selectEditOne.tpl:8
+#: templates/user/category/include_selectEditOne.tpl:8
+msgid "Find category"
+msgstr ""
+
+#: templates/admin/category/include_selectEditOne.tpl:10
+#: templates/user/category/include_selectEditOne.tpl:10
+msgid "Search category"
+msgstr ""
+
+#: templates/admin/category/include_selectEditOne.tpl:16
+#: templates/user/category/include_selectEditOne.tpl:16
+msgid "Create new category"
+msgstr ""
+
+#: templates/admin/include_standardfields_display.tpl:6
+#: templates/user/include_standardfields_display.tpl:6
+msgid "Creation"
+msgstr ""
+
+#: templates/admin/include_standardfields_display.tpl:17
+#: templates/user/include_standardfields_display.tpl:17
+#, php-format
+msgid "Created by %1$s on %2$s"
+msgstr "Erstellt von %1$s am %2$s"
+
+#: templates/admin/include_standardfields_display.tpl:20
+#: templates/user/include_standardfields_display.tpl:20
+msgid "Last update"
+msgstr ""
+
+#: templates/admin/include_standardfields_display.tpl:31
+#: templates/user/include_standardfields_display.tpl:31
+#, php-format
+msgid "Updated by %1$s on %2$s"
+msgstr ""
+
+#: templates/contenttype/itemlist_Category_display_description.tpl:9
+#: templates/contenttype/itemlist_Rank_display.tpl:5
+#: templates/contenttype/itemlist_Category_display.tpl:5
+#: templates/contenttype/itemlist_Abo_display.tpl:5
+#: templates/contenttype/itemlist_User_display.tpl:5
+#: templates/contenttype/itemlist_Abo_display_description.tpl:6
+#: templates/contenttype/itemlist_Forum_display.tpl:5
+#: templates/contenttype/itemlist_Posting_display.tpl:16
+#: templates/contenttype/itemlist_Posting_display.tpl:18
+#: templates/contenttype/itemlist_Rank_display_description.tpl:6
+#: templates/contenttype/itemlist_Posting_display_description.tpl:20
+#: templates/contenttype/itemlist_Posting_display_description.tpl:22
+#: templates/contenttype/itemlist_User_display_description.tpl:6
+#: templates/contenttype/itemlist_Forum_display_description.tpl:9
+msgid "Read more"
+msgstr "Mehr lesen"
+
+#: templates/contenttype/itemlist_Category_display_description.tpl:11
+#: templates/contenttype/itemlist_Abo_display_description.tpl:8
+#: templates/contenttype/itemlist_Posting_display.tpl:21
+#: templates/contenttype/itemlist_Rank_display_description.tpl:8
+#: templates/contenttype/itemlist_Posting_display_description.tpl:26
+#: templates/contenttype/itemlist_User_display_description.tpl:8
+#: templates/contenttype/itemlist_Forum_display_description.tpl:11
+msgid "No entries found."
+msgstr ""
+
+#: templates/contenttype/itemlist_Posting_display.tpl:6
+#: templates/contenttype/itemlist_Posting_display_description.tpl:7
+#: templates/user/posting/display.tpl:79
+msgid "Guest"
+msgstr "Gast"
+
+#: templates/contenttype/itemlist_Posting_display.tpl:11
+#: templates/contenttype/itemlist_Posting_display_description.tpl:12
+msgid "opened issue:"
+msgstr "eröffnete das Thema:"
+
+#: templates/contenttype/itemlist_Posting_display.tpl:13
+#: templates/contenttype/itemlist_Posting_display_description.tpl:14
+msgid "answered to issue:"
+msgstr "antwortete auf das Thema:"
+
+#: templates/contenttype/itemlist_edit.tpl:4
+#: templates/block/itemlist_modify.tpl:4
+msgid "Object type"
+msgstr ""
+
+#: templates/contenttype/itemlist_edit.tpl:10
+#: templates/block/itemlist_modify.tpl:13
+msgid "Sorting"
+msgstr "Sortierung"
+
+#: templates/contenttype/itemlist_edit.tpl:13
+#: templates/block/itemlist_modify.tpl:15
+msgid "Random"
+msgstr "Zufall"
+
+#: templates/contenttype/itemlist_edit.tpl:15
+#: templates/block/itemlist_modify.tpl:16
+msgid "Newest"
+msgstr ""
+
+#: templates/contenttype/itemlist_edit.tpl:17
+#: templates/block/itemlist_modify.tpl:17
+msgid "Default"
+msgstr ""
+
+#: templates/contenttype/itemlist_edit.tpl:22
+#: templates/block/itemlist_modify.tpl:22
+msgid "Amount"
+msgstr "Anzahl"
+
+#: templates/contenttype/itemlist_edit.tpl:27
+#: templates/block/itemlist_modify.tpl:27
+msgid "Template File"
+msgstr ""
+
+#: templates/contenttype/itemlist_edit.tpl:33
+#: templates/block/itemlist_modify.tpl:35
+msgid "Filter (expert option)"
+msgstr ""
+
+#: templates/contenttype/itemlist_edit.tpl:35
+#: templates/block/itemlist_modify.tpl:37
+msgid "Syntax examples"
+msgstr ""
+
+#: templates/contenttype/itemlist_edit.tpl:35
+#: templates/block/itemlist_modify.tpl:37
+msgid "or"
+msgstr ""
+
+#: templates/user/posting/display.tpl:19
+msgid "Issue:"
+msgstr "Thema:"
+
+#: templates/user/posting/display.tpl:22
+#: templates/user/posting/include_displayItemListMany.tpl:15
+msgid "Mark this issue as solved!"
+msgstr "Markiere dieses Thema als gelöst!"
+
+#: templates/user/posting/display.tpl:33
+#: templates/user/posting/include_displayItemListMany.tpl:26
+msgid "This issue is marked as solved! Mark it as unsolved! "
+msgstr ""
+
+#: templates/user/posting/display.tpl:43
+msgid "Created: "
+msgstr "Erstellt: "
+
+#: templates/user/posting/display.tpl:46 templates/user/forum/display.tpl:23
+msgid "Category:"
+msgstr "Kategorie:"
+
+#: templates/user/posting/display.tpl:46 templates/user/posting/display.tpl:47
+msgid "Back to"
+msgstr "Zurück zu"
+
+#: templates/user/posting/display.tpl:47 templates/user/forum/display.tpl:19
+#: templates/user/forum/include_displayItemListMany.tpl:13
+msgid "Forum:"
+msgstr "Forum:"
+
+#: templates/user/posting/display.tpl:61
+#: templates/user/posting/include_displayItemListMany.tpl:54
+msgid "Issue is open! You have permissions to close this issue!"
+msgstr "Thema ist offen! Du hast das Recht, dieses Thema zu schliessen!"
+
+#: templates/user/posting/display.tpl:65
+#: templates/user/posting/include_displayItemListMany.tpl:58
+msgid "Issue is closed. You have permissions to reopen this issue!"
+msgstr "Thema ist geschlossen! Du hast das Recht, dieses Thema zu öffnen!"
+
+#: templates/user/posting/display.tpl:85
+#: templates/user/posting/display.tpl:117
+msgid "Last visit:"
+msgstr "Letzter Besuch:"
+
+#: templates/user/posting/display.tpl:86
+#: templates/user/posting/display.tpl:118
+msgid "Postings:"
+msgstr "Posts:"
+
+#: templates/user/posting/include_displayItemListMany.tpl:40
+msgid "Writer:"
+msgstr "Author:"
+
+#: templates/user/posting/include_displayItemListMany.tpl:49
+msgid "Move issue to another forum!"
+msgstr ""
+
+#: templates/user/posting/view.tpl:54
+msgid "Issue"
+msgstr "Thema"
+
+#: templates/user/posting/edit.tpl:17
+msgid "Answer to posting"
+msgstr "Post beantworten"
+
+#: templates/user/posting/edit.tpl:63 templates/user/posting/edit.tpl:89
+#: templates/user/posting/edit.tpl:115
+msgid "Allowed file size:"
+msgstr "Erlaubte Dateigröße:"
+
+#: templates/user/posting/edit.tpl:271
+msgid "Save answer"
+msgstr "Antwort speichern"
+
+#: templates/user/rank/edit.tpl:63
+msgid "Delete upload image ?"
+msgstr ""
+
+#: templates/user/forum/include_displayItemListMany.tpl:64
+#: templates/user/category/view.tpl:71
+msgid "There are no forums in this category!"
+msgstr ""
+
+#: templates/user/category/view.tpl:124
+msgid "Number of issues"
+msgstr "Anzahl der Themen"
+
+#: templates/user/category/view.tpl:125
+msgid "Number of postings"
+msgstr "Anzahl der Posts"
+
+#: templates/search/moduleSearch.tpl:6
+msgid "Search Terms"
+msgstr "Suchbegriffe"
+
+#: templates/search/moduleSearch.tpl:10
+msgid "Search options"
+msgstr "Suchoptionen"
+
+#: templates/search/moduleSearch.tpl:12
+msgid "All terms [AND]"
+msgstr ""
+
+#: templates/search/moduleSearch.tpl:13
+msgid "Single terms [OR]"
+msgstr ""
+
+#: templates/search/moduleSearch.tpl:14
+msgid "Correct term"
+msgstr "Exakter Begriff"
+
+#: templates/search/moduleSearch.tpl:18
+msgid "Search place"
+msgstr "Suchort"
+
+#: templates/search/moduleSearch.tpl:20
+msgid "Only in titles"
+msgstr "Nur in Titeln"
+
+#: templates/search/moduleSearch.tpl:21
+msgid "In titles and content"
+msgstr "In Titeln und Inhalt"
+
+#: templates/search/moduleSearch.tpl:25
+msgid "Order of results"
+msgstr "Reihenfolge der Ergebnisse"
+
+#: templates/search/moduleSearch.tpl:27
+msgid "Ascending"
+msgstr ""
+
+#: templates/search/moduleSearch.tpl:28
+msgid "Descending"
+msgstr ""
+
+#: templates/search/moduleSearch.tpl:32
+msgid "Search"
+msgstr "Suchen"
