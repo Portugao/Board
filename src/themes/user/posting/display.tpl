@@ -108,7 +108,7 @@
         </div>   
     </div>
     {foreach item='childPosting' from=$postings}
-        <div class="muboard-user-posting">
+        <div id={$childPosting.id} class="muboard-user-posting">
         <div class="muboard-user-posting-user">
         <div class="muboard-user-posting-avatar">
         {useravatar uid=$childPosting.createdUserId size=60}<br />
