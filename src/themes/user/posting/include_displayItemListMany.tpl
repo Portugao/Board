@@ -37,7 +37,7 @@
     <a href="{modurl modname='MUBoard' type='user' func='display' ot='posting' id=$item.id}">
         {$item.title}
     </a><br />
-    {gt text='Writer:'} {usergetvar name=uname uid=$item.createdUserId}
+    {gt text='Writer:'} {if $item.createdUserId > 1}{usergetvar name=uname uid=$item.createdUserId}{else} {gt text='Guest'}{/if}
 </div>
 </div>
 <div class="muboard-user-forum-right">

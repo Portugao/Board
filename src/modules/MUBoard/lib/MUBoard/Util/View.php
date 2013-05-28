@@ -204,6 +204,8 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
      */
     public static function getLastPostingOfForum($forumid)
     {
+        $dom = ZLanguage::getModuleDomain('MUBoard');
+        
         // get repositoy for forum
         $repository = MUBoard_Util_Model::getForumRepository();
         // get forum by id
@@ -240,7 +242,11 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
             $out = '';
             $createdDate = $lastposting->getCreatedDate();
             $date = DateUtil::formatDatetime($createdDate, 'datetimelong');
+            if ($lastposting['createdUserId'] > 1) {
             $uname = UserUtil::getVar('uname', $lastposting['createdUserId']);
+            } else {
+                $uname = __('Guest', $dom);
+            }
             $out .= __('Last posting by ');
             $out .= $uname;
             $out .= "<br />";
