@@ -356,38 +356,32 @@
     });
     
     var MU = jQuery.noConflict();
-    
     MU(document).ready( function() { 
 
-
-       MU("#btnPreview").click(function() {
-       MU("#{{$__formid}}").submit(function(e) {
-       e.preventDefault();
+       MU("#btnPreview").click(function(d) {
+           d.preventDefault();
+           MU("#muboard-user-preview").slideDown(2000).html("<div id='work'><img src='images/ajax/indicator.white.gif' /></div>");
            var url = "index.php?module=muboard&type=ajax&func=preview&theme=printer";
-           var datas = MU(this).serialize();
+           var datas = MU("#{{$__formid}}").serialize();
            var datatyp = 'html';
            var datawork = function(answer) {
                if (answer) {
                    MU("#muboard-user-preview").html(answer).slideDown(3000); 
                }
            }
-           MU("#muboard-user-preview").html("<div id='work'><img src='images/ajax/indicator.white.gif' /></div>").slideDown(1000);
+           
            MU.get(url, datas, datawork, datatyp);
-           return false;
 
        });
        
        MU("#btnCreate").click(function() {
-
+           MU("#{{$__formid}}").submit();
        });  
 
-       MU("#btnCancel").click(function(g) {
-           g.preventDefault();
-           MU("#muboard-user-preview").slideUp(2000);
+       MU("#btnCancel").click(function(f) {
+           f.preventDefault();
+           MU("#muboard-user-preview").slideUp(2000).html("");
        }); 
-       
-       });
-       
    });  
 
 /* ]]> */
