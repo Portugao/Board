@@ -68,7 +68,7 @@ class MUBoard_Form_Handler_Admin_Base_Config extends Zikula_Form_AbstractHandler
         // initialise list entries for the 'template' setting
         $modVars['templateItems'] = array(
             array('value' => 'normal', 'text' => 'Normal'),
-            array('value' => 'jquery', 'text'  => 'Jquery')
+            array('value' => 'jquery', 'text'  => 'JQuery')
         );
 
         // assign all module vars
