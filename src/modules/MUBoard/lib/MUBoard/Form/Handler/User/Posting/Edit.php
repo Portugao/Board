@@ -40,7 +40,6 @@ class MUBoard_Form_Handler_User_Posting_Edit extends MUBoard_Form_Handler_User_P
 			$parentid = $this->request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
 
 			if ($parentid > 0) {
-
 				$entity = $repository->selectById($parentid);
 				$forumOfEntity = $entity->getForum();
 				$forumid = $forumOfEntity['id'];
@@ -156,5 +155,9 @@ class MUBoard_Form_Handler_User_Posting_Edit extends MUBoard_Form_Handler_User_P
 		}
 
 		return $this->view->redirect($this->getRedirectUrl($args, $entity, $repeatCreateAction));
+	}
+	
+	public function postInitialize() {
+	    
 	}
 }
