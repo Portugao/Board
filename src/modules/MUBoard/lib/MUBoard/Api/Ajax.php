@@ -16,57 +16,88 @@
  */
 class MUBoard_Api_Ajax extends MUBoard_Api_Base_Ajax
 {
-	public function preview() {
-		
-		include_once 'lib/viewplugins/function.useravatar.php';
-		
-		$dom = ZLanguage::getModuleDomain('MUBoard');
-		
-		$text = $this->request->getGet()->filter('text', '', FILTER_SANITIZE_STRING);
-		$text = nl2br($text);
-		$text = ModUtil::apiFunc('BBSmile', 'user', 'transform', array('text' => $text));
-		
-		$uid = UserUtil::getVar('uid');
-		if ($uid > 1) {
-		$uname = UserUtil::getVar('uname', $uid);
-		} else {
-		    $uname = __('Guest', $dom);
-		}
-		
-		$userRank = MUBoard_Util_View::getUserRank($uid);
+    public function preview() {
 
-		$date = DateUtil::getDatetime(null,'datetimelong');
-		
-		if ($uid > 1) {
-		$params['uid'] = $uid;
-		$params['size'] = 60;
-		$avatar = smarty_function_useravatar($params);
-		}
-		else {
-		    $avatar = '';
-		}
-		
-		$out = "";
-		$out .= "<div class='muboard-user-posting muboard-preview'>";
-		$out .= "<div class='muboard-user-posting-user'>";
-		$out .= "<div class='muboard-user-posting-avatar'>";
-		$out .= $avatar . "<br />";
-		$out .= $uname;		
-		$out .= "</div>";
-		$out .= "<div class='muboard-user-posting-datas'>";
-		$out .= $userRank;		
-		$out .= "</div>";		
-		$out .= "</div>";	
-		$out .= "<div class='muboard-user-posting-content'>";
-		$out .= "<div class='muboard-user-posting-created'>";
-		$out .= $date;
-		$out .= "</div>";
-		$out .= "<div class='muboard-user-posting-content-text'>";
-		$out .= $text;			
-		$out .= "</div>";	
-		$out .= "</div>";
-		$out .= "</div>";
+        include_once 'lib/viewplugins/function.useravatar.php';
 
-		return $out;
-	}
+        $dom = ZLanguage::getModuleDomain('MUBoard');
+
+        $answer = $this->request->query->filter('answer', 0);
+
+        if ($answer == 0) {
+            $title = $this->request->query->filter('title', '');
+        }
+
+        $text = $this->request->query->filter('text', '', FILTER_SANITIZE_STRING);
+
+        $out = "";
+        if ($text != '' && (($title == '' && $answer == 1) || ($title != '' && $answer == 0))) {
+
+            $text = nl2br($text);
+            $text = ModUtil::apiFunc('BBSmile', 'user', 'transform', array('text' => $text));
+
+            $uid = UserUtil::getVar('uid');
+            if ($uid > 1) {
+                $uname = UserUtil::getVar('uname', $uid);
+            } else {
+                $uname = __('Guest', $dom);
+            }
+
+            $userRank = MUBoard_Util_View::getUserRank($uid);
+
+            $date = DateUtil::getDatetime(null,'datetimelong');
+
+            if ($uid > 1) {
+                $params['uid'] = $uid;
+                if ($title != '') {
+                    $params["size"] = 80;
+                } else {
+                    $params["size"] = 60;
+                }
+                $avatar = smarty_function_useravatar($params);
+            }
+            else {
+                $avatar = '';
+            }
+
+            $out .= "<div class='muboard-user-posting muboard-preview'>";
+            if($title != '') {
+                $out .= "<div class='muboard-user-posting-header'>";
+                $out .= "<div class='muboard-user-posting-header-title'>";
+                $out .= "<h2>" . __('Issue: ', $dom);
+                $out .= $title;
+                $out .= "</h2></div></div>";
+            }
+            $out .= "<div class='muboard-user-posting-user'>";
+            $out .= "<div class='muboard-user-posting-avatar'>";
+            $out .= $avatar . "<br />";
+            $out .= $uname;
+            $out .= "</div>";
+            $out .= "<div class='muboard-user-posting-datas'>";
+            $out .= $userRank;
+            $out .= "</div>";
+            $out .= "</div>";
+            $out .= "<div class='muboard-user-posting-content'>";
+            $out .= "<div class='muboard-user-posting-created'>";
+            $out .= $date;
+            $out .= "</div>";
+            $out .= "<div class='muboard-user-posting-content-text'>";
+            $out .= $text;
+            $out .= "</div>";
+            $out .= "</div>";
+            $out .= "</div>";
+        } else {
+            $out .= "<div class='muboard-user-posting muboard-nopreview'>";
+            $out .= "<h2>";
+            if ($answer == 0 && $title == '' && $text == '') {
+                $out .= __('Sorry! If you want to create an new issue you have to enter a title and a text to get a preview!', $dom);
+            }
+            if ($answer == 1 && $text == '') {
+                $out .= __('Sorry! If you want to answer to an issue you have to enter a text to get a preview', $dom);
+            }
+            $out .= "</h2></div>";
+        }
+
+        return $out;
+    }
 }
