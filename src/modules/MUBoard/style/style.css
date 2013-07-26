@@ -543,6 +543,11 @@ border-bottom: 1px solid #ddd;
 /*******JQuery-----------------*/
 
 #muboard-user-preview .muboard-user-posting {
-     background: #eeffee url(/modules/MUBoard/images/preview.png) 50% 0 repeat-y !important; 
+     background: #eeffee url(/modules/MUBoard/images/preview.png) 50% 0 repeat-y; 
+}
+
+.muboard-nopreview {
+	padding: 10px;
+	background: #eeffee !important;
 }
 
