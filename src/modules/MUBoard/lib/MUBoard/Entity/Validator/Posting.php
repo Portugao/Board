@@ -18,5 +18,117 @@
  */
 class MUBoard_Entity_Validator_Posting extends MUBoard_Entity_Validator_Base_Posting
 {
-    // here you can add custom validation methods or override existing checks
+    /**
+     * Performs all validation rules.
+     *
+     * @return mixed either array with error information or true on success
+     */
+    public function validateAll()
+    {
+        $errorInfo = array('message' => '', 'code' => 0, 'debugArray' => array());
+        $dom = ZLanguage::getModuleDomain('MUBoard');
+        if (!$this->isStringNotLongerThan('title', 255)) {
+            $errorInfo['message'] = __f('Error! Length of field value must not be higher than %2$s (%1$s).', array('title', 255), $dom);
+            return $errorInfo;
+        }
+        if (!$this->isStringNotLongerThan('text', 5000)) {
+            $errorInfo['message'] = __f('Error! Length of field value must not be higher than %2$s (%1$s).', array('text', 5000), $dom);
+            return $errorInfo;
+        }
+        $request = new Zikula_Request_Http();
+        $answer = $request->query->filter('answer', 0);
+        if (!$this->isStringNotEmpty('title') && $answer == 0) {
+            $errorInfo['message'] = __f('Error! Field value must not be empty (%s).', array('title'), $dom);
+            return $errorInfo;
+        }
+        if (!$this->isStringNotEmpty('text')) {
+            $errorInfo['message'] = __f('Error! Field value must not be empty (%s).', array('text'), $dom);
+            return $errorInfo;
+        }
+        if (!$this->isValidInteger('invocations')) {
+            $errorInfo['message'] = __f('Error! Field value may only contain digits (%s).', array('invocations'), $dom);
+            return $errorInfo;
+        }
+        if (!$this->isNumberNotLongerThan('invocations', 11)) {
+            $errorInfo['message'] = __f('Error! Length of field value must not be higher than %2$s (%1$s).', array('invocations', 11), $dom);
+            return $errorInfo;
+        }
+        if (!$this->isValidBoolean('state')) {
+            $errorInfo['message'] = __f('Error! Field value must be a valid boolean (%s).', array('state'), $dom);
+            return $errorInfo;
+        }
+        if (!$this->isValidBoolean('solved')) {
+            $errorInfo['message'] = __f('Error! Field value must be a valid boolean (%s).', array('solved'), $dom);
+            return $errorInfo;
+        }
+        if (!$this->isStringNotLongerThan('firstImage', 255)) {
+            $errorInfo['message'] = __f('Error! Length of field value must not be higher than %2$s (%1$s).', array('firstImage', 255), $dom);
+            return $errorInfo;
+        }
+        if (!$this->isStringNotLongerThan('secondImage', 255)) {
+            $errorInfo['message'] = __f('Error! Length of field value must not be higher than %2$s (%1$s).', array('secondImage', 255), $dom);
+            return $errorInfo;
+        }
+        if (!$this->isStringNotLongerThan('thirdImage', 255)) {
+            $errorInfo['message'] = __f('Error! Length of field value must not be higher than %2$s (%1$s).', array('thirdImage', 255), $dom);
+            return $errorInfo;
+        }
+        if (!$this->isStringNotLongerThan('firstFile', 255)) {
+            $errorInfo['message'] = __f('Error! Length of field value must not be higher than %2$s (%1$s).', array('firstFile', 255), $dom);
+            return $errorInfo;
+        }
+        if (!$this->isStringNotLongerThan('secondFile', 255)) {
+            $errorInfo['message'] = __f('Error! Length of field value must not be higher than %2$s (%1$s).', array('secondFile', 255), $dom);
+            return $errorInfo;
+        }
+        if (!$this->isStringNotLongerThan('thirdFile', 255)) {
+            $errorInfo['message'] = __f('Error! Length of field value must not be higher than %2$s (%1$s).', array('thirdFile', 255), $dom);
+            return $errorInfo;
+        }
+        return true;
+    }
+
+    /**
+     * Check for unique values.
+     *
+     * This method determines if there already exist postings with the same posting.
+     *
+     * @param string $fieldName The name of the property to be checked
+     * @return boolean result of this check, true if the given posting does not already exist
+     */
+    public function isUniqueValue($fieldName)
+    {
+        if (empty($this->entity[$fieldName])) {
+            return false;
+        }
+
+        $serviceManager = ServiceUtil::getManager();
+        $entityManager = $serviceManager->getService('doctrine.entitymanager');
+        $repository = $entityManager->getRepository('MUBoard_Entity_Posting');
+
+        $excludeid = $this->entity['id'];
+        return $repository->detectUniqueState($fieldName, $this->entity[$fieldName], $excludeid);
+    }
+
+    /**
+     * Get entity.
+     *
+     * @return Zikula_EntityAccess
+     */
+    public function getEntity()
+    {
+        return $this->entity;
+    }
+
+    /**
+     * Set entity.
+     *
+     * @param Zikula_EntityAccess $entity.
+     *
+     * @return void
+     */
+    public function setEntity(Zikula_EntityAccess $entity = null)
+    {
+        $this->entity = $entity;
+    }
 }
