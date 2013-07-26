@@ -12,7 +12,7 @@
 {if $mode eq 'edit'}
     {gt text='Edit posting' assign='templateTitle'}
 {elseif $mode eq 'create' && $func ne 'display'}
-    {gt text='Create posting' assign='templateTitle'}
+    {gt text='Create issue' assign='templateTitle'}
 {elseif $mode eq 'create' && $func eq 'display'}
     {gt text='Answer to posting' assign='templateTitle'}
 {else}
@@ -32,10 +32,11 @@
     {/if}
     <fieldset>
         <legend>{gt text='Content'}</legend>
-        {if $func ne 'display' && $mode ne 'edit'}
+        {if ($func ne 'display' && $mode eq 'create') || ($mode eq 'edit' && isset($modinfo.id))}
         <div class="z-formrow">
             {formlabel for='title' __text='Title' mandatorysym='1'}
-            {formtextinput group='posting' id='title' mandatory=false readOnly=false __title='Enter the title of the posting' textMode='singleline' maxLength=255 cssClass=''}
+            {formtextinput group='posting' id='title' mandatory=true __title='Enter the title of the posting' textMode='singleline' maxLength=255 cssClass='required'}
+            {muboardValidationError id='title' class='required'}
         </div>
         {/if}
         <div class="z-formrow">
@@ -43,7 +44,6 @@
             {formtextinput group='posting' id='text' mandatory=true __title='Enter the text of the posting' textMode='multiline' rows='6' cols='50' cssClass='required'}
             {muboardValidationError id='text' class='required'}
         </div>
-
         <div class="z-formrow" style="display: none;">
             {formlabel for='invocations' __text='Invocations'}
             {formintinput group='posting' id='invocations' mandatory=false __title='Enter the invocations of the posting' maxLength=11 cssClass=' validate-digits'}
@@ -260,17 +260,19 @@
     {if $mode eq 'edit'}
         {formbutton id='btnUpdate' commandName='update' __text='Update posting' class='z-bt-save'}
         {formbutton id='btnPreview' commandName='preview' __text='Preview' class='z-bt-ok'}
-      {if !$inlineUsage}
+     {* {if !$inlineUsage}
         {gt text='Really delete this posting?' assign='deleteConfirmMsg'}
         {formbutton id='btnDelete' commandName='delete' __text='Delete posting' class='z-bt-delete z-btred' confirmMessage=$deleteConfirmMsg}
-      {/if}
+      {/if} *}
     {elseif $mode eq 'create'}
     {if $func eq 'edit'}
-        {formbutton id='btnCreate' commandName='create' __text='Create posting' class='z-bt-ok'}
+        {formbutton id='btnCreate' commandName='create' __text='Create issue' class='z-bt-ok'}
+        {formbutton id='btnToforum' commandName='toforum' __text='Back to Forum' class='z-bt-back'}
     {else}
         {formbutton id='btnCreate' commandName='create' __text='Save answer' class='z-bt-ok'}
     {/if}
         {formbutton id='btnPreview' commandName='preview' __text='Preview' class='z-bt-ok'}
+
     {else}
         {formbutton id='btnUpdate' commandName='update' __text='OK' class='z-bt-ok'}
     {/if}
@@ -360,7 +362,7 @@
 
        MU("#btnPreview").click(function(d) {
            d.preventDefault();
-           MU("#muboard-user-preview").slideDown(2000).html("<div id='work'><img src='images/ajax/indicator.white.gif' /></div>");
+           MU("#muboard-user-preview").slideDown(2000).html("<div id='muboard-work' style='height: 50px;'><img src='images/ajax/indicator.white.gif' /></div>");
            var url = "index.php?module=muboard&type=ajax&func=preview&theme=printer";
            var datas = MU("#{{$__formid}}").serialize();
            var datatyp = 'html';
@@ -376,11 +378,15 @@
        
        MU("#btnCreate").click(function() {
            MU("#{{$__formid}}").submit();
-       });  
+       }); 
+       
+       MU("#btnToforum").click(function() {
+           MU("#{{$__formid}}").submit();
+       });   
 
        MU("#btnCancel").click(function(f) {
            f.preventDefault();
-           MU("#muboard-user-preview").slideUp(2000).html("");
+           MU("#muboard-user-preview").slideUp(2000);
        }); 
    });  
 
