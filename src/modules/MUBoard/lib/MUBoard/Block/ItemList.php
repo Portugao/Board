@@ -16,5 +16,117 @@
  */
 class MUBoard_Block_ItemList extends MUBoard_Block_Base_ItemList
 {
-    // feel free to extend the item list block here
+    /**
+     * Display the block
+     *
+     * @param        array       $blockinfo a blockinfo structure
+     * @return       output      the rendered block
+     */
+    public function display($blockinfo)
+    {
+        // only show block content if the user has the required permissions
+        if (!SecurityUtil::checkPermission('MUBoard:ItemListBlock:', "$blockinfo[title]::", ACCESS_OVERVIEW)) {
+            return false;
+        }
+
+        // check if the module is available at all
+        if (!ModUtil::available('MUBoard')) {
+            return false;
+        }
+
+        // get current block content
+        $vars = BlockUtil::varsFromContent($blockinfo['content']);
+        $vars['bid'] = $blockinfo['bid'];
+
+        // set default values for all params which are not properly set
+        if (!isset($vars['objectType']) || empty($vars['objectType'])) {
+            $vars['objectType'] = 'category';
+        }
+        if (!isset($vars['sorting']) || empty($vars['sorting'])) {
+            $vars['sorting'] = 'default';
+        }
+        if (!isset($vars['amount']) || !is_numeric($vars['amount'])) {
+            $vars['amount'] = 5;
+        }
+        if (!isset($vars['template'])) {
+            $vars['template'] = 'itemlist_' . ucwords($vars['objectType']) . '_display.tpl';
+        }
+        if (!isset($vars['filter'])) {
+            $vars['filter'] = '';
+        }
+
+        ModUtil::initOOModule('MUBoard');
+
+        if (!isset($vars['objectType']) || !in_array($vars['objectType'], MUBoard_Util_Controller::getObjectTypes('block'))) {
+            $vars['objectType'] = MUBoard_Util_Controller::getDefaultObjectType('block');
+        }
+
+        $objectType = $vars['objectType'];
+
+        $serviceManager = ServiceUtil::getManager();
+        $entityManager = $serviceManager->getService('doctrine.entitymanager');
+        $repository = $entityManager->getRepository('MUBoard_Entity_' . ucfirst($objectType));
+
+        $idFields = ModUtil::apiFunc('MUBoard', 'selection', 'getIdFields', array('ot' => $objectType));
+
+        $sortParam = '';
+        if ($vars['sorting'] == 'random') {
+            $sortParam = 'RAND()';
+        } elseif ($vars['sorting'] == 'newest') {
+            if (count($idFields) == 1) {
+                $sortParam = $idFields[0] . ' DESC';
+            } else {
+                foreach ($idFields as $idField) {
+                    if (!empty($sortParam)) {
+                        $sortParam .= ', ';
+                    }
+                    $sortParam .= $idField . ' ASC';
+                }
+            }
+        } elseif ($vars['sorting'] == 'default') {
+            $sortParam = $repository->getDefaultSortingField() . ' ASC';
+        }
+
+        // get objects from database
+        $selectionArgs = array(
+            'ot'             => $objectType,
+            'where'          => $vars['filter'],
+            'orderBy'        => $sortParam,
+            'currentPage'    => 1,
+            'resultsPerPage' => $vars['amount']
+        );
+        list($entities, $objectCount) = ModUtil::apiFunc('MUBoard', 'selection', 'getEntitiesPaginated', $selectionArgs);
+
+        $this->view->setCaching(false);
+
+        // assign block vars and fetched data
+        $this->view->assign('vars', $vars)
+            ->assign('objectType', $objectType)
+            ->assign('items', $entities)
+            ->assign($repository->getAdditionalTemplateParameters('block'));
+
+        // set a block title
+        if (empty($blockinfo['title'])) {
+            $blockinfo['title'] = $this->__('MUBoard items');
+        }
+
+        $output = '';
+        $templateForObjectType = str_replace('itemlist_', 'itemlist_' . ucwords($objectType) . '_', $vars['template']);
+        if ($this->view->template_exists('contenttype/' . $templateForObjectType)) {
+            $output = $this->view->fetch('contenttype/' . $templateForObjectType);
+        } elseif ($this->view->template_exists('contenttype/' . $vars['template'])) {
+            $output = $this->view->fetch('contenttype/' . $vars['template']);
+        } elseif ($this->view->template_exists('block/' . $templateForObjectType)) {
+            $output = $this->view->fetch('block/' . $templateForObjectType);
+        } elseif ($this->view->template_exists('block/' . $vars['template'])) {
+            $output = $this->view->fetch('block/' . $vars['template']);
+        } else {
+            $output = $this->view->fetch('block/itemlist.tpl');
+        }
+
+        $blockinfo['content'] = $output;
+
+        // return the block to the theme
+        return BlockUtil::themeBlock($blockinfo);
+    }
 }
