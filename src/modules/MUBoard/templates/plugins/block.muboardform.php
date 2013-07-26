@@ -24,85 +24,77 @@
  */
 function smarty_block_muboardform($params, $content, $view)
 {
-	if ($content) {
-		PageUtil::addVar('stylesheet', 'system/Theme/style/form/style.css');
-		$encodingHtml = (array_key_exists('enctype', $params) ? " enctype=\"$params[enctype]\"" : '');
-		$action = htmlspecialchars(System::getCurrentUri());
-		$classString = '';
-		if (isset($params['cssClass'])) {
-			$classString = "class=\"$params[cssClass]\" ";
-		}
+    if ($content) {
+        PageUtil::addVar('stylesheet', 'system/Theme/style/form/style.css');
+        $encodingHtml = (array_key_exists('enctype', $params) ? " enctype=\"$params[enctype]\"" : '');
+        $action = htmlspecialchars(System::getCurrentUri());
+        $classString = '';
+        if (isset($params['cssClass'])) {
+            $classString = "class=\"$params[cssClass]\" ";
+        }
 
-		$request = new Zikula_Request_Http();
+        $request = new Zikula_Request_Http();
 
-		$id = $request->getGet()->filter('id',0, FILTER_SANITIZE_NUMBER_INT);
-		$forumid = $request->getGet()->filter('forum',0, FILTER_SANITIZE_NUMBER_INT);
+        $id = $request->getGet()->filter('id',0, FILTER_SANITIZE_NUMBER_INT);
+        $forumid = $request->getGet()->filter('forum',0, FILTER_SANITIZE_NUMBER_INT);
 
-		// we check if the entrypoint is part of the url
-		$stripentrypoint = ModUtil::getVar('ZConfig', 'shorturlsstripentrypoint');
+        // we check if the entrypoint is part of the url
+        $stripentrypoint = ModUtil::getVar('ZConfig', 'shorturlsstripentrypoint');
 
-		if(strpos($action,"func=display")!==false || strpos($action,"func=edit")!==false) {
-			$action = 'index.php?module=muboard&amp;type=user&amp;func=edit&amp;ot=posting';
-		}
-		else {
+        if(strpos($action,"func=display")!==false || strpos($action,"func=edit")!==false) {
+            $action = 'index.php?module=muboard&amp;type=user&amp;func=edit&amp;ot=posting';
+        } else {
 
-		if(strpos($action,"/muboard/")!==false && strpos($action, "/id/") === false) {
-			if ($stripentrypoint == 1) {
-				$action = 'muboard/edit/ot/posting';
-			}
-			elseif ($stripentrypoint == 0) {
-				$action = 'index.php/muboard/edit/ot/posting';
-			}
-		}
-		else {
-			if ($stripentrypoint == 1) {
-				$action = 'muboard/edit/ot/posting/id/' . $id;
-			}
-			elseif ($stripentrypoint == 0) {
-				$action = 'index.php/muboard/edit/ot/posting/id/' . $id;
-			}
-		}
-		if(strpos($action,"/muboard/")!==false && strpos($action, "/forum/") === true) {
-			if ($stripentrypoint == 1) {
-				$action = 'muboard/edit/ot/posting/id/' . $id . 'forum/' . $forumid;
-			}
-			elseif ($stripentrypoint == 0) {
-				$action = 'index.php/muboard/edit/ot/posting/id/' . $id . 'forum/' . $forumid;
-			}
-		}
-		}
+            if (strpos($action, "muboard/posting/id.") !== false) {
 
-		$view->postRender();
+                if ($stripentrypoint == 1) {
+                    $action = 'muboard/edit/ot/posting/answer/1';
+                }
+                elseif ($stripentrypoint == 0) {
+                    $action = 'index.php/muboard/edit/ot/posting/answer/1';
+                }
+            }
+            if (strpos($action, "edit/ot/posting/forum/") !== false && $forum > 0) {
+                if ($stripentrypoint == 1) {
+                    $action = 'muboard/edit/ot/posting/forum/' . $forumid;
+                }
+                elseif ($stripentrypoint == 0) {
+                    $action = 'index.php/muboard/edit/ot/posting/forum/' . $forumid;
+                }
+            }
+        }
 
-		$formId = $view->getFormId();
-		$out = "
-<form id=\"{$formId}\" {$classString}action=\"$action\" method=\"post\"{$encodingHtml}>
-$content
-    <div>
-    {$view->getStateHTML()}
-    {$view->getStateDataHTML()}
-    {$view->getIncludesHTML()}
-    {$view->getCsrfTokenHtml()}
+        $view->postRender();
+
+        $formId = $view->getFormId();
+        $out = "
+        <form id=\"{$formId}\" {$classString}action=\"$action\" method=\"post\"{$encodingHtml}>
+        $content
+        <div>
+        {$view->getStateHTML()}
+        {$view->getStateDataHTML()}
+        {$view->getIncludesHTML()}
+        {$view->getCsrfTokenHtml()}
         <input type=\"hidden\" name=\"__formid\" id=\"form__id\" value=\"{$formId}\" />
         <input type=\"hidden\" name=\"FormEventTarget\" id=\"FormEventTarget\" value=\"\" />
         <input type=\"hidden\" name=\"FormEventArgument\" id=\"FormEventArgument\" value=\"\" />
         <script type=\"text/javascript\">
         <!--
-            function FormDoPostBack(eventTarget, eventArgument)
-            {
-                var f = document.getElementById('{$formId}');
-                if (!f.onsubmit || f.onsubmit())
-                {
-                    f.FormEventTarget.value = eventTarget;
-                    f.FormEventArgument.value = eventArgument;
-                    f.submit();
-                }
-            }
-        // -->
-        </script>
+        function FormDoPostBack(eventTarget, eventArgument)
+        {
+        var f = document.getElementById('{$formId}');
+        if (!f.onsubmit || f.onsubmit())
+        {
+        f.FormEventTarget.value = eventTarget;
+        f.FormEventArgument.value = eventArgument;
+        f.submit();
+    }
+    }
+    // -->
+    </script>
     </div>
-</form>
-";
-    return $out;
-	}
+    </form>
+    ";
+        return $out;
+    }
 }
