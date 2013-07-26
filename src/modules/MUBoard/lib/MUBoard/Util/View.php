@@ -675,7 +675,9 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
                     $out .= "<img src='" . $imagepath . "' />";
                 }
             } else {
-                $out .= '<img src="$user.rank.uploadImage|muboardImageThumb:$user.rank.uploadImageFullPath:250:150" width="250" height="150" />';
+                $out .= '<img src="';
+                $out .= $user[rank][uploadImageFullPath];
+                $out .= '" />';
             }
         }
         else {
