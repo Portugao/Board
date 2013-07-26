@@ -19,7 +19,7 @@
 </div>
 <div class="muboard-user-forum-right">
     <div class="muboard-user-category-header-statistic issues">{$item.id|muboardGetNumberOfIssuesOfForum:$item.id}</div>
-    <div class="muboard-user-category-header-statistic postings">{$item.id|muboardGetNumberOfPostingsOfForum:$item.id}</div>
+    <div class="muboard-user-category-header-statistic postings">{$item.posting|@count}</div>
     <div class="muboard-user-category-header-lastposting">
     {$item.id|muboardGetLastPosting:$item.id}
     </div>

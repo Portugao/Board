@@ -41,7 +41,7 @@
 </div>
 </div>
 <div class="muboard-user-forum-right">
-<div class="muboard-user-category-header-statistic children">{$item.id|muboardGetNumberOfAnswersOfPosting:$item.id}</div>
+<div class="muboard-user-category-header-statistic children">{$item.children|@count}</div>
 <div class="muboard-user-category-header-statistic calls">{$item.invocations}</div>
 <div class="muboard-user-category-header-statistic last-posting">{$item.id|muboardGetLastAnswer}</div>
 <div class="muboard-user-posting-header-infos">
