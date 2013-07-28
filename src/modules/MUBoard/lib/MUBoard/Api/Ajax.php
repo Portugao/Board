@@ -64,7 +64,7 @@ class MUBoard_Api_Ajax extends MUBoard_Api_Base_Ajax
             if($title != '') {
                 $out .= "<div class='muboard-user-posting-header'>";
                 $out .= "<div class='muboard-user-posting-header-title'>";
-                $out .= "<h2>" . __('Issue: ', $dom);
+                $out .= "<h2>" . __('Issue: ', $dom) . ' ';
                 $out .= $title;
                 $out .= "</h2></div></div>";
             }
