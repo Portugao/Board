@@ -652,7 +652,8 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 
         $out = '';
         $out .= __('Registered: ', $dom) . $userregDate . '<br />';
-        if (UserUtil::isLoggedIn() == false) { // TODO we have to really check if the user is online
+        $isLoggedIn = ModUtil::apiFunc('MUBoard', 'selection', 'userOnline', array('uid' => $id));
+        if ($isLoggedIn == false) {
             $out .= __('Last Visit: ', $dom) . $lastVisit . '<br />';
         } else {
             $out .= '<span class="muboard-online">' . __('Online', $dom) . '</span><br />';

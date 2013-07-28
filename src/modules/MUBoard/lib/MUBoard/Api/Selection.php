@@ -16,5 +16,15 @@
  */
 class MUBoard_Api_Selection extends MUBoard_Api_Base_Selection
 {
-    // feel free to extend the selection api here
+    /**
+     * @param int args[uid]     userid
+     */
+    public function userOnline($args)
+    {
+        $uid = $args['uid'];
+        $tables = DBUtil::getTables();
+        $columns = $tables['session_info_column'];
+        $where = " WHERE $columns[uid] =" . DataUtil::formatForStore($uid);
+        return DBUtil::selectObject('session_info', $where);
+    }
 }
