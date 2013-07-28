@@ -547,7 +547,8 @@ border-bottom: 1px solid #ddd;
 }
 
 .muboard-nopreview {
-	padding: 10px;
+	width: 96%;
+	padding: 1% 2%;
 	background: #eeffee !important;
 }
 
