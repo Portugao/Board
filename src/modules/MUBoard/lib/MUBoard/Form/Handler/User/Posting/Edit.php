@@ -32,13 +32,13 @@ class MUBoard_Form_Handler_User_Posting_Edit extends MUBoard_Form_Handler_User_P
 		$repository = MUBoard_Util_Model::getPostingRepository();
 
 		// we get forumid for edit form to answer to an issue
+		// we get func 
 		$func = $this->request->query->filter('func', 'main', FILTER_SANITIZE_STRING);
-		// we get form for edit form to create a new issue
+		// we get forum for edit form to create a new issue
 		$forum = $this->request->query->filter('forum', 0, FILTER_SANITIZE_NUMBER_INT);
+		
 		if ($func == 'display') {
 			// we get forumid for edit form to answer to an issue
-			$parentid = $this->request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
-
 			if ($parentid > 0) {
 				$entity = $repository->selectById($parentid);
 				$forumOfEntity = $entity->getForum();
@@ -47,6 +47,8 @@ class MUBoard_Form_Handler_User_Posting_Edit extends MUBoard_Form_Handler_User_P
 			else {
 				$forumid = 0;
 			}
+			// we get parentid for edit form to answer to an issue
+			$parentid = $this->request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
 		}
 		else {
 			$id = $this->request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
@@ -60,14 +62,15 @@ class MUBoard_Form_Handler_User_Posting_Edit extends MUBoard_Form_Handler_User_P
 					$parentid = 0;
 				}
 			}
-			$this->view->assign('parentid', $parentid);
 		}
 
+		// set mode to create if we want to answer
 		if ($func == 'display') {
 			// set mode to create
 			$this->mode = 'create';
 		}
-		else {
+		else { // if we func is not display
+		    // if id > 0 set mode to edit
 			if ($id > 0) {
 				// set mode to edit
 				$this->mode = 'edit';
@@ -97,7 +100,8 @@ class MUBoard_Form_Handler_User_Posting_Edit extends MUBoard_Form_Handler_User_P
 		->assign('numberFiles', $numberFiles)
 		->assign('mode', $this->mode)
 		->assign('forum', $forum)
-		->assign('forumid', $forumid);
+		->assign('forumid', $forumid)
+		->assign('parentid', $parentid);
 
 		// everything okay, no initialization errors occured
 		return true;
