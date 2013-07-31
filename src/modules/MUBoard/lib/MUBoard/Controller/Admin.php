@@ -16,7 +16,7 @@
  */
 class MUBoard_Controller_Admin extends MUBoard_Controller_Base_Admin
 {
-	
+
     /**
      * Post initialise.
      *
@@ -28,147 +28,156 @@ class MUBoard_Controller_Admin extends MUBoard_Controller_Base_Admin
     {
         // Set caching to true by default.
         $this->view->setCaching(Zikula_View::CACHE_DISABLED);
-    } 
-    
+    }
+
     /**
-     * 
+     *
      */
     public function view($args)
     {
-    	$ot = $this->request->query->filter('ot', 'category', FILTER_SANITIZE_STRING);
-    	
-    	//view of postings is blocked
-    	if ($ot == 'posting') {
-    		return System::redirect(ModUtil::url($this->name, 'admin', 'view'));
-    	}
-    	else {
-    		return parent::view($args);
-    	}
-    }    
-	/**
-	 * Controller method to close a posting ( issue )
-	 */
+        $ot = $this->request->query->filter('ot', 'category', FILTER_SANITIZE_STRING);
+         
+        //view of postings is blocked
+        if ($ot == 'posting') {
+            return System::redirect(ModUtil::url($this->name, 'admin', 'view'));
+        }
+        else {
+            return parent::view($args);
+        }
+    }
+    /**
+     * Controller method to close a posting ( issue )
+     */
 
-	public function close()
-	{
+    public function close()
+    {
 
-		$request = new Zikula_Request_Http();
-		$id = $request->getGet()->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
-			
-		MUBoard_Util_Model::closePosting($id);
-			
-		return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $id)));
-			
-	}
+        $request = new Zikula_Request_Http();
+        $id = $request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
+        	
+        MUBoard_Util_Model::closePosting($id);
+        	
+        return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $id)));
+        	
+    }
 
-	/**
-	 * Controller method to reopen a posting ( issue )
-	 */
+    /**
+     * Controller method to reopen a posting ( issue )
+     */
 
-	public function open()
-	{
+    public function open()
+    {
 
-		$request = new Zikula_Request_Http();
-		$id = $request->getGet()->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
-			
-		MUBoard_Util_Model::openPosting($id);
-			
-		return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $id)));
-			
-	}
+        $request = new Zikula_Request_Http();
+        $id = $request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
+        	
+        MUBoard_Util_Model::openPosting($id);
+        	
+        return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $id)));
+        	
+    }
 
-	/**
-	 * Controller method to take an abo
-	 */
+    /**
+     * Controller method to take an abo
+     */
 
-	public function take()
-	{
-		$request = new Zikula_Request_Http();
-		$ot = $request->getGet()->filter('object', 'category', FILTER_SANITIZE_STRING);
-		$posting = $request->getGet()->filter('posting', 0, FILTER_SANITIZE_NUMBER_INT);
-		$forum = $request->getGet()->filter('forum', 0, FILTER_SANITIZE_NUMBER_INT);
-		$category = $request->getGet()->filter('category', 0, FILTER_SANITIZE_NUMBER_INT);
-		$view = $request->getGet()->filter('view', 'view', FILTER_SANITIZE_STRING);
-		$cat = $request->getGet()->filter('cat', 0, FILTER_SANITIZE_NUMBER_INT);
+    public function take()
+    {
+        $request = new Zikula_Request_Http();
+        $ot = $request->query->filter('object', 'category', FILTER_SANITIZE_STRING);
+        $posting = $request->query->filter('posting', 0, FILTER_SANITIZE_NUMBER_INT);
+        $forum = $request->query->filter('forum', 0, FILTER_SANITIZE_NUMBER_INT);
+        $category = $request->query->filter('category', 0, FILTER_SANITIZE_NUMBER_INT);
+        $view = $request->query->filter('view', 'view', FILTER_SANITIZE_STRING);
+        $cat = $request->query->filter('cat', 0, FILTER_SANITIZE_NUMBER_INT);
+        $thisforum = $request->query->filter('thisforum', 0, FILTER_SANITIZE_NUMBER_INT);
 
-		MUBoard_Util_Model::takeAbo($posting, $forum, $category);
-		if ($posting > 0) {
-			if ($ot == 'posting') {
-				return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $posting)));
-			}
-			if ($ot == 'forum') {
-				return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'forum', 'id' => $forum)));
-			}
-		}
-		if ($forum > 0 && $view == 'display') {
-			return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'category', 'id' => $cat)));
-		}
+        MUBoard_Util_Model::takeAbo($posting, $forum, $category);
+        if ($posting > 0) {
+            if ($ot == 'posting') {
+                return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $posting)));
+            }
+            if ($ot == 'forum') {
+                return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'forum', 'id' => $forum)));
+            }
+        }
+        if ($thisforum > 0) {
+            return System::redirect(ModUtil::url($this->name, 'user', 'display', array('ot' => 'forum', 'id' => $thisforum)));
+        }
+        if ($forum > 0 && $view == 'display') {
+            return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'category', 'id' => $cat)));
+        }
 
-		if ($forum > 0 && $view == 'view') {
-			return System::redirect(ModUtil::url($this->name, 'user', 'view' , array('ot' => 'category')));
-		}
-	}
+        if ($forum > 0 && $view == 'view') {
+            return System::redirect(ModUtil::url($this->name, 'user', 'view' , array('ot' => 'category')));
+        }
+    }
 
-	/**
-	 * Controller method to quit an abo
-	 */
+    /**
+     * Controller method to quit an abo
+     */
 
-	public function quit()
-	{
-		$request = new Zikula_Request_Http();
-		$ot = $request->getGet()->filter('object', 'category', FILTER_SANITIZE_STRING);
-		$posting = $request->getGet()->filter('posting', 0, FILTER_SANITIZE_NUMBER_INT);
-		$forum = $request->getGet()->filter('forum', 0, FILTER_SANITIZE_NUMBER_INT);
-		$category = $request->getGet()->filter('category', 0, FILTER_SANITIZE_NUMBER_INT);
-		$view = $request->getGet()->filter('view', 'view', FILTER_SANITIZE_STRING);
-		$cat = $request->getGet()->filter('cat', 0, FILTER_SANITIZE_NUMBER_INT);
+    public function quit()
+    {
+        $request = new Zikula_Request_Http();
+        $ot = $request->query->filter('object', 'category', FILTER_SANITIZE_STRING);
+        $posting = $request->query->filter('posting', 0, FILTER_SANITIZE_NUMBER_INT);
+        $forum = $request->query->filter('forum', 0, FILTER_SANITIZE_NUMBER_INT);
+        $category = $request->query->filter('category', 0, FILTER_SANITIZE_NUMBER_INT);
+        $view = $request->query->filter('view', 'view', FILTER_SANITIZE_STRING);
+        $cat = $request->query->filter('cat', 0, FILTER_SANITIZE_NUMBER_INT);
+        $thisforum = $request->query->filter('thisforum', 0, FILTER_SANITIZE_NUMBER_INT);
 
-		MUBoard_Util_Model::quitAbo($posting, $forum, $category);
-		if ($posting > 0) {
-			if ($ot == 'posting') {
-				return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $posting)));
-			}
-			if ($ot == 'forum') {
-				return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'forum', 'id' => $forum)));
-			}	}
-			if ($forum > 0 && $view == 'display') {
-				return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'category', 'id' => $cat)));
-			}
+        MUBoard_Util_Model::quitAbo($posting, $forum, $category);
+        if ($posting > 0) {
+            if ($ot == 'posting') {
+                return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $posting)));
+            }
+            if ($ot == 'forum') {
+                return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'forum', 'id' => $forum)));
+            }
+        }
+        if ($thisforum > 0) {
+            return System::redirect(ModUtil::url($this->name, 'user', 'display', array('ot' => 'forum', 'id' => $thisforum)));
+        }
+        if ($forum > 0 && $view == 'display') {
+            return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'category', 'id' => $cat)));
+        }
 
-			if ($forum > 0 && $view == 'view') {
-				return System::redirect(ModUtil::url($this->name, 'user', 'view' , array('ot' => 'category')));
-			}
-	}
-	
-	/**
-	 * Controller method to mark a posting as solved ( issue )
-	 */
+        if ($forum > 0 && $view == 'view') {
+            return System::redirect(ModUtil::url($this->name, 'user', 'view' , array('ot' => 'category')));
+        }
+    }
 
-	public function solved()
-	{
+    /**
+     * Controller method to mark a posting as solved ( issue )
+     */
 
-		$request = new Zikula_Request_Http();
-		$id = $request->getGet()->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
-			
-		MUBoard_Util_Model::solvedPosting($id);
-			
-		return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $id)));
-			
-	}
-	
-	/**
-	 * Controller method to mark a posting as solved ( issue )
-	 */
-	
-	public function unsolved()
-	{
-	
-		$request = new Zikula_Request_Http();
-		$id = $request->getGet()->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
-			
-		MUBoard_Util_Model::unsolvedPosting($id);
-			
-		return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $id)));
-			
-	}
+    public function solved()
+    {
+
+        $request = new Zikula_Request_Http();
+        $id = $request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
+        	
+        MUBoard_Util_Model::solvedPosting($id);
+        	
+        return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $id)));
+        	
+    }
+
+    /**
+     * Controller method to mark a posting as solved ( issue )
+     */
+
+    public function unsolved()
+    {
+
+        $request = new Zikula_Request_Http();
+        $id = $request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
+        	
+        MUBoard_Util_Model::unsolvedPosting($id);
+        	
+        return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $id)));
+        	
+    }
 }

@@ -397,7 +397,8 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
     public static function getStateOfForumAbo($forumid, $func)
     {
         $request = new Zikula_Request_Http();
-        $cat = $request->getGet()->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
+        $ot = $request->query->filter('ot', 'category', FILTER_SANITIZE_STRING);
+        $cat = $request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
 
         // get repositoy for Categories
         $repository = MUBoard_Util_Model::getAboRepository();
@@ -410,7 +411,8 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
             $where .= ' AND ';
             $where .= 'tbl.userid = \'' . DataUtil::formatForStore($userid) . '\'';
             $abo = $repository->selectWhere($where);
-
+            
+            if ($ot == 'category') {
             if (!$abo) {
                 $url = ModUtil::url('MUBoard', 'admin', 'take', array('ot' => 'abo', 'forum' => $forumid, 'view' => $func, 'cat' => $cat));
                 $out =  "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
@@ -423,6 +425,21 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
                 $out = "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
                 <img src='/images/icons/extrasmall/mail_get.png' />
                 </a>";
+            }
+            } else {
+                if (!$abo) {
+                    $url = ModUtil::url('MUBoard', 'admin', 'take', array('ot' => 'abo', 'forum' => $forumid, 'view' => $func, 'thisforum' => $forumid));
+                    $out =  "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
+                    <img src='/images/icons/extrasmall/mail_post_to.png' />
+                    </a>";
+                }
+                
+                if ($abo) {
+                $url = ModUtil::url('MUBoard', 'admin', 'quit', array('ot' => 'abo', 'forum' => $forumid, 'view' => $func, 'thisforum' => $forumid));
+                        $out = "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
+                        <img src='/images/icons/extrasmall/mail_get.png' />
+                        </a>";
+                }
             }
         } else {
             $out = '';
