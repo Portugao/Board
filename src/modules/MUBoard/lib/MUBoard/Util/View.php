@@ -107,10 +107,22 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
             if ($posting['parent_id'] === NULL) {
                 $count = $count + 1;
             }
-        }
-         
+        }        
         return $count;
-         
+    }
+    
+    /**
+     * 
+     */
+    public function getForumInfo($forumid)
+    {
+        // get forum repository
+        $repository = MUBoard_Util_Model::getForumRepository();
+        $forum = $repository->selectById($forumid);
+        
+        $out = "<h2>" . __('Forum:') . " " . "<a href='" . ModUtil::url('MUboard', 'user', 'display', array('ot' => 'forum', 'id' => $forumid)). "'>" . $forum['title'] . "</a></h2>";
+        $out .= $forum['description'];
+        return $out;
     }
 
     /**
