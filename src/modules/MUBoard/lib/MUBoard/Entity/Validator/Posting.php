@@ -36,8 +36,9 @@ class MUBoard_Entity_Validator_Posting extends MUBoard_Entity_Validator_Base_Pos
             return $errorInfo;
         }
         $request = new Zikula_Request_Http();
+        $id = $request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
         $answer = $request->query->filter('answer', 0);
-        if (!$this->isStringNotEmpty('title') && $answer == 0) {
+        if (!$this->isStringNotEmpty('title') && $answer == 0 && $id == 0) {
             $errorInfo['message'] = __f('Error! Field value must not be empty (%s).', array('title'), $dom);
             return $errorInfo;
         }
