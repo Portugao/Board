@@ -30,6 +30,8 @@ class MUBoard_Util_Base_Abonnements extends Zikula_AbstractBase
 			$title = __('No title');
 		}*/
 		$text = $args['text'];
+		$text = ModUtil::apiFunc('BBCode', 'user', 'transform', array('message' => $text));
+		$text = ModUtil::apiFunc('BBSmile', 'user', 'transform', array('text' => $text));
 
 		// we get a repository for abos
 		$repository = MUBoard_Util_Model::getAboRepository();
@@ -137,10 +139,14 @@ class MUBoard_Util_Base_Abonnements extends Zikula_AbstractBase
 	}
 
 	/**
-	 *
+	 * This method get the abos of the relevant posting and return the mailadresses
+	 * @param int $postingid      id of the relevant issue
 	 */
 
 	protected static function getPostingAbos() {
+	    // we get a posting repository
+	    $repository = MUBoard_Util_Model::getPostingRepository();
+	    $
 
 	}
 

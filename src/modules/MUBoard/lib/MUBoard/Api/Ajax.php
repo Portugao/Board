@@ -33,8 +33,9 @@ class MUBoard_Api_Ajax extends MUBoard_Api_Base_Ajax
         $out = "";
         if ($text != '' && (($title == '' && $answer == 1) || ($title != '' && $answer == 0))) {
 
+            $text = ModUtil::apiFunc('BBCode', 'user', 'transform', array('message' => $text));
+            $text = ModUtil::apiFunc('BBSmile', 'user', 'transform', array('text' => $text));            
             $text = nl2br($text);
-            $text = ModUtil::apiFunc('BBSmile', 'user', 'transform', array('text' => $text));
 
             $uid = UserUtil::getVar('uid');
             if ($uid > 1) {
