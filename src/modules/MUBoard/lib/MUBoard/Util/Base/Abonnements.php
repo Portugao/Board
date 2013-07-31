@@ -146,7 +146,7 @@ class MUBoard_Util_Base_Abonnements extends Zikula_AbstractBase
 	protected static function getPostingAbos() {
 	    // we get a posting repository
 	    $repository = MUBoard_Util_Model::getPostingRepository();
-	    $
+
 
 	}
 
