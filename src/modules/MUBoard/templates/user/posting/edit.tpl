@@ -7,10 +7,18 @@
 {pageaddvar name='javascript' value='jquery'}
 {pageaddvar name='javascript' value='jquery-ui'}
 
+{if $func eq 'edit'}
+{$forum|muboardGetForumInfo}
+{/if}
+
 <div id="muboard-user-preview" style="display: none;"></div>
 
 {if $mode eq 'edit'}
+    {if $func eq 'edit' && $parentid > 0}
     {gt text='Edit posting' assign='templateTitle'}
+    {else}
+    {gt text='Edit issue' assign='templateTitle}
+    {/if}
 {elseif $mode eq 'create' && $func ne 'display'}
     {gt text='Create issue' assign='templateTitle'}
 {elseif $mode eq 'create' && $func eq 'display'}
@@ -32,10 +40,10 @@
     {/if}
     <fieldset>
         <legend>{gt text='Content'}</legend>
-        {if $func ne 'display' && $mode eq 'create'}
+        {if ($func ne 'display' && $mode eq 'create') || ($mode eq 'edit' && $parentid eq 0)}
         <div class="z-formrow">
             {formlabel for='title' __text='Title' mandatorysym='1'}
-            {formtextinput group='posting' id='title' mandatory=true __title='Enter the title of the posting' textMode='singleline' maxLength=255 cssClass='required'}
+            {formtextinput group='posting' id='title' mandatory=true readOnly=false __title='Enter the title of the posting' textMode='singleline' maxLength=255 cssClass='required'}
             {muboardValidationError id='title' class='required'}
         </div>
         {/if}
@@ -258,7 +266,11 @@
     <div class="muboard-posting-edit-action">
     <div class="z-buttons z-formbuttons">
     {if $mode eq 'edit'}
+        {if $func eq 'edit' && $parentid > 0}
         {formbutton id='btnUpdate' commandName='update' __text='Update posting' class='z-bt-save'}
+        {else}
+        {formbutton id='btnUpdate' commandName='update' __text='Update issue' class='z-bt-save'}
+        {/if}
         {formbutton id='btnPreview' commandName='preview' __text='Preview' class='z-bt-ok'}
      {* {if !$inlineUsage}
         {gt text='Really delete this posting?' assign='deleteConfirmMsg'}
@@ -266,7 +278,7 @@
       {/if} *}
     {elseif $mode eq 'create'}
     {if $func eq 'edit'}
-        {formbutton id='btnCreate' commandName='create' __text='Create posting' class='z-bt-ok'}
+        {formbutton id='btnCreate' commandName='create' __text='Create issue' class='z-bt-ok'}
         {formbutton id='btnToforum' commandName='toforum' __text='Back to Forum' class='z-bt-back'}
     {else}
         {formbutton id='btnCreate' commandName='create' __text='Save answer' class='z-bt-ok'}
@@ -364,6 +376,9 @@
            d.preventDefault();
            MU("#muboard-user-preview").slideDown(2000).html("<div id='muboard-work' style='height: 50px;'><img src='images/ajax/indicator.white.gif' /></div>");
            var url = "index.php?module=muboard&type=ajax&func=preview&theme=printer";
+           {{if $func eq 'display'}}
+           url = "index.php?module=muboard&type=ajax&func=preview&theme=printer&answer=1";
+           {{/if}}
            var datas = MU("#{{$__formid}}").serialize();
            var datatyp = 'html';
            var datawork = function(answer) {
@@ -376,7 +391,7 @@
 
        });
        
-       MU("#btnCreate").click(function() {
+     {{*  MU("#btnCreate").click(function() {
            MU("#{{$__formid}}").submit();
        }); 
        
@@ -387,7 +402,7 @@
        MU("#btnCancel").click(function(f) {
            f.preventDefault();
            MU("#muboard-user-preview").slideUp(2000);
-       }); 
+       }); *}}
    });  
 
 /* ]]> */
