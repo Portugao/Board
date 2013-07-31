@@ -94,21 +94,6 @@ class MUBoard_Util_Base_Abonnements extends Zikula_AbstractBase
 			$messagecontent = MUBoard_Util_Base_Abonnements::getMailContent($from, $fromaddress, $adress, $entry, $ticketcategory, $title, $text, $url , $kind);
 			ModUtil::apiFunc('Mailer', 'user', 'sendmessage', $messagecontent);
 		}
-		//$messagecontent = MUBoard_Util_Base_Abonnements::getMailContent($from, $fromaddress, $toaddress, $entry, $ticketcategory, $title, $text, $url , $kind);
-
-		// We send a mail if an email address is saved
-		/*if ($toaddress != '') {
-
-			if (!ModUtil::apiFunc('Mailer', 'user', 'sendmessage', $messagecontent)) {
-				LogUtil::registerError($handler->__('Unable to send message'));
-			}
-		}*/
-
-		// Formating of status text
-
-		$message = $handler->__('Your posting was saved!');
-
-		LogUtil::registerStatus($message);
 	}
 
 	/**
