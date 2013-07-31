@@ -20,9 +20,7 @@
  */
 function smarty_modifier_muboardGetImportantOfPosting($id)
 {
-
 	$out = MUBoard_Util_View::getImportantOfPosting($id);
-
 
 	return $out;
 }
