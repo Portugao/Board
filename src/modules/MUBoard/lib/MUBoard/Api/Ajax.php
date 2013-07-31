@@ -31,7 +31,7 @@ class MUBoard_Api_Ajax extends MUBoard_Api_Base_Ajax
         $text = $this->request->query->filter('text', '', FILTER_SANITIZE_STRING);
 
         $out = "";
-        if ($text != '' && (($title == '' && $answer == 1) || ($title != '' && $answer == 0))) {
+        if ($text != '' && (($title == '') || ($title != '' && $answer == 0))) {
 
             $text = ModUtil::apiFunc('BBCode', 'user', 'transform', array('message' => $text));
             $text = ModUtil::apiFunc('BBSmile', 'user', 'transform', array('text' => $text));            
