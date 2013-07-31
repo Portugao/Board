@@ -20,7 +20,7 @@
             </h2>
         </div>
         <div class="muboard-user-forum-header-statistic postings">{$forum.id|muboardGetNumberOfPostingsOfForum:$forum.id}</div>
-        <div class="muboard-user-forum-header-category"><a href="{modurl modname='MUBoard' type='user' func='display' ot='category' id=$forum.category.id}">{gt text='Category:'} {$forum.category.title}</a></div>
+        <div class="muboard-user-forum-header-category">{gt text='Category:'} <a href="{modurl modname='MUBoard' type='user' func='display' ot='category' id=$forum.category.id}">{$forum.category.title}</a></div>
         <div class="muboard-user-forum-header-infos">{$forum.id|muboardGetStateOfForumAbo:$func}</div>
         {* <div class="muboard-user-forum-header-action">
         {if count($forum._actions) gt 0}
