@@ -246,19 +246,19 @@ border-bottom: 1px solid #ddd;
 
 .last-posting {
     font-size: 0.9em;
-    width: 60%;
+    width: 50%;
 }
 
 /*********Forums*****************/
 
 .muboard-user-forum {
   /* background: #ddd;*/
-   margin: 5px 1%;
+   margin: 5px 0;
    padding: 3px 1%;
    border-bottom: 1px solid #333;
    border-radius: 5px;
    float: left;
-   width: 96%;
+   width: 98%;
    position: relative;
 }
 
@@ -325,12 +325,12 @@ border-bottom: 1px solid #ddd;
 
 .muboard-user-forum-left {
     float: left;
-    width: 35%;
+    width: 45%;
 }
 
 .muboard-user-forum-left-icon {
     float: left;
-    width: 10%;
+    width: 20%;
     border: 0 1%;
 }
 
@@ -422,6 +422,7 @@ border-bottom: 1px solid #ddd;
     border-bottom: 1px solid #ccc;
     float: left;
     width: 98%;
+    position: relative;
 }
 
 .muboard-user-posting-header-title {
@@ -453,8 +454,10 @@ border-bottom: 1px solid #ddd;
 }
 
 .muboard-user-posting-header-infos {
-    float: right;
     padding: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .muboard-user-posting-header-hooks {
@@ -515,6 +518,12 @@ border-bottom: 1px solid #ddd;
 	height: 90px;
 	float: left;
 	margin: 0 10px 10px 0;
+}
+
+.muboard-user-posting-content-file {
+    float: left;
+    width: 98%;
+    padding: 2px 1%;
 }
 
 .muboard-user-posting-avatar {
