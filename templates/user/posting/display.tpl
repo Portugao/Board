@@ -123,37 +123,37 @@
                                         </a>
                                      {else}&nbsp;{/if}
                            </div>
-                           <div class="muboard-user-posting-content-image">  
+                           <div class="muboard-user-posting-content-file">  
                            {* Here we found the embedded files for the isuse itself *} 
-                               {if $childPosting.firstFile ne ''}               
+                               {if $posting.firstFile ne ''}               
                                    <div class="muboard-user-posting-content-file">
-                                       <a href="{$childPosting.firstFileFullPathURL}" title="{$childPosting.title|replace:"\"":""}"{if $childPosting.firstFileMeta.isImage} rel="imageviewer[childPosting]"{/if}>
-                                           {if $childPosting.firstFileMeta.isImage}
-                                               <img src="{$childPosting.firstFile|muboardImageThumb:$childPosting.firstFileFullPath:250:150}" width="250" height="150" alt="{$childPosting.title|replace:"\"":""}" />
+                                       <a href="{$posting.firstFileFullPathURL}" title="{$posting.title|replace:"\"":""}"{if $posting.firstFileMeta.isImage} rel="imageviewer[posting]"{/if}>
+                                           {if $posting.firstFileMeta.isImage}
+                                               <img src="{$childPosting.firstFile|muboardImageThumb:$posting.firstFileFullPath:250:150}" width="250" height="150" alt="{$posting.title|replace:"\"":""}" />
                                            {else}
-                                               {$childPosting.firstFile|safetext} ({$childPosting.firstFileMeta.size|muboardGetFileSize:$childPosting.firstFileFullPath:false:false})
+                                               {$posting.firstFile|safetext} ({$posting.firstFileMeta.size|muboardGetFileSize:$posting.firstFileFullPath:false:false})
                                            {/if}
                                        </a>
                                    </div> 
                                {else}&nbsp;{/if} 
-                               {if $childPosting.secondFile ne ''}               
+                               {if $posting.secondFile ne ''}               
                                    <div class="muboard-user-posting-content-file">
-                                       <a href="{$childPosting.secondFileFullPathURL}" title="{$childPosting.title|replace:"\"":""}"{if $childPosting.secondFileMeta.isImage} rel="imageviewer[posting]"{/if}>
-                                          {if $childPosting.secondFileMeta.isImage}
-                                              <img src="{$childPosting.secondFile|muboardImageThumb:$childPosting.secondFileFullPath:250:150}" width="250" height="150" alt="{$childPosting.title|replace:"\"":""}" />
+                                       <a href="{$posting.secondFileFullPathURL}" title="{$posting.title|replace:"\"":""}"{if $posting.secondFileMeta.isImage} rel="imageviewer[posting]"{/if}>
+                                          {if $posting.secondFileMeta.isImage}
+                                              <img src="{$posting.secondFile|muboardImageThumb:$posting.secondFileFullPath:250:150}" width="250" height="150" alt="{$posting.title|replace:"\"":""}" />
                                           {else}
-                                              {$childPosting.secondFile|safetext} ({$childPosting.secondFileMeta.size|muboardGetFileSize:$childPosting.secondFileFullPath:false:false})
+                                              {$posting.secondFile|safetext} ({$posting.secondFileMeta.size|muboardGetFileSize:$posting.secondFileFullPath:false:false})
                                           {/if}
                                        </a>
                                    </div> 
                                {else}&nbsp;{/if}  
-                               {if $childPosting.thirdFile ne ''}              
+                               {if $posting.thirdFile ne ''}              
                                    <div class="muboard-user-posting-content-file">
-                                       <a href="{$childPosting.thirdFileFullPathURL}" title="{$childPosting.title|replace:"\"":""}"{if $childPosting.thirdFileMeta.isImage} rel="imageviewer[posting]"{/if}>
-                                           {if $childPosting.thirdFileMeta.isImage}
-                                               <img src="{$childPosting.thirdFile|muboardImageThumb:$childPosting.thirdFileFullPath:250:150}" width="250" height="150" alt="{$childPosting.title|replace:"\"":""}" />
+                                       <a href="{$posting.thirdFileFullPathURL}" title="{$posting.title|replace:"\"":""}"{if $posting.thirdFileMeta.isImage} rel="imageviewer[posting]"{/if}>
+                                           {if $posting.thirdFileMeta.isImage}
+                                               <img src="{$posting.thirdFile|muboardImageThumb:$posting.thirdFileFullPath:250:150}" width="250" height="150" alt="{$posting.title|replace:"\"":""}" />
                                            {else}
-                                               {$childPosting.thirdFile|safetext} ({$childPosting.thirdFileMeta.size|muboardGetFileSize:$childPosting.thirdFileFullPath:false:false})
+                                               {$posting.thirdFile|safetext} ({$posting.thirdFileMeta.size|muboardGetFileSize:$posting.thirdFileFullPath:false:false})
                                            {/if}
                                        </a>
                                    </div>
@@ -169,42 +169,42 @@
                                {useravatar uid=$childPosting.createdUserId size=60}<br />
                                {usergetvar name=uname uid=$childPosting.createdUserId}
                            </div>
-                       <div class="muboard-user-posting-datas">
-                           {$childPosting.createdUserId|muboardGetUserRank}
+                           <div class="muboard-user-posting-datas">
+                                {$childPosting.createdUserId|muboardGetUserRank}
+                           </div>
                        </div>
-                   </div>
-                   <div class="muboard-user-posting-content">
-                        <div class="muboard-user-posting-created">
-                            {$childPosting.createdDate|dateformat:datetimelong} 
-                                {if $editPostings eq 1}
-                                    <div class="muboard-user-posting-edit">
-                                        {$childPosting.id|muboardGetStateOfEditOfIssue}
-                                    </div>
+                       <div class="muboard-user-posting-content">
+                           <div class="muboard-user-posting-created">
+                               {$childPosting.createdDate|dateformat:datetimelong} 
+                               {if $editPostings eq 1}
+                                   <div class="muboard-user-posting-edit">
+                                       {$childPosting.id|muboardGetStateOfEditOfIssue}
+                                   </div>
                                {/if}
-                        </div>
-                        <div class="muboard-user-posting-content-text">
-                            {$childPosting.text|notifyfilters:'muboard.filter_hooks.postings.filter'|nl2br|safehtml}
-                        </div>
-                     <div class="muboard-user-posting-content-image">
-                         {if $childPosting.firstImage ne ''}        
-                             <a href="{$childPosting.firstImageFullPathURL}" title="{$childPosting.title|replace:"\"":""}"{if $childPosting.firstImageMeta.isImage} rel="imageviewer[posting{$childPosting.id}]"{/if}>
-                                 {if $childPosting.firstImageMeta.isImage}
-                                     <div class="muboard-image-container" style="background: url({$childPosting.firstImageFullPathURL}) center center; background-size: cover;"></div>
-                                 {else}
-                                     {gt text='Download'} ({$childPosting.firstImageMeta.size|muboardGetFileSize:$posting.firstImageFullPath:false:false})
-                                 {/if}       
-                             </a>
-                         {else}&nbsp;{/if} 
-                         {if $childPosting.secondImage ne ''}               
-                             <a href="{$childPosting.secondImageFullPathURL}" title="{$childPosting.title|replace:"\"":""}"{if $childPosting.secondImageMeta.isImage} rel="imageviewer[posting{$childPosting.id}]"{/if}>
-                                 {if $childPosting.secondImageMeta.isImage}
-                                     <div class="muboard-image-container" style="background: url({$childPosting.secondImageFullPathURL}) center center; background-size: cover;"></div>
-                                 {else}
-                                     {gt text='Download'} ({$childPosting.secondImageMeta.size|muboardGetFileSize:$childPosting.secondImageFullPath:false:false})
-                                 {/if}       
-                             </a>
-                         {else}&nbsp;{/if}
-                         {if $childPosting.thirdImage ne ''}               
+                           </div>
+                           <div class="muboard-user-posting-content-text">
+                               {$childPosting.text|notifyfilters:'muboard.filter_hooks.postings.filter'|nl2br|safehtml}
+                           </div>
+                           <div class="muboard-user-posting-content-image">
+                           {if $childPosting.firstImage ne ''}        
+                              <a href="{$childPosting.firstImageFullPathURL}" title="{$childPosting.title|replace:"\"":""}"{if $childPosting.firstImageMeta.isImage} rel="imageviewer[posting{$childPosting.id}]"{/if}>
+                                  {if $childPosting.firstImageMeta.isImage}
+                                      <div class="muboard-image-container" style="background: url({$childPosting.firstImageFullPathURL}) center center; background-size: cover;"></div>
+                                  {else}
+                                      {gt text='Download'} ({$childPosting.firstImageMeta.size|muboardGetFileSize:$posting.firstImageFullPath:false:false})
+                                  {/if}       
+                              </a>
+                          {else}&nbsp;{/if} 
+                          {if $childPosting.secondImage ne ''}               
+                              <a href="{$childPosting.secondImageFullPathURL}" title="{$childPosting.title|replace:"\"":""}"{if $childPosting.secondImageMeta.isImage} rel="imageviewer[posting{$childPosting.id}]"{/if}>
+                                  {if $childPosting.secondImageMeta.isImage}
+                                      <div class="muboard-image-container" style="background: url({$childPosting.secondImageFullPathURL}) center center; background-size: cover;"></div>
+                                  {else}
+                                      {gt text='Download'} ({$childPosting.secondImageMeta.size|muboardGetFileSize:$childPosting.secondImageFullPath:false:false})
+                                  {/if}       
+                              </a>
+                          {else}&nbsp;{/if}
+                          {if $childPosting.thirdImage ne ''}               
                              <a href="{$childPosting.thirdImageFullPathURL}" title="{$childPosting.title|replace:"\"":""}"{if $childPosting.thirdImageMeta.isImage} rel="imageviewer[posting{$childPosting.id}]"{/if}>
                                  {if $childPosting.thirdImageMeta.isImage}
                                      <div class="muboard-image-container" style="background: url({$childPosting.thirdImageFullPathURL}) center center; background-size: cover;"></div>
@@ -278,4 +278,3 @@
 {/if}
 </div>
 {include file='user/footer.tpl'}
-
