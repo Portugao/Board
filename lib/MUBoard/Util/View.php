@@ -1,4 +1,6 @@
 <?php
+use DoctrineExtensions\PHPUnit\Operations\Truncate;
+
 /**
  * MUBoard.
  *
@@ -116,12 +118,12 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
      */
     public function getForumInfo($forumid)
     {
+        $dom = ZLanguage::getModuleDomain('MUBoard');
         // get forum repository
         $repository = MUBoard_Util_Model::getForumRepository();
         $forum = $repository->selectById($forumid);
         
-        $out = "<h2>" . __('Forum:') . " " . "<a href='" . ModUtil::url('MUboard', 'user', 'display', array('ot' => 'forum', 'id' => $forumid)). "'>" . $forum['title'] . "</a></h2>";
-        $out .= $forum['description'];
+        $out = "<h3>" . __('Category:', $dom) . " " . "<a href='" . ModUtil::url('MUBoard', 'user', 'display', array('ot' => 'category', 'id' => $forum['category']['id'])). "'>" . $forum['category']['title'] . "</a>" . ", " . __('Forum:', $dom) . " " . "<a href='" . ModUtil::url('MUboard', 'user', 'display', array('ot' => 'forum', 'id' => $forumid)). "'>" . $forum['title'] . "</a></h3>";
         return $out;
     }
 
@@ -250,6 +252,8 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
                 $id = $lastposting->getId();
             }
             $url = ModUtil::url('MUBoard', 'user', 'display', array('ot' => 'posting', 'id' => $id));
+            $url .= "/#" . $lastposting['id'];
+            $url2 = ModUtil::url('MUBoard', 'user', 'display', array('ot' => 'posting', 'id' => $id));
 
             $out = '';
             $createdDate = $lastposting->getCreatedDate();
@@ -264,9 +268,12 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
             $out .= "<br />";
             $out .= __('on ');
             $out .= $date . "<br />";
-            $out .= __('Issue: ');
-            $out .= "<a href='" . $url;
-            $out .= "'>" . $issuetitle . "</a>";
+            $out .= "<a title='";
+            $out .= __('Show last posting', $dom) . " - " . $issuetitle . "' ";
+            $out .= "href='" . $url;
+            $out .= "'>";
+            $out .= substr($issuetitle, 0, 50);
+            $out .= "</a><br />";
 
         } else {
             $out = __('No postings available!');
