@@ -17,5 +17,59 @@
  */
 class MUBoard_Form_Handler_Admin_Config extends MUBoard_Form_Handler_Admin_Base_Config
 {
-    // feel free to extend the base handler class here
+    /**
+     * Initialize form handler.
+     *
+     * This method takes care of all necessary initialisation of our data and form states.
+     *
+     * @return boolean False in case of initialization errors, otherwise true.
+     */
+    public function initialize(Zikula_Form_View $view)
+    {
+        $dom = ZLanguage::getModuleDomain($this->name);
+        // permission check
+        if (!SecurityUtil::checkPermission('MUBoard::', '::', ACCESS_ADMIN)) {
+            return $view->registerError(LogUtil::registerPermissionError());
+        }
+
+        // retrieve module vars
+        $modVars = ModUtil::getVar('MUBoard');
+        // initialise list entries for the 'number images' setting
+        $modVars['numberImagesItems'] = array(
+            array('value' => '1', 'text' => '1'),
+            array('value' => '2', 'text' => '2'),
+            array('value' => '3', 'text'  => '3')
+        );
+        // initialise list entries for the 'number files' setting
+        $modVars['numberFilesItems'] = array(
+            array('value' => '1', 'text' => '1'),
+            array('value' => '2', 'text' => '2'),
+            array('value' => '3', 'text'  => '3')
+        );
+        // initialise list entries for the 'sorting postings' setting
+        $modVars['sortingPostingsItems'] = array(
+            array('value' => 'descending', 'text' => __('Descending', $dom)),
+            array('value' => 'ascending', 'text'  => __('Ascending', $dom))
+        );
+        // initialise list entries for the 'icon set' setting
+        $modVars['iconSetItems'] = array(
+            array('value' => '1', 'text' => '1'),
+            array('value' => '2', 'text' => '2'),
+            array('value' => '3', 'text'  => '3')
+        );
+        // initialise list entries for the 'template' setting
+        $modVars['templateItems'] = array(
+            array('value' => 'normal', 'text' => 'Normal'),
+            array('value' => 'jquery', 'text'  => 'jQuery')
+        );
+
+        // assign all module vars
+        $this->view->assign('config', $modVars);
+
+        // custom initialisation aspects
+        $this->initializeAdditions();
+
+        // everything okay, no initialization errors occured
+        return true;
+    }
 }
