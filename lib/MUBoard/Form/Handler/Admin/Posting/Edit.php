@@ -1,4 +1,6 @@
 <?php
+use Gedmo\Mapping\Annotation\Language;
+
 /**
  * MUBoard.
  *
@@ -31,5 +33,30 @@ class MUBoard_Form_Handler_Admin_Posting_Edit extends MUBoard_Form_Handler_Admin
     	$this->view->assign('work', $work);
     	
     	return parent::initialize($view);
+    }
+    
+    /**
+     * Command event handler.
+     *
+     * This event handler is called when a command is issued by the user.
+     */
+    public function handleCommand(Zikula_Form_View $view, &$args)
+    {
+        parent::HandleCommand($view, $args);
+        
+        $dom = ZLanguage::getModuleDomain($this->name);
+        // we handle the redirect to the frontend after moving an issue
+        // to another forum
+        $work = $this->request->query->filter('work', 'none', FILTER_SANITIZE_STRING);
+        $id = $this->request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
+        if ($id > 0) {
+            $url = ModUtil::url($this->name, 'user', 'display', array('ot' => 'posting', 'id' => $id));
+            return LogUtil::registerStatus(__('Done! Moving of issue successful.', $dom), $url);
+        } else {
+            $url = ModUtil::url($this->name, 'user');
+            LogUtil::registerError('Sorry! Moving the issue failed', $dom);
+        }
+        return System::redirect($url);
+        
     }
 }
