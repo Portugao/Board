@@ -109,12 +109,7 @@ class MUBoard_Form_Handler_User_Edit extends MUBoard_Form_Handler_User_Base_Edit
         $id = $this->request->getGet()->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
         $forumid = $this->request->query->filter('forum', 0);
         $forumid2 = $this->request->getPost()->filter('muboardForum_ForumItemList', 0, FILTER_SANITIZE_NUMBER_INT);
-        $parentid = $this->request->getPost()->filter('muboardPosting_ParentItemList', 0, FILTER_SANITIZE_NUMBER_INT);
-
-        if ($args['commandName'] == 'toforum') {
-            $url = ModUtil::url($this->name, 'user', 'display', array('ot' => 'forum', 'id' => 2));
-            return System::redirect($url);
-        }
+        $parentid = $this->request->getPost()->filter('muboardPosting_ParentItemList', 0);
 
         if ($args['commandName'] == 'delete') {
             if (!SecurityUtil::checkPermission($this->permissionComponent, '::', ACCESS_DELETE)) {
@@ -126,14 +121,22 @@ class MUBoard_Form_Handler_User_Edit extends MUBoard_Form_Handler_User_Base_Edit
             // do forms validation including checking all validators on the page to validate their input
             if (!$this->view->isValid()) {
 
-                if ($parentid > 0) {
-                    $url = ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $parentid));
-                    return LogUtil::registerError(__('Sorry! You have to enter a text!', $dom), null, $url);
-                }
-                
-                if ($parentid == 0) {
-                    $url = ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => 2));
-                    return LogUtil::registerError(__('Sorry! You have to enter a text!', $dom), null, $url);
+                if ($id > 0) {
+                    if ($parentid == 0) {
+                        $idurl = ModUtil::url($this->name, 'user', 'edit', array('ot' => 'posting', 'id' => $id));
+                        LogUtil::registerError(__('Sorry! You have to enter a title and a text!', $dom));
+                        return System::redirect($idurl);
+                    }
+                } else {
+                    if ($parentid > 0) {
+                        $parentnullurl = ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $parentid));
+                        return LogUtil::registerError(__('Sorry! You have to enter a text!', $dom), null, $parentnullurl);
+                    }
+
+                    if ($parentid == 0) {
+                        $parentdigiturl = ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => 2));
+                        return LogUtil::registerError(__('Sorry! You have to enter a text!', $dom), null, $parentdigiturl);
+                    }
                 }
                 return false;
             }
