@@ -11,8 +11,6 @@
 {$forum|muboardGetForumInfo}
 {/if}
 
-<div id="muboard-user-preview" style="display: none;"></div>
-
 {if $mode eq 'edit'}
     {if $func eq 'edit' && $parentid > 0}
     {gt text='Edit posting' assign='templateTitle'}
@@ -246,7 +244,7 @@
     	<input type="hidden" id="muboardPosting_ParentItemList" name="muboardPosting_ParentItemList" value="{$posting.id}" />
     	<input type="hidden" id="muboardPosting_ParentMode" name="muboardPosting_ParentMode" value="0" />
     {/if}
-
+    <div id="muboard-user-preview" style="display: none;"></div>
     {* {if $mode ne 'create'}
         {include file='user/include_standardfields_edit.tpl' obj=$posting}
     {/if} *}
@@ -299,11 +297,18 @@
         {notifydisplayhooks eventname='muboard.ui_hooks.postings.form_edit' id=$posting.id assign='hooks'}
         {/if}
         {if $func eq 'edit' || $func eq 'display'}
-        {foreach key='hookName' item='hook' from=$hooks}
+        {foreach key='hookName' item='hook' from=$hooks name=hooks}
             {if $hookName ne 'Tag'}
-            <div class="z-formrow">
+            {if $smarty.foreach.hooks.iteration == 1 || $smarty.foreach.hooks.iteration == 3 || $smarty.foreach.hooks.iteration == 5 || $smarty.foreach.hooks.iteration == 7 
+            || $smarty.foreach.hooks.iteration == 9 || $smarty.foreach.hooks.iteration == 11 || $smarty.foreach.hooks.iteration == 13 || $smarty.foreach.hooks.iteration == 15}
+            <div class="z-formrow muboard-hook-left">
                 {$hook}
             </div>
+            {else}
+            <div class="z-formrow muboard-hook-right">
+                {$hook}
+            </div>
+            {/if}
             {/if}
         {/foreach}
         {/if}    
