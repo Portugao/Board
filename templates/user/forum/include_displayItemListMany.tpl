@@ -3,7 +3,7 @@
 {if isset($items) && $items ne null}
 {* <ul class="relatedItemList Forum"> *}
 {foreach name='relLoop' item='item' from=$items}
-
+{checkpermissionblock component='MUBoard:Forum:' instance="`$item.id`::" level="ACCESS_OVERVIEW"}
 <div class="muboard-user-forum">
 <div class="muboard-user-forum-left">
 <div class="muboard-user-forum-left-icon">
@@ -12,14 +12,16 @@
 <div class="muboard-user-forum-left-right">
     {gt text='Forum:'}
     <a href="{modurl modname='MUBoard' type='user' func='display' ot='forum' id=$item.id}">
-     {$item.title}
+     {$item.title|safetext|nl2br}
     </a><br />
     {$item.description}
 </div>
 </div>
 <div class="muboard-user-forum-right">
+    <div class="muboard-user-category-header-statistic-container">
     <div class="muboard-user-category-header-statistic issues">{$item.id|muboardGetNumberOfIssuesOfForum:$item.id}</div>
     <div class="muboard-user-category-header-statistic postings">{$item.posting|@count}</div>
+    </div>
     <div class="muboard-user-category-header-lastposting">
     {$item.id|muboardGetLastPosting:$item.id}
     </div>
@@ -59,6 +61,7 @@
     </script>
 
     </li> *}
+{/checkpermissionblock} 
 {/foreach}
 {* </ul> *}
             {else}
