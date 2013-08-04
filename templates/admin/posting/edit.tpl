@@ -3,6 +3,9 @@
 {pageaddvar name='javascript' value='modules/MUBoard/javascript/MUBoard_editFunctions.js'}
 {pageaddvar name='javascript' value='modules/MUBoard/javascript/MUBoard_validation.js'}
 
+{if $work eq 'movetoforum'}
+<h2>{gt text='Issue to move'}: {$posting.title}</h2>
+{/if}
 {if $mode eq 'edit'}
     {gt text='Edit posting' assign='templateTitle'}
     {assign var='adminPageIcon' value='edit'}
@@ -231,17 +234,24 @@
     {* include possible submit actions *}
     <div class="z-buttons z-formbuttons">
     {if $mode eq 'edit'}
+        {if $work eq 'none'}
         {formbutton id='btnUpdate' commandName='update' __text='Update posting' class='z-bt-save'}
+        {else}
+        {formbutton id='btnMove' commandName='update' __text='Move issue' class='z-bt-save'}        
+        {/if}
       {if !$inlineUsage}
+      {if $work eq 'none'}  
         {gt text='Really delete this posting?' assign='deleteConfirmMsg'}
         {formbutton id='btnDelete' commandName='delete' __text='Delete posting' class='z-bt-delete z-btred' confirmMessage=$deleteConfirmMsg}
+      {/if} 
       {/if}
     {elseif $mode eq 'create'}
         {formbutton id='btnCreate' commandName='create' __text='Create posting' class='z-bt-ok'}
     {else}
         {formbutton id='btnUpdate' commandName='update' __text='OK' class='z-bt-ok'}
-    {/if}
+    {/if}        
         {formbutton id='btnCancel' commandName='cancel' __text='Cancel' class='z-bt-cancel'}
+
     </div>
   {/muboardFormFrame}
 {/form}
