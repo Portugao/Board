@@ -8,6 +8,9 @@
 <div class="muboard-user-forum-left">
 <div class="muboard-user-forum-left-icon">
 {$item.id|muboardPostingsSinceLastLogin:2}
+{if $item.children|@count > 20}
+    <img alt"={gt text='Important issue'}" src="/images/icons/small/important.png" />
+{/if}
 </div>
 <div class="muboard-user-forum-left-solved">
 {if $item.solved eq 0}
@@ -48,11 +51,11 @@
     {checkpermissionblock component='MUBoard::' instance='.*' level="ACCESS_ADMIN"}
     <a title="{gt text='Move issue to another forum!'}" href="{modurl modname='MUBoard' type='admin' func='edit' ot='posting' id=$item.id work='movetoforum'}"><img src="/images/icons/extrasmall/1rightarrow.png" /></a>
     {/checkpermissionblock}
-    {$item.id|muboardGetStateOfPostingAbo:$func}
+    {* {$item.id|muboardGetStateOfPostingAbo:$func} *}
     {* {$item.id|muboardGetStateOfPosting}  *}
     {checkpermissionblock component='MUBoard::' instance='.*' level="ACCESS_ADMIN"}    
     {if $item.state eq 1}
-        <a title="{gt text='Issue is open! You have permissions to close this issue!'}" id="muboard-user-posting-header-infos-abo" href="{modurl modname='MUBoard' type='admin' func='close' ot='posting' id=$item.id}">
+        <a title="{gt text='Issue is open! You have permissions to close this issue!'}" class="muboard-user-posting-header-infos-abo" href="{modurl modname='MUBoard' type='admin' func='close' ot='posting' id=$item.id}">
             <img src='/images/icons/extrasmall/button_ok.png' />
         </a>
     {else}
