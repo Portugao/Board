@@ -8,6 +8,7 @@
 {if !isset($smarty.get.theme) || $smarty.get.theme ne 'Printer'}
 
 {checkpermissionblock component='MUBoard:Category:' instance="`$posting.forum.category.id`::" level="ACCESS_OVERVIEW"}
+{checkpermissionblock component='MUBoard:Forum:' instance="`$posting.forum.id`::" level="ACCESS_OVERVIEW"}
 {checkpermissionblock component='MUBoard:Posting:' instance="`$posting.id`::" level="ACCESS_OVERVIEW"}
     <div id="top" class="muboard-user-posting-parent ">
         <div class="muboard-user-posting-header">
@@ -268,6 +269,7 @@
              {/checkpermissionblock}
         {/checkpermissionblock}  
     {/if}
+{/checkpermissionblock}
 {/checkpermissionblock}
 {/checkpermissionblock}
 </div>
