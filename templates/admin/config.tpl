@@ -38,7 +38,7 @@
                     {formcheckbox id='uploadFiles' group='config'}
                 </div>
                 <div id="fileoptions" style="display: none;">
-                <div class="z-formrow">
+                <div class="z-formrow" style="display: none;">
                     {formlabel for='allowedSizeOfFiles' __text='Allowed size of files'}
                     {formintinput id='allowedSizeOfFiles' group='config' maxLength=255 width=20em __title='Enter this setting. Only digits are allowed.'}
                 </div>
@@ -65,11 +65,11 @@
                     {formlabel for='sortingPostings' __text='Sorting postings'}
                     {formdropdownlist id='sortingPostings' group='config'}
                 </div>
-                <div class="z-formrow">
+                <div class="z-formrow" style="display: none;">
                     {formlabel for='iconSet' __text='Icon set'}
                     {formdropdownlist id='iconSet' group='config'}
                 </div>
-                <div class="z-formrow">
+                <div class="z-formrow" style="display: none;">
                     {formlabel for='template' __text='Template'}
                     {formdropdownlist id='template' group='config'}
                 </div>
