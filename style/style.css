@@ -164,6 +164,10 @@ button.muboardInlineButton {
     border-bottom: 1px solid #999;   	
 }
 
+.muboard-user-category-header-statistic-container {
+    float: left;
+}
+
 .muboard-user-category-header-statistic {
     padding: 5px 10px;
     margin: 5px 0 0 10px;
@@ -185,6 +189,7 @@ button.muboardInlineButton {
     padding: 5px 0;
     margin: 5px 0 0 10px;
     float: left;
+    width: 70%;
 }
 
 .muboard-user-legend {
@@ -385,17 +390,9 @@ border-bottom: 1px solid #ddd;
 }
 
 .muboard-posting-edit-action .z-formbuttons {
-    margin: 0 10px;
-    width: 35%;
+    margin: 0 2%;
+    width: 96%;
     float: left;
-    background: #eee;
-    border-radius: 5px;
-}
-
-.muboard-posting-edit-hooks {
-    margin: 0 10px;
-    float: right;
-    width: 55%;
     background: #eee;
     border-radius: 5px;
 }
@@ -564,7 +561,7 @@ border-bottom: 1px solid #ddd;
 	color: #ff3333;
 }
 
-/*******JQuery-----------------*/
+/*----------------JQuery-----------------*/
 
 #muboard-user-preview .muboard-user-posting {
      background: #eeffee url(/modules/MUBoard/images/preview.png) 50% 0 repeat-y; 
@@ -576,3 +573,22 @@ border-bottom: 1px solid #ddd;
 	background: #eeffee !important;
 }
 
+/*-------------HOOKS----------------*/
+
+.muboard-posting-edit-hooks {
+    margin: 0 2%;
+    float: right;
+    width: 96%;
+    background: #eee;
+    border-radius: 5px;
+}
+
+.muboard-hook-left {
+	width: 45%;
+	float: left;
+}
+
+.muboard-hook-right {
+	width: 45%;
+	float: right;
+}
