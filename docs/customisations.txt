@@ -19,7 +19,8 @@ Changed Files
 
 Implemented Classes
 
-
+*lib/MUBoard/Installer.php
+*lib/MUBoard/Version.php
 *lib/MUBoard/Api/Admin.php
 *lib/MUBoard/Api/Search.php
 *lib/MUBoard/Api/User.php
