@@ -26,7 +26,15 @@ use DoctrineExtensions\StandardFields\Mapping\Annotation as ZK;
  */
 class MUBoard_Entity_Category extends MUBoard_Entity_Base_Category
 {
-    // feel free to add your own methods here
+    /**
+     * Bidirectional - One category [category] has many forum [forums] (INVERSE SIDE).
+     *
+     * @ORM\OneToMany(targetEntity="MUBoard_Entity_Forum", mappedBy="category", cascade={"all"})
+     * @ORM\JoinTable(name="muboard_categoryforum")
+     * @ORM\OrderBy({"pos" = "DESC"})
+     * @var MUBoard_Entity_Forum[] $forum.
+     */
+    protected $forum = null;
 
 
 
