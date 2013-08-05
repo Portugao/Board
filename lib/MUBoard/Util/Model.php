@@ -241,7 +241,7 @@ class MUBoard_Util_Model extends MUBoard_Util_Base_Model
 
 	/**
 	 *
-	 This method is for getting a repository for abo
+	 * This method is for getting a repository for abo
 	 *
 	 */
 
@@ -256,7 +256,7 @@ class MUBoard_Util_Model extends MUBoard_Util_Base_Model
 
 	/**
 	 *
-	 This method is for getting a repository for category
+	 * This method is for getting a repository for category
 	 *
 	 */
 
@@ -271,7 +271,7 @@ class MUBoard_Util_Model extends MUBoard_Util_Base_Model
 
 	/**
 	 *
-	 This method is for getting a repository for forum
+	 * This method is for getting a repository for forum
 	 *
 	 */
 
@@ -286,7 +286,7 @@ class MUBoard_Util_Model extends MUBoard_Util_Base_Model
 
 	/**
 	 *
-	 This method is for getting a repository for posting
+	 * This method is for getting a repository for posting
 	 *
 	 */
 
