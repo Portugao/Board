@@ -62,6 +62,10 @@
                     {formintinput id='latestPostings' group='config' maxLength=255 width=20em __title='Enter this setting. Only digits are allowed.'}
                 </div>
                 <div class="z-formrow">
+                    {formlabel for='sortingCategories' __text='Sorting categories'}
+                    {formdropdownlist id='sortingCategories' group='config'}
+                </div>
+                <div class="z-formrow">
                     {formlabel for='sortingPostings' __text='Sorting postings'}
                     {formdropdownlist id='sortingPostings' group='config'}
                 </div>

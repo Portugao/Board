@@ -47,6 +47,11 @@ class MUBoard_Form_Handler_Admin_Config extends MUBoard_Form_Handler_Admin_Base_
             array('value' => '3', 'text'  => '3')
         );
         // initialise list entries for the 'sorting postings' setting
+        $modVars['sortingCategoriesItems'] = array(
+                array('value' => 'descending', 'text' => __('Descending', $dom)),
+                array('value' => 'ascending', 'text'  => __('Ascending', $dom))
+        );
+        // initialise list entries for the 'sorting postings' setting
         $modVars['sortingPostingsItems'] = array(
             array('value' => 'descending', 'text' => __('Descending', $dom)),
             array('value' => 'ascending', 'text'  => __('Ascending', $dom))

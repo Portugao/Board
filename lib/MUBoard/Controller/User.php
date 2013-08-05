@@ -19,280 +19,285 @@ use Doctrine\DBAL\Types\StringType;
 class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 {
 
-	/**
-	 * Post initialise.
-	 *
-	 * Run after construction.
-	 *
-	 * @return void
-	 */
-	protected function postInitialize()
-	{
-		// Set caching to true by default.
-		$this->view->setCaching(Zikula_View::CACHE_DISABLED);
-	}
+    /**
+     * Post initialise.
+     *
+     * Run after construction.
+     *
+     * @return void
+     */
+    protected function postInitialize()
+    {
+        // Set caching to true by default.
+        $this->view->setCaching(Zikula_View::CACHE_DISABLED);
+    }
 
-	/**
-	 * This method is the default function, and is called whenever the application's
-	 * User area is called without defining arguments.
-	 *
-	 * @return mixed Output.
-	 */
-	public function main($args)
-	{
-		// DEBUG: permission check aspect starts
-		$this->throwForbiddenUnless(SecurityUtil::checkPermission('MUBoard::', '::', ACCESS_OVERVIEW));
-		// DEBUG: permission check aspect ends
+    /**
+     * This method is the default function, and is called whenever the application's
+     * User area is called without defining arguments.
+     *
+     * @return mixed Output.
+     */
+    public function main($args)
+    {
+        // DEBUG: permission check aspect starts
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('MUBoard::', '::', ACCESS_OVERVIEW));
+        // DEBUG: permission check aspect ends
 
-		// get actual time
-		$nowtime = DateUtil::getDatetime();
-		// set sessionvar with calling time
-		SessionUtil::setVar('muboardonline', $nowtime);
+        // get actual time
+        $nowtime = DateUtil::getDatetime();
+        // set sessionvar with calling time
+        SessionUtil::setVar('muboardonline', $nowtime);
 
-		// return main template
-		return System::redirect(ModUtil::url($this->name, 'user', 'view', array('ot' => 'category')));
-	}
+        // return main template
+        return System::redirect(ModUtil::url($this->name, 'user', 'view', array('ot' => 'category')));
+    }
 
-	/**
-	 * This method provides a generic item list overview.
-	 *
-	 * @param string  $ot           Treated object type.
-	 * @param string  $sort         Sorting field.
-	 * @param string  $sortdir      Sorting direction.
-	 * @param int     $pos          Current pager position.
-	 * @param int     $num          Amount of entries to display.
-	 * @param string  $tpl          Name of alternative template (for alternative display options, feeds and xml output)
-	 * @param boolean $raw          Optional way to display a template instead of fetching it (needed for standalone output)
-	 * @return mixed Output.
-	 */
-	public function view($args)
-	{
-		$args['ot'] = $this->request->getGet()->filter('ot', 'category', FILTER_SANITIZE_STRING);
-		$type = $this->request->getGet()->filter('type', 'user', FILTER_SANITIZE_STRING);
-		$func = $this->request->getGet()->filter('func', 'view', FILTER_SANITIZE_STRING);
-			
-		$sortdir = ModUtil::getVar('MUBoard', 'sortingPostings');
-		
-		//view of postings is blocked
-		if ($args['ot'] == 'posting') {
-			return System::redirect(ModUtil::url($this->name, 'user', 'view'));
-		}
-			
-		if (($args['ot'] == 'category' || $args['ot'] == 'forum' ) && $type == 'user') {
+    /**
+     * This method provides a generic item list overview.
+     *
+     * @param string  $ot           Treated object type.
+     * @param string  $sort         Sorting field.
+     * @param string  $sortdir      Sorting direction.
+     * @param int     $pos          Current pager position.
+     * @param int     $num          Amount of entries to display.
+     * @param string  $tpl          Name of alternative template (for alternative display options, feeds and xml output)
+     * @param boolean $raw          Optional way to display a template instead of fetching it (needed for standalone output)
+     * @return mixed Output.
+     */
+    public function view($args)
+    {
+        $ot = $this->request->getGet()->filter('ot', 'category', FILTER_SANITIZE_STRING);
+        $type = $this->request->getGet()->filter('type', 'user', FILTER_SANITIZE_STRING);
+        $func = $this->request->getGet()->filter('func', 'view', FILTER_SANITIZE_STRING);
 
-			$args['sort'] = 'pos';
-			if ($sortdir == 'descending') {
-				$args['sortdir'] = 'desc';
-			}
-			else {
-				$args['sortdir'] = 'asc';
-			}
-		}
+        if ($ot == 'category') {
+            $sortdir = ModUtil::getVar('MUBoard', 'sortingCategories');
+        }
+        if ($ot == 'posting') {
+            $sortdir = ModUtil::getVar('MUBoard', 'sortingPostings');
+        }
 
-		// get actual time
-		$nowtime = DateUtil::getDatetime();
-		// set sessionvar with calling time
-		SessionUtil::setVar('muboardonline', $nowtime);
+        //view of postings is blocked
+        if ($ot == 'posting') {
+            return System::redirect(ModUtil::url($this->name, 'user', 'view'));
+        }
+        	
+        if (($ot == 'category' || $ot == 'forum' ) && $type == 'user') {
 
-		$lastlogin = SessionUtil::getVar('muboardonline');
+            $args['sort'] = 'pos';
+            if ($sortdir == 'descending') {
+                $args['sortdir'] = 'desc';
+            }
+            else {
+                $args['sortdir'] = 'asc';
+            }
+        }
 
-		$this->view->assign('func', $func)
-		->assign('lastlogin', $lastlogin);
+        // get actual time
+        $nowtime = DateUtil::getDatetime();
+        // set sessionvar with calling time
+        SessionUtil::setVar('muboardonline', $nowtime);
 
-		if (UserUtil::isLoggedIn() == true && $type == 'user') {
-			$uid = UserUtil::getVar('uid');
-			MUBoard_Util_View::actualUser($uid);// TODO workaround because of problems with logout listener
-		}
+        $lastlogin = SessionUtil::getVar('muboardonline');
 
-		$dom = ZLanguage::getModuleDomain($this->name);
+        $this->view->assign('func', $func)
+        ->assign('lastlogin', $lastlogin);
 
-		$sitename = ModUtil::getVar('ZConfig', 'sitename');
+        if (UserUtil::isLoggedIn() == true && $type == 'user') {
+            $uid = UserUtil::getVar('uid');
+            MUBoard_Util_View::actualUser($uid);// TODO workaround because of problems with logout listener
+        }
 
-		PageUtil::setVar('title', $sitename . ' - ' . __('Forum - Category Overview', $dom));
-			
-		return parent::view($args);
-	}
+        $dom = ZLanguage::getModuleDomain($this->name);
 
-	/**
-	 * This method provides a generic item detail view.
-	 *
-	 * @param string  $ot           Treated object type.
-	 * @param string  $tpl          Name of alternative template (for alternative display options, feeds and xml output)
-	 * @param boolean $raw          Optional way to display a template instead of fetching it (needed for standalone output)
-	 * @return mixed Output.
-	 */
-	public function display($args)
-	{
-		// DEBUG: permission check aspect starts
-		$this->throwForbiddenUnless(SecurityUtil::checkPermission('MUBoard::', '::', ACCESS_READ));
-		// DEBUG: permission check aspect ends
+        $sitename = ModUtil::getVar('ZConfig', 'sitename');
 
-		// parameter specifying which type of objects we are treating
-		$objectType = (isset($args['ot']) && !empty($args['ot'])) ? $args['ot'] : $this->request->getGet()->filter('ot', 'category', FILTER_SANITIZE_STRING);
-		$utilArgs = array('controller' => 'user', 'action' => 'display');
-		if (!in_array($objectType, MUBoard_Util_Controller::getObjectTypes('controllerAction', $utilArgs))) {
-			$objectType = MUBoard_Util_Controller::getDefaultObjectType('controllerAction', $utilArgs);
-		}
-		$repository = $this->entityManager->getRepository('MUBoard_Entity_' . ucfirst($objectType));
+        PageUtil::setVar('title', $sitename . ' - ' . __('Forum - Category Overview', $dom));
+        	
+        return parent::view($args);
+    }
 
-		$idFields = ModUtil::apiFunc($this->name, 'selection', 'getIdFields', array('ot' => $objectType));
+    /**
+     * This method provides a generic item detail view.
+     *
+     * @param string  $ot           Treated object type.
+     * @param string  $tpl          Name of alternative template (for alternative display options, feeds and xml output)
+     * @param boolean $raw          Optional way to display a template instead of fetching it (needed for standalone output)
+     * @return mixed Output.
+     */
+    public function display($args)
+    {
+        // DEBUG: permission check aspect starts
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('MUBoard::', '::', ACCESS_READ));
+        // DEBUG: permission check aspect ends
 
-		// retrieve identifier of the object we wish to view
-		$idValues = MUBoard_Util_Controller::retrieveIdentifier($this->request, $args, $objectType, $idFields);
-		$hasIdentifier = MUBoard_Util_Controller::isValidIdentifier($idValues);
+        // parameter specifying which type of objects we are treating
+        $objectType = (isset($args['ot']) && !empty($args['ot'])) ? $args['ot'] : $this->request->getGet()->filter('ot', 'category', FILTER_SANITIZE_STRING);
+        $utilArgs = array('controller' => 'user', 'action' => 'display');
+        if (!in_array($objectType, MUBoard_Util_Controller::getObjectTypes('controllerAction', $utilArgs))) {
+            $objectType = MUBoard_Util_Controller::getDefaultObjectType('controllerAction', $utilArgs);
+        }
+        $repository = $this->entityManager->getRepository('MUBoard_Entity_' . ucfirst($objectType));
 
-		// check for unique permalinks (without id)
-		$hasSlug = false;
-		$slugTitle = '';
-		if ($hasIdentifier === false) {
-			$entityClass = 'MUBoard_Entity_' . ucfirst($objectType);
-			$objectTemp = new $entityClass();
-			$hasSlug = $objectTemp->get_hasUniqueSlug();
-			if ($hasSlug) {
-				$slugTitle = (isset($args['title']) && !empty($args['title'])) ? $args['title'] : $this->request->getGet()->filter('title', '', FILTER_SANITIZE_STRING);
-				$hasSlug = (!empty($slugTitle));
-			}
-		}
-		$hasIdentifier |= $hasSlug;
-		$this->throwNotFoundUnless($hasIdentifier, $this->__('Error! Invalid identifier received.'));
+        $idFields = ModUtil::apiFunc($this->name, 'selection', 'getIdFields', array('ot' => $objectType));
 
-		$entity = ModUtil::apiFunc($this->name, 'selection', 'getEntity', array('ot' => $objectType, 'id' => $idValues, 'slug' => $slugTitle));
-		$this->throwNotFoundUnless($entity != null, $this->__('No such item.'));
+        // retrieve identifier of the object we wish to view
+        $idValues = MUBoard_Util_Controller::retrieveIdentifier($this->request, $args, $objectType, $idFields);
+        $hasIdentifier = MUBoard_Util_Controller::isValidIdentifier($idValues);
 
-		// we take the children postings of the parent issue
-		if($objectType == 'posting') {
-			$postingid = $entity['id'];
+        // check for unique permalinks (without id)
+        $hasSlug = false;
+        $slugTitle = '';
+        if ($hasIdentifier === false) {
+            $entityClass = 'MUBoard_Entity_' . ucfirst($objectType);
+            $objectTemp = new $entityClass();
+            $hasSlug = $objectTemp->get_hasUniqueSlug();
+            if ($hasSlug) {
+                $slugTitle = (isset($args['title']) && !empty($args['title'])) ? $args['title'] : $this->request->getGet()->filter('title', '', FILTER_SANITIZE_STRING);
+                $hasSlug = (!empty($slugTitle));
+            }
+        }
+        $hasIdentifier |= $hasSlug;
+        $this->throwNotFoundUnless($hasIdentifier, $this->__('Error! Invalid identifier received.'));
 
-			$postingsWhere = 'tbl.parent = \'' . DataUtil::formatForStore($postingid) . '\'';
+        $entity = ModUtil::apiFunc($this->name, 'selection', 'getEntity', array('ot' => $objectType, 'id' => $idValues, 'slug' => $slugTitle));
+        $this->throwNotFoundUnless($entity != null, $this->__('No such item.'));
 
-			$order = ModUtil::getVar($this->name, 'sortingPostings');
+        // we take the children postings of the parent issue
+        if($objectType == 'posting') {
+            $postingid = $entity['id'];
 
-			if ($order == 'descending') {
-				$sdir = 'desc';
-			}
-			else {
-				$sdir = 'asc';
-			}
+            $postingsWhere = 'tbl.parent = \'' . DataUtil::formatForStore($postingid) . '\'';
 
-			$selectionArgs = array(
-            'ot' => 'posting',
-            'where' => $postingsWhere,
-            'orderBy' => 'createdDate' . ' ' . $sdir
-			);
+            $order = ModUtil::getVar($this->name, 'sortingPostings');
 
-			// the current offset which is used to calculate the pagination
-			$currentPage = (int)(isset($args['pos']) && !empty($args['pos'])) ? $args['pos'] : $this->request->getGet()->filter('pos', 1, FILTER_VALIDATE_INT);
+            if ($order == 'descending') {
+                $sdir = 'desc';
+            }
+            else {
+                $sdir = 'asc';
+            }
 
-			// the number of items displayed on a page for pagination
-			$resultsPerPage = (int)(isset($args['num']) && !empty($args['num'])) ? $args['num'] : $this->request->getGet()->filter('num', 0, FILTER_VALIDATE_INT);
-			if ($resultsPerPage == 0) {
-				$csv = (int)(isset($args['usecsv']) && !empty($args['usecsv'])) ? $args['usecsv'] : $this->request->getGet()->filter('usecsvext', 0, FILTER_VALIDATE_INT);
-				$resultsPerPage = ($csv == 1) ? 999999 : $this->getVar('pagesize', 10);
-			}
+            $selectionArgs = array(
+                    'ot' => 'posting',
+                    'where' => $postingsWhere,
+                    'orderBy' => 'createdDate' . ' ' . $sdir
+            );
 
-			$selectionArgs['currentPage'] = $currentPage;
-			$selectionArgs['resultsPerPage'] = $resultsPerPage;
-			list($entities, $objectCount) = ModUtil::apiFunc($this->name, 'selection', 'getEntitiesPaginated', $selectionArgs);
+            // the current offset which is used to calculate the pagination
+            $currentPage = (int)(isset($args['pos']) && !empty($args['pos'])) ? $args['pos'] : $this->request->getGet()->filter('pos', 1, FILTER_VALIDATE_INT);
 
-			// we check if the user may see the form to answer to posting
-			$mayEdit = MUBoard_Util_Controller::mayEdit($id);
-			$this->view->assign('mayEdit', $mayEdit);
-		}
-		
-		if($objectType == 'forum') {
-			$forumid = $entity['id'];
-		
-			$parentWhere = 'tbl.parent_id IS NULL'; 
-			$parentWhere .= ' AND ';
-			$parentWhere .= 'tbl.forum = \'' . DataUtil::formatForStore($forumid) . '\'';
-		
-			$order = ModUtil::getVar($this->name, 'sortingPostings');
-		
-			if ($order == 'descending') {
-				$sdir = 'desc';
-			}
-			else {
-				$sdir = 'asc';
-			}
-		
-			$selectionArgs = array(
-					'ot' => 'posting',
-					'where' => $parentWhere,
-					'orderBy' => 'createdDate' . ' ' . $sdir
-			);
-		
-			// the current offset which is used to calculate the pagination
-			$currentPage = (int)(isset($args['pos']) && !empty($args['pos'])) ? $args['pos'] : $this->request->getGet()->filter('pos', 1, FILTER_VALIDATE_INT);
-		
-			// the number of items displayed on a page for pagination
-			$resultsPerPage = (int)(isset($args['num']) && !empty($args['num'])) ? $args['num'] : $this->request->getGet()->filter('num', 0, FILTER_VALIDATE_INT);
-			if ($resultsPerPage == 0) {
-				$csv = (int)(isset($args['usecsv']) && !empty($args['usecsv'])) ? $args['usecsv'] : $this->request->getGet()->filter('usecsvext', 0, FILTER_VALIDATE_INT);
-				$resultsPerPage = ($csv == 1) ? 999999 : $this->getVar('pagesize', 10);
-			}
-		
-			$selectionArgs['currentPage'] = $currentPage;
-			$selectionArgs['resultsPerPage'] = $resultsPerPage;
-			list($entities, $objectCount) = ModUtil::apiFunc($this->name, 'selection', 'getEntitiesPaginated', $selectionArgs);
-					
-		}
+            // the number of items displayed on a page for pagination
+            $resultsPerPage = (int)(isset($args['num']) && !empty($args['num'])) ? $args['num'] : $this->request->getGet()->filter('num', 0, FILTER_VALIDATE_INT);
+            if ($resultsPerPage == 0) {
+                $csv = (int)(isset($args['usecsv']) && !empty($args['usecsv'])) ? $args['usecsv'] : $this->request->getGet()->filter('usecsvext', 0, FILTER_VALIDATE_INT);
+                $resultsPerPage = ($csv == 1) ? 999999 : $this->getVar('pagesize', 10);
+            }
 
-		// build ModUrl instance for display hooks
-		$currentUrlArgs = array('ot' => $objectType);
-		foreach ($idFields as $idField) {
-			$currentUrlArgs[$idField] = $idValues[$idField];
-		}
+            $selectionArgs['currentPage'] = $currentPage;
+            $selectionArgs['resultsPerPage'] = $resultsPerPage;
+            list($entities, $objectCount) = ModUtil::apiFunc($this->name, 'selection', 'getEntitiesPaginated', $selectionArgs);
 
-		// add a call to the posting
-		if ($objectType == 'posting') {
-			MUBoard_Util_Model::addView($idValues);
-		}
+            // we check if the user may see the form to answer to posting
+            $mayEdit = MUBoard_Util_Controller::mayEdit($id);
+            $this->view->assign('mayEdit', $mayEdit);
+        }
 
-		// get actual time
-		$nowtime = DateUtil::getDatetime();
-		// set sessionvar with calling time
-		SessionUtil::setVar('muboardonline', $nowtime);
+        if($objectType == 'forum') {
+            $forumid = $entity['id'];
 
-		$currentUrlObject = new Zikula_ModUrl($this->name, 'user', 'display', ZLanguage::getLanguageCode(), $currentUrlArgs);
+            $parentWhere = 'tbl.parent_id IS NULL';
+            $parentWhere .= ' AND ';
+            $parentWhere .= 'tbl.forum = \'' . DataUtil::formatForStore($forumid) . '\'';
 
-		$type = $this->request->getGet()->filter('type', 'admin', FILTER_SANITIZE_STRING);
-		$func = $this->request->getGet()->filter('func', 'view', FILTER_SANITIZE_STRING);
-		$editPostings = ModUtil::getVar($this->name, 'editPostings');
-		
-		// assign output data to view object.
-		$this->view->assign($objectType, $entity)
-		->assign('postings', $entities)
-		->assign('currentUrlObject', $currentUrlObject)
-		->assign('func', $func)
-		->assign('editPostings', $editPostings)
-		->assign($repository->getAdditionalTemplateParameters('controllerAction', $utilArgs));
+            $order = ModUtil::getVar($this->name, 'sortingPostings');
 
-		$this->view->assign('currentPage', $currentPage)
-		->assign('pager', array('numitems'     => $objectCount,
-                    'itemsperpage' => $resultsPerPage));
+            if ($order == 'descending') {
+                $sdir = 'desc';
+            }
+            else {
+                $sdir = 'asc';
+            }
 
-		if (UserUtil::isLoggedIn() == true && $type == 'user') {
-			$uid = UserUtil::getVar('uid');
-			MUBoard_Util_View::actualUser($uid);// TODO workaround because of problems with logout listener
-		}
+            $selectionArgs = array(
+                    'ot' => 'posting',
+                    'where' => $parentWhere,
+                    'orderBy' => 'createdDate' . ' ' . $sdir
+            );
 
-		$dom = ZLanguage::getModuleDomain($this->name);
+            // the current offset which is used to calculate the pagination
+            $currentPage = (int)(isset($args['pos']) && !empty($args['pos'])) ? $args['pos'] : $this->request->getGet()->filter('pos', 1, FILTER_VALIDATE_INT);
 
-		// we set Pagetitle
-		$sitename = ModUtil::getVar('ZConfig' , 'sitename');
+            // the number of items displayed on a page for pagination
+            $resultsPerPage = (int)(isset($args['num']) && !empty($args['num'])) ? $args['num'] : $this->request->getGet()->filter('num', 0, FILTER_VALIDATE_INT);
+            if ($resultsPerPage == 0) {
+                $csv = (int)(isset($args['usecsv']) && !empty($args['usecsv'])) ? $args['usecsv'] : $this->request->getGet()->filter('usecsvext', 0, FILTER_VALIDATE_INT);
+                $resultsPerPage = ($csv == 1) ? 999999 : $this->getVar('pagesize', 10);
+            }
 
-		if ($objectType == 'category') {
-			$titletobject = __('Forum - Category: ' , $dom);
-		}
-		if ($objectType == 'forum') {
-			$titletobject = __('Forum: ' , $dom);
-		}
-		if ($objectType == 'posting') {
-			$titletobject = 'Forum: ' . ' ' . $entity['forum']['title'] . ' - ' . __('Issue: ' , $dom);
-		}
-		PageUtil::setVar('title', $sitename . ' - ' . $titletobject . ' ' . $entity['title']);
+            $selectionArgs['currentPage'] = $currentPage;
+            $selectionArgs['resultsPerPage'] = $resultsPerPage;
+            list($entities, $objectCount) = ModUtil::apiFunc($this->name, 'selection', 'getEntitiesPaginated', $selectionArgs);
+            	
+        }
 
-		// fetch and return the appropriate template
-		return MUBoard_Util_View::processTemplate($this->view, 'user', $objectType, 'display', $args);
-	}
+        // build ModUrl instance for display hooks
+        $currentUrlArgs = array('ot' => $objectType);
+        foreach ($idFields as $idField) {
+            $currentUrlArgs[$idField] = $idValues[$idField];
+        }
+
+        // add a call to the posting
+        if ($objectType == 'posting') {
+            MUBoard_Util_Model::addView($idValues);
+        }
+
+        // get actual time
+        $nowtime = DateUtil::getDatetime();
+        // set sessionvar with calling time
+        SessionUtil::setVar('muboardonline', $nowtime);
+
+        $currentUrlObject = new Zikula_ModUrl($this->name, 'user', 'display', ZLanguage::getLanguageCode(), $currentUrlArgs);
+
+        $type = $this->request->getGet()->filter('type', 'admin', FILTER_SANITIZE_STRING);
+        $func = $this->request->getGet()->filter('func', 'view', FILTER_SANITIZE_STRING);
+        $editPostings = ModUtil::getVar($this->name, 'editPostings');
+
+        // assign output data to view object.
+        $this->view->assign($objectType, $entity)
+        ->assign('postings', $entities)
+        ->assign('currentUrlObject', $currentUrlObject)
+        ->assign('func', $func)
+        ->assign('editPostings', $editPostings)
+        ->assign($repository->getAdditionalTemplateParameters('controllerAction', $utilArgs));
+
+        $this->view->assign('currentPage', $currentPage)
+        ->assign('pager', array('numitems'     => $objectCount,
+                'itemsperpage' => $resultsPerPage));
+
+        if (UserUtil::isLoggedIn() == true && $type == 'user') {
+            $uid = UserUtil::getVar('uid');
+            MUBoard_Util_View::actualUser($uid);// TODO workaround because of problems with logout listener
+        }
+
+        $dom = ZLanguage::getModuleDomain($this->name);
+
+        // we set Pagetitle
+        $sitename = ModUtil::getVar('ZConfig' , 'sitename');
+
+        if ($objectType == 'category') {
+            $titletobject = __('Forum - Category: ' , $dom);
+        }
+        if ($objectType == 'forum') {
+            $titletobject = __('Forum: ' , $dom);
+        }
+        if ($objectType == 'posting') {
+            $titletobject = 'Forum: ' . ' ' . $entity['forum']['title'] . ' - ' . __('Issue: ' , $dom);
+        }
+        PageUtil::setVar('title', $sitename . ' - ' . $titletobject . ' ' . $entity['title']);
+
+        // fetch and return the appropriate template
+        return MUBoard_Util_View::processTemplate($this->view, 'user', $objectType, 'display', $args);
+    }
 }

@@ -16,5 +16,15 @@
  */
 class MUBoard_Installer extends MUBoard_Base_Installer
 {
-    // feel free to extend the installer here
+        /**
+     * Install the MUBoard application.
+     *
+     * @return boolean True on success, or false.
+     */
+    public function install()
+    {    
+        $this->setVar('sortingCategories', array('descending'));
+        
+        parent::install();
+    }
 }
