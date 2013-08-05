@@ -25,7 +25,7 @@ class MUBoard_Api_User extends MUBoard_Api_Base_User
     {
     	$func = $this->request->query->filter('func', 'main', FILTER_SANITIZE_STRING);
     	$ot = $this->request->query->filter('ot', 'category', FILTER_SANITIZE_STRING);
-    	$forum = $this->request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);   
+    	$forum = $this->request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT); 
     	  	
         $links = array();
 
@@ -40,7 +40,7 @@ class MUBoard_Api_User extends MUBoard_Api_Base_User
                              'text' => $this->__('Categories'),
                              'title' => $this->__('Category list'));
         }
-        if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADD) && (SecurityUtil::checkPermission($this->name . ':Category:', '::', ACCESS_ADD) && $func == 'display' && $ot == 'forum')) {
+        if (SecurityUtil::checkPermission($this->name . ':Forum:', 'ForumID::' . $forum, ACCESS_ADD) && $func == 'display' && $ot == 'forum') {
             $links[] = array('url' => ModUtil::url($this->name, 'user', 'edit', array('ot' => 'posting', 'forum' => $forum)),
                              'text' => $this->__('New issue'),
                              'title' => $this->__('Create a new issue'));
