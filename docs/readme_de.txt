@@ -1,10 +1,12 @@
 INSTALLATIONSANLEITUNG
 ----------------------
-1) Kopieren Sie MUBoard in das Verzeichnis modules.
-2) Initialisieren und aktivieren Sie MUBoard in der Modulverwaltung.
-3) Setzen Sie das Verzeichnis `userdata/MUBoard/` inklusive aller Unterordner auf beschreibbar.
+1) Kopiere MUBoard in das Verzeichnis modules.
+2) Kopiere den Ordner Resources/userdata/MUBoard in den Ordner 'userdata' oder Deinen persoenlichen Datenordner
+   ( einstellbar in der config.php )Deiner Zikulainstallation und seitze diesen und saemtliche Unterordner auf 0777.
+3) Initialisiere und aktiviere MUBoard in der Modulverwaltung.
 
-Bei Fragen und anderen Anmerkungen besuchen Sie unsere Homepage http://www.webdesign-in-bremen.com.
+
+Bei Fragen und anderen Anmerkungen besuche unsere Homepage http://www.webdesign-in-bremen.com.
 
 Michael Ueberschaer (kontakt@webdesign-in-bremen.com)
 http://www.webdesign-in-bremen.com
