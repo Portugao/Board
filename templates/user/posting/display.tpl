@@ -41,15 +41,17 @@
                 {gt text='Created: '}{$posting.createdDate|dateformat:datetimelong}
             </div> {* class="muboard-user-posting-header-title *}
             <div class="muboard-user-posting-header-action">
-                <div class="muboard-user-posting-header-action-category">{gt text='Category:'} <a title="{gt text='Back to'} {$posting.forum.category.title}" href="{modurl modname='MUBoard' type='user' func='display' ot='category' id=$posting.forum.category.id}">{$posting.forum.category.title}</a></div>
-                    <div class="muboard-user-posting-header-action-forum">{gt text='Forum:'} <a title="{gt text='Back to'} {$posting.forum.title}" href="{modurl modname='MUBoard' type='user' func='display' ot='forum' id=$posting.forum.id}">{$posting.forum.title}</a></div>
-                        <div class="muboard-user-posting-header-hooks">
-                        {notifydisplayhooks eventname='muboard.ui_hooks.postings.display_view' id=$posting.id urlobject=$currentUrlObject assign='hooks'}
+                <div class="muboard-user-posting-header-action-category">{gt text='Category:'} <a title="{gt text='Back to'} {$posting.forum.category.title}" href="{modurl modname='MUBoard' type='user' func='display' ot='category' id=$posting.forum.category.id}">{$posting.forum.category.title}</a>
+                </div>
+                <div class="muboard-user-posting-header-action-forum">{gt text='Forum:'} <a title="{gt text='Back to'} {$posting.forum.title}" href="{modurl modname='MUBoard' type='user' func='display' ot='forum' id=$posting.forum.id}">{$posting.forum.title}</a>
+                </div>
+                <div class="muboard-user-posting-header-hooks">
+                    {notifydisplayhooks eventname='muboard.ui_hooks.postings.display_view' id=$posting.id urlobject=$currentUrlObject assign='hooks'}
                         {foreach key='hookname' item='hook' from=$hooks}
                             {$hook}
                         {/foreach}
-                        </div>
-                    </div>            
+                </div>
+             </div>            
                     <div class="muboard-user-posting-header-infos">
                         {* <a id="muboard-user-posting-header-infos-close" href="{modurl modname='muboard' type='admin' func='take' ot='abo' posting=$posting.id}">
                         <img src="/images/icons/extrasmall/mail_get.png" />
@@ -272,9 +274,9 @@
 {/checkpermissionblock}
 {/checkpermissionblock}
 {/checkpermissionblock}
-</div>
-{/if}
 
+{/if}
+</div>
 {if !isset($smarty.get.theme) || $smarty.get.theme ne 'Printer'}
 <br style="clear: right" />
 {/if}
