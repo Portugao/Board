@@ -27,6 +27,7 @@ Implemented Classes
 *lib/MUBoard/Controller/Admin.php
 *lib/MUBoard/Controller/Search.php
 *lib/MUBoard/Controller/User.php
+*lib/MUBoard/Entity/Category.php
 *lib/MUBoard/Entity/Forum.php
 *lib/MUBoard/Entity/Posting.php
 *lib/MUBoard/Entity/Repository/Forum.php
