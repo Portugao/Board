@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: MUBoard\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-08-02 14:29+0000\n"
-"PO-Revision-Date: 2013-08-05 12:58+0100\n"
+"PO-Revision-Date: 2013-08-05 22:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -52,6 +52,8 @@ msgstr "Bitte gib ein gültiges Datum ein."
 #: templates/plugins/function.muboardValidationError.php:42
 msgid "Please enter a valid email address. For example yourname@example.com ."
 msgstr ""
+"Bitte gib eine gültige email Adresse ein. Zum Beispiel deinname@beispiel."
+"com ."
 
 #: templates/plugins/function.muboardValidationError.php:43
 msgid "Please enter a valid URL."
@@ -62,10 +64,12 @@ msgid ""
 "Please use this date format: dd/mm/yyyy. For example 17/03/2010 for the 17th "
 "of March, 2010."
 msgstr ""
+"Bitte nutze folgendes Datumsformat: dd/mm/yyyy. Beispiel: 17/03/2011 für den "
+"17. März 2010."
 
 #: templates/plugins/function.muboardValidationError.php:45
 msgid "Please enter a valid $ amount. For example $100.00 ."
-msgstr ""
+msgstr "Bitte gib eine $ gültige Zahl ein. Zum Beispiel $ 100.00  ."
 
 #: templates/plugins/function.muboardValidationError.php:46
 msgid "Please make a selection."
@@ -73,31 +77,32 @@ msgstr "Bitte triff eine Wahl."
 
 #: templates/plugins/function.muboardValidationError.php:47
 msgid "Please select one of the above options."
-msgstr ""
+msgstr "Bitte wähle eine der oberen Optionen."
 
 #: templates/plugins/function.muboardValidationError.php:50
 msgid "This value must not contain spaces."
-msgstr ""
+msgstr "Dieser Wert darf keine Leerzeichen enthalten."
 
 #: templates/plugins/function.muboardValidationError.php:51
 msgid "Please select a valid html colour code."
-msgstr ""
+msgstr "Bitte wähle einen gültigen Farbcode."
 
 #: templates/plugins/function.muboardValidationError.php:52
 #: templates/plugins/function.muboardValidationError.php:54
 #: templates/plugins/function.muboardValidationError.php:56
 msgid "Please select a value in the past."
-msgstr ""
+msgstr "Bitte wähle einen Wert in der Vergangenheit"
 
 #: templates/plugins/function.muboardValidationError.php:53
 #: templates/plugins/function.muboardValidationError.php:55
 #: templates/plugins/function.muboardValidationError.php:57
 msgid "Please select a value in the future."
-msgstr ""
+msgstr "Bitte wähle einen Wert in der Zukunft"
 
 #: templates/plugins/function.muboardValidationError.php:58
 msgid "This value is already assigned, but must be unique. Please change it."
 msgstr ""
+"Dieser Wert existiert shon und er muss eindeutig sein. Bitte ändere ihn."
 
 #: templates/plugins/function.muboardSelectorObjectTypes.php:29
 #: lib/MUBoard/Api/Base/User.php:36 lib/MUBoard/Api/Base/Admin.php:36
@@ -171,7 +176,7 @@ msgstr "Erledigt! Element erstellt."
 #: lib/MUBoard/Form/Handler/Admin/Base/Edit.php:541
 #: lib/MUBoard/Form/Handler/User/Base/Edit.php:541
 msgid "Error! Creation attempt failed."
-msgstr ""
+msgstr "Fehler! Erstellung fehlgeschlagen."
 
 #: lib/MUBoard/Form/Handler/Admin/Base/Edit.php:546
 #: lib/MUBoard/Form/Handler/User/Base/Edit.php:546
@@ -181,7 +186,7 @@ msgstr "Erledigt! Element aktualisiert."
 #: lib/MUBoard/Form/Handler/Admin/Base/Edit.php:548
 #: lib/MUBoard/Form/Handler/User/Base/Edit.php:548
 msgid "Error! Update attempt failed."
-msgstr ""
+msgstr "Fehler! Aktualisierung fehlgeschlagen"
 
 #: lib/MUBoard/Form/Handler/Admin/Base/Edit.php:553
 #: lib/MUBoard/Form/Handler/User/Base/Edit.php:553
@@ -192,15 +197,15 @@ msgstr "Erledigt! Element gelöscht."
 #: lib/MUBoard/Form/Handler/Admin/Base/Edit.php:555
 #: lib/MUBoard/Form/Handler/User/Base/Edit.php:555
 msgid "Error! Deletion attempt failed."
-msgstr ""
+msgstr "Fehler! Löschen fehlgeschlagen"
 
 #: lib/MUBoard/Form/Handler/Admin/Base/Config.php:133
 msgid "Error! Failed to set configuration variables."
-msgstr ""
+msgstr "Fehler! Setzen von Modulvariablen fehlgeschlagen."
 
 #: lib/MUBoard/Form/Handler/Admin/Base/Config.php:136
 msgid "Done! Module configuration updated."
-msgstr ""
+msgstr "Erledigt! Moduleinstellungen aktualisiert."
 
 #: lib/MUBoard/Form/Handler/Admin/Rank/Base/Edit.php:139
 #: lib/MUBoard/Form/Handler/User/Rank/Base/Edit.php:139
@@ -327,6 +332,8 @@ msgid ""
 "The upload folder \"%s\" does not exist. Please create it before installing "
 "this application."
 msgstr ""
+"Der Uploadordner \"%s\" existiert nicht. Bitte lege diesen vor der "
+"Installation an."
 
 #: lib/MUBoard/Base/Installer.php:31 lib/MUBoard/Base/Installer.php:38
 #: lib/MUBoard/Base/Installer.php:45 lib/MUBoard/Base/Installer.php:52
@@ -337,6 +344,8 @@ msgid ""
 "The upload folder \"%s\" is not writable. Please change permissions "
 "accordingly before installing this application."
 msgstr ""
+"Der Uploadordner \"%s\" ist nicht beschreibbar. Bitte ändere die "
+"Zugangsberechtigungnen vor der Installation an."
 
 #: lib/MUBoard/Base/Installer.php:81 lib/MUBoard/Base/Installer.php:166
 msgid "Doctrine Exception: "
@@ -345,7 +354,7 @@ msgstr "Doctrine Ausnahmefall:"
 #: lib/MUBoard/Base/Installer.php:83
 #, php-format
 msgid "An error was encountered while creating the tables for the %s module."
-msgstr ""
+msgstr "Ein Fehler ist während des Erstellens der Tabellen für %s aufgetreten."
 
 #: lib/MUBoard/Base/Installer.php:159
 #, php-format
@@ -353,28 +362,35 @@ msgid ""
 "An error was encountered while removing stored object workflows for the %s "
 "module."
 msgstr ""
+"Während des Entfernens gespeicherter Objekt Arbeitsabläufe für das Modul %s "
+"ist ein Fehler aufgetreten."
 
 #: lib/MUBoard/Base/Installer.php:168
 #, php-format
 msgid "An error was encountered while dropping the tables for the %s module."
 msgstr ""
+"Ein Fehler ist während des Löschens der Tabellen für das Modul %s "
+"aufgetreten."
 
 #: lib/MUBoard/Base/UploadHandler.php:81 lib/MUBoard/UploadHandler.php:77
 msgid "Error! Could not move your file to the destination folder."
-msgstr ""
+msgstr "Fehler! Konnte Deine Datei nicht in den Zielordner verschieben.."
 
 #: lib/MUBoard/Base/UploadHandler.php:107 lib/MUBoard/UploadHandler.php:104
 msgid "Error! No file found."
 msgstr "Fehler! Keine Datei gefunden."
 
 #: lib/MUBoard/Base/UploadHandler.php:118 lib/MUBoard/UploadHandler.php:141
+#, fuzzy
 msgid ""
 "Error! This file type is not allowed. Please choose another file format."
 msgstr ""
+"Fehler! Dieser Dateityp ist nicht erlaubt. Wähle bitte ein anderes Format."
 
 #: lib/MUBoard/Base/UploadHandler.php:127 lib/MUBoard/UploadHandler.php:151
+#, fuzzy
 msgid "Error! This file type seems not to be a valid image."
-msgstr ""
+msgstr "Fehler! Dieser Dateityp scheint kein gültiges Bild zu sein."
 
 #: lib/MUBoard/Base/Version.php:25 lib/MUBoard/Version.php:25
 #: templates/user/header.tpl:13
@@ -396,116 +412,141 @@ msgstr "muboard Kategorien Display Hooks"
 
 #: lib/MUBoard/Base/Version.php:91
 msgid "muboard Categories Filter Hooks"
-msgstr ""
+msgstr "muboard Kategorien Filter Hooks"
 
 #: lib/MUBoard/Base/Version.php:96
+#, fuzzy
 msgid "muboard Forums Display Hooks"
-msgstr ""
+msgstr "muimage Alben Ansicht Hooks"
 
 #: lib/MUBoard/Base/Version.php:113
+#, fuzzy
 msgid "muboard Forums Filter Hooks"
-msgstr ""
+msgstr "muimage Alben Filter Hooks"
 
 #: lib/MUBoard/Base/Version.php:118
+#, fuzzy
 msgid "muboard Postings Display Hooks"
-msgstr ""
+msgstr "muimage Alben Ansicht Hooks"
 
 #: lib/MUBoard/Base/Version.php:135
+#, fuzzy
 msgid "muboard Postings Filter Hooks"
-msgstr ""
+msgstr "muimage Alben Filter Hooks"
 
 #: lib/MUBoard/Base/Version.php:140
+#, fuzzy
 msgid "muboard Abos Display Hooks"
-msgstr ""
+msgstr "muimage Alben Ansicht Hooks"
 
 #: lib/MUBoard/Base/Version.php:157
+#, fuzzy
 msgid "muboard Abos Filter Hooks"
-msgstr ""
+msgstr "muimage Alben Filter Hooks"
 
 #: lib/MUBoard/Base/Version.php:162
+#, fuzzy
 msgid "muboard Users Display Hooks"
-msgstr ""
+msgstr "muimage Alben Ansicht Hooks"
 
 #: lib/MUBoard/Base/Version.php:179
+#, fuzzy
 msgid "muboard Users Filter Hooks"
-msgstr ""
+msgstr "muimage Alben Filter Hooks"
 
 #: lib/MUBoard/Base/Version.php:184
+#, fuzzy
 msgid "muboard Ranks Display Hooks"
-msgstr ""
+msgstr "muimage Alben Ansicht Hooks"
 
 #: lib/MUBoard/Base/Version.php:201
+#, fuzzy
 msgid "muboard Ranks Filter Hooks"
-msgstr ""
+msgstr "muimage Alben Filter Hooks"
 
 #: lib/MUBoard/Block/Base/ItemList.php:37
 msgid ""
 "Notice: This block will not be displayed until you activate the MUBoard "
 "module."
 msgstr ""
+"Hinweis: Dieser Block wird erst angezeigt, wenn das Modul MUBoard aktiviert "
+"ist."
 
 #: lib/MUBoard/Block/Base/ItemList.php:41
+#, fuzzy
 msgid "Item list"
-msgstr ""
+msgstr "Elementliste"
 
 #: lib/MUBoard/Block/Base/ItemList.php:42
 msgid "Show a list of MUBoard items based on different criteria."
-msgstr ""
+msgstr "Zeige eine Liste von MUBoard Elementen anhand verschiedener Kriterien."
 
 #: lib/MUBoard/UploadHandler.php:119
-#, php-format
+#, fuzzy, php-format
 msgid ""
 "Error! Your file %s is too big. Please keep it smaller than %s kilobytes."
 msgstr ""
+"Fehler! Deine Datei %s ist zu gross. Bitte halte sie kleiner als %s "
+"kilobytes."
 
 #: lib/MUBoard/UploadHandler.php:127
-#, php-format
+#, fuzzy, php-format
 msgid "Error! Your file is too big. Please keep it smaller than %s megabytes."
 msgstr ""
+"Fehler! Deine Datei ist zu gross. Bitte halte sie kleiner als %s megabytes."
 
 #: lib/MUBoard/Version.php:27
 msgid "MUBoard - a small forum module"
 msgstr "MUBoard - ein kleines Forum Modul"
 
 #: lib/MUBoard/Util/Base/Abonnements.php:171
+#, fuzzy
 msgid "A new ticket on "
-msgstr ""
+msgstr "Ein neues Ticket auf "
 
 #: lib/MUBoard/Util/Base/Abonnements.php:175
+#, fuzzy
 msgid "An answer to your ticket on "
-msgstr ""
+msgstr "Eine Antwort auf Ihr Ticket "
 
 #: lib/MUBoard/Util/Base/Abonnements.php:178
+#, fuzzy
 msgid "An answer to a ticket on "
-msgstr ""
+msgstr "Eine neue Antwort auf ein Ticket auf "
 
 #: lib/MUBoard/Util/Base/Abonnements.php:211
+#, fuzzy
 msgid "Unable to send message"
-msgstr ""
+msgstr "Senden der Nachricht nicht möglich"
 
 #: lib/MUBoard/Util/Base/Abonnements.php:217
+#, fuzzy
 msgid "Your ticket was saved and an email sent to our support!"
-msgstr ""
+msgstr "Ihr Ticket wurde gespeichert und unser Support per email informiert!"
 
 #: lib/MUBoard/Util/Base/Abonnements.php:220
+#, fuzzy
 msgid "Your support answer was saved and an email sent to the customer!"
 msgstr ""
+"Ihre Support Antwort wurde gespeichert und eine mail an den Kunden geschickt!"
 
 #: lib/MUBoard/Util/Base/Abonnements.php:246
+#, fuzzy
 msgid "Another posting was created by an user on "
-msgstr ""
+msgstr "Ein weiterer Eintrag wurde von einem Benutzer angelegt auf"
 
 #: lib/MUBoard/Util/Base/Abonnements.php:248
 msgid "Title of posting"
-msgstr ""
+msgstr "Titel des Beitrags"
 
 #: lib/MUBoard/Util/Base/Abonnements.php:249
 #: templates/admin/posting/display.tpl:37 templates/admin/posting/view.tpl:58
 #: templates/admin/posting/edit.tpl:42 templates/admin/posting/view.csv:3
 #: templates/user/posting/view.tpl:57 templates/user/posting/edit.tpl:49
 #: templates/user/posting/view.csv:3
+#, fuzzy
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: lib/MUBoard/Util/Base/Abonnements.php:250
 msgid "Visit this issue:"
@@ -516,8 +557,9 @@ msgid "Moderate this entry:"
 msgstr "Diesen Eintrag moderieren:"
 
 #: lib/MUBoard/Util/Base/View.php:178
+#, fuzzy
 msgid "Bytes"
-msgstr ""
+msgstr "Bytes"
 
 #: lib/MUBoard/Util/Base/View.php:181
 msgid "KB"
@@ -532,9 +574,9 @@ msgid "GB"
 msgstr "GB"
 
 #: lib/MUBoard/Util/Base/Image.php:140
-#, php-format
+#, fuzzy, php-format
 msgid "An error occured during thumbnail creation: %s"
-msgstr ""
+msgstr "Ein Fehler trat während der Thumbnailerstellung auf: %s"
 
 #: lib/MUBoard/Util/View.php:124 templates/user/posting/display.tpl:43
 #: templates/user/forum/display.tpl:21
@@ -577,16 +619,18 @@ msgid "Issue: "
 msgstr "Thema: "
 
 #: lib/MUBoard/Util/View.php:272
+#, fuzzy
 msgid "No postings available!"
-msgstr ""
+msgstr "Keine Metadaten vorhanden"
 
 #: lib/MUBoard/Util/View.php:301
 msgid "Important issue!"
 msgstr "Wichtiges Thema!"
 
 #: lib/MUBoard/Util/View.php:349
+#, fuzzy
 msgid "You have permissions to edit this issue!"
-msgstr ""
+msgstr "Du hast keine Berechtigung dieses Album zu bearbeiten!"
 
 #: lib/MUBoard/Util/View.php:683
 msgid "Registered: "
@@ -648,9 +692,9 @@ msgstr "Keine Grenze"
 #: lib/MUBoard/Entity/Validator/Base/Rank.php:68
 #: lib/MUBoard/Entity/Validator/Base/User.php:40
 #: lib/MUBoard/Entity/Validator/Base/User.php:52
-#, php-format
+#, fuzzy, php-format
 msgid "Error! Length of field value must not be higher than %2$s (%1$s)."
-msgstr ""
+msgstr "Fehler! Die Länge des Feldes darf nicht größer als %2$s (%1$s) sein."
 
 #: lib/MUBoard/Entity/Validator/Posting.php:42
 #: lib/MUBoard/Entity/Validator/Posting.php:46
@@ -660,9 +704,9 @@ msgstr ""
 #: lib/MUBoard/Entity/Validator/Base/Category.php:36
 #: lib/MUBoard/Entity/Validator/Base/Category.php:44
 #: lib/MUBoard/Entity/Validator/Base/Rank.php:36
-#, php-format
+#, fuzzy, php-format
 msgid "Error! Field value must not be empty (%s)."
-msgstr ""
+msgstr "Fehler! Der Wert des Feldes darf nicht leer sein (%s)."
 
 #: lib/MUBoard/Entity/Validator/Posting.php:50
 #: lib/MUBoard/Entity/Validator/Base/Abo.php:32
@@ -678,40 +722,41 @@ msgstr ""
 #: lib/MUBoard/Entity/Validator/Base/Rank.php:56
 #: lib/MUBoard/Entity/Validator/Base/User.php:32
 #: lib/MUBoard/Entity/Validator/Base/User.php:44
-#, php-format
+#, fuzzy, php-format
 msgid "Error! Field value may only contain digits (%s)."
-msgstr ""
+msgstr "Fehler! Der Wert des Feldes darf nur Ziffern beinhalten (%s)."
 
 #: lib/MUBoard/Entity/Validator/Posting.php:58
 #: lib/MUBoard/Entity/Validator/Posting.php:62
 #: lib/MUBoard/Entity/Validator/Base/Posting.php:52
 #: lib/MUBoard/Entity/Validator/Base/Posting.php:56
 #: lib/MUBoard/Entity/Validator/Base/Rank.php:72
-#, php-format
+#, fuzzy, php-format
 msgid "Error! Field value must be a valid boolean (%s)."
-msgstr ""
+msgstr "Fehler! Das Feld benötigt einen gültigen booleschen Wert (%s)."
 
 #: lib/MUBoard/Entity/Validator/Base/Abo.php:44
 #: lib/MUBoard/Entity/Validator/Base/Forum.php:52
 #: lib/MUBoard/Entity/Validator/Base/Category.php:52
 #: lib/MUBoard/Entity/Validator/Base/Rank.php:60
 #: lib/MUBoard/Entity/Validator/Base/User.php:36
-#, php-format
+#, fuzzy, php-format
 msgid "Error! Field value must not be 0 (%s)."
-msgstr ""
+msgstr "Fehler! Der Wert des Feldes darf nicht 0 (%s) sein."
 
 #: lib/MUBoard/Entity/Validator/Base/User.php:56
-#, php-format
+#, fuzzy, php-format
 msgid "Error! Field value must be a valid datetime (%s)."
-msgstr ""
+msgstr "Fehler! Das Feld benötigt einen gültigen booleschen Wert (%s)."
 
 #: lib/MUBoard/Entity/Forum.php:46 lib/MUBoard/Entity/Posting.php:66
 #: lib/MUBoard/Entity/Base/Abo.php:519 lib/MUBoard/Entity/Base/Forum.php:631
 #: lib/MUBoard/Entity/Base/Posting.php:1557
 #: lib/MUBoard/Entity/Base/Category.php:560
 #: lib/MUBoard/Entity/Base/Rank.php:746 lib/MUBoard/Entity/Base/User.php:447
+#, fuzzy
 msgid "Open preview page"
-msgstr ""
+msgstr "Vorschau öffnen"
 
 #: lib/MUBoard/Entity/Forum.php:47 lib/MUBoard/Entity/Posting.php:67
 #: lib/MUBoard/Entity/Base/Abo.php:520 lib/MUBoard/Entity/Base/Forum.php:632
@@ -719,8 +764,9 @@ msgstr ""
 #: lib/MUBoard/Entity/Base/Category.php:561
 #: lib/MUBoard/Entity/Base/Rank.php:747 lib/MUBoard/Entity/Base/User.php:448
 #: templates/user/posting/edit.tpl:272 templates/user/posting/edit.tpl:284
+#, fuzzy
 msgid "Preview"
-msgstr ""
+msgstr "Vorschau"
 
 #: lib/MUBoard/Entity/Forum.php:53 lib/MUBoard/Entity/Forum.php:97
 #: lib/MUBoard/Entity/Posting.php:73 lib/MUBoard/Entity/Posting.php:117
@@ -735,8 +781,9 @@ msgstr ""
 #: templates/admin/posting/display.tpl:8 templates/admin/abo/display.tpl:8
 #: templates/admin/rank/display.tpl:8 templates/admin/user/display.tpl:8
 #: templates/admin/forum/display.tpl:8 templates/admin/category/display.tpl:8
+#, fuzzy
 msgid "Details"
-msgstr ""
+msgstr "Details"
 
 #: lib/MUBoard/Entity/Forum.php:63 lib/MUBoard/Entity/Forum.php:64
 #: lib/MUBoard/Entity/Posting.php:83 lib/MUBoard/Entity/Posting.php:84
@@ -756,8 +803,9 @@ msgstr ""
 #: lib/MUBoard/Entity/Base/Rank.php:807 lib/MUBoard/Entity/Base/Rank.php:808
 #: lib/MUBoard/Entity/Base/User.php:464 lib/MUBoard/Entity/Base/User.php:465
 #: lib/MUBoard/Entity/Base/User.php:508 lib/MUBoard/Entity/Base/User.php:509
+#, fuzzy
 msgid "Edit"
-msgstr ""
+msgstr "Bearbeiten"
 
 #: lib/MUBoard/Entity/Forum.php:69 lib/MUBoard/Entity/Posting.php:89
 #: lib/MUBoard/Entity/Base/Abo.php:542 lib/MUBoard/Entity/Base/Abo.php:586
@@ -768,8 +816,9 @@ msgstr ""
 #: lib/MUBoard/Entity/Base/Category.php:627
 #: lib/MUBoard/Entity/Base/Rank.php:769 lib/MUBoard/Entity/Base/Rank.php:813
 #: lib/MUBoard/Entity/Base/User.php:470 lib/MUBoard/Entity/Base/User.php:514
+#, fuzzy
 msgid "Reuse for new item"
-msgstr ""
+msgstr "Für ein neues Element benutzen"
 
 #: lib/MUBoard/Entity/Forum.php:70 lib/MUBoard/Entity/Posting.php:90
 #: lib/MUBoard/Entity/Base/Abo.php:543 lib/MUBoard/Entity/Base/Abo.php:587
@@ -780,8 +829,9 @@ msgstr ""
 #: lib/MUBoard/Entity/Base/Category.php:628
 #: lib/MUBoard/Entity/Base/Rank.php:770 lib/MUBoard/Entity/Base/Rank.php:814
 #: lib/MUBoard/Entity/Base/User.php:471 lib/MUBoard/Entity/Base/User.php:515
+#, fuzzy
 msgid "Reuse"
-msgstr ""
+msgstr "Wiederverwenden"
 
 #: lib/MUBoard/Entity/Forum.php:77 lib/MUBoard/Entity/Forum.php:78
 #: lib/MUBoard/Entity/Posting.php:97 lib/MUBoard/Entity/Posting.php:98
@@ -800,23 +850,25 @@ msgstr ""
 #: templates/admin/forum/delete.tpl:7 templates/admin/forum/delete.tpl:20
 #: templates/admin/category/delete.tpl:7
 #: templates/admin/category/delete.tpl:20
+#, fuzzy
 msgid "Delete"
-msgstr ""
+msgstr "Löschen"
 
 #: lib/MUBoard/Entity/Forum.php:122 lib/MUBoard/Entity/Forum.php:123
 #: templates/admin/posting/include_selectEditOne.tpl:16
 #: templates/user/posting/include_selectEditOne.tpl:16
 msgid "Create new posting"
-msgstr ""
+msgstr "Neuen Beitrag erstellen"
 
 #: lib/MUBoard/Entity/Forum.php:128 lib/MUBoard/Entity/Posting.php:149
 #: lib/MUBoard/Entity/Posting.php:154
 msgid "Back to forum overview"
-msgstr ""
+msgstr "Zurück zur Forenübersicht"
 
 #: lib/MUBoard/Entity/Forum.php:129
+#, fuzzy
 msgid "Back to  forum overview"
-msgstr ""
+msgstr "Zurück zur Seitenansicht"
 
 #: lib/MUBoard/Entity/Posting.php:106 lib/MUBoard/Entity/Posting.php:107
 #: lib/MUBoard/Entity/Base/Abo.php:559 lib/MUBoard/Entity/Base/Abo.php:560
@@ -835,16 +887,19 @@ msgstr ""
 #: lib/MUBoard/Entity/Base/Rank.php:822 lib/MUBoard/Entity/Base/Rank.php:823
 #: lib/MUBoard/Entity/Base/User.php:487 lib/MUBoard/Entity/Base/User.php:488
 #: lib/MUBoard/Entity/Base/User.php:523 lib/MUBoard/Entity/Base/User.php:524
+#, fuzzy
 msgid "Back to overview"
-msgstr ""
+msgstr "Zurück zur Übersicht"
 
 #: lib/MUBoard/Entity/Posting.php:148
+#, fuzzy
 msgid "Back to forum "
-msgstr ""
+msgstr "Zurück zur Übersicht"
 
 #: lib/MUBoard/Api/Search.php:181 lib/MUBoard/Controller/Base/Ajax.php:96
+#, fuzzy
 msgid "Item"
-msgstr ""
+msgstr "Element"
 
 #: lib/MUBoard/Api/Search.php:195
 msgid "Error! Could not save the search results."
@@ -865,33 +920,38 @@ msgstr " Themen!"
 
 #: lib/MUBoard/Api/Base/Mailz.php:30
 msgid "3 newest categories"
-msgstr ""
+msgstr "3 aktuelle Kategorien"
 
 #: lib/MUBoard/Api/Base/Mailz.php:31
+#, fuzzy
 msgid "A list of the three newest categories."
-msgstr ""
+msgstr "Eine Liste der 3 neuesten Alben."
 
 #: lib/MUBoard/Api/Base/Mailz.php:36
+#, fuzzy
 msgid "3 random categories"
-msgstr ""
+msgstr "3 zufällige Alben"
 
 #: lib/MUBoard/Api/Base/Mailz.php:37
+#, fuzzy
 msgid "A list of three random categories."
-msgstr ""
+msgstr "Eine Liste 3 zufälliger Alben."
 
 #: lib/MUBoard/Api/Base/User.php:30 lib/MUBoard/Api/User.php:35
 msgid "Backend"
 msgstr "Backend"
 
 #: lib/MUBoard/Api/Base/User.php:31 lib/MUBoard/Api/User.php:36
+#, fuzzy
 msgid "Switch to administration area."
-msgstr ""
+msgstr "Wechsel zum Administrationsbereich."
 
 #: lib/MUBoard/Api/Base/User.php:37 lib/MUBoard/Api/Base/Admin.php:37
 #: lib/MUBoard/Api/User.php:42 lib/MUBoard/Api/Admin.php:37
 #: templates/admin/category/view.tpl:4
+#, fuzzy
 msgid "Category list"
-msgstr ""
+msgstr "Albenliste"
 
 #: lib/MUBoard/Api/Base/User.php:42 lib/MUBoard/Api/Base/Admin.php:42
 #: lib/MUBoard/Api/Admin.php:42 templates/admin/forum/view.tpl:4
@@ -901,8 +961,9 @@ msgstr "Forenliste"
 
 #: lib/MUBoard/Api/Base/User.php:47 lib/MUBoard/Api/Base/Admin.php:47
 #: templates/admin/posting/view.tpl:4 templates/user/posting/view.tpl:4
+#, fuzzy
 msgid "Posting list"
-msgstr ""
+msgstr "Albenliste"
 
 #: lib/MUBoard/Api/Base/User.php:51 lib/MUBoard/Api/Base/Admin.php:51
 msgid "Abos"
@@ -910,8 +971,9 @@ msgstr "Abos"
 
 #: lib/MUBoard/Api/Base/User.php:52 lib/MUBoard/Api/Base/Admin.php:52
 #: templates/admin/abo/view.tpl:4 templates/user/abo/view.tpl:4
+#, fuzzy
 msgid "Abo list"
-msgstr ""
+msgstr "Albenliste"
 
 #: lib/MUBoard/Api/Base/User.php:56 lib/MUBoard/Api/Base/Admin.php:56
 #: lib/MUBoard/Api/Admin.php:51 templates/admin/rank/display.tpl:14
@@ -922,8 +984,9 @@ msgstr ""
 #: lib/MUBoard/Api/Base/User.php:57 lib/MUBoard/Api/Base/Admin.php:57
 #: lib/MUBoard/Api/Admin.php:52 templates/admin/user/view.tpl:4
 #: templates/user/user/view.tpl:4
+#, fuzzy
 msgid "User list"
-msgstr ""
+msgstr "Albenliste"
 
 #: lib/MUBoard/Api/Base/User.php:61 lib/MUBoard/Api/Base/Admin.php:61
 #: lib/MUBoard/Api/Admin.php:56
@@ -933,24 +996,28 @@ msgstr ""
 #: lib/MUBoard/Api/Base/User.php:62 lib/MUBoard/Api/Base/Admin.php:62
 #: lib/MUBoard/Api/Admin.php:57 templates/admin/rank/view.tpl:4
 #: templates/user/rank/view.tpl:4
+#, fuzzy
 msgid "Rank list"
-msgstr ""
+msgstr "Albenliste"
 
 #: lib/MUBoard/Api/Base/Admin.php:30 lib/MUBoard/Api/Admin.php:30
+#, fuzzy
 msgid "Frontend"
-msgstr ""
+msgstr "Frontend"
 
 #: lib/MUBoard/Api/Base/Admin.php:31 lib/MUBoard/Api/Admin.php:31
+#, fuzzy
 msgid "Switch to user area."
-msgstr ""
+msgstr "Wechsel zum Nutzerbereich."
 
 #: lib/MUBoard/Api/Base/Admin.php:66 lib/MUBoard/Api/Admin.php:61
+#, fuzzy
 msgid "Configuration"
-msgstr ""
+msgstr "Einstellungen"
 
 #: lib/MUBoard/Api/Base/Admin.php:67 lib/MUBoard/Api/Admin.php:62
 msgid "Manage settings for this application"
-msgstr ""
+msgstr "Verwalte die Einstellungen für MUBoard"
 
 #: lib/MUBoard/Api/User.php:46
 msgid "New issue"
@@ -996,12 +1063,14 @@ msgstr ""
 #: lib/MUBoard/Controller/Base/Admin.php:176
 #: lib/MUBoard/Controller/Base/Admin.php:256
 #: lib/MUBoard/Controller/User.php:157
+#, fuzzy
 msgid "Error! Invalid identifier received."
-msgstr ""
+msgstr "Fehler! Ungültiger Bezeichner aufgerufen."
 
 #: lib/MUBoard/Controller/Base/Ajax.php:139
+#, fuzzy
 msgid "Error: invalid input."
-msgstr ""
+msgstr "Fehler: ungültige Eingabe"
 
 #: lib/MUBoard/Controller/User.php:111 templates/user/category/view.tpl:4
 msgid "Forum - Category Overview"
@@ -1020,46 +1089,52 @@ msgid "Settings"
 msgstr "Einstellungen"
 
 #: templates/admin/config.tpl:20
+#, fuzzy
 msgid "Here you can manage all basic settings for this application."
-msgstr ""
+msgstr "Hier kannst Du die Grundeinstellungen für dieses Modul verwalten."
 
 #: templates/admin/config.tpl:23
 msgid "Upload images"
 msgstr "Bild hochladen"
 
 #: templates/admin/config.tpl:28
+#, fuzzy
 msgid "Allowed size of images"
-msgstr ""
+msgstr "Erlaubte Dateigröße:"
 
 #: templates/admin/config.tpl:29 templates/admin/config.tpl:43
 #: templates/admin/config.tpl:57 templates/admin/config.tpl:62
 #: templates/admin/config.tpl:78
+#, fuzzy
 msgid "Enter this setting. Only digits are allowed."
-msgstr ""
+msgstr "Gib diese Einstellung ein. Nur Ziffern sind erlaubt."
 
 #: templates/admin/config.tpl:32
+#, fuzzy
 msgid "Number images"
-msgstr ""
+msgstr "Fotos löschen?"
 
 #: templates/admin/config.tpl:37
 msgid "Upload files"
-msgstr ""
+msgstr "Dateien hochladen"
 
 #: templates/admin/config.tpl:42
+#, fuzzy
 msgid "Allowed size of files"
-msgstr ""
+msgstr "Erlaubte Dateigröße:"
 
 #: templates/admin/config.tpl:46
 msgid "Number files"
-msgstr ""
+msgstr "Anzahl Dateien"
 
 #: templates/admin/config.tpl:51
 msgid "Edit postings"
-msgstr ""
+msgstr "Beitrag bearbeiten"
 
 #: templates/admin/config.tpl:56
+#, fuzzy
 msgid "Edit time"
-msgstr ""
+msgstr "Belichtungszeit"
 
 #: templates/admin/config.tpl:61 templates/admin/posting/view.rss:11
 #: templates/admin/posting/view.atom:4 templates/user/posting/view.rss:11
@@ -1072,8 +1147,9 @@ msgid "Sorting postings"
 msgstr ""
 
 #: templates/admin/config.tpl:69
+#, fuzzy
 msgid "Icon set"
-msgstr ""
+msgstr "Nicht gesetzt."
 
 #: templates/admin/config.tpl:73
 msgid "Template"
@@ -1088,16 +1164,18 @@ msgid "Standard icon"
 msgstr ""
 
 #: templates/admin/config.tpl:82 templates/admin/config.tpl:86
+#, fuzzy
 msgid "Enter this setting."
-msgstr ""
+msgstr "Einstellungen eingeben"
 
 #: templates/admin/config.tpl:85
 msgid "Special icon"
 msgstr ""
 
 #: templates/admin/config.tpl:91
+#, fuzzy
 msgid "Update configuration"
-msgstr ""
+msgstr "Einstellungen aktualisieren"
 
 #: templates/admin/config.tpl:92
 #: templates/admin/posting/include_selectOne.tpl:15
@@ -1136,22 +1214,25 @@ msgstr ""
 #: templates/admin/posting/display.tpl:24 templates/admin/posting/view.tpl:13
 #: templates/admin/posting/edit.tpl:13 templates/admin/posting/edit.tpl:249
 #: templates/admin/forum/display.tpl:23 templates/user/posting/view.tpl:11
+#, fuzzy
 msgid "Create posting"
-msgstr ""
+msgstr "Album erstellen"
 
 #: templates/admin/posting/display.tpl:35 templates/admin/posting/view.tpl:52
 #: templates/admin/posting/view.csv:3 templates/user/posting/view.tpl:51
 #: templates/user/posting/view.csv:3
+#, fuzzy
 msgid "Parent_id"
-msgstr ""
+msgstr "Parent_id"
 
 #: templates/admin/posting/display.tpl:39 templates/admin/posting/view.tpl:61
 #: templates/admin/posting/edit.tpl:47 templates/admin/posting/view.csv:3
 #: templates/user/posting/view.tpl:60 templates/user/posting/edit.tpl:54
 #: templates/user/posting/edit.tpl:60 templates/user/posting/view.csv:3
 #: templates/user/forum/display.tpl:31
+#, fuzzy
 msgid "Invocations"
-msgstr ""
+msgstr "Aufrufe:"
 
 #: templates/admin/posting/display.tpl:41 templates/admin/posting/view.tpl:64
 #: templates/admin/posting/edit.tpl:52 templates/admin/posting/view.csv:3
@@ -1186,8 +1267,9 @@ msgstr "Erstes Bild"
 #: templates/user/posting/edit.tpl:159 templates/user/posting/edit.tpl:185
 #: templates/user/posting/edit.tpl:211 templates/user/rank/display.tpl:43
 #: templates/user/rank/view.tpl:86 templates/user/rank/edit.tpl:58
+#, fuzzy
 msgid "Download"
-msgstr ""
+msgstr "Download"
 
 #: templates/admin/posting/display.tpl:52 templates/admin/posting/view.tpl:67
 #: templates/admin/posting/edit.tpl:76 templates/admin/posting/view.csv:3
@@ -1227,8 +1309,9 @@ msgstr "Dritte Datei"
 #: templates/admin/posting/display.tpl:107 templates/admin/posting/view.tpl:82
 #: templates/admin/posting/view.csv:3 templates/user/posting/view.tpl:81
 #: templates/user/posting/view.csv:3
+#, fuzzy
 msgid "Parent"
-msgstr ""
+msgstr "Hauptalbum"
 
 #: templates/admin/posting/display.tpl:114
 #: templates/admin/posting/display.tpl:137
@@ -1265,8 +1348,9 @@ msgstr ""
 #: templates/user/forum/include_displayItemListOne.tpl:7
 #: templates/user/category/include_displayItemListMany.tpl:10
 #: templates/user/category/include_displayItemListOne.tpl:7
+#, fuzzy
 msgid "Open quick view window"
-msgstr ""
+msgstr "Fenster für Schnellansicht öffnen"
 
 #: templates/admin/posting/display.tpl:115
 #: templates/admin/posting/display.tpl:138
@@ -1303,8 +1387,9 @@ msgstr ""
 #: templates/user/forum/include_displayItemListOne.tpl:8
 #: templates/user/category/include_displayItemListMany.tpl:11
 #: templates/user/category/include_displayItemListOne.tpl:8
+#, fuzzy
 msgid "Quick view"
-msgstr ""
+msgstr "Schnellansicht"
 
 #: templates/admin/posting/display.tpl:127
 #: templates/admin/posting/display.tpl:150 templates/admin/user/display.tpl:38
@@ -1323,29 +1408,30 @@ msgstr "Forum"
 
 #: templates/admin/posting/view.rss:12 templates/admin/posting/view.atom:5
 #: templates/user/posting/view.rss:12 templates/user/posting/view.atom:5
+#, fuzzy
 msgid "A direct feed showing the list of postings"
-msgstr ""
+msgstr "Ein Feed der die Albumliste anzeigt"
 
 #: templates/admin/posting/include_selectOne.tpl:6
 #: templates/admin/posting/include_selectEditOne.tpl:6
 #: templates/user/posting/include_selectOne.tpl:6
 #: templates/user/posting/include_selectEditOne.tpl:6
 msgid "Select posting"
-msgstr ""
+msgstr "Beitrag wählen"
 
 #: templates/admin/posting/include_selectOne.tpl:8
 #: templates/admin/posting/include_selectEditOne.tpl:8
 #: templates/user/posting/include_selectOne.tpl:8
 #: templates/user/posting/include_selectEditOne.tpl:8
 msgid "Find posting"
-msgstr ""
+msgstr "Beitrag finden"
 
 #: templates/admin/posting/include_selectOne.tpl:10
 #: templates/admin/posting/include_selectEditOne.tpl:10
 #: templates/user/posting/include_selectOne.tpl:10
 #: templates/user/posting/include_selectEditOne.tpl:10
 msgid "Search posting"
-msgstr ""
+msgstr "Beitrag suchen"
 
 #: templates/admin/posting/include_selectOne.tpl:17
 #: templates/admin/posting/include_selectEditOne.tpl:18
@@ -1357,8 +1443,9 @@ msgstr ""
 #: templates/user/rank/include_selectEditOne.tpl:18
 #: templates/user/forum/include_selectEditOne.tpl:18
 #: templates/user/category/include_selectEditOne.tpl:18
+#, fuzzy
 msgid "This function requires JavaScript activated!"
-msgstr ""
+msgstr "Diese Funktion verlangt aktiviertes Javascript!"
 
 #: templates/admin/posting/view.tpl:21 templates/admin/abo/view.tpl:21
 #: templates/admin/rank/view.tpl:21 templates/admin/user/view.tpl:21
@@ -1366,8 +1453,9 @@ msgstr ""
 #: templates/user/posting/view.tpl:19 templates/user/abo/view.tpl:19
 #: templates/user/rank/view.tpl:19 templates/user/user/view.tpl:19
 #: templates/user/forum/view.tpl:19 templates/user/category/view.tpl:19
+#, fuzzy
 msgid "Back to paginated view"
-msgstr ""
+msgstr "Zurück zur Seitenansicht"
 
 #: templates/admin/posting/view.tpl:27 templates/admin/abo/view.tpl:27
 #: templates/admin/rank/view.tpl:27 templates/admin/user/view.tpl:27
@@ -1409,8 +1497,9 @@ msgstr "Nicht gesetzt."
 #: templates/admin/posting/view.tpl:229 templates/user/posting/view.tpl:228
 #: templates/mailz/itemlist_Posting_html.tpl:11
 #: templates/mailz/itemlist_Posting_text.tpl:7
+#, fuzzy
 msgid "No postings found."
-msgstr ""
+msgstr "Keine Alben gefunden"
 
 #: templates/admin/posting/edit.tpl:7
 msgid "Issue to move"
@@ -1418,8 +1507,9 @@ msgstr "Zu verschiebenes Thema"
 
 #: templates/admin/posting/edit.tpl:10 templates/admin/posting/edit.tpl:16
 #: templates/user/posting/edit.tpl:16 templates/user/posting/edit.tpl:25
+#, fuzzy
 msgid "Edit posting"
-msgstr ""
+msgstr "Album bearbeiten"
 
 #: templates/admin/posting/edit.tpl:20
 msgid "Move issue to another forum"
@@ -1431,21 +1521,25 @@ msgstr "Thema in ein anderes Forum verschieben"
 #: templates/user/posting/edit.tpl:40 templates/user/abo/edit.tpl:23
 #: templates/user/rank/edit.tpl:23 templates/user/user/edit.tpl:23
 #: templates/user/forum/edit.tpl:23 templates/user/category/edit.tpl:23
+#, fuzzy
 msgid "Content"
-msgstr ""
+msgstr "Inhalt"
 
 #: templates/admin/posting/edit.tpl:39 templates/user/posting/edit.tpl:44
+#, fuzzy
 msgid "Enter the title of the posting"
-msgstr ""
+msgstr "Gib den Albumtitel ein"
 
 #: templates/admin/posting/edit.tpl:43 templates/user/posting/edit.tpl:50
+#, fuzzy
 msgid "Enter the text of the posting"
-msgstr ""
+msgstr "Geben Sie den Text des Tickets ein"
 
 #: templates/admin/posting/edit.tpl:48 templates/user/posting/edit.tpl:55
 #: templates/user/posting/edit.tpl:61
+#, fuzzy
 msgid "Enter the invocations of the posting"
-msgstr ""
+msgstr "Gib die Albumbeschreibung ein"
 
 #: templates/admin/posting/edit.tpl:55 templates/admin/posting/edit.tpl:79
 #: templates/admin/posting/edit.tpl:103 templates/admin/posting/edit.tpl:127
@@ -1454,8 +1548,9 @@ msgstr ""
 #: templates/user/posting/edit.tpl:96 templates/user/posting/edit.tpl:122
 #: templates/user/posting/edit.tpl:150 templates/user/posting/edit.tpl:176
 #: templates/user/posting/edit.tpl:202 templates/user/rank/edit.tpl:49
+#, fuzzy
 msgid "Allowed file extensions:"
-msgstr ""
+msgstr "Erlaubte Dateiendungen"
 
 #: templates/admin/posting/edit.tpl:59 templates/admin/posting/edit.tpl:83
 #: templates/admin/posting/edit.tpl:107 templates/admin/posting/edit.tpl:131
@@ -1468,8 +1563,9 @@ msgid "Current file"
 msgstr "Aktuelle Datei"
 
 #: templates/admin/posting/edit.tpl:69 templates/user/posting/edit.tpl:84
+#, fuzzy
 msgid "Delete first image ?"
-msgstr ""
+msgstr "Aufrufe zählen"
 
 #: templates/admin/posting/edit.tpl:70 templates/admin/posting/edit.tpl:94
 #: templates/admin/posting/edit.tpl:118 templates/admin/posting/edit.tpl:142
@@ -1482,24 +1578,29 @@ msgid "Delete existing file"
 msgstr "Datei löschen"
 
 #: templates/admin/posting/edit.tpl:93 templates/user/posting/edit.tpl:110
+#, fuzzy
 msgid "Delete second image ?"
-msgstr ""
+msgstr "Aufrufe zählen"
 
 #: templates/admin/posting/edit.tpl:117 templates/user/posting/edit.tpl:136
+#, fuzzy
 msgid "Delete third image ?"
-msgstr ""
+msgstr "Aufrufe zählen"
 
 #: templates/admin/posting/edit.tpl:141 templates/user/posting/edit.tpl:164
+#, fuzzy
 msgid "Delete first file ?"
-msgstr ""
+msgstr "Vorhandene Datei löchen"
 
 #: templates/admin/posting/edit.tpl:165 templates/user/posting/edit.tpl:190
+#, fuzzy
 msgid "Delete second file ?"
-msgstr ""
+msgstr "Vorhandene Datei löchen"
 
 #: templates/admin/posting/edit.tpl:189 templates/user/posting/edit.tpl:216
+#, fuzzy
 msgid "Delete third file ?"
-msgstr ""
+msgstr "Vorhandene Datei löchen"
 
 #: templates/admin/posting/edit.tpl:214 templates/admin/abo/edit.tpl:64
 #: templates/admin/rank/edit.tpl:104 templates/admin/user/edit.tpl:62
@@ -1507,8 +1608,9 @@ msgstr ""
 #: templates/user/abo/edit.tpl:59 templates/user/rank/edit.tpl:87
 #: templates/user/user/edit.tpl:57 templates/user/forum/edit.tpl:55
 #: templates/user/category/edit.tpl:54
+#, fuzzy
 msgid "Hooks"
-msgstr ""
+msgstr "Hooks"
 
 #: templates/admin/posting/edit.tpl:226 templates/admin/abo/edit.tpl:76
 #: templates/admin/rank/edit.tpl:116 templates/admin/user/edit.tpl:74
@@ -1516,8 +1618,9 @@ msgstr ""
 #: templates/user/posting/edit.tpl:255 templates/user/abo/edit.tpl:71
 #: templates/user/rank/edit.tpl:99 templates/user/user/edit.tpl:69
 #: templates/user/forum/edit.tpl:67 templates/user/category/edit.tpl:66
+#, fuzzy
 msgid "Return control"
-msgstr ""
+msgstr "Weiterleitungkontrolle"
 
 #: templates/admin/posting/edit.tpl:228 templates/admin/abo/edit.tpl:78
 #: templates/admin/rank/edit.tpl:118 templates/admin/user/edit.tpl:76
@@ -1525,25 +1628,29 @@ msgstr ""
 #: templates/user/posting/edit.tpl:257 templates/user/abo/edit.tpl:73
 #: templates/user/rank/edit.tpl:101 templates/user/user/edit.tpl:71
 #: templates/user/forum/edit.tpl:69 templates/user/category/edit.tpl:68
+#, fuzzy
 msgid "Create another item after save"
-msgstr ""
+msgstr "Ein weiteres Element nach dem Speichern erstellen"
 
 #: templates/admin/posting/edit.tpl:238 templates/user/posting/edit.tpl:268
+#, fuzzy
 msgid "Update posting"
-msgstr ""
+msgstr "Letzte Aktualisierung"
 
 #: templates/admin/posting/edit.tpl:240
 msgid "Move issue"
 msgstr "Verschiebe Thema"
 
 #: templates/admin/posting/edit.tpl:244 templates/user/posting/edit.tpl:274
+#, fuzzy
 msgid "Really delete this posting?"
-msgstr ""
+msgstr "Dieses Bild wirklich löschen?"
 
 #: templates/admin/posting/edit.tpl:245 templates/admin/posting/delete.tpl:4
 #: templates/user/posting/edit.tpl:275
+#, fuzzy
 msgid "Delete posting"
-msgstr ""
+msgstr "Album löschen"
 
 #: templates/admin/posting/edit.tpl:251 templates/admin/abo/edit.tpl:95
 #: templates/admin/rank/edit.tpl:135 templates/admin/user/edit.tpl:93
@@ -1555,8 +1662,9 @@ msgid "OK"
 msgstr "OK"
 
 #: templates/admin/posting/delete.tpl:11
+#, fuzzy
 msgid "Do you really want to delete this posting ?"
-msgstr ""
+msgstr "Möchtest du dieses Album wirklich löschen?"
 
 #: templates/admin/posting/delete.tpl:18 templates/admin/abo/delete.tpl:18
 #: templates/admin/rank/delete.tpl:18 templates/admin/user/delete.tpl:18
@@ -1633,19 +1741,22 @@ msgstr ""
 
 #: templates/admin/abo/view.rss:11 templates/admin/abo/view.atom:4
 #: templates/user/abo/view.rss:11 templates/user/abo/view.atom:4
+#, fuzzy
 msgid "Latest abos"
-msgstr ""
+msgstr "Letzte Alben"
 
 #: templates/admin/abo/view.rss:12 templates/admin/abo/view.atom:5
 #: templates/user/abo/view.rss:12 templates/user/abo/view.atom:5
+#, fuzzy
 msgid "A direct feed showing the list of abos"
-msgstr ""
+msgstr "Ein Feed der die Albumliste anzeigt"
 
 #: templates/admin/abo/view.tpl:13 templates/admin/abo/edit.tpl:10
 #: templates/admin/abo/edit.tpl:93 templates/user/abo/view.tpl:11
 #: templates/user/abo/edit.tpl:9 templates/user/abo/edit.tpl:88
+#, fuzzy
 msgid "Create abo"
-msgstr ""
+msgstr "Album erstellen"
 
 #: templates/admin/abo/view.tpl:44 templates/admin/abo/edit.tpl:30
 #: templates/admin/abo/view.csv:3 templates/admin/user/view.tpl:44
@@ -1659,46 +1770,56 @@ msgstr "Benutzer Id"
 #: templates/admin/abo/view.tpl:89 templates/user/abo/view.tpl:87
 #: templates/mailz/itemlist_Abo_html.tpl:11
 #: templates/mailz/itemlist_Abo_text.tpl:7
+#, fuzzy
 msgid "No abos found."
-msgstr ""
+msgstr "Keine Alben gefunden"
 
 #: templates/admin/abo/edit.tpl:7 templates/admin/abo/edit.tpl:13
 #: templates/user/abo/edit.tpl:7 templates/user/abo/edit.tpl:11
+#, fuzzy
 msgid "Edit abo"
-msgstr ""
+msgstr "Album bearbeiten"
 
 #: templates/admin/abo/edit.tpl:31 templates/user/abo/edit.tpl:26
+#, fuzzy
 msgid "Enter the userid of the abo"
-msgstr ""
+msgstr "Gib die Albumbeschreibung ein"
 
 #: templates/admin/abo/edit.tpl:37 templates/user/abo/edit.tpl:32
+#, fuzzy
 msgid "Enter the catid of the abo"
-msgstr ""
+msgstr "Gib die Albumbeschreibung ein"
 
 #: templates/admin/abo/edit.tpl:42 templates/user/abo/edit.tpl:37
+#, fuzzy
 msgid "Enter the forumid of the abo"
-msgstr ""
+msgstr "Gib die Albumbeschreibung ein"
 
 #: templates/admin/abo/edit.tpl:47 templates/user/abo/edit.tpl:42
+#, fuzzy
 msgid "Enter the postingid of the abo"
-msgstr ""
+msgstr "Gib die Albumbeschreibung ein"
 
 #: templates/admin/abo/edit.tpl:87 templates/user/abo/edit.tpl:82
+#, fuzzy
 msgid "Update abo"
-msgstr ""
+msgstr "Letzte Aktualisierung"
 
 #: templates/admin/abo/edit.tpl:89 templates/user/abo/edit.tpl:84
+#, fuzzy
 msgid "Really delete this abo?"
-msgstr ""
+msgstr "Dieses Bild wirklich löschen?"
 
 #: templates/admin/abo/edit.tpl:90 templates/admin/abo/delete.tpl:4
 #: templates/user/abo/edit.tpl:85
+#, fuzzy
 msgid "Delete abo"
-msgstr ""
+msgstr "Album löschen"
 
 #: templates/admin/abo/delete.tpl:11
+#, fuzzy
 msgid "Do you really want to delete this abo ?"
-msgstr ""
+msgstr "Möchtest du dieses Album wirklich löschen?"
 
 #: templates/admin/rank/display.tpl:4
 #: templates/admin/rank/include_selectEditOne.tpl:3
@@ -1714,8 +1835,9 @@ msgstr ""
 #: templates/admin/user/edit.tpl:10 templates/admin/user/edit.tpl:91
 #: templates/user/rank/display.tpl:21 templates/user/user/view.tpl:11
 #: templates/user/user/edit.tpl:9 templates/user/user/edit.tpl:86
+#, fuzzy
 msgid "Create user"
-msgstr ""
+msgstr "Benutzerkommentar"
 
 #: templates/admin/rank/display.tpl:33 templates/admin/rank/view.tpl:49
 #: templates/admin/rank/edit.tpl:35 templates/admin/rank/view.csv:3
@@ -1735,15 +1857,17 @@ msgstr ""
 #: templates/admin/rank/edit.tpl:45 templates/admin/rank/view.csv:3
 #: templates/user/rank/display.tpl:35 templates/user/rank/view.tpl:53
 #: templates/user/rank/edit.tpl:40 templates/user/rank/view.csv:3
+#, fuzzy
 msgid "Number of icons"
-msgstr ""
+msgstr "Anzahl Bilder"
 
 #: templates/admin/rank/display.tpl:39 templates/admin/rank/view.tpl:58
 #: templates/admin/rank/edit.tpl:55 templates/admin/rank/view.csv:3
 #: templates/user/rank/display.tpl:37 templates/user/rank/view.tpl:56
 #: templates/user/rank/edit.tpl:46 templates/user/rank/view.csv:3
+#, fuzzy
 msgid "Upload image"
-msgstr ""
+msgstr "Aktueller Bildupload"
 
 #: templates/admin/rank/display.tpl:52 templates/admin/rank/view.tpl:61
 #: templates/admin/rank/edit.tpl:86 templates/admin/rank/view.csv:3
@@ -1763,8 +1887,9 @@ msgstr "Ja"
 #: templates/admin/rank/view.tpl:98 templates/admin/rank/view.tpl:101
 #: templates/user/rank/display.tpl:52 templates/user/rank/display.tpl:55
 #: templates/user/rank/view.tpl:96 templates/user/rank/view.tpl:99
+#, fuzzy
 msgid "This setting is enabled. Click here to disable it."
-msgstr ""
+msgstr "Diese Einstellung ist aktiviert. Klicke hier um sie zu deaktivieren."
 
 #: templates/admin/rank/display.tpl:57 templates/admin/rank/display.tpl:60
 #: templates/admin/rank/view.tpl:99 templates/admin/rank/view.tpl:102
@@ -1777,18 +1902,21 @@ msgstr "Nein"
 #: templates/admin/rank/view.tpl:99 templates/admin/rank/view.tpl:102
 #: templates/user/rank/display.tpl:53 templates/user/rank/display.tpl:56
 #: templates/user/rank/view.tpl:97 templates/user/rank/view.tpl:100
+#, fuzzy
 msgid "This setting is disabled. Click here to enable it."
-msgstr ""
+msgstr "Diese Einstellung ist deaktiviert. Klicke hier zum aktivieren."
 
 #: templates/admin/rank/view.rss:11 templates/admin/rank/view.atom:4
 #: templates/user/rank/view.rss:11 templates/user/rank/view.atom:4
+#, fuzzy
 msgid "Latest ranks"
-msgstr ""
+msgstr "Letzte Alben"
 
 #: templates/admin/rank/view.rss:12 templates/admin/rank/view.atom:5
 #: templates/user/rank/view.rss:12 templates/user/rank/view.atom:5
+#, fuzzy
 msgid "A direct feed showing the list of ranks"
-msgstr ""
+msgstr "Ein Feed der die Albumliste anzeigt"
 
 #: templates/admin/rank/view.tpl:13 templates/admin/rank/edit.tpl:10
 #: templates/admin/rank/edit.tpl:133 templates/user/rank/view.tpl:11
@@ -1799,19 +1927,20 @@ msgstr "Rang erstellen"
 #: templates/admin/rank/view.tpl:46 templates/admin/rank/edit.tpl:30
 #: templates/admin/rank/view.csv:3 templates/user/rank/view.tpl:44
 #: templates/user/rank/edit.tpl:25 templates/user/rank/view.csv:3
+#, fuzzy
 msgid "Name"
-msgstr ""
+msgstr "Dateiname"
 
 #: templates/admin/rank/view.tpl:124 templates/user/rank/view.tpl:122
 #: templates/mailz/itemlist_Rank_text.tpl:7
 #: templates/mailz/itemlist_Rank_html.tpl:11
 msgid "No ranks found."
-msgstr ""
+msgstr "Keine Ränge gefunden"
 
 #: templates/admin/rank/edit.tpl:7 templates/admin/rank/edit.tpl:13
 #: templates/user/rank/edit.tpl:7 templates/user/rank/edit.tpl:11
 msgid "Edit rank"
-msgstr ""
+msgstr "Rank bearbeiten"
 
 #: templates/admin/rank/edit.tpl:31 templates/user/rank/edit.tpl:26
 msgid "Enter the name of the rank"
@@ -1839,25 +1968,25 @@ msgstr ""
 
 #: templates/admin/rank/edit.tpl:127 templates/user/rank/edit.tpl:110
 msgid "Update rank"
-msgstr ""
+msgstr "Rang aktualisieren"
 
 #: templates/admin/rank/edit.tpl:129 templates/user/rank/edit.tpl:112
 msgid "Really delete this rank?"
-msgstr ""
+msgstr "Diesen Rang wirklich löschen?"
 
 #: templates/admin/rank/edit.tpl:130 templates/admin/rank/delete.tpl:4
 #: templates/user/rank/edit.tpl:113
 msgid "Delete rank"
-msgstr ""
+msgstr "Rang löschen"
 
 #: templates/admin/rank/delete.tpl:11
 msgid "Do you really want to delete this rank ?"
-msgstr ""
+msgstr "Möchtest du diesen Rang wirklich löschen?"
 
 #: templates/admin/rank/include_selectEditOne.tpl:6
 #: templates/user/rank/include_selectEditOne.tpl:6
 msgid "Select rank"
-msgstr ""
+msgstr "Rang wählen"
 
 #: templates/admin/rank/include_selectEditOne.tpl:8
 #: templates/user/rank/include_selectEditOne.tpl:8
@@ -1900,7 +2029,7 @@ msgstr "Aktuelle Benutzer"
 #: templates/admin/user/view.rss:12 templates/admin/user/view.atom:5
 #: templates/user/user/view.rss:12 templates/user/user/view.atom:5
 msgid "A direct feed showing the list of users"
-msgstr ""
+msgstr "Ein Feed der die Benutzerliste anzeigt"
 
 #: templates/admin/user/view.tpl:104 templates/user/user/view.tpl:102
 #: templates/mailz/itemlist_User_html.tpl:11
@@ -1914,8 +2043,9 @@ msgid "Edit user"
 msgstr "Benutzer bearbeiten"
 
 #: templates/admin/user/edit.tpl:31 templates/user/user/edit.tpl:26
+#, fuzzy
 msgid "Enter the userid of the user"
-msgstr ""
+msgstr "Gib die Albumbeschreibung ein"
 
 #: templates/admin/user/edit.tpl:37 templates/user/user/edit.tpl:32
 msgid "Enter the number postings of the user"
@@ -1931,8 +2061,9 @@ msgid "Update user"
 msgstr "Benutzer aktualisieren"
 
 #: templates/admin/user/edit.tpl:87 templates/user/user/edit.tpl:82
+#, fuzzy
 msgid "Really delete this user?"
-msgstr ""
+msgstr "Dieses Bild wirklich löschen?"
 
 #: templates/admin/user/edit.tpl:88 templates/admin/user/delete.tpl:4
 #: templates/user/user/edit.tpl:83
@@ -1940,8 +2071,9 @@ msgid "Delete user"
 msgstr "Benutzer löschen"
 
 #: templates/admin/user/delete.tpl:11
+#, fuzzy
 msgid "Do you really want to delete this user ?"
-msgstr ""
+msgstr "Möchtest du dieses Album wirklich löschen?"
 
 #: templates/admin/forum/display.tpl:33 templates/admin/forum/view.tpl:47
 #: templates/admin/forum/edit.tpl:35 templates/admin/forum/view.csv:3
@@ -1981,55 +2113,66 @@ msgstr "Aktuelle Foren"
 
 #: templates/admin/forum/view.rss:12 templates/admin/forum/view.atom:5
 #: templates/user/forum/view.rss:12 templates/user/forum/view.atom:5
+#, fuzzy
 msgid "A direct feed showing the list of forums"
-msgstr ""
+msgstr "Ein Feed der die Albumliste anzeigt"
 
 #: templates/admin/forum/view.tpl:13 templates/admin/forum/edit.tpl:10
 #: templates/admin/forum/edit.tpl:89 templates/admin/category/display.tpl:23
 #: templates/user/forum/view.tpl:11 templates/user/forum/edit.tpl:9
 #: templates/user/forum/edit.tpl:84 templates/user/category/display.tpl:37
+#, fuzzy
 msgid "Create forum"
-msgstr ""
+msgstr "Album erstellen"
 
 #: templates/admin/forum/view.tpl:104 templates/user/forum/view.tpl:102
 #: templates/mailz/itemlist_Forum_html.tpl:11
 #: templates/mailz/itemlist_Forum_text.tpl:7
+#, fuzzy
 msgid "No forums found."
-msgstr ""
+msgstr "Keine Alben gefunden"
 
 #: templates/admin/forum/edit.tpl:7 templates/admin/forum/edit.tpl:13
 #: templates/user/forum/edit.tpl:7 templates/user/forum/edit.tpl:11
+#, fuzzy
 msgid "Edit forum"
-msgstr ""
+msgstr "Album bearbeiten"
 
 #: templates/admin/forum/edit.tpl:31 templates/user/forum/edit.tpl:26
+#, fuzzy
 msgid "Enter the title of the forum"
-msgstr ""
+msgstr "Gib den Albumtitel ein"
 
 #: templates/admin/forum/edit.tpl:36 templates/user/forum/edit.tpl:31
+#, fuzzy
 msgid "Enter the description of the forum"
-msgstr ""
+msgstr "Gib die Albumbeschreibung ein"
 
 #: templates/admin/forum/edit.tpl:41 templates/user/forum/edit.tpl:36
+#, fuzzy
 msgid "Enter the pos of the forum"
-msgstr ""
+msgstr "Gib die Albumbeschreibung ein"
 
 #: templates/admin/forum/edit.tpl:83 templates/user/forum/edit.tpl:78
+#, fuzzy
 msgid "Update forum"
-msgstr ""
+msgstr "Letzte Aktualisierung"
 
 #: templates/admin/forum/edit.tpl:85 templates/user/forum/edit.tpl:80
+#, fuzzy
 msgid "Really delete this forum?"
-msgstr ""
+msgstr "Dieses Bild wirklich löschen?"
 
 #: templates/admin/forum/edit.tpl:86 templates/admin/forum/delete.tpl:4
 #: templates/user/forum/edit.tpl:81
+#, fuzzy
 msgid "Delete forum"
-msgstr ""
+msgstr "Album löschen"
 
 #: templates/admin/forum/delete.tpl:11
+#, fuzzy
 msgid "Do you really want to delete this forum ?"
-msgstr ""
+msgstr "Möchtest du dieses Album wirklich löschen?"
 
 #: templates/admin/forum/include_selectEditOne.tpl:6
 #: templates/user/forum/include_selectEditOne.tpl:6
@@ -2043,8 +2186,9 @@ msgstr "Finde Forum"
 
 #: templates/admin/forum/include_selectEditOne.tpl:10
 #: templates/user/forum/include_selectEditOne.tpl:10
+#, fuzzy
 msgid "Search forum"
-msgstr ""
+msgstr "Album suchen"
 
 #: templates/admin/forum/include_selectEditOne.tpl:16
 #: templates/user/forum/include_selectEditOne.tpl:16
@@ -2053,84 +2197,100 @@ msgstr "Neues Forum erstellen"
 
 #: templates/admin/category/view.rss:11 templates/admin/category/view.atom:4
 #: templates/user/category/view.rss:11 templates/user/category/view.atom:4
+#, fuzzy
 msgid "Latest categories"
-msgstr ""
+msgstr "Letzte Alben"
 
 #: templates/admin/category/view.rss:12 templates/admin/category/view.atom:5
 #: templates/user/category/view.rss:12 templates/user/category/view.atom:5
+#, fuzzy
 msgid "A direct feed showing the list of categories"
-msgstr ""
+msgstr "Ein Feed der die Albumliste anzeigt"
 
 #: templates/admin/category/view.tpl:13 templates/admin/category/edit.tpl:10
 #: templates/admin/category/edit.tpl:88 templates/user/category/view.tpl:11
 #: templates/user/category/edit.tpl:9 templates/user/category/edit.tpl:83
+#, fuzzy
 msgid "Create category"
-msgstr ""
+msgstr "Keine Kategorie"
 
 #: templates/admin/category/view.tpl:82 templates/user/category/view.tpl:103
 #: templates/mailz/itemlist_Category_text.tpl:7
 #: templates/mailz/itemlist_Category_html.tpl:11
+#, fuzzy
 msgid "No categories found."
-msgstr ""
+msgstr "Keine Alben gefunden"
 
 #: templates/admin/category/edit.tpl:7 templates/admin/category/edit.tpl:13
 #: templates/user/category/edit.tpl:7 templates/user/category/edit.tpl:11
+#, fuzzy
 msgid "Edit category"
-msgstr ""
+msgstr "Keine Kategorie"
 
 #: templates/admin/category/edit.tpl:31 templates/user/category/edit.tpl:26
+#, fuzzy
 msgid "Enter the title of the category"
-msgstr ""
+msgstr "Gib den Albumtitel ein"
 
 #: templates/admin/category/edit.tpl:36 templates/user/category/edit.tpl:31
+#, fuzzy
 msgid "Enter the description of the category"
-msgstr ""
+msgstr "Gib die Albumbeschreibung ein"
 
 #: templates/admin/category/edit.tpl:41 templates/user/category/edit.tpl:36
 msgid "Enter the pos of the category"
 msgstr "Gib die Position der Kategorie ein"
 
 #: templates/admin/category/edit.tpl:82 templates/user/category/edit.tpl:77
+#, fuzzy
 msgid "Update category"
-msgstr ""
+msgstr "Keine Kategorie"
 
 #: templates/admin/category/edit.tpl:84 templates/user/category/edit.tpl:79
+#, fuzzy
 msgid "Really delete this category?"
-msgstr ""
+msgstr "Dieses Bild wirklich löschen?"
 
 #: templates/admin/category/edit.tpl:85 templates/admin/category/delete.tpl:4
 #: templates/user/category/edit.tpl:80
+#, fuzzy
 msgid "Delete category"
-msgstr ""
+msgstr "Keine Kategorie"
 
 #: templates/admin/category/delete.tpl:11
+#, fuzzy
 msgid "Do you really want to delete this category ?"
-msgstr ""
+msgstr "Möchtest du dieses Album wirklich löschen?"
 
 #: templates/admin/category/include_selectEditOne.tpl:6
 #: templates/user/category/include_selectEditOne.tpl:6
+#, fuzzy
 msgid "Select category"
-msgstr ""
+msgstr "Wählen Sie eine Kategorie"
 
 #: templates/admin/category/include_selectEditOne.tpl:8
 #: templates/user/category/include_selectEditOne.tpl:8
+#, fuzzy
 msgid "Find category"
-msgstr ""
+msgstr "Keine Kategorie"
 
 #: templates/admin/category/include_selectEditOne.tpl:10
 #: templates/user/category/include_selectEditOne.tpl:10
+#, fuzzy
 msgid "Search category"
-msgstr ""
+msgstr "Keine Kategorie"
 
 #: templates/admin/category/include_selectEditOne.tpl:16
 #: templates/user/category/include_selectEditOne.tpl:16
+#, fuzzy
 msgid "Create new category"
-msgstr ""
+msgstr "Neues Album erstellen"
 
 #: templates/admin/include_standardfields_display.tpl:6
 #: templates/user/include_standardfields_display.tpl:6
+#, fuzzy
 msgid "Creation"
-msgstr ""
+msgstr "Erstellung"
 
 #: templates/admin/include_standardfields_display.tpl:17
 #: templates/user/include_standardfields_display.tpl:17
@@ -2140,14 +2300,15 @@ msgstr "Erstellt von %1$s am %2$s"
 
 #: templates/admin/include_standardfields_display.tpl:20
 #: templates/user/include_standardfields_display.tpl:20
+#, fuzzy
 msgid "Last update"
-msgstr ""
+msgstr "Letzte Aktualisierung"
 
 #: templates/admin/include_standardfields_display.tpl:31
 #: templates/user/include_standardfields_display.tpl:31
-#, php-format
+#, fuzzy, php-format
 msgid "Updated by %1$s on %2$s"
-msgstr ""
+msgstr "Aktualisiert von %1$s am %2$s"
 
 #: templates/contenttype/itemlist_Category_display_description.tpl:9
 #: templates/contenttype/itemlist_Rank_display.tpl:5
@@ -2188,8 +2349,9 @@ msgstr "antwortete auf das Thema:"
 
 #: templates/contenttype/itemlist_edit.tpl:4
 #: templates/block/itemlist_modify.tpl:4
+#, fuzzy
 msgid "Object type"
-msgstr ""
+msgstr "Objekttyp"
 
 #: templates/contenttype/itemlist_edit.tpl:10
 #: templates/block/itemlist_modify.tpl:13
@@ -2218,18 +2380,21 @@ msgstr "Anzahl"
 
 #: templates/contenttype/itemlist_edit.tpl:27
 #: templates/block/itemlist_modify.tpl:27
+#, fuzzy
 msgid "Template File"
-msgstr ""
+msgstr "Template Datei"
 
 #: templates/contenttype/itemlist_edit.tpl:33
 #: templates/block/itemlist_modify.tpl:35
+#, fuzzy
 msgid "Filter (expert option)"
-msgstr ""
+msgstr "Filter ( Expertenoption )"
 
 #: templates/contenttype/itemlist_edit.tpl:35
 #: templates/block/itemlist_modify.tpl:37
+#, fuzzy
 msgid "Syntax examples"
-msgstr ""
+msgstr "Syntax Beispiele"
 
 #: templates/contenttype/itemlist_edit.tpl:35
 #: templates/block/itemlist_modify.tpl:37
@@ -2314,8 +2479,9 @@ msgid "Save answer"
 msgstr "Antwort speichern"
 
 #: templates/user/rank/edit.tpl:63
+#, fuzzy
 msgid "Delete upload image ?"
-msgstr ""
+msgstr "Aufrufe zählen"
 
 #: templates/user/forum/display.tpl:30
 msgid "Answers"
@@ -2332,7 +2498,7 @@ msgstr "Anzahl der Themen"
 
 #: templates/user/category/display.tpl:78 templates/user/category/view.tpl:125
 msgid "Number of postings"
-msgstr "Anzahl der Posts"
+msgstr "Anzahl der Beiträge"
 
 #: templates/search/moduleSearch.tpl:6
 msgid "Search Terms"
