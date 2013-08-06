@@ -16,15 +16,101 @@
  */
 class MUBoard_Installer extends MUBoard_Base_Installer
 {
-        /**
+    /**
      * Install the MUBoard application.
      *
      * @return boolean True on success, or false.
      */
     public function install()
-    {    
-        $this->setVar('sortingCategories', array('descending'));
-        
-        parent::install();
+    {
+        $basePath = MUBoard_Util_Controller::getFileBaseFolder('posting', 'firstImage');
+        if (!is_dir($basePath)) {
+            return LogUtil::registerError($this->__f('The upload folder "%s" does not exist. Please create it before installing this application.', array($basePath)));
+        }
+        if (!is_writable($basePath)) {
+            return LogUtil::registerError($this->__f('The upload folder "%s" is not writable. Please change permissions accordingly before installing this application.', array($basePath)));
+        }
+        $basePath = MUBoard_Util_Controller::getFileBaseFolder('posting', 'secondImage');
+        if (!is_dir($basePath)) {
+            return LogUtil::registerError($this->__f('The upload folder "%s" does not exist. Please create it before installing this application.', array($basePath)));
+        }
+        if (!is_writable($basePath)) {
+            return LogUtil::registerError($this->__f('The upload folder "%s" is not writable. Please change permissions accordingly before installing this application.', array($basePath)));
+        }
+        $basePath = MUBoard_Util_Controller::getFileBaseFolder('posting', 'thirdImage');
+        if (!is_dir($basePath)) {
+            return LogUtil::registerError($this->__f('The upload folder "%s" does not exist. Please create it before installing this application.', array($basePath)));
+        }
+        if (!is_writable($basePath)) {
+            return LogUtil::registerError($this->__f('The upload folder "%s" is not writable. Please change permissions accordingly before installing this application.', array($basePath)));
+        }
+        $basePath = MUBoard_Util_Controller::getFileBaseFolder('posting', 'firstFile');
+        if (!is_dir($basePath)) {
+            return LogUtil::registerError($this->__f('The upload folder "%s" does not exist. Please create it before installing this application.', array($basePath)));
+        }
+        if (!is_writable($basePath)) {
+            return LogUtil::registerError($this->__f('The upload folder "%s" is not writable. Please change permissions accordingly before installing this application.', array($basePath)));
+        }
+        $basePath = MUBoard_Util_Controller::getFileBaseFolder('posting', 'secondFile');
+        if (!is_dir($basePath)) {
+            return LogUtil::registerError($this->__f('The upload folder "%s" does not exist. Please create it before installing this application.', array($basePath)));
+        }
+        if (!is_writable($basePath)) {
+            return LogUtil::registerError($this->__f('The upload folder "%s" is not writable. Please change permissions accordingly before installing this application.', array($basePath)));
+        }
+        $basePath = MUBoard_Util_Controller::getFileBaseFolder('posting', 'thirdFile');
+        if (!is_dir($basePath)) {
+            return LogUtil::registerError($this->__f('The upload folder "%s" does not exist. Please create it before installing this application.', array($basePath)));
+        }
+        if (!is_writable($basePath)) {
+            return LogUtil::registerError($this->__f('The upload folder "%s" is not writable. Please change permissions accordingly before installing this application.', array($basePath)));
+        }
+        $basePath = MUBoard_Util_Controller::getFileBaseFolder('rank', 'uploadImage');
+        if (!is_dir($basePath)) {
+            return LogUtil::registerError($this->__f('The upload folder "%s" does not exist. Please create it before installing this application.', array($basePath)));
+        }
+        if (!is_writable($basePath)) {
+            return LogUtil::registerError($this->__f('The upload folder "%s" is not writable. Please change permissions accordingly before installing this application.', array($basePath)));
+        }
+
+        // create all tables from according entity definitions
+        try {
+            DoctrineHelper::createSchema($this->entityManager, $this->listEntityClasses());
+        } catch (Exception $e) {
+            if (System::isDevelopmentMode()) {
+                LogUtil::registerError($this->__('Doctrine Exception: ') . $e->getMessage());
+            }
+            return LogUtil::registerError($this->__f('An error was encountered while creating the tables for the %s module.', array($this->getName())));
+        }
+
+        // set up all our vars with initial values
+        $this->setVar('uploadImages', false);
+        $this->setVar('allowedSizeOfImages', 0);
+        $this->setVar('numberImages', array('1'));
+        $this->setVar('uploadFiles', false);
+        $this->setVar('allowedSizeOfFiles', 0);
+        $this->setVar('numberFiles', array('1'));
+        $this->setVar('editPostings', false);
+        $this->setVar('editTime', 6);
+        $this->setVar('latestPostings', 1);
+        $this->setVar('sortingCategories', array('descending'));        
+        $this->setVar('sortingPostings', array('descending'));
+        $this->setVar('iconSet', array('1'));
+        $this->setVar('template', array('normal'));
+        $this->setVar('pagesize', 10);
+        $this->setVar('standardIcon', 'images/icons/extrasmall/favorites.png');
+        $this->setVar('specialIcon', 'images/icons/extrasmall/package_favorite.png');
+
+        // create the default data for MUBoard
+        $this->createDefaultData();
+
+        // register persistent event handlers
+        $this->registerPersistentEventHandlers();
+
+        // register hook subscriber bundles
+        HookUtil::registerSubscriberBundles($this->version->getHookSubscriberBundles());
+
+        // initialisation successful
+        return true;
     }
 }
