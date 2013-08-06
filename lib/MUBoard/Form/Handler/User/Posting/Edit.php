@@ -17,151 +17,165 @@
  */
 class MUBoard_Form_Handler_User_Posting_Edit extends MUBoard_Form_Handler_User_Posting_Base_Edit
 {
-	/**
-	 * Initialize form handler.
-	 *
-	 * This method takes care of all necessary initialisation of our data and form states.
-	 *
-	 * @return boolean False in case of initialization errors, otherwise true.
-	 */
-	public function initialize(Zikula_Form_View $view)
-	{
-		parent::initialize($view);
+    /**
+     * Initialize form handler.
+     *
+     * This method takes care of all necessary initialisation of our data and form states.
+     *
+     * @return boolean False in case of initialization errors, otherwise true.
+     */
+    public function initialize(Zikula_Form_View $view)
+    {
+        // we get forumid for edit form to answer to an issue
+        // we get func
+        $func = $this->request->query->filter('func', 'main', FILTER_SANITIZE_STRING);
+        // we get forum for edit form to create a new issue
+        $forum = $this->request->query->filter('forum', 0, FILTER_SANITIZE_NUMBER_INT);
+        // we get parentid for edit form to answer to an issue
+        $parentid = $this->request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
+        
+        if (!SecurityUtil::checkPermission('MUBoard:Forum:', 'ForumID::1', ACCESS_ADD)) {
+            return $view->registerError(LogUtil::registerPermissionError());
+        }
+        
+        parent::initialize($view);
 
-		// build posting repository
-		$repository = MUBoard_Util_Model::getPostingRepository();
+        // build posting repository
+        $repository = MUBoard_Util_Model::getPostingRepository();
 
-		// we get forumid for edit form to answer to an issue
-		// we get func 
-		$func = $this->request->query->filter('func', 'main', FILTER_SANITIZE_STRING);
-		// we get forum for edit form to create a new issue
-		$forum = $this->request->query->filter('forum', 0, FILTER_SANITIZE_NUMBER_INT);
-		
-		if ($func == 'display') {
-			// we get forumid for edit form to answer to an issue
-			if ($parentid > 0) {
-				$entity = $repository->selectById($parentid);
-				$forumOfEntity = $entity->getForum();
-				$forumid = $forumOfEntity['id'];
-			}
-			else {
-				$forumid = 0;
-			}
-			// we get parentid for edit form to answer to an issue
-			$parentid = $this->request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
-		}
-		else {
-			$id = $this->request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
-			if ($id > 0) {
-				$entity = $repository->selectById($id);
-				$parent = $entity->getParent();
-				if ($parent) {
-					$parentid = $parent->getId();
-				}
-				else {
-					$parentid = 0;
-				}
-			}
-		}
 
-		// set mode to create if we want to answer
-		if ($func == 'display') {
-			// set mode to create
-			$this->mode = 'create';
-		}
-		else { // if we func is not display
-		    // if id > 0 set mode to edit
-			if ($id > 0) {
-				// set mode to edit
-				$this->mode = 'edit';
-			}
-		}
-		// TODO rule of token
-		if ($this->mode == 'edit') {
-			$token = $this->request->query->filter('token');
-			//$controller = new Ziku
-			//Zikula_AbstractBase::checkCsrfToken('dsfssd');
-		}
-		
-		// get text for the picture upload fields
-		$maxSize = MUBoard_Util_Controller::maxSize();
-			
-		// get modvars
-		$uploadImages = ModUtil::getVar('MUBoard', 'uploadImages');
-		$uploadFiles = ModUtil::getVar('MUBoard', 'uploadFiles');
-		$numberImages = ModUtil::getVar('MUBoard', 'numberImages');
-		$numberFiles = ModUtil::getVar('MUBoard', 'numberFiles');
-			
-		// we assign to template
-		$this->view->assign('uploadImages', $uploadImages)
-		->assign('maxSize', $maxSize)
-		->assign('uploadFiles', $uploadFiles)
-		->assign('numberImages', $numberImages)
-		->assign('numberFiles', $numberFiles)
-		->assign('mode', $this->mode)
-		->assign('forum', $forum)
-		->assign('forumid', $forumid)
-		->assign('parentid', $parentid);
+        if ($func == 'display') {
+            // we get forumid for edit form to answer to an issue
+            if ($parentid > 0) {
+                $entity = $repository->selectById($parentid);
+                $forumOfEntity = $entity->getForum();
+                $forumid = $forumOfEntity['id'];
+            }
+            else {
+                $forumid = 0;
+            }
+        }
+        else {
+            $id = $this->request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
+            if ($id > 0) {
+                $entity = $repository->selectById($id);
+                $parent = $entity->getParent();
+                if ($parent) {
+                    $parentid = $parent->getId();
+                }
+                else {
+                    $parentid = 0;
+                }
+            }
+        }
 
-		// everything okay, no initialization errors occured
-		return true;
+        // set mode to create if we want to answer
+        if ($func == 'display') {
+            // set mode to create
+            $this->mode = 'create';
+        }
+        else { // if we func is not display
+            // if id > 0 set mode to edit
+            if ($id > 0) {
+                // set mode to edit
+                $this->mode = 'edit';
+            }
+        }
+        // rule of token TODO with this we get problems with the edit
+        // because e get always an error messahe nor permissions
+        /* if ($this->mode == 'edit') {
+        $token = $this->request->query->filter('token');
 
-	}
+        if (SecurityUtil::validateCsrfToken($token)){
+        // nothing to do
+            } else {
+        if($parentid > 0) {
+        $url = ModUtil::url($this->name, 'user', 'display', array('ot' => 'posting', 'id' => $parentid));
+        } else {
+        $url = ModUtil::url($this->name, 'user', 'display', array('ot' => 'forum', 'id' => $forum));
+        }
+        return LogUtil::registerPermissionError($url);
+        }
+        }*/
 
-	/**
-	 * Get the default redirect url. Required if no returnTo parameter has been supplied.
-	 * This method is called in handleCommand so we know which command has been performed.
-	 */
-	protected function getDefaultReturnUrl($args, $obj)
-	{
-		$parentid = $this->request->getPost()->filter('muboardPosting_ParentItemList', 0, FILTER_SANITIZE_NUMBER_INT);
-			
-		// redirect to the list of postings
-		$viewArgs = array('ot' => $this->objectType);
-		$url = ModUtil::url($this->name, 'user', 'view', $viewArgs);
+        // get text for the picture upload fields
+        $maxSize = MUBoard_Util_Controller::maxSize();
+         
+        // get modvars
+        $uploadImages = ModUtil::getVar('MUBoard', 'uploadImages');
+        $uploadFiles = ModUtil::getVar('MUBoard', 'uploadFiles');
+        $numberImages = ModUtil::getVar('MUBoard', 'numberImages');
+        $numberFiles = ModUtil::getVar('MUBoard', 'numberFiles');
+         
+        // we assign to template
+        $this->view->assign('uploadImages', $uploadImages)
+        ->assign('maxSize', $maxSize)
+        ->assign('uploadFiles', $uploadFiles)
+        ->assign('numberImages', $numberImages)
+        ->assign('numberFiles', $numberFiles)
+        ->assign('mode', $this->mode)
+        ->assign('forum', $forum)
+        ->assign('forumid', $forumid)
+        ->assign('parentid', $parentid);
 
-		if ($args['commandName'] != 'delete' && !($this->mode == 'create' && $args['commandName'] == 'cancel')) {
-			// redirect to the detail page of treated posting
-			if ($parentid > 0) {
-				$url = ModUtil::url($this->name, 'user', 'display', array('ot' => 'posting', 'id' => $parentid));
-			}
-			if ($parentid == 0) {
-				$url = ModUtil::url($this->name, 'user', 'display', array('ot' => 'posting', 'id' => $this->idValues['id']));
-					
-			}
-		}
-		return $url;
-	}
+        // everything okay, no initialization errors occured
+        return true;
+    }
 
-	/**
-	 * Command event handler.
-	 *
-	 * This event handler is called when a command is issued by the user.
-	 */
-	public function handleCommand(Zikula_Form_View $view, &$args)
-	{
-		$result = parent::handleCommand($view, $args);
-		if ($result === false) {
-			return $result;
-		}
+    /**
+     * Get the default redirect url. Required if no returnTo parameter has been supplied.
+     * This method is called in handleCommand so we know which command has been performed.
+     */
+    protected function getDefaultReturnUrl($args, $obj)
+    {
+        $parentid = $this->request->getPost()->filter('muboardPosting_ParentItemList', 0, FILTER_SANITIZE_NUMBER_INT);
+         
+        // redirect to the list of postings
+        $viewArgs = array('ot' => $this->objectType);
+        $url = ModUtil::url($this->name, 'user', 'view', $viewArgs);
 
-		if ($args['commandName'] == 'create') {
+        if ($args['commandName'] != 'delete' && !($this->mode == 'create' && $args['commandName'] == 'cancel')) {
+            // redirect to the detail page of treated posting
+            if ($parentid > 0) {
+                $url = ModUtil::url($this->name, 'user', 'display', array('ot' => 'posting', 'id' => $parentid));
+            }
+            if ($parentid == 0) {
+                $url = ModUtil::url($this->name, 'user', 'display', array('ot' => 'posting', 'id' => $this->idValues['id']));
+                 
+            }
+        }
+        return $url;
+    }
 
-			// we need the userid
-			$userid = UserUtil::getVar('uid');
-			// we need a userrepository
-			$repository = MUBoard_Util_Model::getUserRepository();
-			// we get the user entity
-			$boarduser = $repository->selectById($userid);
+    /**
+     * Command event handler.
+     *
+     * This event handler is called when a command is issued by the user.
+     */
+    public function handleCommand(Zikula_Form_View $view, &$args)
+    {
+        $result = parent::handleCommand($view, $args);
+        if ($result === false) {
+            return $result;
+        }
 
-			$userrank = $boarduser->getRank();
+        if ($args['commandName'] == 'create') {
 
-		}
+            // we need the userid
+            $userid = UserUtil::getVar('uid');
+            // we need a userrepository
+            $repository = MUBoard_Util_Model::getUserRepository();
+            // we get the user entity
+            $boarduser = $repository->selectById($userid);
 
-		return $this->view->redirect($this->getRedirectUrl($args, $entity, $repeatCreateAction));
-	}
-	
-	public function postInitialize() {
-	    
-	}
+            $userrank = $boarduser->getRank();
+
+        }
+
+        return $this->view->redirect($this->getRedirectUrl($args, $entity, $repeatCreateAction));
+    }
+
+    public function postInitialize() {
+         
+    }
 }
