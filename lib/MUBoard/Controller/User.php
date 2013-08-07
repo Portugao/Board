@@ -28,7 +28,7 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
      */
     protected function postInitialize()
     {
-        // Set caching to true by default.
+        // Set caching to false by default.
         $this->view->setCaching(Zikula_View::CACHE_DISABLED);
     }
 
@@ -103,11 +103,6 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 
         $this->view->assign('func', $func)
         ->assign('lastlogin', $lastlogin);
-
-        if (UserUtil::isLoggedIn() == true && $type == 'user') {
-            $uid = UserUtil::getVar('uid');
-            MUBoard_Util_View::actualUser($uid);// TODO workaround because of problems with logout listener
-        }
 
         $dom = ZLanguage::getModuleDomain($this->name);
 
@@ -275,11 +270,6 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
         $this->view->assign('currentPage', $currentPage)
         ->assign('pager', array('numitems'     => $objectCount,
                 'itemsperpage' => $resultsPerPage));
-
-        if (UserUtil::isLoggedIn() == true && $type == 'user') {
-            $uid = UserUtil::getVar('uid');
-            MUBoard_Util_View::actualUser($uid);// TODO workaround because of problems with logout listener
-        }
 
         $dom = ZLanguage::getModuleDomain($this->name);
 
