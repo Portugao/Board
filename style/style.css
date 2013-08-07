@@ -403,6 +403,7 @@ border-bottom: 1px solid #ddd;
     width: 100%;
     background: #eee;
     border-radius: 5px;
+    position: relative;
 }
 
 .muboard-user-posting-parent {
@@ -477,7 +478,7 @@ border-bottom: 1px solid #ddd;
     position: relative;
     float: right;
     width: 68%;
-    border-left: 1px solid #ddd;
+    border-left: 1px solid #ccc;
 }
 
 .muboard-user-posting-content-links {
@@ -492,8 +493,10 @@ border-bottom: 1px solid #ddd;
 }
 
 .muboard-user-posting-content-bottom {
-    float: left;
-    width: 100%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
 }
 
 .muboard-user-posting-content-image {
