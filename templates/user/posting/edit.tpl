@@ -245,20 +245,6 @@
     	<input type="hidden" id="muboardPosting_ParentMode" name="muboardPosting_ParentMode" value="0" />
     {/if}
     <div id="muboard-user-preview" style="display: none;"></div>
-    {* {if $mode ne 'create'}
-        {include file='user/include_standardfields_edit.tpl' obj=$posting}
-    {/if} *}
-
-    {* include return control *}
-    {* {if $mode eq 'create'}
-        <fieldset>
-            <legend>{gt text='Return control'}</legend>
-            <div class="z-formrow">
-                {formlabel for='repeatcreation' __text='Create another item after save'}
-                {formcheckbox group='posting' id='repeatcreation' readOnly=false}
-            </div>
-        </fieldset>
-    {/if} *}
 
     {* include possible submit actions *}
     <div class="muboard-posting-edit-action">
@@ -270,10 +256,6 @@
         {formbutton id='btnUpdate' commandName='update' __text='Update issue' class='z-bt-save'}
         {/if}
         {formbutton id='btnPreview' commandName='preview' __text='Preview' class='z-bt-ok'}
-     {* {if !$inlineUsage}
-        {gt text='Really delete this posting?' assign='deleteConfirmMsg'}
-        {formbutton id='btnDelete' commandName='delete' __text='Delete posting' class='z-bt-delete z-btred' confirmMessage=$deleteConfirmMsg}
-      {/if} *}
     {elseif $mode eq 'create'}
     {if $func eq 'edit'}
         {formbutton id='btnCreate' commandName='create' __text='Create issue' class='z-bt-ok'}
@@ -314,10 +296,8 @@
         {/if}    
     </div>  
     </div>  
-    </div>
   {/muboardFormFrame}
 {/muboardform}
-
 </div>
 </div>
 {include file='user/footer.tpl'}
