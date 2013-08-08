@@ -95,7 +95,6 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
      */
     public static function getIssuesOfForum($forumid)
     {
-
         $count = 0;
 
         // get repositoy for Forum
@@ -109,12 +108,12 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
             if ($posting['parent_id'] === NULL) {
                 $count = $count + 1;
             }
-        }        
+        }
         return $count;
     }
-    
+
     /**
-     * 
+     *
      */
     public function getForumInfo($forumid)
     {
@@ -122,7 +121,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
         // get forum repository
         $repository = MUBoard_Util_Model::getForumRepository();
         $forum = $repository->selectById($forumid);
-        
+
         $out = "<h3>" . __('Category:', $dom) . " " . "<a href='" . ModUtil::url('MUBoard', 'user', 'display', array('ot' => 'category', 'id' => $forum['category']['id'])). "'>" . $forum['category']['title'] . "</a>" . ", " . __('Forum:', $dom) . " " . "<a href='" . ModUtil::url('MUboard', 'user', 'display', array('ot' => 'forum', 'id' => $forumid)). "'>" . $forum['title'] . "</a></h3>";
         return $out;
     }
@@ -143,7 +142,6 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
         $count = count($postings);
          
         return $count;
-         
     }
 
     /**
@@ -219,7 +217,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
     public static function getLastPostingOfForum($forumid)
     {
         $dom = ZLanguage::getModuleDomain('MUBoard');
-        
+
         // get repositoy for forum
         $repository = MUBoard_Util_Model::getForumRepository();
         // get forum by id
@@ -259,7 +257,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
             $createdDate = $lastposting->getCreatedDate();
             $date = DateUtil::formatDatetime($createdDate, 'datetimelong');
             if ($lastposting['createdUserId'] > 1) {
-            $uname = UserUtil::getVar('uname', $lastposting['createdUserId']);
+                $uname = UserUtil::getVar('uname', $lastposting['createdUserId']);
             } else {
                 $uname = __('Guest', $dom);
             }
@@ -279,7 +277,6 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
             $out = __('No postings available!');
         }
         return $out;
-         
     }
 
     /**
@@ -418,21 +415,21 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
             $where .= ' AND ';
             $where .= 'tbl.userid = \'' . DataUtil::formatForStore($userid) . '\'';
             $abo = $repository->selectWhere($where);
-            
-            if ($ot == 'category') {
-            if (!$abo) {
-                $url = ModUtil::url('MUBoard', 'admin', 'take', array('ot' => 'abo', 'forum' => $forumid, 'view' => $func, 'cat' => $cat));
-                $out =  "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
-                <img src='/images/icons/extrasmall/mail_post_to.png' />
-                </a>";
-            }
 
-            if ($abo) {
-                $url = ModUtil::url('MUBoard', 'admin', 'quit', array('ot' => 'abo', 'forum' => $forumid, 'view' => $func, 'cat' => $cat));
-                $out = "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
-                <img src='/images/icons/extrasmall/mail_get.png' />
-                </a>";
-            }
+            if ($ot == 'category') {
+                if (!$abo) {
+                    $url = ModUtil::url('MUBoard', 'admin', 'take', array('ot' => 'abo', 'forum' => $forumid, 'view' => $func, 'cat' => $cat));
+                    $out =  "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
+                    <img src='/images/icons/extrasmall/mail_post_to.png' />
+                    </a>";
+                }
+
+                if ($abo) {
+                    $url = ModUtil::url('MUBoard', 'admin', 'quit', array('ot' => 'abo', 'forum' => $forumid, 'view' => $func, 'cat' => $cat));
+                    $out = "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
+                    <img src='/images/icons/extrasmall/mail_get.png' />
+                    </a>";
+                }
             } else {
                 if (!$abo) {
                     $url = ModUtil::url('MUBoard', 'admin', 'take', array('ot' => 'abo', 'forum' => $forumid, 'view' => $func, 'thisforum' => $forumid));
@@ -440,18 +437,17 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
                     <img src='/images/icons/extrasmall/mail_post_to.png' />
                     </a>";
                 }
-                
+
                 if ($abo) {
-                $url = ModUtil::url('MUBoard', 'admin', 'quit', array('ot' => 'abo', 'forum' => $forumid, 'view' => $func, 'thisforum' => $forumid));
-                        $out = "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
-                        <img src='/images/icons/extrasmall/mail_get.png' />
-                        </a>";
+                    $url = ModUtil::url('MUBoard', 'admin', 'quit', array('ot' => 'abo', 'forum' => $forumid, 'view' => $func, 'thisforum' => $forumid));
+                    $out = "<a id='muboard-user-posting-header-infos-abo' href='{$url}'>
+                    <img src='/images/icons/extrasmall/mail_get.png' />
+                    </a>";
                 }
             }
         } else {
             $out = '';
-        }
-         
+        }       
         return $out;
     }
 
@@ -509,7 +505,6 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
         } else {
             $out = '';
         }
-
         return $out;
     }
 
@@ -552,7 +547,6 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
             } else {
                 $out = self::getOut(2);
             }
-
         }
 
         if ($kind == 2) {
@@ -574,9 +568,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
                 $out = self::getOut(2);
             }
         }
-
-        return $out;
-         
+        return $out;   
     }
 
     /**
@@ -654,10 +646,8 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
                 $user->setNumberPostings(0);
                 $entityManager->persist($user);
                 $entityManager->flush();
-
             }
         }
-
     }
 
     /**
@@ -713,7 +703,12 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
                 }
             } else {
                 $out .= '<img src="';
-                $out .= $user[rank][uploadImageFullPath];
+                if ($user[rank][uploadImageFullPath] != '') {
+                    $out .= $user[rank][uploadImageFullPath];
+                } else {
+                    $imagepath = ModUtil::getVar('MUBoard', 'specialIcon');
+                    $out .= $imagepath;
+                }
                 $out .= '" />';
             }
         }
