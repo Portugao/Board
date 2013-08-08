@@ -156,22 +156,4 @@ class MUBoard_Util_Base_Abonnements extends Zikula_AbstractBase
 
 		return $messagecontent;
 	}
-
-	/**
-	 * get the email address of the user that
-	 * created parent ticket
-	 * @parentid id of the parent ticket
-	 * @returns $email string
-	 */
-
-	public function getMailAddressOfUser($parentid)
-	{
-		// get entity with id is parentid
-		$entity = ModUtil::apiFunc('MUTicket', 'selection', 'getEntity', array('ot' => 'ticket', 'id' => $parentid));
-		// get userid created the parent ticket
-		$userid = $entity['createdUserId'];
-		$email = UserUtil::getVar('email', $userid);
-
-		return $email;
-	}
 }
