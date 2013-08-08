@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: MUBoard\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-08-08 14:38+0000\n"
-"PO-Revision-Date: 2013-08-08 16:49+0100\n"
+"PO-Revision-Date: 2013-08-08 16:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1498,7 +1498,7 @@ msgstr "Gib die Aufrufe des Beitrags ein"
 #: templates/user/posting/edit.tpl:150 templates/user/posting/edit.tpl:176
 #: templates/user/posting/edit.tpl:202 templates/user/rank/edit.tpl:49
 msgid "Allowed file extensions:"
-msgstr "Erlaubte Dateiendungen"
+msgstr "Erlaubte Dateiendungen:"
 
 #: templates/admin/posting/edit.tpl:59 templates/admin/posting/edit.tpl:83
 #: templates/admin/posting/edit.tpl:107 templates/admin/posting/edit.tpl:131
