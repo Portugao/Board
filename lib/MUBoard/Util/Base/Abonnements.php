@@ -31,9 +31,13 @@ class MUBoard_Util_Base_Abonnements extends Zikula_AbstractBase
 		$title = $args['title'];
 
 		$text = $args['text'];
+		if (ModUtil::available('BBCode')) {
 		$text = ModUtil::apiFunc('BBCode', 'user', 'transform', array('message' => $text));
+		}
+		if (ModUtil::available('BBSmile')) {
 		$text = ModUtil::apiFunc('BBSmile', 'user', 'transform', array('text' => $text));
-
+		}
+		
 		// we get a repository for abos
 		$repository = MUBoard_Util_Model::getAboRepository();
 
