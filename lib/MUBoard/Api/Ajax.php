@@ -33,8 +33,12 @@ class MUBoard_Api_Ajax extends MUBoard_Api_Base_Ajax
         $out = "";
         if ($text != '' && (($title == '') || ($title != '' && $answer == 0))) {
 
+            if (ModUtil::available('BBCode')) {
             $text = ModUtil::apiFunc('BBCode', 'user', 'transform', array('message' => $text));
-            $text = ModUtil::apiFunc('BBSmile', 'user', 'transform', array('text' => $text));            
+            }
+            if (ModUtil::available('BBSmile')) {
+            $text = ModUtil::apiFunc('BBSmile', 'user', 'transform', array('text' => $text));  
+            }          
             $text = nl2br($text);
 
             $uid = UserUtil::getVar('uid');
@@ -92,6 +96,9 @@ class MUBoard_Api_Ajax extends MUBoard_Api_Base_Ajax
             $out .= "<h2>";
             if ($answer == 0 && $title == '' && $text == '') {
                 $out .= __('Sorry! If you want to create an new issue you have to enter a title and a text to get a preview!', $dom);
+            }
+            if ($answer == 0 && $title == '' && $text != '') {
+                $out .= __('Sorry! If you want to create an new issue or to edit an existing issue you have to enter a title to get a preview!', $dom);
             }
             if ($answer == 1 && $text == '') {
                 $out .= __('Sorry! If you want to answer to an issue you have to enter a text to get a preview', $dom);
