@@ -1,5 +1,5 @@
 {include file='user/header.tpl'}
-<h2>{gt text ='Look for relevant issues!'}</h2>
+<h2>{gt text='Look for relevant issues!'}</h2>
 <form class="z-form" action="" method="post">
 <fieldset>
 <div class="z-formrow">

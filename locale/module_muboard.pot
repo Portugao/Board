@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#: lib/MUBoard/Entity/Posting.php:155 templates/user/posting/display.tpl:255
+#: lib/MUBoard/Entity/Posting.php:155 templates/user/posting/display.tpl:251
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Zikula 1.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-02 14:29+0000\n"
+"POT-Creation-Date: 2013-08-08 14:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -98,7 +98,7 @@ msgstr ""
 
 #: templates/plugins/function.muboardSelectorObjectTypes.php:29
 #: lib/MUBoard/Api/Base/User.php:36 lib/MUBoard/Api/Base/Admin.php:36
-#: lib/MUBoard/Api/User.php:41 lib/MUBoard/Api/Admin.php:36
+#: lib/MUBoard/Api/User.php:40 lib/MUBoard/Api/Admin.php:36
 #: templates/block/itemlist_modify.tpl:6
 msgid "Categories"
 msgstr ""
@@ -106,7 +106,6 @@ msgstr ""
 #: templates/plugins/function.muboardSelectorObjectTypes.php:30
 #: lib/MUBoard/Api/Base/User.php:41 lib/MUBoard/Api/Base/Admin.php:41
 #: lib/MUBoard/Api/Admin.php:41 templates/admin/category/display.tpl:14
-#: templates/user/category/display.tpl:12
 #: templates/block/itemlist_modify.tpl:7
 msgid "Forums"
 msgstr ""
@@ -233,10 +232,6 @@ msgstr ""
 msgid "Done! Moving of issue successful."
 msgstr ""
 
-#: lib/MUBoard/Form/Handler/Admin/Posting/Edit.php:57
-msgid "Sorry! Moving the issue failed."
-msgstr ""
-
 #: lib/MUBoard/Form/Handler/Admin/User/Base/Edit.php:145
 #: lib/MUBoard/Form/Handler/User/User/Base/Edit.php:145
 msgid "Done! User created."
@@ -250,6 +245,18 @@ msgstr ""
 #: lib/MUBoard/Form/Handler/Admin/User/Base/Edit.php:151
 #: lib/MUBoard/Form/Handler/User/User/Base/Edit.php:151
 msgid "Done! User deleted."
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Config.php:51
+#: lib/MUBoard/Form/Handler/Admin/Config.php:56
+#: templates/search/moduleSearch.tpl:28
+msgid "Descending"
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Config.php:52
+#: lib/MUBoard/Form/Handler/Admin/Config.php:57
+#: templates/search/moduleSearch.tpl:27
+msgid "Ascending"
 msgstr ""
 
 #: lib/MUBoard/Form/Handler/Admin/Category/Base/Edit.php:137
@@ -318,7 +325,10 @@ msgstr ""
 #: lib/MUBoard/Base/Installer.php:28 lib/MUBoard/Base/Installer.php:35
 #: lib/MUBoard/Base/Installer.php:42 lib/MUBoard/Base/Installer.php:49
 #: lib/MUBoard/Base/Installer.php:56 lib/MUBoard/Base/Installer.php:63
-#: lib/MUBoard/Base/Installer.php:70
+#: lib/MUBoard/Base/Installer.php:70 lib/MUBoard/Installer.php:28
+#: lib/MUBoard/Installer.php:35 lib/MUBoard/Installer.php:42
+#: lib/MUBoard/Installer.php:49 lib/MUBoard/Installer.php:56
+#: lib/MUBoard/Installer.php:63 lib/MUBoard/Installer.php:70
 #, php-format
 msgid ""
 "The upload folder \"%s\" does not exist. Please create it before installing "
@@ -328,7 +338,10 @@ msgstr ""
 #: lib/MUBoard/Base/Installer.php:31 lib/MUBoard/Base/Installer.php:38
 #: lib/MUBoard/Base/Installer.php:45 lib/MUBoard/Base/Installer.php:52
 #: lib/MUBoard/Base/Installer.php:59 lib/MUBoard/Base/Installer.php:66
-#: lib/MUBoard/Base/Installer.php:73
+#: lib/MUBoard/Base/Installer.php:73 lib/MUBoard/Installer.php:31
+#: lib/MUBoard/Installer.php:38 lib/MUBoard/Installer.php:45
+#: lib/MUBoard/Installer.php:52 lib/MUBoard/Installer.php:59
+#: lib/MUBoard/Installer.php:66 lib/MUBoard/Installer.php:73
 #, php-format
 msgid ""
 "The upload folder \"%s\" is not writable. Please change permissions "
@@ -336,10 +349,11 @@ msgid ""
 msgstr ""
 
 #: lib/MUBoard/Base/Installer.php:81 lib/MUBoard/Base/Installer.php:166
+#: lib/MUBoard/Installer.php:81
 msgid "Doctrine Exception: "
 msgstr ""
 
-#: lib/MUBoard/Base/Installer.php:83
+#: lib/MUBoard/Base/Installer.php:83 lib/MUBoard/Installer.php:83
 #, php-format
 msgid "An error was encountered while creating the tables for the %s module."
 msgstr ""
@@ -464,39 +478,19 @@ msgstr ""
 msgid "MUBoard - a small forum module"
 msgstr ""
 
-#: lib/MUBoard/Util/Base/Abonnements.php:171
-msgid "A new ticket on "
+#: lib/MUBoard/Util/Base/Abonnements.php:138
+msgid "Another issue was created by an user on "
 msgstr ""
 
-#: lib/MUBoard/Util/Base/Abonnements.php:175
-msgid "An answer to your ticket on "
-msgstr ""
-
-#: lib/MUBoard/Util/Base/Abonnements.php:178
-msgid "An answer to a ticket on "
-msgstr ""
-
-#: lib/MUBoard/Util/Base/Abonnements.php:211
-msgid "Unable to send message"
-msgstr ""
-
-#: lib/MUBoard/Util/Base/Abonnements.php:217
-msgid "Your ticket was saved and an email sent to our support!"
-msgstr ""
-
-#: lib/MUBoard/Util/Base/Abonnements.php:220
-msgid "Your support answer was saved and an email sent to the customer!"
-msgstr ""
-
-#: lib/MUBoard/Util/Base/Abonnements.php:246
+#: lib/MUBoard/Util/Base/Abonnements.php:140
 msgid "Another posting was created by an user on "
 msgstr ""
 
-#: lib/MUBoard/Util/Base/Abonnements.php:248
+#: lib/MUBoard/Util/Base/Abonnements.php:143
 msgid "Title of posting"
 msgstr ""
 
-#: lib/MUBoard/Util/Base/Abonnements.php:249
+#: lib/MUBoard/Util/Base/Abonnements.php:144
 #: templates/admin/posting/display.tpl:37 templates/admin/posting/view.tpl:58
 #: templates/admin/posting/edit.tpl:42 templates/admin/posting/view.csv:3
 #: templates/user/posting/view.tpl:57 templates/user/posting/edit.tpl:49
@@ -504,12 +498,27 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
-#: lib/MUBoard/Util/Base/Abonnements.php:250
+#: lib/MUBoard/Util/Base/Abonnements.php:145
 msgid "Visit this issue:"
 msgstr ""
 
-#: lib/MUBoard/Util/Base/Abonnements.php:253
-msgid "Moderate this entry:"
+#: lib/MUBoard/Util/Base/Abonnements.php:147
+msgid "You get this messsage because you did a subscription for a forum!"
+msgstr ""
+
+#: lib/MUBoard/Util/Base/Abonnements.php:152
+#: templates/admin/posting/display.tpl:130 templates/admin/posting/view.tpl:85
+#: templates/admin/posting/view.csv:4 templates/admin/forum/display.tpl:4
+#: templates/admin/forum/include_selectEditOne.tpl:3
+#: templates/user/posting/view.tpl:84 templates/user/posting/view.csv:4
+#: templates/user/forum/display.tpl:4
+#: templates/user/forum/include_selectEditOne.tpl:3
+msgid "Forum"
+msgstr ""
+
+#: lib/MUBoard/Util/Base/Abonnements.php:153
+#, php-format
+msgid "You can quit the subscription if you visit the %s!"
 msgstr ""
 
 #: lib/MUBoard/Util/Base/View.php:178
@@ -533,12 +542,12 @@ msgstr ""
 msgid "An error occured during thumbnail creation: %s"
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:124 templates/user/posting/display.tpl:43
+#: lib/MUBoard/Util/View.php:125 templates/user/posting/display.tpl:43
 #: templates/user/forum/display.tpl:21
 msgid "Category:"
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:124 templates/user/posting/display.tpl:44
+#: lib/MUBoard/Util/View.php:125 templates/user/posting/display.tpl:45
 #: templates/user/forum/display.tpl:17
 #: templates/user/forum/include_displayItemListMany.tpl:13
 msgid "Forum:"
@@ -548,7 +557,7 @@ msgstr ""
 msgid "Last answer by "
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:202 lib/MUBoard/Util/View.php:265
+#: lib/MUBoard/Util/View.php:202 lib/MUBoard/Util/View.php:267
 msgid "on "
 msgstr ""
 
@@ -556,52 +565,51 @@ msgstr ""
 msgid "No answer available!"
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:260 lib/MUBoard/Api/Ajax.php:44
+#: lib/MUBoard/Util/View.php:262 lib/MUBoard/Api/Ajax.php:48
 #: templates/contenttype/itemlist_Posting_display.tpl:6
 #: templates/contenttype/itemlist_Posting_display_description.tpl:7
-#: templates/user/posting/display.tpl:84
+#: templates/user/posting/display.tpl:82
 #: templates/user/posting/include_displayItemListMany.tpl:43
 msgid "Guest"
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:262
+#: lib/MUBoard/Util/View.php:264
 msgid "Last posting by "
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:267 lib/MUBoard/Api/Ajax.php:68
-#: lib/MUBoard/Controller/User.php:291
-msgid "Issue: "
+#: lib/MUBoard/Util/View.php:270
+msgid "Show last posting"
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:272
+#: lib/MUBoard/Util/View.php:277
 msgid "No postings available!"
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:301
+#: lib/MUBoard/Util/View.php:305
 msgid "Important issue!"
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:349
+#: lib/MUBoard/Util/View.php:353
 msgid "You have permissions to edit this issue!"
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:683
+#: lib/MUBoard/Util/View.php:680
 msgid "Registered: "
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:686
+#: lib/MUBoard/Util/View.php:683
 msgid "Last Visit: "
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:688
+#: lib/MUBoard/Util/View.php:685
 msgid "Online"
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:691 lib/MUBoard/Util/View.php:694
+#: lib/MUBoard/Util/View.php:688 lib/MUBoard/Util/View.php:691
 msgid "Postings: "
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:697 lib/MUBoard/Util/View.php:699
+#: lib/MUBoard/Util/View.php:694 lib/MUBoard/Util/View.php:696
 msgid "Rank: "
 msgstr ""
 
@@ -715,7 +723,7 @@ msgstr ""
 #: lib/MUBoard/Entity/Base/Posting.php:1558
 #: lib/MUBoard/Entity/Base/Category.php:561
 #: lib/MUBoard/Entity/Base/Rank.php:747 lib/MUBoard/Entity/Base/User.php:448
-#: templates/user/posting/edit.tpl:272 templates/user/posting/edit.tpl:284
+#: templates/user/posting/edit.tpl:258 templates/user/posting/edit.tpl:266
 msgid "Preview"
 msgstr ""
 
@@ -876,16 +884,16 @@ msgstr ""
 msgid "A list of three random categories."
 msgstr ""
 
-#: lib/MUBoard/Api/Base/User.php:30 lib/MUBoard/Api/User.php:35
+#: lib/MUBoard/Api/Base/User.php:30 lib/MUBoard/Api/User.php:34
 msgid "Backend"
 msgstr ""
 
-#: lib/MUBoard/Api/Base/User.php:31 lib/MUBoard/Api/User.php:36
+#: lib/MUBoard/Api/Base/User.php:31 lib/MUBoard/Api/User.php:35
 msgid "Switch to administration area."
 msgstr ""
 
 #: lib/MUBoard/Api/Base/User.php:37 lib/MUBoard/Api/Base/Admin.php:37
-#: lib/MUBoard/Api/User.php:42 lib/MUBoard/Api/Admin.php:37
+#: lib/MUBoard/Api/User.php:41 lib/MUBoard/Api/Admin.php:37
 #: templates/admin/category/view.tpl:4
 msgid "Category list"
 msgstr ""
@@ -949,37 +957,47 @@ msgstr ""
 msgid "Manage settings for this application"
 msgstr ""
 
-#: lib/MUBoard/Api/User.php:46
+#: lib/MUBoard/Api/User.php:45
 msgid "New issue"
 msgstr ""
 
-#: lib/MUBoard/Api/User.php:47
+#: lib/MUBoard/Api/User.php:46
 msgid "Create a new issue"
 msgstr ""
 
-#: lib/MUBoard/Api/User.php:51
+#: lib/MUBoard/Api/User.php:50
 msgid "Latest issues"
 msgstr ""
 
-#: lib/MUBoard/Api/User.php:52
+#: lib/MUBoard/Api/User.php:51
 msgid "Look for latest issues"
 msgstr ""
 
-#: lib/MUBoard/Api/User.php:56
+#: lib/MUBoard/Api/User.php:55
 msgid "Search issues"
 msgstr ""
 
-#: lib/MUBoard/Api/User.php:57
+#: lib/MUBoard/Api/User.php:56
 msgid "Look for relevant issues"
 msgstr ""
 
-#: lib/MUBoard/Api/Ajax.php:94
+#: lib/MUBoard/Api/Ajax.php:72 lib/MUBoard/Controller/User.php:286
+msgid "Issue: "
+msgstr ""
+
+#: lib/MUBoard/Api/Ajax.php:98
 msgid ""
 "Sorry! If you want to create an new issue you have to enter a title and a "
 "text to get a preview!"
 msgstr ""
 
-#: lib/MUBoard/Api/Ajax.php:97
+#: lib/MUBoard/Api/Ajax.php:101
+msgid ""
+"Sorry! If you want to create an new issue or to edit an existing issue you "
+"have to enter a title to get a preview!"
+msgstr ""
+
+#: lib/MUBoard/Api/Ajax.php:104
 msgid ""
 "Sorry! If you want to answer to an issue you have to enter a text to get a "
 "preview"
@@ -1004,11 +1022,11 @@ msgstr ""
 msgid "Forum - Category Overview"
 msgstr ""
 
-#: lib/MUBoard/Controller/User.php:285
+#: lib/MUBoard/Controller/User.php:280
 msgid "Forum - Category: "
 msgstr ""
 
-#: lib/MUBoard/Controller/User.php:288 templates/search/moduleResult.tpl:10
+#: lib/MUBoard/Controller/User.php:283 templates/search/moduleResult.tpl:10
 msgid "Forum: "
 msgstr ""
 
@@ -1030,7 +1048,7 @@ msgstr ""
 
 #: templates/admin/config.tpl:29 templates/admin/config.tpl:43
 #: templates/admin/config.tpl:57 templates/admin/config.tpl:62
-#: templates/admin/config.tpl:78
+#: templates/admin/config.tpl:82
 msgid "Enter this setting. Only digits are allowed."
 msgstr ""
 
@@ -1065,38 +1083,42 @@ msgid "Latest postings"
 msgstr ""
 
 #: templates/admin/config.tpl:65
-msgid "Sorting postings"
+msgid "Sorting categories"
 msgstr ""
 
 #: templates/admin/config.tpl:69
-msgid "Icon set"
+msgid "Sorting postings"
 msgstr ""
 
 #: templates/admin/config.tpl:73
-msgid "Template"
+msgid "Icon set"
 msgstr ""
 
 #: templates/admin/config.tpl:77
-msgid "Pagesize"
+msgid "Template"
 msgstr ""
 
 #: templates/admin/config.tpl:81
-msgid "Standard icon"
-msgstr ""
-
-#: templates/admin/config.tpl:82 templates/admin/config.tpl:86
-msgid "Enter this setting."
+msgid "Pagesize"
 msgstr ""
 
 #: templates/admin/config.tpl:85
+msgid "Standard icon"
+msgstr ""
+
+#: templates/admin/config.tpl:86 templates/admin/config.tpl:90
+msgid "Enter this setting."
+msgstr ""
+
+#: templates/admin/config.tpl:89
 msgid "Special icon"
 msgstr ""
 
-#: templates/admin/config.tpl:91
+#: templates/admin/config.tpl:95
 msgid "Update configuration"
 msgstr ""
 
-#: templates/admin/config.tpl:92
+#: templates/admin/config.tpl:96
 #: templates/admin/posting/include_selectOne.tpl:15
 #: templates/admin/posting/edit.tpl:253 templates/admin/posting/delete.tpl:22
 #: templates/admin/posting/include_selectEditOne.tpl:15
@@ -1109,7 +1131,7 @@ msgstr ""
 #: templates/admin/category/edit.tpl:92 templates/admin/category/delete.tpl:22
 #: templates/admin/category/include_selectEditOne.tpl:15
 #: templates/user/posting/include_selectOne.tpl:15
-#: templates/user/posting/edit.tpl:289
+#: templates/user/posting/edit.tpl:271
 #: templates/user/posting/include_selectEditOne.tpl:15
 #: templates/user/abo/edit.tpl:92 templates/user/rank/edit.tpl:120
 #: templates/user/rank/include_selectEditOne.tpl:15
@@ -1170,12 +1192,12 @@ msgstr ""
 #: templates/admin/posting/edit.tpl:112 templates/admin/posting/edit.tpl:136
 #: templates/admin/posting/edit.tpl:160 templates/admin/posting/edit.tpl:184
 #: templates/admin/rank/display.tpl:46 templates/admin/rank/view.tpl:88
-#: templates/admin/rank/edit.tpl:72 templates/user/posting/display.tpl:102
-#: templates/user/posting/display.tpl:111
-#: templates/user/posting/display.tpl:121
-#: templates/user/posting/display.tpl:194
-#: templates/user/posting/display.tpl:203
-#: templates/user/posting/display.tpl:212 templates/user/posting/view.tpl:111
+#: templates/admin/rank/edit.tpl:72 templates/user/posting/display.tpl:100
+#: templates/user/posting/display.tpl:109
+#: templates/user/posting/display.tpl:118
+#: templates/user/posting/display.tpl:191
+#: templates/user/posting/display.tpl:200
+#: templates/user/posting/display.tpl:209 templates/user/posting/view.tpl:111
 #: templates/user/posting/view.tpl:123 templates/user/posting/view.tpl:135
 #: templates/user/posting/view.tpl:147 templates/user/posting/view.tpl:159
 #: templates/user/posting/view.tpl:171 templates/user/posting/edit.tpl:79
@@ -1257,7 +1279,7 @@ msgstr ""
 #: templates/user/user/include_displayItemListMany.tpl:10
 #: templates/user/user/view.tpl:74
 #: templates/user/user/include_displayItemListOne.tpl:7
-#: templates/user/forum/include_displayItemListMany.tpl:50
+#: templates/user/forum/include_displayItemListMany.tpl:52
 #: templates/user/forum/view.tpl:74
 #: templates/user/forum/include_displayItemListOne.tpl:7
 #: templates/user/category/include_displayItemListMany.tpl:10
@@ -1295,7 +1317,7 @@ msgstr ""
 #: templates/user/user/include_displayItemListMany.tpl:11
 #: templates/user/user/view.tpl:75
 #: templates/user/user/include_displayItemListOne.tpl:8
-#: templates/user/forum/include_displayItemListMany.tpl:51
+#: templates/user/forum/include_displayItemListMany.tpl:53
 #: templates/user/forum/view.tpl:75
 #: templates/user/forum/include_displayItemListOne.tpl:8
 #: templates/user/category/include_displayItemListMany.tpl:11
@@ -1307,15 +1329,6 @@ msgstr ""
 #: templates/admin/posting/display.tpl:150 templates/admin/user/display.tpl:38
 #: templates/admin/forum/display.tpl:57 templates/user/user/display.tpl:36
 msgid "No set."
-msgstr ""
-
-#: templates/admin/posting/display.tpl:130 templates/admin/posting/view.tpl:85
-#: templates/admin/posting/view.csv:4 templates/admin/forum/display.tpl:4
-#: templates/admin/forum/include_selectEditOne.tpl:3
-#: templates/user/posting/view.tpl:84 templates/user/posting/view.csv:4
-#: templates/user/forum/display.tpl:4
-#: templates/user/forum/include_selectEditOne.tpl:3
-msgid "Forum"
 msgstr ""
 
 #: templates/admin/posting/view.rss:12 templates/admin/posting/view.atom:5
@@ -1510,22 +1523,22 @@ msgstr ""
 #: templates/admin/posting/edit.tpl:226 templates/admin/abo/edit.tpl:76
 #: templates/admin/rank/edit.tpl:116 templates/admin/user/edit.tpl:74
 #: templates/admin/forum/edit.tpl:72 templates/admin/category/edit.tpl:71
-#: templates/user/posting/edit.tpl:255 templates/user/abo/edit.tpl:71
-#: templates/user/rank/edit.tpl:99 templates/user/user/edit.tpl:69
-#: templates/user/forum/edit.tpl:67 templates/user/category/edit.tpl:66
+#: templates/user/abo/edit.tpl:71 templates/user/rank/edit.tpl:99
+#: templates/user/user/edit.tpl:69 templates/user/forum/edit.tpl:67
+#: templates/user/category/edit.tpl:66
 msgid "Return control"
 msgstr ""
 
 #: templates/admin/posting/edit.tpl:228 templates/admin/abo/edit.tpl:78
 #: templates/admin/rank/edit.tpl:118 templates/admin/user/edit.tpl:76
 #: templates/admin/forum/edit.tpl:74 templates/admin/category/edit.tpl:73
-#: templates/user/posting/edit.tpl:257 templates/user/abo/edit.tpl:73
-#: templates/user/rank/edit.tpl:101 templates/user/user/edit.tpl:71
-#: templates/user/forum/edit.tpl:69 templates/user/category/edit.tpl:68
+#: templates/user/abo/edit.tpl:73 templates/user/rank/edit.tpl:101
+#: templates/user/user/edit.tpl:71 templates/user/forum/edit.tpl:69
+#: templates/user/category/edit.tpl:68
 msgid "Create another item after save"
 msgstr ""
 
-#: templates/admin/posting/edit.tpl:238 templates/user/posting/edit.tpl:268
+#: templates/admin/posting/edit.tpl:238 templates/user/posting/edit.tpl:254
 msgid "Update posting"
 msgstr ""
 
@@ -1533,19 +1546,18 @@ msgstr ""
 msgid "Move issue"
 msgstr ""
 
-#: templates/admin/posting/edit.tpl:244 templates/user/posting/edit.tpl:274
+#: templates/admin/posting/edit.tpl:244
 msgid "Really delete this posting?"
 msgstr ""
 
 #: templates/admin/posting/edit.tpl:245 templates/admin/posting/delete.tpl:4
-#: templates/user/posting/edit.tpl:275
 msgid "Delete posting"
 msgstr ""
 
 #: templates/admin/posting/edit.tpl:251 templates/admin/abo/edit.tpl:95
 #: templates/admin/rank/edit.tpl:135 templates/admin/user/edit.tpl:93
 #: templates/admin/forum/edit.tpl:91 templates/admin/category/edit.tpl:90
-#: templates/user/posting/edit.tpl:287 templates/user/abo/edit.tpl:90
+#: templates/user/posting/edit.tpl:269 templates/user/abo/edit.tpl:90
 #: templates/user/rank/edit.tpl:118 templates/user/user/edit.tpl:88
 #: templates/user/forum/edit.tpl:86 templates/user/category/edit.tpl:85
 msgid "OK"
@@ -1946,8 +1958,8 @@ msgstr ""
 #: templates/admin/category/view.tpl:46 templates/admin/category/edit.tpl:35
 #: templates/admin/category/view.csv:3 templates/user/forum/view.tpl:45
 #: templates/user/forum/edit.tpl:30 templates/user/forum/view.csv:3
-#: templates/user/category/display.tpl:47 templates/user/category/view.tpl:44
-#: templates/user/category/edit.tpl:30 templates/user/category/view.csv:3
+#: templates/user/category/view.tpl:44 templates/user/category/edit.tpl:30
+#: templates/user/category/view.csv:3
 msgid "Description"
 msgstr ""
 
@@ -1957,8 +1969,8 @@ msgstr ""
 #: templates/admin/category/view.tpl:49 templates/admin/category/edit.tpl:40
 #: templates/admin/category/view.csv:3 templates/user/forum/view.tpl:48
 #: templates/user/forum/edit.tpl:35 templates/user/forum/view.csv:3
-#: templates/user/category/display.tpl:49 templates/user/category/view.tpl:47
-#: templates/user/category/edit.tpl:35 templates/user/category/view.csv:3
+#: templates/user/category/view.tpl:47 templates/user/category/edit.tpl:35
+#: templates/user/category/view.csv:3
 msgid "Pos"
 msgstr ""
 
@@ -1984,7 +1996,7 @@ msgstr ""
 #: templates/admin/forum/view.tpl:13 templates/admin/forum/edit.tpl:10
 #: templates/admin/forum/edit.tpl:89 templates/admin/category/display.tpl:23
 #: templates/user/forum/view.tpl:11 templates/user/forum/edit.tpl:9
-#: templates/user/forum/edit.tpl:84 templates/user/category/display.tpl:37
+#: templates/user/forum/edit.tpl:84
 msgid "Create forum"
 msgstr ""
 
@@ -2251,16 +2263,16 @@ msgstr ""
 msgid "Created: "
 msgstr ""
 
-#: templates/user/posting/display.tpl:43 templates/user/posting/display.tpl:44
+#: templates/user/posting/display.tpl:43 templates/user/posting/display.tpl:45
 msgid "Back to"
 msgstr ""
 
-#: templates/user/posting/display.tpl:59
+#: templates/user/posting/display.tpl:58
 #: templates/user/posting/include_displayItemListMany.tpl:58
 msgid "Issue is open! You have permissions to close this issue!"
 msgstr ""
 
-#: templates/user/posting/display.tpl:67
+#: templates/user/posting/display.tpl:66
 #: templates/user/posting/include_displayItemListMany.tpl:62
 msgid "Issue is closed. You have permissions to reopen this issue!"
 msgstr ""
@@ -2285,7 +2297,7 @@ msgstr ""
 msgid "Edit issue"
 msgstr ""
 
-#: templates/user/posting/edit.tpl:21 templates/user/posting/edit.tpl:279
+#: templates/user/posting/edit.tpl:21 templates/user/posting/edit.tpl:261
 msgid "Create issue"
 msgstr ""
 
@@ -2298,15 +2310,15 @@ msgstr ""
 msgid "Allowed file size:"
 msgstr ""
 
-#: templates/user/posting/edit.tpl:270
+#: templates/user/posting/edit.tpl:256
 msgid "Update issue"
 msgstr ""
 
-#: templates/user/posting/edit.tpl:280
+#: templates/user/posting/edit.tpl:262
 msgid "Back to Forum"
 msgstr ""
 
-#: templates/user/posting/edit.tpl:282
+#: templates/user/posting/edit.tpl:264
 msgid "Save answer"
 msgstr ""
 
@@ -2318,16 +2330,16 @@ msgstr ""
 msgid "Answers"
 msgstr ""
 
-#: templates/user/forum/include_displayItemListMany.tpl:65
+#: templates/user/forum/include_displayItemListMany.tpl:67
 #: templates/user/category/view.tpl:71
 msgid "There are no forums in this category!"
 msgstr ""
 
-#: templates/user/category/display.tpl:77 templates/user/category/view.tpl:124
+#: templates/user/category/display.tpl:40 templates/user/category/view.tpl:124
 msgid "Number of issues"
 msgstr ""
 
-#: templates/user/category/display.tpl:78 templates/user/category/view.tpl:125
+#: templates/user/category/display.tpl:41 templates/user/category/view.tpl:125
 msgid "Number of postings"
 msgstr ""
 
@@ -2367,14 +2379,9 @@ msgstr ""
 msgid "Order of results"
 msgstr ""
 
-#: templates/search/moduleSearch.tpl:27
-msgid "Ascending"
-msgstr ""
-
-#: templates/search/moduleSearch.tpl:28
-msgid "Descending"
-msgstr ""
-
 #: templates/search/moduleSearch.tpl:32
 msgid "Search"
+msgstr ""
+
+msgid "Your result!"
 msgstr ""
