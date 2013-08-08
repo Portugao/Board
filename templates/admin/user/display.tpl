@@ -6,7 +6,7 @@
 {pagesetvar name='title' value=$templateTitle|@html_entity_decode}
 <div class="z-admin-content-pagetitle">
     {icon type='display' size='small' __alt='Details'}
-    <h3>{$templateTitle|notifyfilters:'muboard.filter_hooks.users.filter'}</h3>
+    <h3>{$templateTitle|notifyfilters:'muboard.filter_hooks.users.filter'} | {usergetvar name='uname' uid=$user.userid}</h3>
 </div>
 
 

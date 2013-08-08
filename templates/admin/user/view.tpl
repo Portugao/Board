@@ -60,7 +60,7 @@
     {foreach item='user' from=$items}
     <tr class="{cycle values='z-odd, z-even'}">
         <td headers="huserid" class="z-right">
-            {$user.userid|notifyfilters:'muboard.filterhook.users'}
+            {$user.userid|notifyfilters:'muboard.filterhook.users'} | {usergetvar name='uname' uid=$user.userid}
         </td>
         <td headers="hnumberpostings" class="z-right">
             {$user.numberPostings}
