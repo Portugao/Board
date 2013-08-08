@@ -41,8 +41,14 @@ function smarty_block_muboardform($params, $content, $view)
         // we check if the entrypoint is part of the url
         $stripentrypoint = ModUtil::getVar('ZConfig', 'shorturlsstripentrypoint');
 
-        if(strpos($action,"func=display")!==false || strpos($action,"func=edit")!==false) {
-            $action = 'index.php?module=muboard&amp;type=user&amp;func=edit&amp;ot=posting';
+        if (ModUtil::getVar('ZConfig', 'shorturls') == 0) {
+        if (strpos($action, "func=display")!== false ) {
+            $action = 'index.php?module=muboard&amp;type=user&amp;func=edit&amp;ot=posting&amp;answer=1';
+        }
+        if (strpos($action, "func=edit&ot=posting")!== false && $forumid > 0) {
+            $action = 'index.php?module=muboard&amp;type=user&amp;func=edit&amp;ot=posting&amp;forum' . $forumid;
+        }
+
         } else {
 
             if (strpos($action, "muboard/posting/id.") !== false) {
@@ -54,7 +60,7 @@ function smarty_block_muboardform($params, $content, $view)
                     $action = 'index.php/muboard/edit/ot/posting/answer/1';
                 }
             }
-            if (strpos($action, "edit/ot/posting/forum/") !== false && $forum > 0) {
+            if (strpos($action, "edit/ot/posting/forum/") !== false && $forumid > 0) {
                 if ($stripentrypoint == 1) {
                     $action = 'muboard/edit/ot/posting/forum/' . $forumid;
                 }
