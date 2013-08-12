@@ -118,7 +118,7 @@ abstract class MUBoard_Entity_Base_Category extends Zikula_EntityAccess
     /**
      * Bidirectional - One category [category] has many forum [forums] (INVERSE SIDE).
      *
-     * @ORM\OneToMany(targetEntity="MUBoard_Entity_Forum", mappedBy="category", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="MUBoard_Entity_Forum", mappedBy="category", cascade={"remove"})
      * @ORM\JoinTable(name="muboard_categoryforum")
      * @var MUBoard_Entity_Forum[] $forum.
      */

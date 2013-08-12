@@ -25,18 +25,7 @@ use DoctrineExtensions\StandardFields\Mapping\Annotation as ZK;
  * @ORM\HasLifecycleCallbacks
  */
 class MUBoard_Entity_Forum extends MUBoard_Entity_Base_Forum
-{
-    
-    /**
-     * Bidirectional - One forum [forum] has many posting [postings] (INVERSE SIDE).
-     *
-     * @ORM\OneToMany(targetEntity="MUBoard_Entity_Posting", mappedBy="forum", cascade={"remove"})
-     * @ORM\JoinTable(name="muboard_forumposting")
-     * @ORM\OrderBy({"createdDate" = "DESC"})
-     * @var MUBoard_Entity_Posting[] $posting.
-     */
-    protected $posting = null;
-    
+{    
     /**
      * Collect available actions for this entity.
      */

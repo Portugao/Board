@@ -126,7 +126,7 @@ abstract class MUBoard_Entity_Base_Forum extends Zikula_EntityAccess
     /**
      * Bidirectional - One forum [forum] has many posting [postings] (INVERSE SIDE).
      *
-     * @ORM\OneToMany(targetEntity="MUBoard_Entity_Posting", mappedBy="forum")
+     * @ORM\OneToMany(targetEntity="MUBoard_Entity_Posting", mappedBy="forum", cascade={"remove"})
      * @ORM\JoinTable(name="muboard_forumposting")
      * @ORM\OrderBy({"createdDate" = "DESC"})
      * @var MUBoard_Entity_Posting[] $posting.

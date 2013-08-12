@@ -314,7 +314,7 @@ abstract class MUBoard_Entity_Base_Posting extends Zikula_EntityAccess
     /**
      * Bidirectional - Many children [postings] are linked by one parent [posting] (OWNING SIDE).
      *
-     * @ORM\ManyToOne(targetEntity="MUBoard_Entity_Posting", inversedBy="children", cascade={"all"})
+     * @ORM\ManyToOne(targetEntity="MUBoard_Entity_Posting", inversedBy="children")
      * @ORM\JoinTable(name="muboard_posting",
      *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" )},
      *      inverseJoinColumns={@ORM\JoinColumn(name="parent_id", referencedColumnName="id" )}
@@ -341,7 +341,7 @@ abstract class MUBoard_Entity_Base_Posting extends Zikula_EntityAccess
     /**
      * Bidirectional - One parent [posting] has many children [postings] (INVERSE SIDE).
      *
-     * @ORM\OneToMany(targetEntity="MUBoard_Entity_Posting", mappedBy="parent", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="MUBoard_Entity_Posting", mappedBy="parent", cascade={"remove"})
      * @ORM\JoinTable(name="muboard_parentchildren",
      *      joinColumns={@ORM\JoinColumn(name="parent_id", referencedColumnName="id" )},
      *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" )}

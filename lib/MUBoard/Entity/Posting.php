@@ -25,36 +25,7 @@ use DoctrineExtensions\StandardFields\Mapping\Annotation as ZK;
  * @ORM\HasLifecycleCallbacks
  */
 class MUBoard_Entity_Posting extends MUBoard_Entity_Base_Posting
-{
-    /**
-     * Self relations were not working yet, must be retested with Doctrine 2.
-     * See #9 for more information
-     */
-    /**
-     * Bidirectional - Many children [postings] are linked by one parent [posting] (OWNING SIDE).
-     *
-     * @ORM\ManyToOne(targetEntity="MUBoard_Entity_Posting", inversedBy="children")
-     * @ORM\JoinTable(name="muboard_posting",
-     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" )},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="parent_id", referencedColumnName="id" )}
-     * )
-     * @var MUBoard_Entity_Posting $parent.
-     */
-    protected $parent;	
-    
-    
-    /**
-     * Bidirectional - One parent [posting] has many children [postings] (INVERSE SIDE).
-     *
-     * @ORM\OneToMany(targetEntity="MUBoard_Entity_Posting", mappedBy="parent", cascade={"remove"})
-     * @ORM\JoinTable(name="muboard_parentchildren",
-     *      joinColumns={@ORM\JoinColumn(name="parent_id", referencedColumnName="id" )},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" )}
-     * )
-     * @var MUBoard_Entity_Posting[] $children.
-     */
-    protected $children = null;
-        
+{       
 	/**
 	 * Get list of allowed redirect codes.
 	 */
