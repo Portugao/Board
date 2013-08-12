@@ -37,8 +37,8 @@
             {muboardValidationError id='description' class='required'}
         </div>
         <div class="z-formrow">
-            {formlabel for='pos' __text='Pos' mandatorysym='1'}
-            {formintinput group='forum' id='pos' mandatory=true __title='Enter the pos of the forum' maxLength=3 cssClass='required validate-digits'}
+            {formlabel for='pos' __text='Position' mandatorysym='1'}
+            {formintinput group='forum' id='pos' mandatory=true __title='Enter the position of the forum' maxLength=3 cssClass='required validate-digits'}
             {muboardValidationError id='pos' class='required'}
             {muboardValidationError id='pos' class='validate-digits'}
         </div>
