@@ -18,5 +18,43 @@
  */
 class MUBoard_Entity_Validator_Category extends MUBoard_Entity_Validator_Base_Category
 {
-    // here you can add custom validation methods or override existing checks
+    /**
+     * Performs all validation rules.
+     *
+     * @return mixed either array with error information or true on success
+     */
+    public function validateAll()
+    {
+        $errorInfo = array('message' => '', 'code' => 0, 'debugArray' => array());
+        $dom = ZLanguage::getModuleDomain('MUBoard');
+        if (!$this->isStringNotLongerThan('title', 255)) {
+            $errorInfo['message'] = __f('Error! Length of field value must not be higher than %2$s (%1$s).', array('title', 255), $dom);
+            return $errorInfo;
+        }
+        if (!$this->isStringNotEmpty('title')) {
+            $errorInfo['message'] = __f('Error! Field value must not be empty (%s).', array('title'), $dom);
+            return $errorInfo;
+        }
+        if (!$this->isStringNotLongerThan('description', 2000)) {
+            $errorInfo['message'] = __f('Error! Length of field value must not be higher than %2$s (%1$s).', array('description', 2000), $dom);
+            return $errorInfo;
+        }
+        if (!$this->isStringNotEmpty('description')) {
+            $errorInfo['message'] = __f('Error! Field value must not be empty (%s).', array('description'), $dom);
+            return $errorInfo;
+        }
+        if (!$this->isValidInteger('pos')) {
+            $errorInfo['message'] = __f('Error! Field value may only contain digits (%s).', array('pos'), $dom);
+            return $errorInfo;
+        }
+       /* if (!$this->isNumberNotEmpty('pos')) {
+            $errorInfo['message'] = __f('Error! Field value must not be 0 (%s).', array('pos'), $dom);
+            return $errorInfo;
+        }*/
+        if (!$this->isNumberNotLongerThan('pos', 3)) {
+            $errorInfo['message'] = __f('Error! Length of field value must not be higher than %2$s (%1$s).', array('pos', 3), $dom);
+            return $errorInfo;
+        }
+        return true;
+    }
 }
