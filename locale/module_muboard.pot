@@ -590,7 +590,7 @@ msgid "Important issue!"
 msgstr ""
 
 #: lib/MUBoard/Util/View.php:353
-msgid "You have permissions to edit this issue!"
+msgid "You have permissions to edit this posting!"
 msgstr ""
 
 #: lib/MUBoard/Util/View.php:680

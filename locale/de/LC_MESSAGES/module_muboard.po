@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: MUBoard\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-08-08 14:38+0000\n"
-"PO-Revision-Date: 2013-08-08 16:59+0100\n"
+"PO-Revision-Date: 2013-08-08 17:20+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -614,8 +614,8 @@ msgid "Important issue!"
 msgstr "Wichtiges Thema!"
 
 #: lib/MUBoard/Util/View.php:353
-msgid "You have permissions to edit this issue!"
-msgstr "Du hast die Berechtigung dieses Thema zu bearbeiten!"
+msgid "You have permissions to edit this posting!"
+msgstr "Du hast die Berechtigung diesen Beitrag zu bearbeiten!"
 
 #: lib/MUBoard/Util/View.php:680
 msgid "Registered: "
