@@ -52,7 +52,7 @@
                 </div>
              </div>  {* class="muboard-user-posting-header-action *}          
              <div class="muboard-user-posting-header-infos">
-                 {$posting.id|muboardGetStateOfPostingAbo:$posting.id}
+               {*  {$posting.id|muboardGetStateOfPostingAbo:$posting.id} at the moment no abonement of issues *}
                      {if $posting.state eq 1}
                          {checkpermissionblock component='MUBoard::' instance='.*' level="ACCESS_ADMIN"} 
                          <a title="{gt text='Issue is open! You have permissions to close this issue!'}" id="muboard-user-posting-header-infos-abo" href="{modurl modname='MUBoard' type='admin' func='close' ot='posting' id=$posting.id}">
