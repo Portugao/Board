@@ -33,6 +33,7 @@ Implemented Classes
 *lib/MUBoard/Entity/Repository/Forum.php
 *lib/MUBoard/Entity/Repository/Posting.php
 *lib/MUBoard/Entity/Repository/User.php
+*lib/MUBoard/Entity/Validator/Category.php
 *lib/MUBoard/Form/Handler/Admin/Config.php
 *lib/MUBoard/Form/Handler/Admin/Posting/Edit.php
 *lib/MUBoard/Form/Handler/User/Edit.php
