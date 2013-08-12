@@ -316,6 +316,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
      */
     public static function getStateOfEditOfIssue($postingid)
     {
+        $dom = ZLanguage::getModuleDomain('MUBoard');
         //get repository for Postings
         $repository = MUBoard_Util_Model::getPostingRepository();
         // get posting
@@ -348,9 +349,9 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
         if ($createdUserId == $userid && ($diffTimeHours < $editTime || $parent == NULL) ) {
             $serviceManager = ServiceUtil::getManager();
             // generate an auth key to use in urls
-            $csrftoken = SecurityUtil::generateCsrfToken($serviceManager, true);
-            $url = ModUtil::url('MUBoard', 'user', 'edit', array('ot' => 'posting', 'id' => $postingid, 'forum' => $forumid, 'token' => $csrftoken));
-            $title = __('You have permissions to edit this issue!');
+            //$csrftoken = SecurityUtil::generateCsrfToken($serviceManager, true); we do not use token at the moment TODO, 'token' => $csrftoken
+            $url = ModUtil::url('MUBoard', 'user', 'edit', array('ot' => 'posting', 'id' => $postingid, 'forum' => $forumid));
+            $title = __('You have permissions to edit this posting!', $dom);
             $out = "<a title='{$title}' id='muboard-user-posting-header-infos-edit-creater' href='{$url}'>
             <img src='/images/icons/extrasmall/xedit.png' />
             </a>";
