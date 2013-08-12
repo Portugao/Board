@@ -252,6 +252,7 @@
     {if $mode eq 'edit'}
         {if $func eq 'edit' && $parentid > 0}
         {formbutton id='btnUpdate' commandName='update' __text='Update posting' class='z-bt-save'}
+        {formbutton id='btnDelete' commandName='delete' __text='Delete' class='z-bt-delete'}
         {else}
         {formbutton id='btnUpdate' commandName='update' __text='Update issue' class='z-bt-save'}
         {/if}
