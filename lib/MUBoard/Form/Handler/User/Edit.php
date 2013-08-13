@@ -242,4 +242,40 @@ class MUBoard_Form_Handler_User_Edit extends MUBoard_Form_Handler_User_Base_Edit
 
         return $this->view->redirect($this->getRedirectUrl($args, $entity, $repeatCreateAction));
     }
+    
+    /**
+     * Get success or error message for default operations.
+     *
+     * @param Array   $args    arguments from handleCommand method.
+     * @param Boolean $success true if this is a success, false for default error.
+     * @return String desired status or error message.
+     */
+    protected function getDefaultMessage($args, $success = false)
+    {
+        $message = '';
+        switch ($args['commandName']) {
+            case 'create':
+                if ($success === true) {
+                    $message = $this->__('Done! Item created.');
+                } else {
+                    $message = $this->__('Error! Creation attempt failed.');
+                }
+                break;
+            case 'update':
+                if ($success === true) {
+                    $message = $this->__('Done! Item updated.');
+                } else {
+                    $message = $this->__('Error! Update attempt failed.');
+                }
+                break;
+            case 'delete':
+                if ($success === true) {
+                    $message = $this->__('Done! Item deleted.');
+                } else {
+                    $message = $this->__('Error! Deletion attempt failed.');
+                }
+                break;
+        }
+        return $message;
+    }
 }
