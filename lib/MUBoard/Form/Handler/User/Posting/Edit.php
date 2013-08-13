@@ -129,6 +129,7 @@ class MUBoard_Form_Handler_User_Posting_Edit extends MUBoard_Form_Handler_User_P
     protected function getDefaultReturnUrl($args, $obj)
     {
         $parentid = $this->request->getPost()->filter('muboardPosting_ParentItemList', 0, FILTER_SANITIZE_NUMBER_INT);
+        $forumid = $this->request->getPost()->filter('muboardForum_ForumItemList', 0, FILTER_SANITIZE_NUMBER_INT);
          
         // redirect to the list of postings
         $viewArgs = array('ot' => $this->objectType);
@@ -143,6 +144,21 @@ class MUBoard_Form_Handler_User_Posting_Edit extends MUBoard_Form_Handler_User_P
                 $url = ModUtil::url($this->name, 'user', 'display', array('ot' => 'posting', 'id' => $this->idValues['id']));
                  
             }
+        }
+        if ($args['commandName'] == 'create') {
+            if ($parentid > 0) {
+                $url = ModUtil::url($this->name, 'user', 'display', array('ot' => 'posting', 'id' => $parentid));
+            }
+        } 
+        if ($args['commandName'] == 'delete') {
+            if ($parentid > 0) {
+                $url = ModUtil::url($this->name, 'user', 'display', array('ot' => 'posting', 'id' => $parentid));
+            }            
+        } 
+        if ($args['commandName'] == 'cancel') {
+            if ($forumid > 0) {
+                $url = ModUtil::url($this->name, 'user', 'display', array('ot' => 'forum', 'id' => $forumid));
+            }            
         }
         return $url;
     }
