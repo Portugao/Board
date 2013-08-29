@@ -274,7 +274,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
             $out .= "</a><br />";
 
         } else {
-            $out = __('No postings available!');
+            $out = __('No postings available!', $dom);
         }
         return $out;
     }
@@ -692,9 +692,9 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
             $out .= __('Postings: ', $dom) . '' . '<br />';
         }
         if ($id > 1) {
-            $out .= __('Rank: ') . $user['rank']['name'] . '<br />';
+            $out .= __('Rank: ', $dom) . $user['rank']['name'] . '<br />';
         } else {
-            $out .= __('Rank: ') . '' . '<br />';
+            $out .= __('Rank: ', $dom) . '' . '<br />';
         }
         if ($id > 1) {
             if ($user['rank']['special'] == 0) {
