@@ -40,32 +40,40 @@ function smarty_block_muboardform($params, $content, $view)
 
         // we check if the entrypoint is part of the url
         $stripentrypoint = ModUtil::getVar('ZConfig', 'shorturlsstripentrypoint');
+        
+        // get url name
+        $tables = DBUtil::getTables();
+        $modcolumn = $tables['modules_column'];
+        $module = 'MUBoard';
+        $where = "$modcolumn[name] = '" . DataUtil::formatForStore($module) . "'";
+        $module = DBUtil::selectObject('modules', $where);
+        $urlname = $module['url'];
 
         if (ModUtil::getVar('ZConfig', 'shorturls') == 0) {
         if (strpos($action, "func=display")!== false ) {
-            $action = 'index.php?module=muboard&amp;type=user&amp;func=edit&amp;ot=posting&amp;answer=1';
+            $action = 'index.php?module=' . $urlname . '&amp;type=user&amp;func=edit&amp;ot=posting&amp;answer=1';
         }
         if (strpos($action, "func=edit&ot=posting")!== false && $forumid > 0) {
-            $action = 'index.php?module=muboard&amp;type=user&amp;func=edit&amp;ot=posting&amp;forum' . $forumid;
+            $action = 'index.php?module=' . $urlname . '&amp;type=user&amp;func=edit&amp;ot=posting&amp;forum' . $forumid;
         }
 
         } else {
 
-            if (strpos($action, "muboard/posting/id.") !== false) {
+            if (strpos($action, $urlname . "/posting/id.") !== false) {
 
                 if ($stripentrypoint == 1) {
-                    $action = 'muboard/edit/ot/posting/answer/1';
+                    $action = $urlname . '/edit/ot/posting/answer/1';
                 }
                 elseif ($stripentrypoint == 0) {
-                    $action = 'index.php/muboard/edit/ot/posting/answer/1';
+                    $action = 'index.php/' . $urlname  . '/edit/ot/posting/answer/1';
                 }
             }
             if (strpos($action, "edit/ot/posting/forum/") !== false && $forumid > 0) {
                 if ($stripentrypoint == 1) {
-                    $action = 'muboard/edit/ot/posting/forum/' . $forumid;
+                    $action = $urlname . '/edit/ot/posting/forum/' . $forumid;
                 }
                 elseif ($stripentrypoint == 0) {
-                    $action = 'index.php/muboard/edit/ot/posting/forum/' . $forumid;
+                    $action = 'index.php/' . $urlname . '/edit/ot/posting/forum/' . $forumid;
                 }
             }
         }
