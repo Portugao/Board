@@ -90,5 +90,7 @@
     </li> *}
 {/foreach}
 {* </ul> *}
+{else}
+{gt text='No postings available!'} {gt text='Be the first who created an issue!'}
 {/if}
 
