@@ -2385,3 +2385,6 @@ msgstr ""
 
 msgid "Your result!"
 msgstr ""
+
+msgid "Be the first who created an issue!"
+msgstr ""

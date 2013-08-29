@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: MUBoard\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-08-08 14:38+0000\n"
-"PO-Revision-Date: 2013-08-08 17:20+0100\n"
+"PO-Revision-Date: 2013-08-29 16:21+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -603,11 +603,11 @@ msgstr "Letzter Beitrag von "
 
 #: lib/MUBoard/Util/View.php:270
 msgid "Show last posting"
-msgstr "Letzten beitrag anzeigen"
+msgstr "Letzten Beitrag anzeigen"
 
 #: lib/MUBoard/Util/View.php:277
 msgid "No postings available!"
-msgstr "Keine Beiträge vorhanden"
+msgstr "Keine Beiträge vorhanden!"
 
 #: lib/MUBoard/Util/View.php:305
 msgid "Important issue!"
@@ -2134,7 +2134,7 @@ msgstr "Gib die Position der Kategorie ein"
 
 #: templates/admin/category/edit.tpl:82 templates/user/category/edit.tpl:77
 msgid "Update category"
-msgstr "Kategorie altualisieren"
+msgstr "Kategorie aktualisieren"
 
 #: templates/admin/category/edit.tpl:84 templates/user/category/edit.tpl:79
 msgid "Really delete this category?"
@@ -2419,6 +2419,9 @@ msgstr "Suchen"
 
 msgid "Your result!"
 msgstr "Dein Ergebnis!"
+
+msgid "Be the first who created an issue!"
+msgstr "Eröffne das erste Thema!"
 
 #~ msgid "Sorry! Moving the issue failed."
 #~ msgstr "Entschuldigung! Verschieben des Themas fehlgeschlagen."
