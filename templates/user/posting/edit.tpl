@@ -244,7 +244,7 @@
     	<input type="hidden" id="muboardPosting_ParentItemList" name="muboardPosting_ParentItemList" value="{$posting.id}" />
     	<input type="hidden" id="muboardPosting_ParentMode" name="muboardPosting_ParentMode" value="0" />
     {/if}
-    <div id="muboard-user-preview" style="display: none;"></div>
+    <div id="muboard-user-preview" style="display: none; height: 40px;"></div>
 
     {* include possible submit actions *}
     <div class="muboard-posting-edit-action">
@@ -360,7 +360,7 @@
 
        MU("#btnPreview").click(function(d) {
            d.preventDefault();
-           MU("#muboard-user-preview").slideDown(2000).html("<div id='muboard-work' style='height: 50px;'><img src='images/ajax/indicator.white.gif' /></div>");
+           MU("#muboard-user-preview").slideDown(500).html("<img style='margin: 0 auto;' src='images/ajax/large_square_white.gif' />");
            var url = "index.php?module=muboard&type=ajax&func=preview&theme=printer";
            {{if $func eq 'display'}}
            url = "index.php?module=muboard&type=ajax&func=preview&theme=printer&answer=1";
@@ -369,7 +369,8 @@
            var datatyp = 'html';
            var datawork = function(answer) {
                if (answer) {
-                   MU("#muboard-user-preview").html(answer).slideDown(3000); 
+                   MU("#muboard-user-preview").fadeOut(10).html("")
+                   .fadeIn(1000).html(answer); 
                }
            }
            
