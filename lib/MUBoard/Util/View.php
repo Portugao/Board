@@ -171,6 +171,8 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
      */
     public static function getLastAnswer($id)
     {
+        $dom = ZLanguage::getModuleDomain('MUBoard');
+        
         // get repositoy for posting
         $repository = MUBoard_Util_Model::getPostingRepository();
         // get posting by id
@@ -196,14 +198,14 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
             $createdDate = $lastposting->getCreatedDate();
             $date = DateUtil::formatDatetime($createdDate, 'datetimelong');
             $uname = UserUtil::getVar('uname', $lastposting['createdUserId']);
-            $out .= __('Last answer by ');
+            $out .= __('Last answer by ', $dom);
             $out .= $uname;
             $out .= "<br />";
-            $out .= __('on ');
+            $out .= __('on ', $dom);
             $out .= $date;
 
         } else {
-            $out = __('No answer available!');
+            $out = __('No answer available!', $dom);
         }
          
         return $out;
@@ -261,10 +263,10 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
             } else {
                 $uname = __('Guest', $dom);
             }
-            $out .= __('Last posting by ');
+            $out .= __('Last posting by ', $dom);
             $out .= $uname;
             $out .= "<br />";
-            $out .= __('on ');
+            $out .= __('on ', $dom);
             $out .= $date . "<br />";
             $out .= "<a title='";
             $out .= __('Show last posting', $dom) . " - " . $issuetitle . "' ";
