@@ -41,13 +41,13 @@
         {if ($func ne 'display' && $mode eq 'create') || ($mode eq 'edit' && $parentid eq 0)}
         <div class="z-formrow">
             {formlabel for='title' __text='Title' mandatorysym='1'}
-            {formtextinput group='posting' id='title' mandatory=true readOnly=false __title='Enter the title of the posting' textMode='singleline' maxLength=255 cssClass='required'}
+            {formtextinput group='posting' id='title' mandatory=true readOnly=false __title='Enter the title of the posting' textMode='singleline' maxLength=255 cssClass='required' }
             {muboardValidationError id='title' class='required'}
         </div>
         {/if}
         <div class="z-formrow">
             {formlabel for='text' __text='Text' mandatorysym='1'}
-            {formtextinput group='posting' id='text' mandatory=true __title='Enter the text of the posting' textMode='multiline' rows='6' cols='50' cssClass='required'}
+            {formtextinput group='posting' id='text' mandatory=true __title='Enter the text of the posting' textMode='multiline' rows='6' cols='50' cssClass='required' }
             {muboardValidationError id='text' class='required'}
         </div>
         <div class="z-formrow" style="display: none;">
