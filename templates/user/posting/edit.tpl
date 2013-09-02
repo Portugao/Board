@@ -260,7 +260,7 @@
     {elseif $mode eq 'create'}
     {if $func eq 'edit'}
         {formbutton id='btnCreate' commandName='create' __text='Create issue' class='z-bt-ok'}
-        {formbutton id='btnToforum' commandName='toforum' __text='Back to Forum' class='z-bt-back'}
+       {* {formbutton id='btnToforum' commandName='toforum' __text='Back to Forum' class='z-bt-back'} *}
     {else}
         {formbutton id='btnCreate' commandName='create' __text='Save answer' class='z-bt-ok'}
     {/if}
