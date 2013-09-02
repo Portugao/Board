@@ -105,11 +105,19 @@ class MUBoard_Form_Handler_User_Edit extends MUBoard_Form_Handler_User_Base_Edit
     public function HandleCommand(Zikula_Form_View $view, &$args)
     {
         $dom = ZLanguage::getModuleDomain('MUBoard');
-
-        $id = $this->request->getGet()->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
+        $id = 0;
+        $id = $this->request->query->filter('id', 0, FILTER_SANITIZE_NUMBER_INT);
         $forumid = $this->request->query->filter('forum', 0);
         $forumid2 = $this->request->getPost()->filter('muboardForum_ForumItemList', 0, FILTER_SANITIZE_NUMBER_INT);
+        $parentid = 0;
         $parentid = $this->request->getPost()->filter('muboardPosting_ParentItemList', 0);
+        
+        if ($args['commandName'] == 'toforum') {
+            if ($forumid > 0) {
+                $url = ModUtil::url($this->name, 'user', 'display', array('ot' => 'forum', 'id' => $forumid));
+                return System::redirect($url);
+            }
+        }
 
         if ($args['commandName'] == 'delete') {
             if (!SecurityUtil::checkPermission($this->permissionComponent, '::', ACCESS_DELETE)) {
@@ -117,7 +125,7 @@ class MUBoard_Form_Handler_User_Edit extends MUBoard_Form_Handler_User_Base_Edit
             }
         }
 
-        if (!in_array($args['commandName'], array('delete', 'cancel'))) {
+        if (!in_array($args['commandName'], array('delete', 'cancel', 'toforum'))) {
             // do forms validation including checking all validators on the page to validate their input
             if (!$this->view->isValid()) {
 
@@ -126,6 +134,10 @@ class MUBoard_Form_Handler_User_Edit extends MUBoard_Form_Handler_User_Base_Edit
                         $idurl = ModUtil::url($this->name, 'user', 'edit', array('ot' => 'posting', 'id' => $id));
                         LogUtil::registerError(__('Sorry! You have to enter a title and a text!', $dom));
                         return System::redirect($idurl);
+                    } else {
+                        $parentnotnullurl = ModUtil::url($this->name, 'user', 'edit', array('ot' => 'posting', 'id' => $id));
+                        LogUtil::registerError(__('Sorry! You have to enter a text!', $dom));
+                        return System::redirect($parentnotnullurl);
                     }
                 } else {
                     if ($parentid > 0) {
@@ -134,8 +146,7 @@ class MUBoard_Form_Handler_User_Edit extends MUBoard_Form_Handler_User_Base_Edit
                     }
 
                     if ($parentid == 0) {
-                        $parentdigiturl = ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => 2));
-                        return LogUtil::registerError(__('Sorry! You have to enter a text!', $dom), null, $parentdigiturl);
+                        $parentdigiturl = ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $parentid));
                     }
                 }
                 return false;
@@ -242,7 +253,7 @@ class MUBoard_Form_Handler_User_Edit extends MUBoard_Form_Handler_User_Base_Edit
 
         return $this->view->redirect($this->getRedirectUrl($args, $entity, $repeatCreateAction));
     }
-    
+
     /**
      * Get success or error message for default operations.
      *
