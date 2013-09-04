@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: MUBoard\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-08-08 14:38+0000\n"
-"PO-Revision-Date: 2013-08-29 16:21+0100\n"
+"PO-Revision-Date: 2013-09-03 08:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1203,7 +1203,7 @@ msgstr "Parent_id"
 #: templates/user/posting/edit.tpl:60 templates/user/posting/view.csv:3
 #: templates/user/forum/display.tpl:31
 msgid "Invocations"
-msgstr "Aufrufe:"
+msgstr "Aufrufe"
 
 #: templates/admin/posting/display.tpl:41 templates/admin/posting/view.tpl:64
 #: templates/admin/posting/edit.tpl:52 templates/admin/posting/view.csv:3
