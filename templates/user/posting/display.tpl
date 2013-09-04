@@ -91,6 +91,7 @@
              <div class="muboard-user-posting-content-text">
              {$posting.text|notifyfilters:'muboard.filter_hooks.postings.filter'|safehtml|nl2br}
              </div> {* class="muboard-user-posting-content-text *}
+             {if $posting.firstImage ne ''}
              <div class="muboard-user-posting-content-image">
              {if $posting.firstImage ne ''}
                  <a href="{$posting.firstImageFullPathURL}" title="{$posting.title|replace:"\"":""}"{if $posting.firstImageMeta.isImage} rel="imageviewer[posting{$posting.id}]"{/if}>
@@ -120,6 +121,8 @@
                  </a>
               {else}&nbsp;{/if}
               </div> {* class="muboard-user-posting-content-image *}
+              {/if}
+              {if $posting.firstFile ne ''}
               <div class="muboard-user-posting-content-file">  
               {* Here we found the embedded files for the issue itself *} 
               {if $posting.firstFile ne ''}               
@@ -155,7 +158,8 @@
                   </a>
                   </div>
               {else}&nbsp;{/if}            
-              </div> {* class="muboard-user-posting-content-file *}     
+              </div> {* class="muboard-user-posting-content-file *}
+              {/if}     
               </div> {* class="muboard-user-posting-content *}
           </div> {* class="muboard-user-posting-parent *}
       {foreach item='childPosting' from=$postings}
