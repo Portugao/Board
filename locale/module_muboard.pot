@@ -987,13 +987,13 @@ msgstr ""
 
 #: lib/MUBoard/Api/Ajax.php:98
 msgid ""
-"Sorry! If you want to create an new issue you have to enter a title and a "
+"Sorry! If you want to create a new issue you have to enter a title and a "
 "text to get a preview!"
 msgstr ""
 
 #: lib/MUBoard/Api/Ajax.php:101
 msgid ""
-"Sorry! If you want to create an new issue or to edit an existing issue you "
+"Sorry! If you want to create a new issue or to edit an existing issue you "
 "have to enter a title to get a preview!"
 msgstr ""
 
