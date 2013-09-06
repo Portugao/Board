@@ -252,7 +252,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
                 $id = $lastposting->getId();
             }
             $url = ModUtil::url('MUBoard', 'user', 'display', array('ot' => 'posting', 'id' => $id));
-            $url .= "/#" . $lastposting['id'];
+            $url .= "/#muboard" . $lastposting['id'];
             $url2 = ModUtil::url('MUBoard', 'user', 'display', array('ot' => 'posting', 'id' => $id));
 
             $out = '';
@@ -656,7 +656,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
     /**
      *
      */
-    public static function getUserRank($id)
+    public static function getUserRank($id, $kind = 0)
     {
         $dom = ZLanguage::getModuleDomain('MUBoard');
 
@@ -688,7 +688,12 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
             $out .= '<span class="muboard-online">' . __('Online', $dom) . '</span><br />';
         }
         if ($id > 1) {
+            if ($kind == 0) {
             $out .= __('Postings: ', $dom) . $user['numberPostings'] . '<br />';
+            } else {
+                $user['numberPostings'] = $user['numberPostings'] + 1;
+                $out .= __('Postings: ', $dom) . $user['numberPostings'] . '<br />';
+            }
         }
         else {
             $out .= __('Postings: ', $dom) . '' . '<br />';
