@@ -21,17 +21,17 @@ class MUBoard_Api_Ajax extends MUBoard_Api_Base_Ajax
         include_once 'lib/viewplugins/function.useravatar.php';
 
         $dom = ZLanguage::getModuleDomain('MUBoard');
-
+        
+        $id = $this->request->query->filter('id', 0);
         $answer = $this->request->query->filter('answer', 0);
-
-        if ($answer == 0) {
-            $title = $this->request->query->filter('title', '');
-        }
-
-        $text = $this->request->query->filter('text', '', FILTER_SANITIZE_STRING);
+        
+        $title = '';
+        $text = '';
+        $title = $this->request->query->filter('title');
+        $text = $this->request->query->filter('text');
 
         $out = "";
-        if ($text != '' && (($title == '') || ($title != '' && $answer == 0))) {
+        if ($text != '' && (($id == 0 && $title == '' && $answer == 1) || ($id == 0 && $title != '' && $answer == 0) || (($id > 0 && $title != '' && $answer == 0)|| ($id > 0 && $title == '' && $answer == 0)))) {
 
             if (ModUtil::available('BBCode')) {
             $text = ModUtil::apiFunc('BBCode', 'user', 'transform', array('message' => $text));
@@ -48,7 +48,7 @@ class MUBoard_Api_Ajax extends MUBoard_Api_Base_Ajax
                 $uname = __('Guest', $dom);
             }
 
-            $userRank = MUBoard_Util_View::getUserRank($uid);
+            $userRank = MUBoard_Util_View::getUserRank($uid, 1);
 
             $date = DateUtil::getDatetime(null,'datetimelong');
 
@@ -93,17 +93,20 @@ class MUBoard_Api_Ajax extends MUBoard_Api_Base_Ajax
             $out .= "</div>";
         } else {
             $out .= "<div class='muboard-user-posting muboard-nopreview'>";
-            $out .= "<h2>";
+            $out .= "<h3>";
             if ($answer == 0 && $title == '' && $text == '') {
-                $out .= __('Sorry! If you want to create an new issue you have to enter a title and a text to get a preview!', $dom);
+                $out .= __('Sorry! If you want to create a new issue you have to enter a title and a text to get a preview!', $dom);
             }
             if ($answer == 0 && $title == '' && $text != '') {
-                $out .= __('Sorry! If you want to create an new issue or to edit an existing issue you have to enter a title to get a preview!', $dom);
+                $out .= __('Sorry! If you want to create a new issue or to edit an existing issue you have to enter a title to get a preview!', $dom);
+            }
+            if ($answer == 0 && $title != '' && $text == '') {
+                $out .= __('Sorry! If you want to create a new issue or to edit an existing issue you have to enter a text to get a preview!', $dom);
             }
             if ($answer == 1 && $text == '') {
                 $out .= __('Sorry! If you want to answer to an issue you have to enter a text to get a preview', $dom);
             }
-            $out .= "</h2></div>";
+            $out .= "</h3></div>";
         }
 
         return $out;
