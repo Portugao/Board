@@ -21,24 +21,24 @@ class MUBoard_Api_Ajax extends MUBoard_Api_Base_Ajax
         include_once 'lib/viewplugins/function.useravatar.php';
 
         $dom = ZLanguage::getModuleDomain('MUBoard');
-        
+
         $id = $this->request->query->filter('id', 0);
         $answer = $this->request->query->filter('answer', 0);
-        
+
         $title = '';
         $text = '';
         $title = $this->request->query->filter('title');
         $text = $this->request->query->filter('text');
 
         $out = "";
-        if ($text != '' && (($id == 0 && $title == '' && $answer == 1) || ($id == 0 && $title != '' && $answer == 0) || (($id > 0 && $title != '' && $answer == 0)|| ($id > 0 && $title == '' && $answer == 0)))) {
+        if ($text != '' && (($id == 0 && $title == '' && $answer == 1) || ($id == 0 && $answer == 0 && $title != ''))) {
 
             if (ModUtil::available('BBCode')) {
-            $text = ModUtil::apiFunc('BBCode', 'user', 'transform', array('message' => $text));
+                $text = ModUtil::apiFunc('BBCode', 'user', 'transform', array('message' => $text));
             }
             if (ModUtil::available('BBSmile')) {
-            $text = ModUtil::apiFunc('BBSmile', 'user', 'transform', array('text' => $text));  
-            }          
+                $text = ModUtil::apiFunc('BBSmile', 'user', 'transform', array('text' => $text));
+            }
             $text = nl2br($text);
 
             $uid = UserUtil::getVar('uid');
@@ -94,18 +94,28 @@ class MUBoard_Api_Ajax extends MUBoard_Api_Base_Ajax
         } else {
             $out .= "<div class='muboard-user-posting muboard-nopreview'>";
             $out .= "<h3>";
-            if ($answer == 0 && $title == '' && $text == '') {
-                $out .= __('Sorry! If you want to create a new issue you have to enter a title and a text to get a preview!', $dom);
+            if ($id == 0) {
+                if ($answer == 0 && $title == '' && $text == '') {
+                    $out .= __('Sorry! If you want to create a new issue you have to enter a title and a text to get a preview!', $dom);
+                }
+                if ($answer == 0 && $title == '' && $text != '') {
+                    $out .= __('Sorry! If you want to create a new issue you have to enter a title to get a preview!', $dom);
+                }
+                if ($answer == 0 && $title != '' && $text == '') {
+                    $out .= __('Sorry! If you want to create a new issue you have to enter a text to get a preview!', $dom);
+                }
+                if ($answer == 1 && $text == '') {
+                    $out .= __('Sorry! If you want to answer to an issue you have to enter a text to get a preview', $dom);
+                }
+            } else {
+                if ($answer == 0 && $title == '' && $text != '') {
+                    $out .= __('Sorry! If you want to edit an existing issue you have to enter a title to get a preview!', $dom);
+                }
+                if ($answer == 0 && $title != '') {
+                    $out .= __('Sorry! If you want to edit an existing issue you have to enter a text to get a preview!', $dom);
+                }                              
             }
-            if ($answer == 0 && $title == '' && $text != '') {
-                $out .= __('Sorry! If you want to create a new issue or to edit an existing issue you have to enter a title to get a preview!', $dom);
-            }
-            if ($answer == 0 && $title != '' && $text == '') {
-                $out .= __('Sorry! If you want to create a new issue or to edit an existing issue you have to enter a text to get a preview!', $dom);
-            }
-            if ($answer == 1 && $text == '') {
-                $out .= __('Sorry! If you want to answer to an issue you have to enter a text to get a preview', $dom);
-            }
+
             $out .= "</h3></div>";
         }
 

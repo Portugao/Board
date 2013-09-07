@@ -1,4 +1,4 @@
-{* purpose of this template: build the Form to edit an instance of posting *}
+{zdebug}{* purpose of this template: build the Form to edit an instance of posting *}
 {if $func ne 'display'}
 {include file='user/header.tpl'}
 {/if}
@@ -361,10 +361,14 @@
        MU("#btnPreview").click(function(d) {
            d.preventDefault();
            MU("#muboard-user-preview").slideDown(500).html("<img style='margin: 0 auto;' src='images/ajax/large_square_white.gif' />");
-           var url = "index.php?module=muboard&type=ajax&func=preview&theme=printer";
-           {{if $func eq 'display'}}
+           var url;
+           url = "index.php?module=muboard&type=ajax&func=preview&theme=printer";
+           {{if $func eq 'display' && $mode eq 'create'}}
            url = "index.php?module=muboard&type=ajax&func=preview&theme=printer&answer=1";
            {{/if}}
+           {{if $func eq 'edit' && $mode eq 'edit'}}
+           url = "index.php?module=muboard&type=ajax&func=preview&theme=printer&id={{$posting.id}}";
+           {{/if}}           
            var datas = MU("#{{$__formid}}").serialize();
            var datatyp = 'html';
            var datawork = function(answer) {
