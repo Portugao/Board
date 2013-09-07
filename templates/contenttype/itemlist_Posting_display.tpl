@@ -1,6 +1,5 @@
 {* Purpose of this template: Display postings within an external context *}
 
-<dl>
 {foreach item='item' from=$items}
 {if $item.createdUserId eq 0 || $item.createdUserId eq 1}
 {gt text='Guest' assign='itemuser'}
@@ -13,11 +12,10 @@
     <h6>{$itemuser} {gt text='answered to issue:'} {$item.parent.title} | {$item.createdDate|dateformat:datebrief}</h6>
 {/if}
     {if $item.parent_id eq NULL}
-    <dd><a href="{modurl modname='MUBoard' type='user' func='display' ot=$objectType id=$item.id}">{gt text='Read more'}</a></dd>
+    <a href="{modurl modname='MUBoard' type='user' func='display' ot=$objectType id=$item.id}">{gt text='Read more'}</a>
     {else}
-        <dd><a href="{modurl modname='MUBoard' type='user' func='display' ot=$objectType id=$item.parent_id}/#{$item.id}">{gt text='Read more'}</a></dd>
+        <a href="{modurl modname='MUBoard' type='user' func='display' ot=$objectType id=$item.parent_id}/#{$item.id}">{gt text='Read more'}</a>
     {/if}
 {foreachelse}
-    <dt>{gt text='No entries found.'}</dt>
+    {gt text='No entries found.'}
 {/foreach}
-</dl>
