@@ -23,6 +23,7 @@ class MUBoard_Api_Ajax extends MUBoard_Api_Base_Ajax
         $dom = ZLanguage::getModuleDomain('MUBoard');
 
         $id = $this->request->query->filter('id', 0);
+        $parentid = $this->request->query->filter('muboardPosting_ParentItemList', 0 , FILTER_SANITIZE_NUMBER_INT);
         $answer = $this->request->query->filter('answer', 0);
 
         $title = '';
@@ -31,7 +32,7 @@ class MUBoard_Api_Ajax extends MUBoard_Api_Base_Ajax
         $text = $this->request->query->filter('text');
 
         $out = "";
-        if ($text != '' && (($id == 0 && $title == '' && $answer == 1) || ($id == 0 && $answer == 0 && $title != ''))) {
+        if ($text != '' && (($id == 0 && $title == '' && $answer == 1) || ($id == 0 && $answer == 0 && $title != '') || ($id > 0 && ($parentid == 0 && $title != '' || $parentid > 0 && $title == '')))) {
 
             if (ModUtil::available('BBCode')) {
                 $text = ModUtil::apiFunc('BBCode', 'user', 'transform', array('message' => $text));
@@ -108,11 +109,11 @@ class MUBoard_Api_Ajax extends MUBoard_Api_Base_Ajax
                     $out .= __('Sorry! If you want to answer to an issue you have to enter a text to get a preview', $dom);
                 }
             } else {
-                if ($answer == 0 && $title == '' && $text != '') {
-                    $out .= __('Sorry! If you want to edit an existing issue you have to enter a title to get a preview!', $dom);
+                if ($answer == 0 && $parentid == 0 && $title == '') {
+                    $out .= __('Sorry! If you want to edit an existing issue you have to enter a title and a text to get a preview!', $dom);
                 }
-                if ($answer == 0 && $title != '') {
-                    $out .= __('Sorry! If you want to edit an existing issue you have to enter a text to get a preview!', $dom);
+                if ($answer == 0 && $parentid > 0) {
+                    $out .= __('Sorry! If you want to edit an existing posting you have to enter a text to get a preview!', $dom);
                 }                              
             }
 

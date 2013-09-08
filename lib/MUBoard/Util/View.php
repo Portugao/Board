@@ -656,21 +656,23 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
     /**
      *
      */
-    public static function getUserRank($id, $kind = 0)
+    public static function getUserRank($uid, $kind = 0)
     {
         $dom = ZLanguage::getModuleDomain('MUBoard');
+        $request = new Zikula_Request_Http();
+        $id = $request->query->filter('id', 0 , FILTER_SANITIZE_NUMBER_INT);
 
-        if ($id > 1) {
+        if ($uid > 1) {
             // we get a repository for users
             $userrepository = MUBoard_Util_Model::getUserRepository();
             // get infos of the relevant user
-            $where = 'tbl.userid = \'' . DataUtil::formatForStore($id) . '\'';
+            $where = 'tbl.userid = \'' . DataUtil::formatForStore($uid) . '\'';
             $user = $userrepository->selectWhere($where);
             if (count($user) == 1) {
                 $user = $user[0];
             }
 
-            $userregDate = UserUtil::getVar('user_regdate', $id);
+            $userregDate = UserUtil::getVar('user_regdate', $uid);
             $userregDate = DateUtil::formatDatetime($userregDate, 'datebrief');
             $lastVisit = DateUtil::formatDatetime($user['lastVisit'], 'datebrief');
         }
@@ -681,29 +683,31 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 
         $out = '';
         $out .= __('Registered: ', $dom) . $userregDate . '<br />';
-        $isLoggedIn = ModUtil::apiFunc('MUBoard', 'selection', 'userOnline', array('uid' => $id));
+        $isLoggedIn = ModUtil::apiFunc('MUBoard', 'selection', 'userOnline', array('uid' => $uid));
         if ($isLoggedIn == false) {
             $out .= __('Last Visit: ', $dom) . $lastVisit . '<br />';
         } else {
             $out .= '<span class="muboard-online">' . __('Online', $dom) . '</span><br />';
         }
-        if ($id > 1) {
+        if ($uid > 1) {
             if ($kind == 0) {
             $out .= __('Postings: ', $dom) . $user['numberPostings'] . '<br />';
             } else {
+                if ($id == 0) {
                 $user['numberPostings'] = $user['numberPostings'] + 1;
+                }
                 $out .= __('Postings: ', $dom) . $user['numberPostings'] . '<br />';
             }
         }
         else {
             $out .= __('Postings: ', $dom) . '' . '<br />';
         }
-        if ($id > 1) {
+        if ($uid > 1) {
             $out .= __('Rank: ', $dom) . $user['rank']['name'] . '<br />';
         } else {
             $out .= __('Rank: ', $dom) . '' . '<br />';
         }
-        if ($id > 1) {
+        if ($uid > 1) {
             if ($user['rank']['special'] == 0) {
                 $imagepath = ModUtil::getVar('MUBoard', 'standardIcon');
                 for ($i = 0; $i < $user['rank']['numberOfIcons']; $i++) {

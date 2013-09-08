@@ -1,4 +1,4 @@
-{zdebug}{* purpose of this template: build the Form to edit an instance of posting *}
+{* purpose of this template: build the Form to edit an instance of posting *}
 {if $func ne 'display'}
 {include file='user/header.tpl'}
 {/if}

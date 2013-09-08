@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MUBoard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-08 14:38+0000\n"
-"PO-Revision-Date: 2013-09-07 15:27+0100\n"
+"POT-Creation-Date: 2013-09-08 09:03+0000\n"
+"PO-Revision-Date: 2013-09-08 11:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -169,32 +169,38 @@ msgstr "Kein solches Element"
 
 #: lib/MUBoard/Form/Handler/Admin/Base/Edit.php:539
 #: lib/MUBoard/Form/Handler/User/Base/Edit.php:539
+#: lib/MUBoard/Form/Handler/User/Edit.php:270
 msgid "Done! Item created."
 msgstr "Erledigt! Element erstellt."
 
 #: lib/MUBoard/Form/Handler/Admin/Base/Edit.php:541
 #: lib/MUBoard/Form/Handler/User/Base/Edit.php:541
+#: lib/MUBoard/Form/Handler/User/Edit.php:272
 msgid "Error! Creation attempt failed."
 msgstr "Fehler! Erstellung fehlgeschlagen."
 
 #: lib/MUBoard/Form/Handler/Admin/Base/Edit.php:546
 #: lib/MUBoard/Form/Handler/User/Base/Edit.php:546
+#: lib/MUBoard/Form/Handler/User/Edit.php:277
 msgid "Done! Item updated."
 msgstr "Erledigt! Element aktualisiert."
 
 #: lib/MUBoard/Form/Handler/Admin/Base/Edit.php:548
 #: lib/MUBoard/Form/Handler/User/Base/Edit.php:548
+#: lib/MUBoard/Form/Handler/User/Edit.php:279
 msgid "Error! Update attempt failed."
 msgstr "Fehler! Aktualisierung fehlgeschlagen"
 
 #: lib/MUBoard/Form/Handler/Admin/Base/Edit.php:553
 #: lib/MUBoard/Form/Handler/User/Base/Edit.php:553
+#: lib/MUBoard/Form/Handler/User/Edit.php:284
 #: lib/MUBoard/Controller/Base/Admin.php:269
 msgid "Done! Item deleted."
 msgstr "Erledigt! Element gelöscht."
 
 #: lib/MUBoard/Form/Handler/Admin/Base/Edit.php:555
 #: lib/MUBoard/Form/Handler/User/Base/Edit.php:555
+#: lib/MUBoard/Form/Handler/User/Edit.php:286
 msgid "Error! Deletion attempt failed."
 msgstr "Fehler! Löschen fehlgeschlagen"
 
@@ -297,18 +303,18 @@ msgstr "Erledigt! Abo aktualisiert."
 msgid "Done! Abo deleted."
 msgstr "Erledigt! Abo gelöscht."
 
-#: lib/MUBoard/Form/Handler/User/Edit.php:127
+#: lib/MUBoard/Form/Handler/User/Edit.php:135
 msgid "Sorry! You have to enter a title and a text!"
 msgstr "Entschuldigung! Du musst einen Titel und einen Text eingeben!"
 
-#: lib/MUBoard/Form/Handler/User/Edit.php:133
-#: lib/MUBoard/Form/Handler/User/Edit.php:138
+#: lib/MUBoard/Form/Handler/User/Edit.php:139
+#: lib/MUBoard/Form/Handler/User/Edit.php:145
 msgid "Sorry! You have to enter a text!"
 msgstr "Entschuldigung! Du musst einen Text eingeben!"
 
-#: lib/MUBoard/Form/Handler/User/Edit.php:170
-#: lib/MUBoard/Form/Handler/User/Edit.php:175
 #: lib/MUBoard/Form/Handler/User/Edit.php:181
+#: lib/MUBoard/Form/Handler/User/Edit.php:186
+#: lib/MUBoard/Form/Handler/User/Edit.php:192
 msgid ""
 "The validation of the hooked security module was incorrect. Please try again."
 msgstr ""
@@ -577,63 +583,65 @@ msgstr "Kategorie:"
 msgid "Forum:"
 msgstr "Forum: "
 
-#: lib/MUBoard/Util/View.php:199
+#: lib/MUBoard/Util/View.php:201
 msgid "Last answer by "
 msgstr "Letzte Antwort von "
 
-#: lib/MUBoard/Util/View.php:202 lib/MUBoard/Util/View.php:267
+#: lib/MUBoard/Util/View.php:204 lib/MUBoard/Util/View.php:269
 msgid "on "
 msgstr "am "
 
-#: lib/MUBoard/Util/View.php:206
+#: lib/MUBoard/Util/View.php:208
 msgid "No answer available!"
 msgstr "Keine Antwort vorhanden!"
 
-#: lib/MUBoard/Util/View.php:262 lib/MUBoard/Api/Ajax.php:48
-#: templates/contenttype/itemlist_Posting_display.tpl:6
-#: templates/contenttype/itemlist_Posting_display_description.tpl:7
+#: lib/MUBoard/Util/View.php:264 lib/MUBoard/Api/Ajax.php:49
+#: templates/contenttype/itemlist_Posting_display.tpl:5
+#: templates/contenttype/itemlist_Posting_display_description.tpl:6
 #: templates/user/posting/display.tpl:82
 #: templates/user/posting/include_displayItemListMany.tpl:43
 msgid "Guest"
 msgstr "Gast"
 
-#: lib/MUBoard/Util/View.php:264
+#: lib/MUBoard/Util/View.php:266
 msgid "Last posting by "
 msgstr "Letzter Beitrag von "
 
-#: lib/MUBoard/Util/View.php:270
+#: lib/MUBoard/Util/View.php:272
 msgid "Show last posting"
 msgstr "Letzten Beitrag anzeigen"
 
-#: lib/MUBoard/Util/View.php:277
+#: lib/MUBoard/Util/View.php:279
+#: templates/user/posting/include_displayItemListMany.tpl:93
 msgid "No postings available!"
 msgstr "Keine Beiträge vorhanden!"
 
-#: lib/MUBoard/Util/View.php:305
+#: lib/MUBoard/Util/View.php:307
 msgid "Important issue!"
 msgstr "Wichtiges Thema!"
 
-#: lib/MUBoard/Util/View.php:353
+#: lib/MUBoard/Util/View.php:356
 msgid "You have permissions to edit this posting!"
 msgstr "Du hast die Berechtigung diesen Beitrag zu bearbeiten!"
 
-#: lib/MUBoard/Util/View.php:680
+#: lib/MUBoard/Util/View.php:685
 msgid "Registered: "
 msgstr "Registriert: "
 
-#: lib/MUBoard/Util/View.php:683
+#: lib/MUBoard/Util/View.php:688
 msgid "Last Visit: "
 msgstr "Letzter Besuch: "
 
-#: lib/MUBoard/Util/View.php:685
+#: lib/MUBoard/Util/View.php:690
 msgid "Online"
 msgstr "Online"
 
-#: lib/MUBoard/Util/View.php:688 lib/MUBoard/Util/View.php:691
+#: lib/MUBoard/Util/View.php:694 lib/MUBoard/Util/View.php:699
+#: lib/MUBoard/Util/View.php:703
 msgid "Postings: "
 msgstr "Beiträge: "
 
-#: lib/MUBoard/Util/View.php:694 lib/MUBoard/Util/View.php:696
+#: lib/MUBoard/Util/View.php:706 lib/MUBoard/Util/View.php:708
 msgid "Rank: "
 msgstr "Rang: "
 
@@ -677,6 +685,9 @@ msgstr "Keine Grenze"
 #: lib/MUBoard/Entity/Validator/Base/Rank.php:68
 #: lib/MUBoard/Entity/Validator/Base/User.php:40
 #: lib/MUBoard/Entity/Validator/Base/User.php:52
+#: lib/MUBoard/Entity/Validator/Category.php:31
+#: lib/MUBoard/Entity/Validator/Category.php:39
+#: lib/MUBoard/Entity/Validator/Category.php:55
 #, php-format
 msgid "Error! Length of field value must not be higher than %2$s (%1$s)."
 msgstr "Fehler! Die Länge des Feldes darf nicht größer als %2$s (%1$s) sein."
@@ -689,6 +700,8 @@ msgstr "Fehler! Die Länge des Feldes darf nicht größer als %2$s (%1$s) sein."
 #: lib/MUBoard/Entity/Validator/Base/Category.php:36
 #: lib/MUBoard/Entity/Validator/Base/Category.php:44
 #: lib/MUBoard/Entity/Validator/Base/Rank.php:36
+#: lib/MUBoard/Entity/Validator/Category.php:35
+#: lib/MUBoard/Entity/Validator/Category.php:43
 #, php-format
 msgid "Error! Field value must not be empty (%s)."
 msgstr "Fehler! Der Wert des Feldes darf nicht leer sein (%s)."
@@ -707,6 +720,7 @@ msgstr "Fehler! Der Wert des Feldes darf nicht leer sein (%s)."
 #: lib/MUBoard/Entity/Validator/Base/Rank.php:56
 #: lib/MUBoard/Entity/Validator/Base/User.php:32
 #: lib/MUBoard/Entity/Validator/Base/User.php:44
+#: lib/MUBoard/Entity/Validator/Category.php:47
 #, php-format
 msgid "Error! Field value may only contain digits (%s)."
 msgstr "Fehler! Der Wert des Feldes darf nur Ziffern beinhalten (%s)."
@@ -734,7 +748,7 @@ msgstr "Fehler! Der Wert des Feldes darf nicht 0 (%s) sein."
 msgid "Error! Field value must be a valid datetime (%s)."
 msgstr "Fehler! Das Feld benötigt einen gültigen Datumswert (%s)."
 
-#: lib/MUBoard/Entity/Forum.php:46 lib/MUBoard/Entity/Posting.php:66
+#: lib/MUBoard/Entity/Forum.php:46 lib/MUBoard/Entity/Posting.php:65
 #: lib/MUBoard/Entity/Base/Abo.php:519 lib/MUBoard/Entity/Base/Forum.php:631
 #: lib/MUBoard/Entity/Base/Posting.php:1557
 #: lib/MUBoard/Entity/Base/Category.php:560
@@ -742,17 +756,17 @@ msgstr "Fehler! Das Feld benötigt einen gültigen Datumswert (%s)."
 msgid "Open preview page"
 msgstr "Vorschau öffnen"
 
-#: lib/MUBoard/Entity/Forum.php:47 lib/MUBoard/Entity/Posting.php:67
+#: lib/MUBoard/Entity/Forum.php:47 lib/MUBoard/Entity/Posting.php:66
 #: lib/MUBoard/Entity/Base/Abo.php:520 lib/MUBoard/Entity/Base/Forum.php:632
 #: lib/MUBoard/Entity/Base/Posting.php:1558
 #: lib/MUBoard/Entity/Base/Category.php:561
 #: lib/MUBoard/Entity/Base/Rank.php:747 lib/MUBoard/Entity/Base/User.php:448
-#: templates/user/posting/edit.tpl:258 templates/user/posting/edit.tpl:266
+#: templates/user/posting/edit.tpl:259 templates/user/posting/edit.tpl:267
 msgid "Preview"
 msgstr "Vorschau"
 
 #: lib/MUBoard/Entity/Forum.php:53 lib/MUBoard/Entity/Forum.php:97
-#: lib/MUBoard/Entity/Posting.php:73 lib/MUBoard/Entity/Posting.php:117
+#: lib/MUBoard/Entity/Posting.php:72 lib/MUBoard/Entity/Posting.php:116
 #: lib/MUBoard/Entity/Base/Abo.php:526 lib/MUBoard/Entity/Base/Abo.php:570
 #: lib/MUBoard/Entity/Base/Forum.php:638 lib/MUBoard/Entity/Base/Forum.php:682
 #: lib/MUBoard/Entity/Base/Posting.php:1564
@@ -768,7 +782,7 @@ msgid "Details"
 msgstr "Details"
 
 #: lib/MUBoard/Entity/Forum.php:63 lib/MUBoard/Entity/Forum.php:64
-#: lib/MUBoard/Entity/Posting.php:83 lib/MUBoard/Entity/Posting.php:84
+#: lib/MUBoard/Entity/Posting.php:82 lib/MUBoard/Entity/Posting.php:83
 #: lib/MUBoard/Entity/Base/Abo.php:536 lib/MUBoard/Entity/Base/Abo.php:537
 #: lib/MUBoard/Entity/Base/Abo.php:580 lib/MUBoard/Entity/Base/Abo.php:581
 #: lib/MUBoard/Entity/Base/Forum.php:648 lib/MUBoard/Entity/Base/Forum.php:649
@@ -788,7 +802,7 @@ msgstr "Details"
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: lib/MUBoard/Entity/Forum.php:69 lib/MUBoard/Entity/Posting.php:89
+#: lib/MUBoard/Entity/Forum.php:69 lib/MUBoard/Entity/Posting.php:88
 #: lib/MUBoard/Entity/Base/Abo.php:542 lib/MUBoard/Entity/Base/Abo.php:586
 #: lib/MUBoard/Entity/Base/Forum.php:654 lib/MUBoard/Entity/Base/Forum.php:698
 #: lib/MUBoard/Entity/Base/Posting.php:1580
@@ -800,7 +814,7 @@ msgstr "Bearbeiten"
 msgid "Reuse for new item"
 msgstr "Für ein neues Element benutzen"
 
-#: lib/MUBoard/Entity/Forum.php:70 lib/MUBoard/Entity/Posting.php:90
+#: lib/MUBoard/Entity/Forum.php:70 lib/MUBoard/Entity/Posting.php:89
 #: lib/MUBoard/Entity/Base/Abo.php:543 lib/MUBoard/Entity/Base/Abo.php:587
 #: lib/MUBoard/Entity/Base/Forum.php:655 lib/MUBoard/Entity/Base/Forum.php:699
 #: lib/MUBoard/Entity/Base/Posting.php:1581
@@ -813,7 +827,7 @@ msgid "Reuse"
 msgstr "Wiederverwenden"
 
 #: lib/MUBoard/Entity/Forum.php:77 lib/MUBoard/Entity/Forum.php:78
-#: lib/MUBoard/Entity/Posting.php:97 lib/MUBoard/Entity/Posting.php:98
+#: lib/MUBoard/Entity/Posting.php:96 lib/MUBoard/Entity/Posting.php:97
 #: lib/MUBoard/Entity/Base/Abo.php:550 lib/MUBoard/Entity/Base/Abo.php:551
 #: lib/MUBoard/Entity/Base/Forum.php:662 lib/MUBoard/Entity/Base/Forum.php:663
 #: lib/MUBoard/Entity/Base/Posting.php:1588
@@ -828,7 +842,7 @@ msgstr "Wiederverwenden"
 #: templates/admin/user/delete.tpl:7 templates/admin/user/delete.tpl:20
 #: templates/admin/forum/delete.tpl:7 templates/admin/forum/delete.tpl:20
 #: templates/admin/category/delete.tpl:7
-#: templates/admin/category/delete.tpl:20
+#: templates/admin/category/delete.tpl:20 templates/user/posting/edit.tpl:255
 msgid "Delete"
 msgstr "Löschen"
 
@@ -838,8 +852,8 @@ msgstr "Löschen"
 msgid "Create new posting"
 msgstr "Neuen Beitrag erstellen"
 
-#: lib/MUBoard/Entity/Forum.php:128 lib/MUBoard/Entity/Posting.php:149
-#: lib/MUBoard/Entity/Posting.php:154
+#: lib/MUBoard/Entity/Forum.php:128 lib/MUBoard/Entity/Posting.php:148
+#: lib/MUBoard/Entity/Posting.php:153
 msgid "Back to forum overview"
 msgstr "Zurück zur Forenübersicht"
 
@@ -847,7 +861,7 @@ msgstr "Zurück zur Forenübersicht"
 msgid "Back to  forum overview"
 msgstr "Zurück zur Seitenansicht"
 
-#: lib/MUBoard/Entity/Posting.php:106 lib/MUBoard/Entity/Posting.php:107
+#: lib/MUBoard/Entity/Posting.php:105 lib/MUBoard/Entity/Posting.php:106
 #: lib/MUBoard/Entity/Base/Abo.php:559 lib/MUBoard/Entity/Base/Abo.php:560
 #: lib/MUBoard/Entity/Base/Abo.php:595 lib/MUBoard/Entity/Base/Abo.php:596
 #: lib/MUBoard/Entity/Base/Forum.php:671 lib/MUBoard/Entity/Base/Forum.php:672
@@ -867,7 +881,7 @@ msgstr "Zurück zur Seitenansicht"
 msgid "Back to overview"
 msgstr "Zurück zur Übersicht"
 
-#: lib/MUBoard/Entity/Posting.php:148
+#: lib/MUBoard/Entity/Posting.php:147
 msgid "Back to forum "
 msgstr "Zurück zum Forum"
 
@@ -1007,11 +1021,11 @@ msgstr "Themensuche"
 msgid "Look for relevant issues"
 msgstr "Nach relevanten Themen suchen"
 
-#: lib/MUBoard/Api/Ajax.php:72 lib/MUBoard/Controller/User.php:286
+#: lib/MUBoard/Api/Ajax.php:73 lib/MUBoard/Controller/User.php:286
 msgid "Issue: "
 msgstr "Thema: "
 
-#: lib/MUBoard/Api/Ajax.php:98
+#: lib/MUBoard/Api/Ajax.php:100
 msgid ""
 "Sorry! If you want to create a new issue you have to enter a title and a "
 "text to get a preview!"
@@ -1019,22 +1033,45 @@ msgstr ""
 "Entschuldigung! Wenn Du ein Thema erstellen möchtest, musst Du einen Titel "
 "und einen Text eingeben um eine Vorschau zu erhalten! "
 
-#: lib/MUBoard/Api/Ajax.php:101
+#: lib/MUBoard/Api/Ajax.php:103
 msgid ""
-"Sorry! If you want to create a new issue or to edit an existing issue you "
-"have to enter a title to get a preview!"
+"Sorry! If you want to create a new issue you have to enter a title to get a "
+"preview!"
 msgstr ""
-"Entschuldigung! Wenn Du ein Thema erstellen oder ein bestehendes Thema "
-"bearbeiten möchtest, musst Du einen Titel eingeben um eine Vorschau zu "
-"erhalten! "
+"Entschuldigung! Wenn Du ein Thema erstellen möchtest, musst Du einen Titel "
+"eingeben, um eine Vorschau zu erhalten! "
 
-#: lib/MUBoard/Api/Ajax.php:104
+#: lib/MUBoard/Api/Ajax.php:106
+msgid ""
+"Sorry! If you want to create a new issue you have to enter a text to get a "
+"preview!"
+msgstr ""
+"Entschuldigung! Wenn Du ein Thema erstellen möchtest, musst Du einen Text "
+"eingeben, um eine Vorschau zu erhalten! "
+
+#: lib/MUBoard/Api/Ajax.php:109
 msgid ""
 "Sorry! If you want to answer to an issue you have to enter a text to get a "
 "preview"
 msgstr ""
 "Entschuldigung! Wenn Du auf ein Thema antworten möchtest, musst Du einen "
 "Text eingeben um eine Vorschau zu erhalten."
+
+#: lib/MUBoard/Api/Ajax.php:113
+msgid ""
+"Sorry! If you want to edit an existing issue you have to enter a title and a "
+"text to get a preview!"
+msgstr ""
+"Entschuldigung! Wenn Du ein Thema bearbeiten möchtest, musst Du einen Titel "
+"und einen Text eingeben, um eine Vorschau zu erhalten! "
+
+#: lib/MUBoard/Api/Ajax.php:116
+msgid ""
+"Sorry! If you want to edit an existing posting you have to enter a text to "
+"get a preview!"
+msgstr ""
+"Entschuldigung! Wenn Du einen Beitrag bearbeiten möchtest, musst Du einen "
+"Text eingeben, um eine Vorschau zu erhalten."
 
 #: lib/MUBoard/Controller/Search.php:45
 msgid "You have to enter a string!"
@@ -1164,7 +1201,7 @@ msgstr "Einstellungen aktualisieren"
 #: templates/admin/category/edit.tpl:92 templates/admin/category/delete.tpl:22
 #: templates/admin/category/include_selectEditOne.tpl:15
 #: templates/user/posting/include_selectOne.tpl:15
-#: templates/user/posting/edit.tpl:271
+#: templates/user/posting/edit.tpl:272
 #: templates/user/posting/include_selectEditOne.tpl:15
 #: templates/user/abo/edit.tpl:92 templates/user/rank/edit.tpl:120
 #: templates/user/rank/include_selectEditOne.tpl:15
@@ -1225,12 +1262,12 @@ msgstr "Erstes Bild"
 #: templates/admin/posting/edit.tpl:112 templates/admin/posting/edit.tpl:136
 #: templates/admin/posting/edit.tpl:160 templates/admin/posting/edit.tpl:184
 #: templates/admin/rank/display.tpl:46 templates/admin/rank/view.tpl:88
-#: templates/admin/rank/edit.tpl:72 templates/user/posting/display.tpl:100
-#: templates/user/posting/display.tpl:109
-#: templates/user/posting/display.tpl:118
-#: templates/user/posting/display.tpl:191
-#: templates/user/posting/display.tpl:200
-#: templates/user/posting/display.tpl:209 templates/user/posting/view.tpl:111
+#: templates/admin/rank/edit.tpl:72 templates/user/posting/display.tpl:101
+#: templates/user/posting/display.tpl:110
+#: templates/user/posting/display.tpl:119
+#: templates/user/posting/display.tpl:195
+#: templates/user/posting/display.tpl:204
+#: templates/user/posting/display.tpl:213 templates/user/posting/view.tpl:111
 #: templates/user/posting/view.tpl:123 templates/user/posting/view.tpl:135
 #: templates/user/posting/view.tpl:147 templates/user/posting/view.tpl:159
 #: templates/user/posting/view.tpl:171 templates/user/posting/edit.tpl:79
@@ -1590,7 +1627,7 @@ msgstr "Beitrag löschen"
 #: templates/admin/posting/edit.tpl:251 templates/admin/abo/edit.tpl:95
 #: templates/admin/rank/edit.tpl:135 templates/admin/user/edit.tpl:93
 #: templates/admin/forum/edit.tpl:91 templates/admin/category/edit.tpl:90
-#: templates/user/posting/edit.tpl:269 templates/user/abo/edit.tpl:90
+#: templates/user/posting/edit.tpl:270 templates/user/abo/edit.tpl:90
 #: templates/user/rank/edit.tpl:118 templates/user/user/edit.tpl:88
 #: templates/user/forum/edit.tpl:86 templates/user/category/edit.tpl:85
 msgid "OK"
@@ -1997,13 +2034,11 @@ msgid "Description"
 msgstr "Beschreibung"
 
 #: templates/admin/forum/display.tpl:35 templates/admin/forum/view.tpl:50
-#: templates/admin/forum/edit.tpl:40 templates/admin/forum/view.csv:3
-#: templates/admin/category/display.tpl:35
-#: templates/admin/category/view.tpl:49 templates/admin/category/edit.tpl:40
-#: templates/admin/category/view.csv:3 templates/user/forum/view.tpl:48
-#: templates/user/forum/edit.tpl:35 templates/user/forum/view.csv:3
-#: templates/user/category/view.tpl:47 templates/user/category/edit.tpl:35
-#: templates/user/category/view.csv:3
+#: templates/admin/forum/view.csv:3 templates/admin/category/display.tpl:35
+#: templates/admin/category/view.tpl:49 templates/admin/category/view.csv:3
+#: templates/user/forum/view.tpl:48 templates/user/forum/edit.tpl:35
+#: templates/user/forum/view.csv:3 templates/user/category/view.tpl:47
+#: templates/user/category/edit.tpl:35 templates/user/category/view.csv:3
 msgid "Pos"
 msgstr "Position"
 
@@ -2052,9 +2087,13 @@ msgstr "Gib den Titel für das Forum ein"
 msgid "Enter the description of the forum"
 msgstr "Gib die Beschreibung für das Forum ein"
 
-#: templates/admin/forum/edit.tpl:41 templates/user/forum/edit.tpl:36
-msgid "Enter the pos of the forum"
-msgstr "Gib Position für das Forum ein"
+#: templates/admin/forum/edit.tpl:40 templates/admin/category/edit.tpl:40
+msgid "Position"
+msgstr "Position"
+
+#: templates/admin/forum/edit.tpl:41
+msgid "Enter the position of the forum"
+msgstr "Gib die Position für das Forum ein"
 
 #: templates/admin/forum/edit.tpl:83 templates/user/forum/edit.tpl:78
 msgid "Update forum"
@@ -2128,8 +2167,8 @@ msgstr "Gib den Kategorietitel ein"
 msgid "Enter the description of the category"
 msgstr "Gib die Beschreibung für die Kategorie ein"
 
-#: templates/admin/category/edit.tpl:41 templates/user/category/edit.tpl:36
-msgid "Enter the pos of the category"
+#: templates/admin/category/edit.tpl:41
+msgid "Enter the position of the category"
 msgstr "Gib die Position der Kategorie ein"
 
 #: templates/admin/category/edit.tpl:82 templates/user/category/edit.tpl:77
@@ -2198,11 +2237,11 @@ msgstr "Aktualisiert von %1$s am %2$s"
 #: templates/contenttype/itemlist_User_display.tpl:5
 #: templates/contenttype/itemlist_Abo_display_description.tpl:6
 #: templates/contenttype/itemlist_Forum_display.tpl:5
-#: templates/contenttype/itemlist_Posting_display.tpl:16
-#: templates/contenttype/itemlist_Posting_display.tpl:18
+#: templates/contenttype/itemlist_Posting_display.tpl:15
+#: templates/contenttype/itemlist_Posting_display.tpl:17
 #: templates/contenttype/itemlist_Rank_display_description.tpl:6
-#: templates/contenttype/itemlist_Posting_display_description.tpl:20
-#: templates/contenttype/itemlist_Posting_display_description.tpl:22
+#: templates/contenttype/itemlist_Posting_display_description.tpl:19
+#: templates/contenttype/itemlist_Posting_display_description.tpl:21
 #: templates/contenttype/itemlist_User_display_description.tpl:6
 #: templates/contenttype/itemlist_Forum_display_description.tpl:9
 msgid "Read more"
@@ -2210,21 +2249,21 @@ msgstr "Mehr lesen"
 
 #: templates/contenttype/itemlist_Category_display_description.tpl:11
 #: templates/contenttype/itemlist_Abo_display_description.tpl:8
-#: templates/contenttype/itemlist_Posting_display.tpl:21
+#: templates/contenttype/itemlist_Posting_display.tpl:20
 #: templates/contenttype/itemlist_Rank_display_description.tpl:8
-#: templates/contenttype/itemlist_Posting_display_description.tpl:26
+#: templates/contenttype/itemlist_Posting_display_description.tpl:25
 #: templates/contenttype/itemlist_User_display_description.tpl:8
 #: templates/contenttype/itemlist_Forum_display_description.tpl:11
 msgid "No entries found."
 msgstr "Keine Einträge gefunden."
 
-#: templates/contenttype/itemlist_Posting_display.tpl:11
-#: templates/contenttype/itemlist_Posting_display_description.tpl:12
+#: templates/contenttype/itemlist_Posting_display.tpl:10
+#: templates/contenttype/itemlist_Posting_display_description.tpl:11
 msgid "opened issue:"
 msgstr "eröffnete das Thema:"
 
-#: templates/contenttype/itemlist_Posting_display.tpl:13
-#: templates/contenttype/itemlist_Posting_display_description.tpl:14
+#: templates/contenttype/itemlist_Posting_display.tpl:12
+#: templates/contenttype/itemlist_Posting_display_description.tpl:13
 msgid "answered to issue:"
 msgstr "antwortete auf das Thema:"
 
@@ -2323,6 +2362,10 @@ msgstr "Verfasser:"
 msgid "Move issue to another forum!"
 msgstr "Thema in ein anderes Forum verschieben!"
 
+#: templates/user/posting/include_displayItemListMany.tpl:93
+msgid "Be the first who created an issue!"
+msgstr "Eröffne das erste Thema!"
+
 #: templates/user/posting/view.tpl:54
 msgid "Issue"
 msgstr "Thema"
@@ -2331,7 +2374,7 @@ msgstr "Thema"
 msgid "Edit issue"
 msgstr "Thema bearbeiten"
 
-#: templates/user/posting/edit.tpl:21 templates/user/posting/edit.tpl:261
+#: templates/user/posting/edit.tpl:21 templates/user/posting/edit.tpl:262
 msgid "Create issue"
 msgstr "Neues Thema erstellen"
 
@@ -2344,15 +2387,15 @@ msgstr "Beitrag beantworten"
 msgid "Allowed file size:"
 msgstr "Erlaubte Dateigröße:"
 
-#: templates/user/posting/edit.tpl:256
+#: templates/user/posting/edit.tpl:257
 msgid "Update issue"
 msgstr "Thema aktualisieren"
 
-#: templates/user/posting/edit.tpl:262
+#: templates/user/posting/edit.tpl:263
 msgid "Back to Forum"
 msgstr "Zurück zum Forum"
 
-#: templates/user/posting/edit.tpl:264
+#: templates/user/posting/edit.tpl:265
 msgid "Save answer"
 msgstr "Antwort speichern"
 
@@ -2369,6 +2412,10 @@ msgstr "Antworten"
 msgid "There are no forums in this category!"
 msgstr "Keine Foren in dieser Kategorie vorhanden!"
 
+#: templates/user/forum/edit.tpl:36
+msgid "Enter the pos of the forum"
+msgstr "Gib Position für das Forum ein"
+
 #: templates/user/category/display.tpl:40 templates/user/category/view.tpl:124
 msgid "Number of issues"
 msgstr "Anzahl der Themen"
@@ -2376,6 +2423,18 @@ msgstr "Anzahl der Themen"
 #: templates/user/category/display.tpl:41 templates/user/category/view.tpl:125
 msgid "Number of postings"
 msgstr "Anzahl der Beiträge"
+
+#: templates/user/category/edit.tpl:36
+msgid "Enter the pos of the category"
+msgstr "Gib die Position der Kategorie ein"
+
+#: templates/search/moduleResult.tpl:2
+msgid "Your result!"
+msgstr "Dein Ergebnis!"
+
+#: templates/search/moduleSearch.tpl:2
+msgid "Look for relevant issues!"
+msgstr "Nach relevanten Themen suchen"
 
 #: templates/search/moduleSearch.tpl:6
 msgid "Search Terms"
@@ -2417,11 +2476,13 @@ msgstr "Reihenfolge der Ergebnisse"
 msgid "Search"
 msgstr "Suchen"
 
-msgid "Your result!"
-msgstr "Dein Ergebnis!"
-
-msgid "Be the first who created an issue!"
-msgstr "Eröffne das erste Thema!"
+#~ msgid ""
+#~ "Sorry! If you want to create a new issue or to edit an existing issue you "
+#~ "have to enter a title to get a preview!"
+#~ msgstr ""
+#~ "Entschuldigung! Wenn Du ein Thema erstellen oder ein bestehendes Thema "
+#~ "bearbeiten möchtest, musst Du einen Titel eingeben um eine Vorschau zu "
+#~ "erhalten! "
 
 #~ msgid "Sorry! Moving the issue failed."
 #~ msgstr "Entschuldigung! Verschieben des Themas fehlgeschlagen."
