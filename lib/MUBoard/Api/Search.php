@@ -282,8 +282,9 @@ class MUBoard_Api_Search extends MUBoard_Api_Base_Search
 			}
 		}
 
-		if (count($resultedEntities) > 0) {
-			LogUtil::registerStatus(__('Congratulations! Your search has a result! We found ', $dom) . count($resultedEntities) . __(' issues!', $dom));
+		$countResultedEntities = count($resultedEntities);
+		if ($countResultedEntities > 0) {
+			LogUtil::registerStatus(__('Congratulations! Your search has a result! We found ', $dom) . count($resultedEntities) . _n(' issue', ' issues!',$countResultedEntities, $dom));
 		}
 
 		$view->assign('entities', $resultedEntities)
