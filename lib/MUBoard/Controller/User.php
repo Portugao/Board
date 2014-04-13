@@ -280,7 +280,7 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
             $titletobject = __('Forum - Category: ' , $dom);
         }
         if ($objectType == 'forum') {
-            $titletobject = __('Forum: ' , $dom);
+            $titletobject = __('Forum - Category: ', $dom) . ' ' . $entity['category']['title'] . ' - ' . __('Forum: ' , $dom);
         }
         if ($objectType == 'posting') {
             $titletobject = 'Forum: ' . ' ' . $entity['forum']['title'] . ' - ' . __('Issue: ' , $dom);
