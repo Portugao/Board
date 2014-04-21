@@ -82,7 +82,7 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
         if ($ot == 'posting') {
             return System::redirect(ModUtil::url($this->name, 'user', 'view'));
         }
-        	
+         
         if (($ot == 'category' || $ot == 'forum' ) && $type == 'user') {
 
             $args['sort'] = 'pos';
@@ -109,7 +109,7 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
         $sitename = ModUtil::getVar('ZConfig', 'sitename');
 
         PageUtil::setVar('title', $sitename . ' - ' . __('Forum - Category Overview', $dom));
-        	
+         
         return parent::view($args);
     }
 
@@ -234,7 +234,7 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
             $selectionArgs['currentPage'] = $currentPage;
             $selectionArgs['resultsPerPage'] = $resultsPerPage;
             list($entities, $objectCount) = ModUtil::apiFunc($this->name, 'selection', 'getEntitiesPaginated', $selectionArgs);
-            	
+             
         }
 
         // build ModUrl instance for display hooks
@@ -286,6 +286,16 @@ class MUBoard_Controller_User extends MUBoard_Controller_Base_User
             $titletobject = 'Forum: ' . ' ' . $entity['forum']['title'] . ' - ' . __('Issue: ' , $dom);
         }
         PageUtil::setVar('title', $sitename . ' - ' . $titletobject . ' ' . $entity['title']);
+
+        // we set description
+        if ($objectType == 'category' || $objectType == 'forum') {
+            $descriptionobject = $entity['description'];
+        }
+        if ($objectType == 'posting') {
+            $descriptionobject = $entity['text'];
+            $descriptionobject = substr($descriptionobject, 0, 160) . '...';
+        }
+        PageUtil::setVar('description', $descriptionobject);
 
         // fetch and return the appropriate template
         return MUBoard_Util_View::processTemplate($this->view, 'user', $objectType, 'display', $args);
