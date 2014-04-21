@@ -630,7 +630,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
                     }
                 } else {
                     $rankrepository = MUBoard_Util_Model::getRankRepository();
-                    $where = 'tbl.minPostings = 0';
+                    $where = 'tbl.minPostings <= 1';
                     $rank = $rankrepository->selectWhere($where);
                     if ($rank) {
                         $firstRank = $rankrepository->selectById($rank[0]['id']);
