@@ -567,14 +567,21 @@ border-bottom: 1px solid #ddd;
 
 /*----------------JQuery-----------------*/
 
+#muboard-user-preview {
+	float: left;
+	width: 100%;
+}
 #muboard-user-preview .muboard-user-posting {
-     background: #eeffee url(/modules/MUBoard/images/preview.png) 50% 0 repeat-y; 
+    background: #eeffee url(/modules/MUBoard/images/preview.png) 50% 0 repeat-y;
 }
 
 .muboard-nopreview {
 	width: 96%;
+	height: auto;
 	padding: 1% 2%;
 	background: #eeffee !important;
+	float: left;
+	position: relative;
 }
 
 /*-------------HOOKS----------------*/

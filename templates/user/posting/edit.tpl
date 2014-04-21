@@ -2,10 +2,10 @@
 {if $func ne 'display'}
 {include file='user/header.tpl'}
 {/if}
-{pageaddvar name='javascript' value='modules/MUBoard/javascript/MUBoard_editFunctions.js'}
-{pageaddvar name='javascript' value='modules/MUBoard/javascript/MUBoard_validation.js'}
 {pageaddvar name='javascript' value='jquery'}
 {pageaddvar name='javascript' value='jquery-ui'}
+{pageaddvar name='javascript' value='modules/MUBoard/javascript/MUBoard_editFunctions.js'}
+{pageaddvar name='javascript' value='modules/MUBoard/javascript/MUBoard_validation.js'}
 
 {if $func eq 'edit'}
 {$forum|muboardGetForumInfo}
@@ -244,7 +244,7 @@
     	<input type="hidden" id="muboardPosting_ParentItemList" name="muboardPosting_ParentItemList" value="{$posting.id}" />
     	<input type="hidden" id="muboardPosting_ParentMode" name="muboardPosting_ParentMode" value="0" />
     {/if}
-    <div id="muboard-user-preview" style="display: none; height: 40px;"></div>
+    <div id="muboard-user-preview" style="display: none;"></div>
 
     {* include possible submit actions *}
     <div class="muboard-posting-edit-action">
@@ -355,12 +355,12 @@
         Zikula.UI.Tooltips($$('.muboardFormTooltips'));
     });
     
-    var MU = jQuery.noConflict();
-    MU(document).ready( function() { 
 
-       MU("#btnPreview").click(function(d) {
+    jQuery(document).ready( function() { 
+
+       jQuery("#btnPreview").click(function(d) {
            d.preventDefault();
-           MU("#muboard-user-preview").slideDown(500).html("<img style='margin: 0 auto;' src='images/ajax/large_square_white.gif' />");
+           jQuery("#muboard-user-preview").slideDown(500).html("<img style='margin: 0 auto;' src='images/ajax/large_square_white.gif' />");
            var url;
            url = "index.php?module=muboard&type=ajax&func=preview&theme=printer";
            {{if $func eq 'display' && $mode eq 'create'}}
@@ -369,31 +369,18 @@
            {{if $func eq 'edit' && $mode eq 'edit'}}
            url = "index.php?module=muboard&type=ajax&func=preview&theme=printer&id={{$posting.id}}";
            {{/if}}           
-           var datas = MU("#{{$__formid}}").serialize();
+           var datas = jQuery("#{{$__formid}}").serialize();
            var datatyp = 'html';
            var datawork = function(answer) {
                if (answer) {
-                   MU("#muboard-user-preview").fadeOut(10).html("")
+                   jQuery("#muboard-user-preview").fadeOut(10).html("")
                    .fadeIn(1000).html(answer); 
                }
            }
            
-           MU.get(url, datas, datawork, datatyp);
+           jQuery.get(url, datas, datawork, datatyp);
 
        });
-       
-     {{*  MU("#btnCreate").click(function() {
-           MU("#{{$__formid}}").submit();
-       }); 
-       
-       MU("#btnToforum").click(function() {
-           MU("#{{$__formid}}").submit();
-       });   
-
-       MU("#btnCancel").click(function(f) {
-           f.preventDefault();
-           MU("#muboard-user-preview").slideUp(2000);
-       }); *}}
    });  
 
 /* ]]> */
