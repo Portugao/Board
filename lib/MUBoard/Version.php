@@ -20,7 +20,7 @@ class MUBoard_Version extends MUBoard_Base_Version
     {
         $meta = array();
         // the current module version
-        $meta['version'] = '1.0.0';
+        $meta['version'] = '1.1.0';
         // the displayed name of the module
         $meta['displayname'] = $this->__('MUBoard');
         // the module description
