@@ -144,14 +144,13 @@ class MUBoard_Api_Admin extends MUBoard_Api_Base_Admin
             $result = DBUtil::executeSQL('SELECT * FROM `z_dizkus_topics`');
             $topics = $result->fetchAll(Doctrine::FETCH_ASSOC);
 
-            $sqlContac3 = new mysqli($host, $user, $password);
+            $sqlContact3 = new mysqli($host, $user, $password);
 
             foreach ($topics as $topic) {
-                $title = $sqlContact2->escape_string($forum['forum_name']);
-                $description = $sqlContact2->escape_string($forum['forum_desc']);
-                $values = "('" . $forum['forum_id'] . "', '" . $forum['cat_id'] . "', '" . $title . "', '" . $description . "', '" . $forum['forum_order'] . "')";
+                $title = $sqlContact3->escape_string($topic['topic_title']);
+                $values = "('" . $topic['topic_id'] . "', NULL, '" . $topic['forum_id'] . "', '" . $title . "', '" . $topic['topic_views'] . "', '" . $topic['topic_status'] . "', '" . $topic['topic_poster'] . "', '" . $topic['topic_time'] . "', 'a:0:{}', 'a:0:{}', 'a:0:{}', 'a:0:{}', 'a:0:{}', 'a:0:{}')";
 
-                $sql = 'INSERT INTO muboard_forum (id, category_id, title, description, pos) VALUES ' . $values;
+                $sql = 'INSERT INTO muboard_posting (id, parent_id, forum_id, title, invocations, state, createdUserId, createdDate, firstImageMeta, secondImageMeta, thirdImageMeta, firstFileMeta, secondFileMeta, thirdFileMeta) VALUES ' . $values;
 
                 $stmt = $connection->prepare($sql);
                 try {
