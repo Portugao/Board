@@ -16,76 +16,177 @@
  */
 class MUBoard_Api_Admin extends MUBoard_Api_Base_Admin
 {
-	/**
-	 * get available Admin panel links
-	 *
-	 * @return array Array of admin links
-	 */
-	public function getlinks()
-	{
-		$links = array();
+    /**
+     * get available Admin panel links
+     *
+     * @return array Array of admin links
+     */
+    public function getlinks()
+    {
+        $links = array();
 
-		if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_READ)) {
-			$links[] = array('url' => ModUtil::url($this->name, 'user', 'main'),
-					'text' => $this->__('Frontend'),
-					'title' => $this->__('Switch to user area.'),
-					'class' => 'z-icon-es-home');
-		}
-		if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
-			$links[] = array('url' => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'category')),
-					'text' => $this->__('Categories'),
-					'title' => $this->__('Category list'));
-		}
-		if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
-			$links[] = array('url' => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'forum')),
-					'text' => $this->__('Forums'),
-					'title' => $this->__('Forum list'));
-		}
-		/*if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
-		 $links[] = array('url' => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'posting')),
-		 		'text' => $this->__('Postings'),
-		 		'title' => $this->__('Posting list'));
-		}*/
-		if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
-			$links[] = array('url'   => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'user')),
-					'text'  => $this->__('Users'),
-					'title' => $this->__('User list'));
-		}
-		if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
-			$links[] = array('url'   => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'rank')),
-					'text'  => $this->__('Ranks'),
-					'title' => $this->__('Rank list'));
-		}
-		if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
-			$links[] = array('url' => ModUtil::url($this->name, 'admin', 'config'),
-					'text' => $this->__('Configuration'),
-					'title' => $this->__('Manage settings for this application'));
-		}
-		return $links;
-	}
+        if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_READ)) {
+            $links[] = array('url' => ModUtil::url($this->name, 'user', 'main'),
+                    'text' => $this->__('Frontend'),
+                    'title' => $this->__('Switch to user area.'),
+                    'class' => 'z-icon-es-home');
+        }
+        if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
+            $links[] = array('url' => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'category')),
+                    'text' => $this->__('Categories'),
+                    'title' => $this->__('Category list'));
+        }
+        if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
+            $links[] = array('url' => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'forum')),
+                    'text' => $this->__('Forums'),
+                    'title' => $this->__('Forum list'));
+        }
+        /*if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
+         $links[] = array('url' => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'posting')),
+                 'text' => $this->__('Postings'),
+                 'title' => $this->__('Posting list'));
+        }*/
+        if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
+            $links[] = array('url'   => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'user')),
+                    'text'  => $this->__('Users'),
+                    'title' => $this->__('User list'));
+        }
+        if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
+            $links[] = array('url'   => ModUtil::url($this->name, 'admin', 'view', array('ot' => 'rank')),
+                    'text'  => $this->__('Ranks'),
+                    'title' => $this->__('Rank list'));
+        }
+        if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
+            $links[] = array('url'   => ModUtil::url($this->name, 'admin', 'import'),
+                    'text'  => $this->__('Import'),
+                    'title' => $this->__('Import of dizkus'));
+        }
+        if (SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN)) {
+            $links[] = array('url' => ModUtil::url($this->name, 'admin', 'config'),
+                    'text' => $this->__('Configuration'),
+                    'title' => $this->__('Manage settings for this application'));
+        }
+        return $links;
+    }
 
-	/**
-	 * this function change the forum for the children of a posting
-	 * $args
-	 */
-	public function movetoforum($args)
-	{
-		$work = $this->request->query->filter('work', 'none', FILTER_SANITIZE_STRING);
+    /**
+     * import of dizkus datas
+     */
+    public function importDizkus($args)
+    {
+        // we get serviceManager
+        $serviceManager = ServiceUtil::getManager();
+        // we get entityManager
+        $entityManager = $serviceManager->getService('doctrine.entitymanager');
 
-		$args['postingid'] = $this->getId();
-		$forum = $args['forum'];
-		$children = $args['children'];
-		if ($work == 'movetoforum') {
-			
-			$serviceManager = ServiceUtil::getManager();
-			$entityManager = $serviceManager->getService('doctrine.entitymanager');
-			
-			$postingrepository = MUBoard_Util_Model::getPostingRepository();
-			foreach ($children as $child) {
-				$posting = $postingrepository->selectById($child['id']);
-				$posting->setForum($forum);
-				$entityManager->flush();
-			}
-		}
-	}
+        $categoryRepositoy = MUBoard_Util_Model::getCategoryRepository();
+        $forumRepositoy = MUBoard_Util_Model::getForumRepository();
+
+        $host = $args['host'];
+        $dbname = $args['dbname'];
+        $user = $args['user'];
+        $password = $args['password'];
+        $dizkustable = $args['dizkustable'];
+
+        $connection = Doctrine_Manager::getInstance()->getConnection('default');
+         
+        if ($dizkustable == 1 || $dizkustable == 2) {
+            // we get all categories
+            $result = DBUtil::executeSQL('SELECT * FROM `z_dizkus_categories`');
+            $categories = $result->fetchAll(Doctrine::FETCH_ASSOC);
+
+            $sqlContact = new mysqli($host, $user, $password);
+
+            foreach ($categories as $category) {
+                $title = $sqlContact->escape_string($category['cat_title']);
+                $values = "('" . $category['cat_id'] . "', '" . $title . "', '', '" . $category['cat_order'] . "')";
+
+                $sql = 'INSERT INTO muboard_category (id, title, description, pos) VALUES ' . $values;
+
+                $stmt = $connection->prepare($sql);
+                try {
+                    $stmt->execute();
+                } catch (Exception $e) {
+                    LogUtil::registerError($e);
+                }
+            }
+            $sqlContact->close();
+
+        }
+
+        if ($dizkustable == 1 || $dizkustable == 2) {
+            // we get all forums
+            $result = DBUtil::executeSQL('SELECT * FROM `z_dizkus_forums`');
+            $forums = $result->fetchAll(Doctrine::FETCH_ASSOC);
+
+            $sqlContact2 = new mysqli($host, $user, $password);
+
+            foreach ($forums as $forum) {
+                $title = $sqlContact2->escape_string($forum['forum_name']);
+                $description = $sqlContact2->escape_string($forum['forum_desc']);
+                $values = "('" . $forum['forum_id'] . "', '" . $forum['cat_id'] . "', '" . $title . "', '" . $description . "', '" . $forum['forum_order'] . "')";
+
+                $sql = 'INSERT INTO muboard_forum (id, category_id, title, description, pos) VALUES ' . $values;
+
+                $stmt = $connection->prepare($sql);
+                try {
+                    $stmt->execute();
+                } catch (Exception $e) {
+                    LogUtil::registerError($e);
+                }
+            }
+            $sqlContact2->close();
+        }
+
+        if ($dizkustable == 1 || $dizkustable == 3) {
+
+            // we get all topics
+            $result = DBUtil::executeSQL('SELECT * FROM `z_dizkus_topics`');
+            $topics = $result->fetchAll(Doctrine::FETCH_ASSOC);
+
+            $sqlContac3 = new mysqli($host, $user, $password);
+
+            foreach ($topics as $topic) {
+                $title = $sqlContact2->escape_string($forum['forum_name']);
+                $description = $sqlContact2->escape_string($forum['forum_desc']);
+                $values = "('" . $forum['forum_id'] . "', '" . $forum['cat_id'] . "', '" . $title . "', '" . $description . "', '" . $forum['forum_order'] . "')";
+
+                $sql = 'INSERT INTO muboard_forum (id, category_id, title, description, pos) VALUES ' . $values;
+
+                $stmt = $connection->prepare($sql);
+                try {
+                    $stmt->execute();
+                } catch (Exception $e) {
+                    LogUtil::registerError($e);
+                }
+            }
+            $sqlContact3->close();
+        }
+
+    }
+
+    /**
+     * this function change the forum for the children of a posting
+     * $args
+     */
+    public function movetoforum($args)
+    {
+        $work = $this->request->query->filter('work', 'none', FILTER_SANITIZE_STRING);
+
+        $args['postingid'] = $this->getId();
+        $forum = $args['forum'];
+        $children = $args['children'];
+        if ($work == 'movetoforum') {
+             
+            $serviceManager = ServiceUtil::getManager();
+            $entityManager = $serviceManager->getService('doctrine.entitymanager');
+             
+            $postingrepository = MUBoard_Util_Model::getPostingRepository();
+            foreach ($children as $child) {
+                $posting = $postingrepository->selectById($child['id']);
+                $posting->setForum($forum);
+                $entityManager->flush();
+            }
+        }
+    }
 }

@@ -180,4 +180,20 @@ class MUBoard_Controller_Admin extends MUBoard_Controller_Base_Admin
         return System::redirect(ModUtil::url($this->name, 'user', 'display' , array('ot' => 'posting', 'id' => $id)));
         	
     }
+    
+	/**
+	 * This method takes care of the application configuration.
+	 *
+	 * @return string Output
+	 */
+	public function import()
+	{
+		$this->throwForbiddenUnless(SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN));
+
+		// Create new Form reference
+		$view = FormUtil::newForm($this->name, $this);
+
+		// Execute form using supplied template and page event handler
+		return $view->execute('admin/import.tpl', new MUBoard_Form_Handler_Admin_Base_Import());
+	}
 }
