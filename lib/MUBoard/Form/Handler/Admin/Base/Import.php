@@ -45,10 +45,9 @@ class MUBoard_Form_Handler_Admin_Base_Import extends Zikula_Form_AbstractHandler
         // initialise list entries for the 'number images' setting
         $vars['dizkustableItems'] = array(
             array('value' => '1', 'text' => __('All', $dom)),
-            array('value' => '2', 'text' => __('Categories and Forums', $dom)),
-            array('value' => '3', 'text' => __('Topics', $dom)),
-            array('value' => '4', 'text' => __('Answers', $dom)),
-            array('value' => '5', 'text' => __('Ranks', $dom) . ' and ' . __('Users', $dom))
+            array('value' => '2', 'text' => __('Categories', $dom) . ' ' . __('and', $dom) . ' ' . __('Forums', $dom)),
+            array('value' => '3', 'text' => __('Topics', $dom) . ' ' . __('and', $dom) . ' ' . __('Answers', $dom)),
+            array('value' => '4', 'text' => __('Ranks', $dom) . ' ' . __('and', $dom) . ' ' . __('Users', $dom))
         );
 
         // assign all module vars
