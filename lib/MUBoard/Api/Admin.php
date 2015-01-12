@@ -74,14 +74,6 @@ class MUBoard_Api_Admin extends MUBoard_Api_Base_Admin
      */
     public function importDizkus($args)
     {
-        // we get serviceManager
-        $serviceManager = ServiceUtil::getManager();
-        // we get entityManager
-        $entityManager = $serviceManager->getService('doctrine.entitymanager');
-
-        $categoryRepositoy = MUBoard_Util_Model::getCategoryRepository();
-        $forumRepositoy = MUBoard_Util_Model::getForumRepository();
-
         $host = $args['host'];
         $dbname = $args['dbname'];
         $user = $args['user'];
