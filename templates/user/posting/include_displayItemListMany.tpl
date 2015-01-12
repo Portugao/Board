@@ -63,6 +63,9 @@
             <img src='/images/icons/extrasmall/button_cancel.png' />
         </a>
     {/if}
+    {* <a title="{gt text='You have permissions to delete this issue!'}" id="muboard-user-posting-header-infos-abo" href="{modurl modname='MUBoard' type='admin' func='delete' ot='posting' id=$item.id}">
+        <img src='/images/icons/extrasmall/14_layer_deletelayer.png' />
+    </a> *}
     {/checkpermissionblock}              
 </div>
 </div>
