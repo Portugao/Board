@@ -77,7 +77,7 @@ abstract class MUBoard_Entity_Base_Posting extends Zikula_EntityAccess
 
 
     /**
-     * @ORM\Column(length=5000)
+     * @ORM\Column(length=10000)
      * @var string $text.
      */
     protected $text = '';

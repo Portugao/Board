@@ -93,7 +93,7 @@ class MUBoard_Installer extends MUBoard_Base_Installer
         $this->setVar('editPostings', false);
         $this->setVar('editTime', 6);
         $this->setVar('latestPostings', 1);
-        $this->setVar('sortingCategories', array('descending'));        
+        $this->setVar('sortingCategories', array('descending'));
         $this->setVar('sortingPostings', array('descending'));
         $this->setVar('iconSet', array('1'));
         $this->setVar('template', array('normal'));
@@ -111,6 +111,39 @@ class MUBoard_Installer extends MUBoard_Base_Installer
         HookUtil::registerSubscriberBundles($this->version->getHookSubscriberBundles());
 
         // initialisation successful
+        return true;
+    }
+
+    /**
+     * Upgrade the MUBoard application from an older version.
+     *
+     * If the upgrade fails at some point, it returns the last upgraded version.
+     *
+     * @param integer $oldversion Version to upgrade from.
+     *
+     * @return boolean True on success, false otherwise.
+     */
+    public function upgrade($oldversion)
+    {
+        // Upgrade dependent on old version number
+        switch ($oldversion) {
+            case '1.0.0':
+                // nothing to do
+                // update the database schema
+                try {
+                    DoctrineHelper::updateSchema($this->entityManager, $this->listEntityClasses());
+                } catch (Exception $e) {
+                    if (System::isDevelopmentMode()) {
+                        LogUtil::registerError($this->__('Doctrine Exception: ') . $e->getMessage());
+                    }
+                    return LogUtil::registerError($this->__f('An error was encountered while dropping the tables for the %s module.', array($this->getName())));
+                }
+
+            case '1.1.0':
+                // for later updates
+        }
+
+        // update successful
         return true;
     }
 }

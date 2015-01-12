@@ -31,7 +31,7 @@ class MUBoard_Entity_Validator_Posting extends MUBoard_Entity_Validator_Base_Pos
             $errorInfo['message'] = __f('Error! Length of field value must not be higher than %2$s (%1$s).', array('title', 255), $dom);
             return $errorInfo;
         }
-        if (!$this->isStringNotLongerThan('text', 5000)) {
+        if (!$this->isStringNotLongerThan('text', 10000)) {
             $errorInfo['message'] = __f('Error! Length of field value must not be higher than %2$s (%1$s).', array('text', 5000), $dom);
             return $errorInfo;
         }
