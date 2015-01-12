@@ -147,10 +147,56 @@ class MUBoard_Api_Admin extends MUBoard_Api_Base_Admin
             $sqlContact3 = new mysqli($host, $user, $password);
 
             foreach ($topics as $topic) {
+                // we get all posts of this topic
+                $result = DBUtil::executeSQL('SELECT * FROM `z_dizkus_posts` WHERE `topic_id` = ' . $topic['topic_id']);
+                $posts = $result->fetchAll(Doctrine::FETCH_ASSOC);
+                if (isset($posts)) {
+                    $firstId = $posts[0]['post_id'];
+                    $text = $posts[0]['post_text'];
+                }
+                $text = $sqlContact3->escape_string($text);
                 $title = $sqlContact3->escape_string($topic['topic_title']);
-                $values = "('" . $topic['topic_id'] . "', NULL, '" . $topic['forum_id'] . "', '" . $title . "', '" . $topic['topic_views'] . "', '" . $topic['topic_status'] . "', '" . $topic['topic_poster'] . "', '" . $topic['topic_time'] . "', 'a:0:{}', 'a:0:{}', 'a:0:{}', 'a:0:{}', 'a:0:{}', 'a:0:{}')";
+                $values = "('" . $firstId . "', NULL, '" . $topic['forum_id'] . "', '" . $title . "', '" . $text . "', '" . $topic['topic_views'] . "', '" . "1" . "', '" . $topic['topic_poster'] . "', '" . $topic['topic_time'] . "', 'a:0:{}', 'a:0:{}', 'a:0:{}', 'a:0:{}', 'a:0:{}', 'a:0:{}')";
 
-                $sql = 'INSERT INTO muboard_posting (id, parent_id, forum_id, title, invocations, state, createdUserId, createdDate, firstImageMeta, secondImageMeta, thirdImageMeta, firstFileMeta, secondFileMeta, thirdFileMeta) VALUES ' . $values;
+                $sql = 'INSERT INTO muboard_posting (id, parent_id, forum_id, title, text, invocations, state, createdUserId, createdDate, firstImageMeta, secondImageMeta, thirdImageMeta, firstFileMeta, secondFileMeta, thirdFileMeta) VALUES ' . $values;
+
+                $stmt = $connection->prepare($sql);
+                try {
+                    $stmt->execute();
+                    foreach ($posts as $post) {
+                        if ($post['post_id'] != $firstId) {
+                            $text2 = $sqlContact3->escape_string($post['post_text']);
+                            $values2 = "('" . $post['post_id'] . "', '" . $firstId . "', '" . $post['forum_id'] . "', '" . $text2 . "', '" . $post['poster_id'] . "', '" . $post['post_time'] . "', 'a:0:{}', 'a:0:{}', 'a:0:{}', 'a:0:{}', 'a:0:{}', 'a:0:{}')";
+
+                            $sql2 = 'INSERT INTO muboard_posting (id, parent_id, forum_id, text, createdUserId, createdDate, firstImageMeta, secondImageMeta, thirdImageMeta, firstFileMeta, secondFileMeta, thirdFileMeta) VALUES ' . $values2;
+                            $stmt2 = $connection->prepare($sql2);
+                            try {
+                                $stmt2->execute();
+
+                            } catch (Exception $f) {
+                                LogUtil::registerError($f);
+                            }
+                        }
+                    }
+
+                } catch (Exception $e) {
+                    LogUtil::registerError($e);
+                }
+            }
+            $sqlContact3->close();
+        }
+
+        if ($dizkustable == 1 || $dizkustable == 4) {
+            // we get all users
+            $result = DBUtil::executeSQL('SELECT * FROM `z_dizkus_users`');
+            $users = $result->fetchAll(Doctrine::FETCH_ASSOC);
+
+            $sqlContact4 = new mysqli($host, $user, $password);
+
+            foreach ($users as $user) {
+                $values = "('" . $user['user_rank'] . "', '" . $user['user_id'] . "', '" . $user['user_posts'] . "', '" . $user['user_lastvisit'] . "')";
+
+                $sql = 'INSERT INTO muboard_user (rank_id, userid, numberPostings, lastVisit) VALUES ' . $values;
 
                 $stmt = $connection->prepare($sql);
                 try {
@@ -159,7 +205,51 @@ class MUBoard_Api_Admin extends MUBoard_Api_Base_Admin
                     LogUtil::registerError($e);
                 }
             }
-            $sqlContact3->close();
+
+            // we get all users
+            $result = DBUtil::executeSQL('SELECT * FROM `z_dizkus_ranks`');
+            $ranks = $result->fetchAll(Doctrine::FETCH_ASSOC);
+
+            foreach ($ranks as $rank) {
+                $numberOfIcons = $this->numberOfIcons($rank['rank_image']);
+                $name = $sqlContact4->escape_string($rank['rank_title']);
+                $values = "('" . $rank['rank_id'] . "', '" . $name . "', '" . $rank['rank_min'] . "', '" . $rank['rank_max'] . "', '" . $numberOfIcons . "', 'a:0:{}', '" . $rank['rank_special'] . "')";
+
+                $sql = 'INSERT INTO muboard_rank (id, name, minPostings, maxPostings, numberOfIcons, uploadImageMeta, special) VALUES ' . $values;
+
+                $stmt = $connection->prepare($sql);
+                try {
+                    $stmt->execute();
+                } catch (Exception $e) {
+                    LogUtil::registerError($e);
+                }
+            }
+            $sqlContact4->close();
+        }
+
+    }
+    /**
+     * This function return the number of icons
+     * depending on gif file in dizkus
+     * @param string $icon
+     * @return int number
+     */
+
+    private function numberOfIcons($icon)
+    {
+        switch ($icon) {
+            case 'zerostar.gif':
+                return 0;
+            case 'onestar.gif':
+                return 1;
+            case 'twostars.gif':
+                return 2;
+            case 'threestars.gif':
+                return 3;
+            case 'fourstars.gif':
+                return 4;
+            case 'fivestars.gif':
+                return 5;
         }
 
     }
