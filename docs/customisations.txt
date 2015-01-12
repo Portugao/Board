@@ -6,7 +6,7 @@ MUBoard - Manual additions and amendments
 
 Changes by hand on the model to change in MOST
 
-
+We have to change the text field in posting to varchar(10000)
 
 Changed Files
 
@@ -58,6 +58,7 @@ customisations.txt
 *templates/plugins/modifier.muboardGetStateOfPosting.php
 *templates/plugins/modifier.muboardGetStateOfPostingAbo.php
 
+*templates/admin/import.tpl
 *templates/search/options.tpl
 
 
