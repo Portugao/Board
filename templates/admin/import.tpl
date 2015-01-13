@@ -14,6 +14,7 @@
         {muboardFormFrame}
         {formsetinitialfocus inputId='uploadImages'}
             <fieldset>
+            <div class="z-warningmsg z-formnote">{gt text='For a correct import \'mysqli\' has to be activated on your server!'}</div>
             <div class="z-informationmsg z-formnote">{gt text='For security aspects you have to enter your datas to give the import function access to the database!'}</div>
                 <legend>{gt text='Here you can import datas of Dizkus.'}</legend>
                 <div class="z-formrow">
