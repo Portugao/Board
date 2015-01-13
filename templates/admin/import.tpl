@@ -10,11 +10,11 @@
 </div>
 
     {form cssClass='z-form'}
-
         {* add validation summary and a <div> element for styling the form *}
         {muboardFormFrame}
         {formsetinitialfocus inputId='uploadImages'}
             <fieldset>
+            <div class="z-informationmsg z-formnote">{gt text='For security aspects you have to enter your datas to give the import function access to the database!'}</div>
                 <legend>{gt text='Here you can import datas of Dizkus.'}</legend>
                 <div class="z-formrow">
                     {formlabel for='host' __text='Host'}
@@ -35,6 +35,7 @@
                 <div class="z-formrow">
                     {formlabel for='dizkustable' __text='Tables of dizkus'}
                     {formdropdownlist id='dizkustable' group='import'}
+                    <div class="z-informationmsg z-formnote">{gt text='Here you can select if you wish to import all tables in one process or if you wish to do it in 3 steps. If you have much datas it is possible that you get problems if you select All!'}</div>
                 </div>
             </fieldset>
 
