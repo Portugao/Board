@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Zikula 1.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-08 09:03+0000\n"
+"POT-Creation-Date: 2015-01-13 08:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -97,6 +97,7 @@ msgid "This value is already assigned, but must be unique. Please change it."
 msgstr ""
 
 #: templates/plugins/function.muboardSelectorObjectTypes.php:29
+#: lib/MUBoard/Form/Handler/Admin/Base/Import.php:48
 #: lib/MUBoard/Api/Base/User.php:36 lib/MUBoard/Api/Base/Admin.php:36
 #: lib/MUBoard/Api/User.php:40 lib/MUBoard/Api/Admin.php:36
 #: templates/block/itemlist_modify.tpl:6
@@ -104,6 +105,7 @@ msgid "Categories"
 msgstr ""
 
 #: templates/plugins/function.muboardSelectorObjectTypes.php:30
+#: lib/MUBoard/Form/Handler/Admin/Base/Import.php:48
 #: lib/MUBoard/Api/Base/User.php:41 lib/MUBoard/Api/Base/Admin.php:41
 #: lib/MUBoard/Api/Admin.php:41 templates/admin/category/display.tpl:14
 #: templates/block/itemlist_modify.tpl:7
@@ -196,10 +198,44 @@ msgstr ""
 msgid "Error! Deletion attempt failed."
 msgstr ""
 
+#: lib/MUBoard/Form/Handler/Admin/Base/Import.php:47
+msgid "All"
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Base/Import.php:48
+#: lib/MUBoard/Form/Handler/Admin/Base/Import.php:49
+#: lib/MUBoard/Form/Handler/Admin/Base/Import.php:50
+msgid "and"
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Base/Import.php:49
+msgid "Topics"
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Base/Import.php:49
+#: templates/user/forum/display.tpl:30
+msgid "Answers"
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Base/Import.php:50
+#: lib/MUBoard/Api/Base/User.php:61 lib/MUBoard/Api/Base/Admin.php:61
+#: lib/MUBoard/Api/Admin.php:56
+msgid "Ranks"
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Base/Import.php:50
+#: lib/MUBoard/Api/Base/User.php:56 lib/MUBoard/Api/Base/Admin.php:56
+#: lib/MUBoard/Api/Admin.php:51 templates/admin/rank/display.tpl:14
+#: templates/user/rank/display.tpl:12
+msgid "Users"
+msgstr ""
+
+#: lib/MUBoard/Form/Handler/Admin/Base/Import.php:115
 #: lib/MUBoard/Form/Handler/Admin/Base/Config.php:133
 msgid "Error! Failed to set configuration variables."
 msgstr ""
 
+#: lib/MUBoard/Form/Handler/Admin/Base/Import.php:118
 #: lib/MUBoard/Form/Handler/Admin/Base/Config.php:136
 msgid "Done! Module configuration updated."
 msgstr ""
@@ -355,7 +391,7 @@ msgid ""
 msgstr ""
 
 #: lib/MUBoard/Base/Installer.php:81 lib/MUBoard/Base/Installer.php:166
-#: lib/MUBoard/Installer.php:81
+#: lib/MUBoard/Installer.php:81 lib/MUBoard/Installer.php:137
 msgid "Doctrine Exception: "
 msgstr ""
 
@@ -371,7 +407,7 @@ msgid ""
 "module."
 msgstr ""
 
-#: lib/MUBoard/Base/Installer.php:168
+#: lib/MUBoard/Base/Installer.php:168 lib/MUBoard/Installer.php:139
 #, php-format
 msgid "An error was encountered while dropping the tables for the %s module."
 msgstr ""
@@ -588,7 +624,7 @@ msgid "Show last posting"
 msgstr ""
 
 #: lib/MUBoard/Util/View.php:279
-#: templates/user/posting/include_displayItemListMany.tpl:93
+#: templates/user/posting/include_displayItemListMany.tpl:96
 msgid "No postings available!"
 msgstr ""
 
@@ -874,13 +910,15 @@ msgid ""
 "Sorry! There is no entity for your search string. Please try another string!"
 msgstr ""
 
-#: lib/MUBoard/Api/Search.php:286
+#: lib/MUBoard/Api/Search.php:287
 msgid "Congratulations! Your search has a result! We found "
 msgstr ""
 
-#: lib/MUBoard/Api/Search.php:286
-msgid " issues!"
-msgstr ""
+#: lib/MUBoard/Api/Search.php:287
+msgid "issue"
+msgid_plural "issues"
+msgstr[0] ""
+msgstr[1] ""
 
 #: lib/MUBoard/Api/Base/Mailz.php:30
 msgid "3 newest categories"
@@ -932,21 +970,10 @@ msgstr ""
 msgid "Abo list"
 msgstr ""
 
-#: lib/MUBoard/Api/Base/User.php:56 lib/MUBoard/Api/Base/Admin.php:56
-#: lib/MUBoard/Api/Admin.php:51 templates/admin/rank/display.tpl:14
-#: templates/user/rank/display.tpl:12
-msgid "Users"
-msgstr ""
-
 #: lib/MUBoard/Api/Base/User.php:57 lib/MUBoard/Api/Base/Admin.php:57
 #: lib/MUBoard/Api/Admin.php:52 templates/admin/user/view.tpl:4
 #: templates/user/user/view.tpl:4
 msgid "User list"
-msgstr ""
-
-#: lib/MUBoard/Api/Base/User.php:61 lib/MUBoard/Api/Base/Admin.php:61
-#: lib/MUBoard/Api/Admin.php:56
-msgid "Ranks"
 msgstr ""
 
 #: lib/MUBoard/Api/Base/User.php:62 lib/MUBoard/Api/Base/Admin.php:62
@@ -963,11 +990,11 @@ msgstr ""
 msgid "Switch to user area."
 msgstr ""
 
-#: lib/MUBoard/Api/Base/Admin.php:66 lib/MUBoard/Api/Admin.php:61
+#: lib/MUBoard/Api/Base/Admin.php:66 lib/MUBoard/Api/Admin.php:66
 msgid "Configuration"
 msgstr ""
 
-#: lib/MUBoard/Api/Base/Admin.php:67 lib/MUBoard/Api/Admin.php:62
+#: lib/MUBoard/Api/Base/Admin.php:67 lib/MUBoard/Api/Admin.php:67
 msgid "Manage settings for this application"
 msgstr ""
 
@@ -993,6 +1020,14 @@ msgstr ""
 
 #: lib/MUBoard/Api/User.php:56
 msgid "Look for relevant issues"
+msgstr ""
+
+#: lib/MUBoard/Api/Admin.php:61 templates/admin/import.tpl:5
+msgid "Import"
+msgstr ""
+
+#: lib/MUBoard/Api/Admin.php:62
+msgid "Import of dizkus"
 msgstr ""
 
 #: lib/MUBoard/Api/Ajax.php:73 lib/MUBoard/Controller/User.php:286
@@ -1054,7 +1089,7 @@ msgstr ""
 msgid "Forum - Category Overview"
 msgstr ""
 
-#: lib/MUBoard/Controller/User.php:280
+#: lib/MUBoard/Controller/User.php:280 lib/MUBoard/Controller/User.php:283
 msgid "Forum - Category: "
 msgstr ""
 
@@ -1063,6 +1098,7 @@ msgid "Forum: "
 msgstr ""
 
 #: templates/admin/config.tpl:7 templates/admin/config.tpl:10
+#: templates/admin/import.tpl:8
 msgid "Settings"
 msgstr ""
 
@@ -1157,8 +1193,9 @@ msgstr ""
 #: templates/admin/abo/edit.tpl:97 templates/admin/abo/delete.tpl:22
 #: templates/admin/rank/edit.tpl:137 templates/admin/rank/delete.tpl:22
 #: templates/admin/rank/include_selectEditOne.tpl:15
-#: templates/admin/user/edit.tpl:95 templates/admin/user/delete.tpl:22
-#: templates/admin/forum/edit.tpl:93 templates/admin/forum/delete.tpl:22
+#: templates/admin/import.tpl:43 templates/admin/user/edit.tpl:95
+#: templates/admin/user/delete.tpl:22 templates/admin/forum/edit.tpl:93
+#: templates/admin/forum/delete.tpl:22
 #: templates/admin/forum/include_selectEditOne.tpl:15
 #: templates/admin/category/edit.tpl:92 templates/admin/category/delete.tpl:22
 #: templates/admin/category/include_selectEditOne.tpl:15
@@ -1300,7 +1337,7 @@ msgstr ""
 #: templates/admin/forum/include_displayItemListOne.tpl:7
 #: templates/admin/category/include_displayItemListMany.tpl:10
 #: templates/admin/category/include_displayItemListOne.tpl:7
-#: templates/user/posting/include_displayItemListMany.tpl:75
+#: templates/user/posting/include_displayItemListMany.tpl:78
 #: templates/user/posting/view.tpl:182 templates/user/posting/view.tpl:200
 #: templates/user/posting/include_displayItemListOne.tpl:7
 #: templates/user/abo/include_displayItemListMany.tpl:10
@@ -1338,7 +1375,7 @@ msgstr ""
 #: templates/admin/forum/include_displayItemListOne.tpl:8
 #: templates/admin/category/include_displayItemListMany.tpl:11
 #: templates/admin/category/include_displayItemListOne.tpl:8
-#: templates/user/posting/include_displayItemListMany.tpl:76
+#: templates/user/posting/include_displayItemListMany.tpl:79
 #: templates/user/posting/view.tpl:183 templates/user/posting/view.tpl:201
 #: templates/user/posting/include_displayItemListOne.tpl:8
 #: templates/user/abo/include_displayItemListMany.tpl:11
@@ -1915,8 +1952,33 @@ msgstr ""
 msgid "Create new rank"
 msgstr ""
 
-#: templates/admin/user/display.tpl:4 templates/user/user/display.tpl:4
+#: templates/admin/import.tpl:18
+msgid "Here you can import datas of Dizkus."
+msgstr ""
+
+#: templates/admin/import.tpl:20
+msgid "Host"
+msgstr ""
+
+#: templates/admin/import.tpl:24
+msgid "DB Name"
+msgstr ""
+
+#: templates/admin/import.tpl:28 templates/admin/user/display.tpl:4
+#: templates/user/user/display.tpl:4
 msgid "User"
+msgstr ""
+
+#: templates/admin/import.tpl:32
+msgid "Password"
+msgstr ""
+
+#: templates/admin/import.tpl:36
+msgid "Tables of dizkus"
+msgstr ""
+
+#: templates/admin/import.tpl:42
+msgid "Start import"
 msgstr ""
 
 #: templates/admin/user/display.tpl:14 templates/admin/user/view.tpl:47
@@ -2323,7 +2385,7 @@ msgstr ""
 msgid "Move issue to another forum!"
 msgstr ""
 
-#: templates/user/posting/include_displayItemListMany.tpl:93
+#: templates/user/posting/include_displayItemListMany.tpl:96
 msgid "Be the first who created an issue!"
 msgstr ""
 
@@ -2362,10 +2424,6 @@ msgstr ""
 
 #: templates/user/rank/edit.tpl:63
 msgid "Delete upload image ?"
-msgstr ""
-
-#: templates/user/forum/display.tpl:30
-msgid "Answers"
 msgstr ""
 
 #: templates/user/forum/include_displayItemListMany.tpl:67
