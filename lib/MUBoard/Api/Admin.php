@@ -81,16 +81,28 @@ class MUBoard_Api_Admin extends MUBoard_Api_Base_Admin
         $dizkustable = $args['dizkustable'];
 
         $connection = Doctrine_Manager::getInstance()->getConnection('default');
+        
+        if (!$connection) {
+            $url = ModUtil::url($this->name, 'admin', 'import');
+            LogUtil::registerError(__('Sorry. No connection to the database. Something went wrong!'));
+            return System::redirect($url);
+        }
          
         if ($dizkustable == 1 || $dizkustable == 2) {
             // we get all categories
             $result = DBUtil::executeSQL('SELECT * FROM `z_dizkus_categories`');
             $categories = $result->fetchAll(Doctrine::FETCH_ASSOC);
 
-            $sqlContact = new mysqli($host, $user, $password);
+            $sqlContact = new mysqli($host, $user, $password, $dbname);
+            
+            if (mysqli_connect_errno()) {
+                $url = ModUtil::url('MUBoard', 'admin', 'import');
+                LogUtil::registerError(__('Sorry. No connection to the database. It seems your entered datas are wrong!'));
+                return ModUtil::url('MUBoard', 'admin', 'import');
+            }
 
             foreach ($categories as $category) {
-                $title = $sqlContact->escape_string($category['cat_title']);
+                $title = $sqlContact->real_escape_string($category['cat_title']);
                 $values = "('" . $category['cat_id'] . "', '" . $title . "', '', '" . $category['cat_order'] . "')";
 
                 $sql = 'INSERT INTO muboard_category (id, title, description, pos) VALUES ' . $values;
@@ -111,11 +123,17 @@ class MUBoard_Api_Admin extends MUBoard_Api_Base_Admin
             $result = DBUtil::executeSQL('SELECT * FROM `z_dizkus_forums`');
             $forums = $result->fetchAll(Doctrine::FETCH_ASSOC);
 
-            $sqlContact2 = new mysqli($host, $user, $password);
+            $sqlContact2 = new mysqli($host, $user, $password, $dbname);
+            
+            if (mysqli_connect_errno()) {
+                $url = ModUtil::url($this->name, 'admin', 'import');
+                LogUtil::registerError(__('Sorry. No connection to the database. It seems your entered datas are wrong!'));
+                return System::redirect($url);
+            }
 
             foreach ($forums as $forum) {
-                $title = $sqlContact2->escape_string($forum['forum_name']);
-                $description = $sqlContact2->escape_string($forum['forum_desc']);
+                $title = $sqlContact2->real_escape_string($forum['forum_name']);
+                $description = $sqlContact2->real_escape_string($forum['forum_desc']);
                 $values = "('" . $forum['forum_id'] . "', '" . $forum['cat_id'] . "', '" . $title . "', '" . $description . "', '" . $forum['forum_order'] . "')";
 
                 $sql = 'INSERT INTO muboard_forum (id, category_id, title, description, pos) VALUES ' . $values;
@@ -155,7 +173,13 @@ class MUBoard_Api_Admin extends MUBoard_Api_Base_Admin
             $result = DBUtil::executeSQL('SELECT * FROM `z_dizkus_topics`');
             $topics = $result->fetchAll(Doctrine::FETCH_ASSOC);
 
-            $sqlContact3 = new mysqli($host, $user, $password);
+            $sqlContact3 = new mysqli($host, $user, $password, $dbname);
+            
+            if (mysqli_connect_errno()) {
+                $url = ModUtil::url($this->name, 'admin', 'import');
+                LogUtil::registerError(__('Sorry. No connection to the database. It seems your entered datas are wrong!'));
+                return System::redirect($url);
+            }
 
             foreach ($topics as $topic) {
                 // we get all posts of this topic
@@ -165,8 +189,8 @@ class MUBoard_Api_Admin extends MUBoard_Api_Base_Admin
                     $firstId = $posts[0]['post_id'];
                     $text = $posts[0]['post_text'];
                 }
-                $text = $sqlContact3->escape_string($text);
-                $title = $sqlContact3->escape_string($topic['topic_title']);
+                $text = $sqlContact3->real_escape_string($text);
+                $title = $sqlContact3->real_escape_string($topic['topic_title']);
                 $values = "('" . $firstId . "', NULL, '" . $topic['forum_id'] . "', '" . $title . "', '" . $text . "', '" . $topic['topic_views'] . "', '" . "1" . "', '" . $topic['topic_poster'] . "', '" . $topic['topic_time'] . "', 'a:0:{}', 'a:0:{}', 'a:0:{}', 'a:0:{}', 'a:0:{}', 'a:0:{}')";
 
                 $sql = 'INSERT INTO muboard_posting (id, parent_id, forum_id, title, text, invocations, state, createdUserId, createdDate, firstImageMeta, secondImageMeta, thirdImageMeta, firstFileMeta, secondFileMeta, thirdFileMeta) VALUES ' . $values;
@@ -176,7 +200,7 @@ class MUBoard_Api_Admin extends MUBoard_Api_Base_Admin
                     $stmt->execute();
                     foreach ($posts as $post) {
                         if ($post['post_id'] != $firstId) {
-                            $text2 = $sqlContact3->escape_string($post['post_text']);
+                            $text2 = $sqlContact3->real_escape_string($post['post_text']);
                             $values2 = "('" . $post['post_id'] . "', '" . $firstId . "', '" . $post['forum_id'] . "', '" . $text2 . "', '" . $post['poster_id'] . "', '" . $post['post_time'] . "', 'a:0:{}', 'a:0:{}', 'a:0:{}', 'a:0:{}', 'a:0:{}', 'a:0:{}')";
 
                             $sql2 = 'INSERT INTO muboard_posting (id, parent_id, forum_id, text, createdUserId, createdDate, firstImageMeta, secondImageMeta, thirdImageMeta, firstFileMeta, secondFileMeta, thirdFileMeta) VALUES ' . $values2;
@@ -202,7 +226,13 @@ class MUBoard_Api_Admin extends MUBoard_Api_Base_Admin
             $result = DBUtil::executeSQL('SELECT * FROM `z_dizkus_users`');
             $users = $result->fetchAll(Doctrine::FETCH_ASSOC);
 
-            $sqlContact4 = new mysqli($host, $user, $password);
+            $sqlContact4 = new mysqli($host, $user, $password, $dbname);
+            
+            if (mysqli_connect_errno()) {
+                $url = ModUtil::url($this->name, 'admin', 'import');
+                LogUtil::registerError(__('Sorry. No connection to the database. It seems your entered datas are wrong!'));
+                return System::redirect($url);
+            }
 
             foreach ($users as $user) {
                 $values = "('" . $user['user_rank'] . "', '" . $user['user_id'] . "', '" . $user['user_posts'] . "', '" . $user['user_lastvisit'] . "')";
@@ -223,7 +253,7 @@ class MUBoard_Api_Admin extends MUBoard_Api_Base_Admin
 
             foreach ($ranks as $rank) {
                 $numberOfIcons = $this->numberOfIcons($rank['rank_image']);
-                $name = $sqlContact4->escape_string($rank['rank_title']);
+                $name = $sqlContact4->real_escape_string($rank['rank_title']);
                 $values = "('" . $rank['rank_id'] . "', '" . $name . "', '" . $rank['rank_min'] . "', '" . $rank['rank_max'] . "', '" . $numberOfIcons . "', 'a:0:{}', '" . $rank['rank_special'] . "')";
 
                 $sql = 'INSERT INTO muboard_rank (id, name, minPostings, maxPostings, numberOfIcons, uploadImageMeta, special) VALUES ' . $values;
