@@ -3,7 +3,19 @@ CHANGELOG
 
 Changes in MUBoard 1.1.0
 
+# fixed #50 button deleted
 
+# fixed #51 categories, forums and issues with own meta tags
+
+# fixed #52 serch result contains plural if necessary
+
+# fixed #60 #61 #62 #63 #64 #65 #66 import of dizkus complete
+
+# fixed #68 set text field in postings to varchar(10000)
+
+# fixed #69 subscriptions import complete
+
+# fixed #71 layout modified, possibel to set in the module settings
 
 Some other fixes
 
