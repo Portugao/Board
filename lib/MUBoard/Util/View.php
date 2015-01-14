@@ -820,7 +820,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
     public static function modifyPostings($userid)
     {
         $view = new Zikula_Request_Http();
-        $postingid = $view->getGet()->filter('id', 0, FILTER_SANITIZE_STRING);
+        $postingid = $view->query->filter('id', 0, FILTER_SANITIZE_STRING);
         $postingids = SessionUtil::getVar('muboardpostingids');
         if (count($postingids) > 0 && is_array($postingids)) {
             if(in_array($postingid,$postingids)){
