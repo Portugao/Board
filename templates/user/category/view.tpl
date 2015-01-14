@@ -127,5 +127,8 @@
     <div class="muboard-user-legend"><span>{gt text='Number of postings'}</span><span class="muboard-user-category-footer-statistic postings">5</span></div>
     </div>
     {/if}
+{if $modvars.MUBoard.showStatisticOnBottom eq 1}
+    {gt text='Number of issues'}: {muboardGetNumberOfIssues} | {gt text='Number of postings'}: {muboardGetNumberOfPostings} 
+{/if}
 {include file='user/footer.tpl'}
 
