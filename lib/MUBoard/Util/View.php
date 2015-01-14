@@ -18,7 +18,34 @@ use DoctrineExtensions\PHPUnit\Operations\Truncate;
  */
 class MUBoard_Util_View extends MUBoard_Util_Base_View
 {
-
+    /**
+     *
+     * This method gets the number of issues
+     */
+    public static function getIssues()
+    {
+        // get repositoy for Categories
+        $repository = MUBoard_Util_Model::getPostingRepository();
+        // where clause
+        $where = 'tbl.parent_id is NULL';
+        $countIssues = $repository->selectCount($where);
+         
+        return $countIssues;     
+    }
+    
+    /**
+     *
+     * This method gets the number of postings
+     */
+    public static function getPostings()
+    {
+        // get repositoy for Categories
+        $repository = MUBoard_Util_Model::getPostingRepository();
+        $countPostings = $repository->selectCount();
+         
+        return $countPostings;
+    }
+    
     /**
      *
      * This method gets the number of issues in an category

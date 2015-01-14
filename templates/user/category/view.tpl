@@ -61,8 +61,10 @@
             <a href="{modurl modname='MUBoard' type='user' func='display' ot='category' id=$category.id}">{$category.title|notifyfilters:'muboard.filterhook.categories'}</a>
             </h2>
         </div>
+        {if $modvars.MUBoard.showStatisticInDetails eq 1}
         <div class="muboard-user-category-header-statistic issues">{$category.id|muboardGetNumberOfIssuesOfCategory:$category.id}</div>
         <div class="muboard-user-category-header-statistic postings">{$category.id|muboardGetNumberOfPostingsOfCategory:$category.id}</div>
+        {/if}
         </div>
         <div class=muboard-user-category-content>
             {if isset($category.forum) && $category.forum ne null && count($category.forum) > 0}
@@ -119,10 +121,11 @@
     {/foreach}
 </div>
 </div>
-        
+    {if $modvars.MUBoard.showStatisticInDetails eq 1}   
     <div class="z-informationmsg z-formnote muboard-category-legend">
     <div class="muboard-user-legend"><span>{gt text='Number of issues'}</span><span class="muboard-user-category-footer-statistic issues">3</span></div> 
     <div class="muboard-user-legend"><span>{gt text='Number of postings'}</span><span class="muboard-user-category-footer-statistic postings">5</span></div>
     </div>
+    {/if}
 {include file='user/footer.tpl'}
 

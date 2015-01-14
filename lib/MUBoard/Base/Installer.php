@@ -99,6 +99,8 @@ class MUBoard_Base_Installer extends Zikula_AbstractInstaller
         $this->setVar('pagesize', 10);
         $this->setVar('standardIcon', 'images/icons/extrasmall/favorites.png');
         $this->setVar('specialIcon', 'images/icons/extrasmall/package_favorite.png');
+        $this->setVar('showStatisticInDetails', true);
+        $this->setVar('showStatisticOnBottom', false);
 
         // create the default data for MUBoard
         $this->createDefaultData();

@@ -89,6 +89,14 @@
                     {formlabel for='specialIcon' __text='Special icon' class='muboardFormTooltips' title=$toolTip}
                     {formtextinput id='specialIcon' group='config' maxLength=255 width=20em __title='Enter this setting.'}
                 </div>
+                <div class="z-formrow">
+                    {formlabel for='showStatisticInDetails' __text='Show statistic in details?'}
+                    {formcheckbox id='showStatisticInDetails' group='config'}
+                </div>
+                <div class="z-formrow">
+                    {formlabel for='showStatisticOnBottom' __text='Show statistic on bottom?'}
+                    {formcheckbox id='showStatisticOnBottom' group='config'}
+                </div>
             </fieldset>
 
             <div class="z-buttons z-formbuttons">

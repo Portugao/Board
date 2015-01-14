@@ -15,4 +15,7 @@
 {/capture}
 {pageaddvar name='header' value=$pageStyles}
 {/if}
+{if $modvars.MUBoard.showStatisticOnBottom eq 1}
+    {gt text='Number of issues'}: {muboardGetNumberOfIssues} | {gt text='Number of postings'}: {muboardGetNumberOfPostings} 
+{/if}
 
