@@ -49,7 +49,7 @@ class MUBoard_Util_Base_Abonnements extends Zikula_AbstractBase
         $savedPosting = $repository3->selectById($id);
 
         $createdUserId = $savedPosting->getCreatedUserId();
-        	
+         
         $forum = $savedPosting->getForum();
         $forumid = $forum->getId();
 
@@ -75,10 +75,8 @@ class MUBoard_Util_Base_Abonnements extends Zikula_AbstractBase
 
         $toaddress = self::getForumAbos($forumid, $createdUserId);
         foreach ($toaddress as $address) {
-            if (filter_var($address, FILTER_VALIDATE_EMAIL)) {
-                $messagecontent = self::getMailContent($from, $fromaddress, $address, $forum, $title, $text, $url , $kind, $parent);
-                ModUtil::apiFunc('Mailer', 'user', 'sendmessage', $messagecontent);
-            }
+            $messagecontent = self::getMailContent($from, $fromaddress, $address, $forum, $title, $text, $url , $kind, $parent);
+            ModUtil::apiFunc('Mailer', 'user', 'sendmessage', $messagecontent);
         }
     }
 
