@@ -17,6 +17,8 @@ Changes in MUBoard 1.1.0
 
 # fixed #71 layout modified, possibel to set in the module settings
 
+# fixed #72 no error messages after import; deletion of import for subsriptions
+
 Some other fixes
 
 # fixed issue with preview answering to an issue; now we get the complete preview shown in chrome too
