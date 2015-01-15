@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Zikula 1.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-13 08:49+0000\n"
+"POT-Creation-Date: 2015-01-15 19:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -367,10 +367,7 @@ msgstr ""
 #: lib/MUBoard/Base/Installer.php:28 lib/MUBoard/Base/Installer.php:35
 #: lib/MUBoard/Base/Installer.php:42 lib/MUBoard/Base/Installer.php:49
 #: lib/MUBoard/Base/Installer.php:56 lib/MUBoard/Base/Installer.php:63
-#: lib/MUBoard/Base/Installer.php:70 lib/MUBoard/Installer.php:28
-#: lib/MUBoard/Installer.php:35 lib/MUBoard/Installer.php:42
-#: lib/MUBoard/Installer.php:49 lib/MUBoard/Installer.php:56
-#: lib/MUBoard/Installer.php:63 lib/MUBoard/Installer.php:70
+#: lib/MUBoard/Base/Installer.php:70
 #, php-format
 msgid ""
 "The upload folder \"%s\" does not exist. Please create it before installing "
@@ -380,34 +377,31 @@ msgstr ""
 #: lib/MUBoard/Base/Installer.php:31 lib/MUBoard/Base/Installer.php:38
 #: lib/MUBoard/Base/Installer.php:45 lib/MUBoard/Base/Installer.php:52
 #: lib/MUBoard/Base/Installer.php:59 lib/MUBoard/Base/Installer.php:66
-#: lib/MUBoard/Base/Installer.php:73 lib/MUBoard/Installer.php:31
-#: lib/MUBoard/Installer.php:38 lib/MUBoard/Installer.php:45
-#: lib/MUBoard/Installer.php:52 lib/MUBoard/Installer.php:59
-#: lib/MUBoard/Installer.php:66 lib/MUBoard/Installer.php:73
+#: lib/MUBoard/Base/Installer.php:73
 #, php-format
 msgid ""
 "The upload folder \"%s\" is not writable. Please change permissions "
 "accordingly before installing this application."
 msgstr ""
 
-#: lib/MUBoard/Base/Installer.php:81 lib/MUBoard/Base/Installer.php:166
-#: lib/MUBoard/Installer.php:81 lib/MUBoard/Installer.php:137
+#: lib/MUBoard/Base/Installer.php:81 lib/MUBoard/Base/Installer.php:168
+#: lib/MUBoard/Installer.php:39
 msgid "Doctrine Exception: "
 msgstr ""
 
-#: lib/MUBoard/Base/Installer.php:83 lib/MUBoard/Installer.php:83
+#: lib/MUBoard/Base/Installer.php:83
 #, php-format
 msgid "An error was encountered while creating the tables for the %s module."
 msgstr ""
 
-#: lib/MUBoard/Base/Installer.php:159
+#: lib/MUBoard/Base/Installer.php:161
 #, php-format
 msgid ""
 "An error was encountered while removing stored object workflows for the %s "
 "module."
 msgstr ""
 
-#: lib/MUBoard/Base/Installer.php:168 lib/MUBoard/Installer.php:139
+#: lib/MUBoard/Base/Installer.php:170 lib/MUBoard/Installer.php:41
 #, php-format
 msgid "An error was encountered while dropping the tables for the %s module."
 msgstr ""
@@ -520,19 +514,19 @@ msgstr ""
 msgid "MUBoard - a small forum module"
 msgstr ""
 
-#: lib/MUBoard/Util/Base/Abonnements.php:138
+#: lib/MUBoard/Util/Base/Abonnements.php:140
 msgid "Another issue was created by an user on "
 msgstr ""
 
-#: lib/MUBoard/Util/Base/Abonnements.php:140
+#: lib/MUBoard/Util/Base/Abonnements.php:142
 msgid "Another posting was created by an user on "
 msgstr ""
 
-#: lib/MUBoard/Util/Base/Abonnements.php:143
+#: lib/MUBoard/Util/Base/Abonnements.php:145
 msgid "Title of posting"
 msgstr ""
 
-#: lib/MUBoard/Util/Base/Abonnements.php:144
+#: lib/MUBoard/Util/Base/Abonnements.php:146
 #: templates/admin/posting/display.tpl:37 templates/admin/posting/view.tpl:58
 #: templates/admin/posting/edit.tpl:42 templates/admin/posting/view.csv:3
 #: templates/user/posting/view.tpl:57 templates/user/posting/edit.tpl:49
@@ -540,15 +534,15 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
-#: lib/MUBoard/Util/Base/Abonnements.php:145
+#: lib/MUBoard/Util/Base/Abonnements.php:147
 msgid "Visit this issue:"
 msgstr ""
 
-#: lib/MUBoard/Util/Base/Abonnements.php:147
+#: lib/MUBoard/Util/Base/Abonnements.php:149
 msgid "You get this messsage because you did a subscription for a forum!"
 msgstr ""
 
-#: lib/MUBoard/Util/Base/Abonnements.php:152
+#: lib/MUBoard/Util/Base/Abonnements.php:154
 #: templates/admin/posting/display.tpl:130 templates/admin/posting/view.tpl:85
 #: templates/admin/posting/view.csv:4 templates/admin/forum/display.tpl:4
 #: templates/admin/forum/include_selectEditOne.tpl:3
@@ -558,7 +552,7 @@ msgstr ""
 msgid "Forum"
 msgstr ""
 
-#: lib/MUBoard/Util/Base/Abonnements.php:153
+#: lib/MUBoard/Util/Base/Abonnements.php:155
 #, php-format
 msgid "You can quit the subscription if you visit the %s!"
 msgstr ""
@@ -584,30 +578,32 @@ msgstr ""
 msgid "An error occured during thumbnail creation: %s"
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:125 templates/user/posting/display.tpl:43
+#: lib/MUBoard/Util/View.php:152 templates/user/posting/display.tpl:43
 #: templates/user/forum/display.tpl:21
 msgid "Category:"
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:125 templates/user/posting/display.tpl:45
-#: templates/user/forum/display.tpl:17
+#: lib/MUBoard/Util/View.php:152
+#: Resource/templates/user/forum/include_displayItemListMany.tpl:13
+#: templates/user/posting/display.tpl:45 templates/user/forum/display.tpl:17
 #: templates/user/forum/include_displayItemListMany.tpl:13
 msgid "Forum:"
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:201
+#: lib/MUBoard/Util/View.php:228
 msgid "Last answer by "
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:204 lib/MUBoard/Util/View.php:269
+#: lib/MUBoard/Util/View.php:231 lib/MUBoard/Util/View.php:296
 msgid "on "
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:208
+#: lib/MUBoard/Util/View.php:235
 msgid "No answer available!"
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:264 lib/MUBoard/Api/Ajax.php:49
+#: lib/MUBoard/Util/View.php:291 lib/MUBoard/Api/Ajax.php:49
+#: Resource/templates/user/posting/include_displayItemListMany.tpl:43
 #: templates/contenttype/itemlist_Posting_display.tpl:5
 #: templates/contenttype/itemlist_Posting_display_description.tpl:6
 #: templates/user/posting/display.tpl:82
@@ -615,45 +611,46 @@ msgstr ""
 msgid "Guest"
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:266
+#: lib/MUBoard/Util/View.php:293
 msgid "Last posting by "
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:272
+#: lib/MUBoard/Util/View.php:299
 msgid "Show last posting"
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:279
+#: lib/MUBoard/Util/View.php:306
+#: Resource/templates/user/posting/include_displayItemListMany.tpl:96
 #: templates/user/posting/include_displayItemListMany.tpl:96
 msgid "No postings available!"
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:307
+#: lib/MUBoard/Util/View.php:334
 msgid "Important issue!"
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:356
+#: lib/MUBoard/Util/View.php:383
 msgid "You have permissions to edit this posting!"
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:685
+#: lib/MUBoard/Util/View.php:712
 msgid "Registered: "
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:688
+#: lib/MUBoard/Util/View.php:715
 msgid "Last Visit: "
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:690
+#: lib/MUBoard/Util/View.php:717
 msgid "Online"
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:694 lib/MUBoard/Util/View.php:699
-#: lib/MUBoard/Util/View.php:703
+#: lib/MUBoard/Util/View.php:721 lib/MUBoard/Util/View.php:726
+#: lib/MUBoard/Util/View.php:730
 msgid "Postings: "
 msgstr ""
 
-#: lib/MUBoard/Util/View.php:706 lib/MUBoard/Util/View.php:708
+#: lib/MUBoard/Util/View.php:733 lib/MUBoard/Util/View.php:735
 msgid "Rank: "
 msgstr ""
 
@@ -1022,12 +1019,23 @@ msgstr ""
 msgid "Look for relevant issues"
 msgstr ""
 
-#: lib/MUBoard/Api/Admin.php:61 templates/admin/import.tpl:5
+#: lib/MUBoard/Api/Admin.php:61 Resource/templates/admin/import.tpl:5
+#: templates/admin/import.tpl:5
 msgid "Import"
 msgstr ""
 
 #: lib/MUBoard/Api/Admin.php:62
 msgid "Import of dizkus"
+msgstr ""
+
+#: lib/MUBoard/Api/Admin.php:87
+msgid "Sorry. No connection to the database. Something went wrong!"
+msgstr ""
+
+#: lib/MUBoard/Api/Admin.php:100 lib/MUBoard/Api/Admin.php:130
+#: lib/MUBoard/Api/Admin.php:162 lib/MUBoard/Api/Admin.php:215
+msgid ""
+"Sorry. No connection to the database. It seems your entered datas are wrong!"
 msgstr ""
 
 #: lib/MUBoard/Api/Ajax.php:73 lib/MUBoard/Controller/User.php:286
@@ -1085,7 +1093,9 @@ msgstr ""
 msgid "Error: invalid input."
 msgstr ""
 
-#: lib/MUBoard/Controller/User.php:111 templates/user/category/view.tpl:4
+#: lib/MUBoard/Controller/User.php:111
+#: Resource/templates/user/category/view.tpl:4
+#: templates/user/category/view.tpl:4
 msgid "Forum - Category Overview"
 msgstr ""
 
@@ -1097,103 +1107,120 @@ msgstr ""
 msgid "Forum: "
 msgstr ""
 
-#: templates/admin/config.tpl:7 templates/admin/config.tpl:10
-#: templates/admin/import.tpl:8
+#: Resource/templates/admin/config.tpl:7
+#: Resource/templates/admin/config.tpl:10
+#: Resource/templates/admin/import.tpl:8 templates/admin/config.tpl:7
+#: templates/admin/config.tpl:10 templates/admin/import.tpl:8
 msgid "Settings"
 msgstr ""
 
-#: templates/admin/config.tpl:20
+#: Resource/templates/admin/config.tpl:20 templates/admin/config.tpl:20
 msgid "Here you can manage all basic settings for this application."
 msgstr ""
 
-#: templates/admin/config.tpl:23
+#: Resource/templates/admin/config.tpl:23 templates/admin/config.tpl:23
 msgid "Upload images"
 msgstr ""
 
-#: templates/admin/config.tpl:28
+#: Resource/templates/admin/config.tpl:28 templates/admin/config.tpl:28
 msgid "Allowed size of images"
 msgstr ""
 
-#: templates/admin/config.tpl:29 templates/admin/config.tpl:43
-#: templates/admin/config.tpl:57 templates/admin/config.tpl:62
-#: templates/admin/config.tpl:82
+#: Resource/templates/admin/config.tpl:29
+#: Resource/templates/admin/config.tpl:43
+#: Resource/templates/admin/config.tpl:57
+#: Resource/templates/admin/config.tpl:62
+#: Resource/templates/admin/config.tpl:82 templates/admin/config.tpl:29
+#: templates/admin/config.tpl:43 templates/admin/config.tpl:57
+#: templates/admin/config.tpl:62 templates/admin/config.tpl:82
 msgid "Enter this setting. Only digits are allowed."
 msgstr ""
 
-#: templates/admin/config.tpl:32
+#: Resource/templates/admin/config.tpl:32 templates/admin/config.tpl:32
 msgid "Number images"
 msgstr ""
 
-#: templates/admin/config.tpl:37
+#: Resource/templates/admin/config.tpl:37 templates/admin/config.tpl:37
 msgid "Upload files"
 msgstr ""
 
-#: templates/admin/config.tpl:42
+#: Resource/templates/admin/config.tpl:42 templates/admin/config.tpl:42
 msgid "Allowed size of files"
 msgstr ""
 
-#: templates/admin/config.tpl:46
+#: Resource/templates/admin/config.tpl:46 templates/admin/config.tpl:46
 msgid "Number files"
 msgstr ""
 
-#: templates/admin/config.tpl:51
+#: Resource/templates/admin/config.tpl:51 templates/admin/config.tpl:51
 msgid "Edit postings"
 msgstr ""
 
-#: templates/admin/config.tpl:56
+#: Resource/templates/admin/config.tpl:56 templates/admin/config.tpl:56
 msgid "Edit time"
 msgstr ""
 
-#: templates/admin/config.tpl:61 templates/admin/posting/view.rss:11
-#: templates/admin/posting/view.atom:4 templates/user/posting/view.rss:11
-#: templates/user/posting/view.atom:4
+#: Resource/templates/admin/config.tpl:61 templates/admin/config.tpl:61
+#: templates/admin/posting/view.rss:11 templates/admin/posting/view.atom:4
+#: templates/user/posting/view.rss:11 templates/user/posting/view.atom:4
 msgid "Latest postings"
 msgstr ""
 
-#: templates/admin/config.tpl:65
+#: Resource/templates/admin/config.tpl:65 templates/admin/config.tpl:65
 msgid "Sorting categories"
 msgstr ""
 
-#: templates/admin/config.tpl:69
+#: Resource/templates/admin/config.tpl:69 templates/admin/config.tpl:69
 msgid "Sorting postings"
 msgstr ""
 
-#: templates/admin/config.tpl:73
+#: Resource/templates/admin/config.tpl:73 templates/admin/config.tpl:73
 msgid "Icon set"
 msgstr ""
 
-#: templates/admin/config.tpl:77
+#: Resource/templates/admin/config.tpl:77 templates/admin/config.tpl:77
 msgid "Template"
 msgstr ""
 
-#: templates/admin/config.tpl:81
+#: Resource/templates/admin/config.tpl:81 templates/admin/config.tpl:81
 msgid "Pagesize"
 msgstr ""
 
-#: templates/admin/config.tpl:85
+#: Resource/templates/admin/config.tpl:85 templates/admin/config.tpl:85
 msgid "Standard icon"
 msgstr ""
 
-#: templates/admin/config.tpl:86 templates/admin/config.tpl:90
+#: Resource/templates/admin/config.tpl:86
+#: Resource/templates/admin/config.tpl:90 templates/admin/config.tpl:86
+#: templates/admin/config.tpl:90
 msgid "Enter this setting."
 msgstr ""
 
-#: templates/admin/config.tpl:89
+#: Resource/templates/admin/config.tpl:89 templates/admin/config.tpl:89
 msgid "Special icon"
 msgstr ""
 
-#: templates/admin/config.tpl:95
+#: Resource/templates/admin/config.tpl:93 templates/admin/config.tpl:93
+msgid "Show statistic in details?"
+msgstr ""
+
+#: Resource/templates/admin/config.tpl:97 templates/admin/config.tpl:97
+msgid "Show statistic on bottom?"
+msgstr ""
+
+#: Resource/templates/admin/config.tpl:103 templates/admin/config.tpl:103
 msgid "Update configuration"
 msgstr ""
 
-#: templates/admin/config.tpl:96
+#: Resource/templates/admin/config.tpl:104
+#: Resource/templates/admin/import.tpl:45 templates/admin/config.tpl:104
 #: templates/admin/posting/include_selectOne.tpl:15
 #: templates/admin/posting/edit.tpl:253 templates/admin/posting/delete.tpl:22
 #: templates/admin/posting/include_selectEditOne.tpl:15
 #: templates/admin/abo/edit.tpl:97 templates/admin/abo/delete.tpl:22
 #: templates/admin/rank/edit.tpl:137 templates/admin/rank/delete.tpl:22
 #: templates/admin/rank/include_selectEditOne.tpl:15
-#: templates/admin/import.tpl:43 templates/admin/user/edit.tpl:95
+#: templates/admin/import.tpl:45 templates/admin/user/edit.tpl:95
 #: templates/admin/user/delete.tpl:22 templates/admin/forum/edit.tpl:93
 #: templates/admin/forum/delete.tpl:22
 #: templates/admin/forum/include_selectEditOne.tpl:15
@@ -1209,6 +1236,276 @@ msgstr ""
 #: templates/user/category/edit.tpl:87
 #: templates/user/category/include_selectEditOne.tpl:15
 msgid "Cancel"
+msgstr ""
+
+#: Resource/templates/admin/import.tpl:17 templates/admin/import.tpl:17
+msgid "For a correct import 'mysqli' has to be activated on your server!"
+msgstr ""
+
+#: Resource/templates/admin/import.tpl:18 templates/admin/import.tpl:18
+msgid ""
+"For security aspects you have to enter your datas to give the import "
+"function access to the database!"
+msgstr ""
+
+#: Resource/templates/admin/import.tpl:19 templates/admin/import.tpl:19
+msgid "Here you can import datas of Dizkus."
+msgstr ""
+
+#: Resource/templates/admin/import.tpl:21 templates/admin/import.tpl:21
+msgid "Host"
+msgstr ""
+
+#: Resource/templates/admin/import.tpl:25 templates/admin/import.tpl:25
+msgid "DB Name"
+msgstr ""
+
+#: Resource/templates/admin/import.tpl:29 templates/admin/import.tpl:29
+#: templates/admin/user/display.tpl:4 templates/user/user/display.tpl:4
+msgid "User"
+msgstr ""
+
+#: Resource/templates/admin/import.tpl:33 templates/admin/import.tpl:33
+msgid "Password"
+msgstr ""
+
+#: Resource/templates/admin/import.tpl:37 templates/admin/import.tpl:37
+msgid "Tables of dizkus"
+msgstr ""
+
+#: Resource/templates/admin/import.tpl:39 templates/admin/import.tpl:39
+msgid ""
+"Here you can select if you wish to import all tables in one process or if "
+"you wish to do it in 3 steps. If you have much datas it is possible that you "
+"get problems if you select All!"
+msgstr ""
+
+#: Resource/templates/admin/import.tpl:44 templates/admin/import.tpl:44
+msgid "Start import"
+msgstr ""
+
+#: Resource/templates/user/posting/include_displayItemListMany.tpl:12
+#: templates/user/posting/include_displayItemListMany.tpl:12
+msgid "Important issue"
+msgstr ""
+
+#: Resource/templates/user/posting/include_displayItemListMany.tpl:18
+#: templates/user/posting/display.tpl:19
+#: templates/user/posting/include_displayItemListMany.tpl:18
+msgid "Mark this issue as solved!"
+msgstr ""
+
+#: Resource/templates/user/posting/include_displayItemListMany.tpl:29
+#: templates/user/posting/display.tpl:30
+#: templates/user/posting/include_displayItemListMany.tpl:29
+msgid "This issue is marked as solved! Mark it as unsolved! "
+msgstr ""
+
+#: Resource/templates/user/posting/include_displayItemListMany.tpl:43
+#: templates/user/posting/include_displayItemListMany.tpl:43
+msgid "Writer:"
+msgstr ""
+
+#: Resource/templates/user/posting/include_displayItemListMany.tpl:52
+#: templates/user/posting/include_displayItemListMany.tpl:52
+msgid "Move issue to another forum!"
+msgstr ""
+
+#: Resource/templates/user/posting/include_displayItemListMany.tpl:58
+#: templates/user/posting/display.tpl:58
+#: templates/user/posting/include_displayItemListMany.tpl:58
+msgid "Issue is open! You have permissions to close this issue!"
+msgstr ""
+
+#: Resource/templates/user/posting/include_displayItemListMany.tpl:62
+#: templates/user/posting/display.tpl:66
+#: templates/user/posting/include_displayItemListMany.tpl:62
+msgid "Issue is closed. You have permissions to reopen this issue!"
+msgstr ""
+
+#: Resource/templates/user/posting/include_displayItemListMany.tpl:78
+#: Resource/templates/user/forum/include_displayItemListMany.tpl:55
+#: templates/admin/posting/display.tpl:114
+#: templates/admin/posting/display.tpl:137
+#: templates/admin/posting/include_displayItemListMany.tpl:10
+#: templates/admin/posting/view.tpl:183 templates/admin/posting/view.tpl:201
+#: templates/admin/posting/include_displayItemListOne.tpl:7
+#: templates/admin/abo/include_displayItemListMany.tpl:10
+#: templates/admin/abo/include_displayItemListOne.tpl:7
+#: templates/admin/rank/include_displayItemListMany.tpl:10
+#: templates/admin/rank/include_displayItemListOne.tpl:7
+#: templates/admin/user/display.tpl:25
+#: templates/admin/user/include_displayItemListMany.tpl:10
+#: templates/admin/user/view.tpl:76
+#: templates/admin/user/include_displayItemListOne.tpl:7
+#: templates/admin/forum/display.tpl:44
+#: templates/admin/forum/include_displayItemListMany.tpl:10
+#: templates/admin/forum/view.tpl:76
+#: templates/admin/forum/include_displayItemListOne.tpl:7
+#: templates/admin/category/include_displayItemListMany.tpl:10
+#: templates/admin/category/include_displayItemListOne.tpl:7
+#: templates/user/posting/include_displayItemListMany.tpl:78
+#: templates/user/posting/view.tpl:182 templates/user/posting/view.tpl:200
+#: templates/user/posting/include_displayItemListOne.tpl:7
+#: templates/user/abo/include_displayItemListMany.tpl:10
+#: templates/user/abo/include_displayItemListOne.tpl:7
+#: templates/user/rank/include_displayItemListMany.tpl:10
+#: templates/user/rank/include_displayItemListOne.tpl:7
+#: templates/user/user/display.tpl:23
+#: templates/user/user/include_displayItemListMany.tpl:10
+#: templates/user/user/view.tpl:74
+#: templates/user/user/include_displayItemListOne.tpl:7
+#: templates/user/forum/include_displayItemListMany.tpl:55
+#: templates/user/forum/view.tpl:74
+#: templates/user/forum/include_displayItemListOne.tpl:7
+#: templates/user/category/include_displayItemListMany.tpl:10
+#: templates/user/category/include_displayItemListOne.tpl:7
+msgid "Open quick view window"
+msgstr ""
+
+#: Resource/templates/user/posting/include_displayItemListMany.tpl:79
+#: Resource/templates/user/forum/include_displayItemListMany.tpl:56
+#: templates/admin/posting/display.tpl:115
+#: templates/admin/posting/display.tpl:138
+#: templates/admin/posting/include_displayItemListMany.tpl:11
+#: templates/admin/posting/view.tpl:184 templates/admin/posting/view.tpl:202
+#: templates/admin/posting/include_displayItemListOne.tpl:8
+#: templates/admin/abo/include_displayItemListMany.tpl:11
+#: templates/admin/abo/include_displayItemListOne.tpl:8
+#: templates/admin/rank/include_displayItemListMany.tpl:11
+#: templates/admin/rank/include_displayItemListOne.tpl:8
+#: templates/admin/user/display.tpl:26
+#: templates/admin/user/include_displayItemListMany.tpl:11
+#: templates/admin/user/view.tpl:77
+#: templates/admin/user/include_displayItemListOne.tpl:8
+#: templates/admin/forum/display.tpl:45
+#: templates/admin/forum/include_displayItemListMany.tpl:11
+#: templates/admin/forum/view.tpl:77
+#: templates/admin/forum/include_displayItemListOne.tpl:8
+#: templates/admin/category/include_displayItemListMany.tpl:11
+#: templates/admin/category/include_displayItemListOne.tpl:8
+#: templates/user/posting/include_displayItemListMany.tpl:79
+#: templates/user/posting/view.tpl:183 templates/user/posting/view.tpl:201
+#: templates/user/posting/include_displayItemListOne.tpl:8
+#: templates/user/abo/include_displayItemListMany.tpl:11
+#: templates/user/abo/include_displayItemListOne.tpl:8
+#: templates/user/rank/include_displayItemListMany.tpl:11
+#: templates/user/rank/include_displayItemListOne.tpl:8
+#: templates/user/user/display.tpl:24
+#: templates/user/user/include_displayItemListMany.tpl:11
+#: templates/user/user/view.tpl:75
+#: templates/user/user/include_displayItemListOne.tpl:8
+#: templates/user/forum/include_displayItemListMany.tpl:56
+#: templates/user/forum/view.tpl:75
+#: templates/user/forum/include_displayItemListOne.tpl:8
+#: templates/user/category/include_displayItemListMany.tpl:11
+#: templates/user/category/include_displayItemListOne.tpl:8
+msgid "Quick view"
+msgstr ""
+
+#: Resource/templates/user/posting/include_displayItemListMany.tpl:96
+#: templates/user/posting/include_displayItemListMany.tpl:96
+msgid "Be the first who created an issue!"
+msgstr ""
+
+#: Resource/templates/user/forum/include_displayItemListMany.tpl:70
+#: Resource/templates/user/category/view.tpl:73
+#: templates/user/forum/include_displayItemListMany.tpl:70
+#: templates/user/category/view.tpl:73
+msgid "There are no forums in this category!"
+msgstr ""
+
+#: Resource/templates/user/category/view.tpl:11
+#: templates/admin/category/view.tpl:13 templates/admin/category/edit.tpl:10
+#: templates/admin/category/edit.tpl:88 templates/user/category/view.tpl:11
+#: templates/user/category/edit.tpl:9 templates/user/category/edit.tpl:83
+msgid "Create category"
+msgstr ""
+
+#: Resource/templates/user/category/view.tpl:19
+#: templates/admin/posting/view.tpl:21 templates/admin/abo/view.tpl:21
+#: templates/admin/rank/view.tpl:21 templates/admin/user/view.tpl:21
+#: templates/admin/forum/view.tpl:21 templates/admin/category/view.tpl:21
+#: templates/user/posting/view.tpl:19 templates/user/abo/view.tpl:19
+#: templates/user/rank/view.tpl:19 templates/user/user/view.tpl:19
+#: templates/user/forum/view.tpl:19 templates/user/category/view.tpl:19
+msgid "Back to paginated view"
+msgstr ""
+
+#: Resource/templates/user/category/view.tpl:25
+#: templates/admin/posting/view.tpl:27 templates/admin/abo/view.tpl:27
+#: templates/admin/rank/view.tpl:27 templates/admin/user/view.tpl:27
+#: templates/admin/forum/view.tpl:27 templates/admin/category/view.tpl:27
+#: templates/user/posting/view.tpl:25 templates/user/abo/view.tpl:25
+#: templates/user/rank/view.tpl:25 templates/user/user/view.tpl:25
+#: templates/user/forum/view.tpl:25 templates/user/category/view.tpl:25
+msgid "Show all entries"
+msgstr ""
+
+#: Resource/templates/user/category/view.tpl:41
+#: templates/admin/posting/view.tpl:55 templates/admin/posting/edit.tpl:38
+#: templates/admin/posting/view.csv:3 templates/admin/forum/view.tpl:44
+#: templates/admin/forum/edit.tpl:30 templates/admin/forum/view.csv:3
+#: templates/admin/category/view.tpl:43 templates/admin/category/edit.tpl:30
+#: templates/admin/category/view.csv:3 templates/user/posting/edit.tpl:43
+#: templates/user/posting/view.csv:3 templates/user/forum/view.tpl:42
+#: templates/user/forum/edit.tpl:25 templates/user/forum/view.csv:3
+#: templates/user/category/view.tpl:41 templates/user/category/edit.tpl:25
+#: templates/user/category/view.csv:3
+msgid "Title"
+msgstr ""
+
+#: Resource/templates/user/category/view.tpl:44
+#: templates/admin/forum/display.tpl:33 templates/admin/forum/view.tpl:47
+#: templates/admin/forum/edit.tpl:35 templates/admin/forum/view.csv:3
+#: templates/admin/category/display.tpl:33
+#: templates/admin/category/view.tpl:46 templates/admin/category/edit.tpl:35
+#: templates/admin/category/view.csv:3 templates/user/forum/view.tpl:45
+#: templates/user/forum/edit.tpl:30 templates/user/forum/view.csv:3
+#: templates/user/category/view.tpl:44 templates/user/category/edit.tpl:30
+#: templates/user/category/view.csv:3
+msgid "Description"
+msgstr ""
+
+#: Resource/templates/user/category/view.tpl:47
+#: templates/admin/forum/display.tpl:35 templates/admin/forum/view.tpl:50
+#: templates/admin/forum/view.csv:3 templates/admin/category/display.tpl:35
+#: templates/admin/category/view.tpl:49 templates/admin/category/view.csv:3
+#: templates/user/forum/view.tpl:48 templates/user/forum/edit.tpl:35
+#: templates/user/forum/view.csv:3 templates/user/category/view.tpl:47
+#: templates/user/category/edit.tpl:35 templates/user/category/view.csv:3
+msgid "Pos"
+msgstr ""
+
+#: Resource/templates/user/category/view.tpl:49
+#: templates/admin/posting/view.tpl:87 templates/admin/abo/view.tpl:55
+#: templates/admin/rank/view.tpl:63 templates/admin/user/view.tpl:55
+#: templates/admin/forum/view.tpl:55 templates/admin/category/view.tpl:51
+#: templates/user/posting/view.tpl:86 templates/user/abo/view.tpl:53
+#: templates/user/rank/view.tpl:61 templates/user/user/view.tpl:53
+#: templates/user/forum/view.tpl:53 templates/user/category/view.tpl:49
+msgid "Actions"
+msgstr ""
+
+#: Resource/templates/user/category/view.tpl:105
+#: templates/admin/category/view.tpl:82 templates/user/category/view.tpl:105
+#: templates/mailz/itemlist_Category_text.tpl:7
+#: templates/mailz/itemlist_Category_html.tpl:11
+msgid "No categories found."
+msgstr ""
+
+#: Resource/templates/user/category/view.tpl:126
+#: Resource/templates/user/category/view.tpl:131
+#: templates/user/category/display.tpl:40 templates/user/category/view.tpl:126
+#: templates/user/category/view.tpl:131
+msgid "Number of issues"
+msgstr ""
+
+#: Resource/templates/user/category/view.tpl:127
+#: Resource/templates/user/category/view.tpl:131
+#: templates/user/category/display.tpl:41 templates/user/category/view.tpl:127
+#: templates/user/category/view.tpl:131
+msgid "Number of postings"
 msgstr ""
 
 #: templates/admin/posting/display.tpl:4
@@ -1318,82 +1615,6 @@ msgstr ""
 msgid "Parent"
 msgstr ""
 
-#: templates/admin/posting/display.tpl:114
-#: templates/admin/posting/display.tpl:137
-#: templates/admin/posting/include_displayItemListMany.tpl:10
-#: templates/admin/posting/view.tpl:183 templates/admin/posting/view.tpl:201
-#: templates/admin/posting/include_displayItemListOne.tpl:7
-#: templates/admin/abo/include_displayItemListMany.tpl:10
-#: templates/admin/abo/include_displayItemListOne.tpl:7
-#: templates/admin/rank/include_displayItemListMany.tpl:10
-#: templates/admin/rank/include_displayItemListOne.tpl:7
-#: templates/admin/user/display.tpl:25
-#: templates/admin/user/include_displayItemListMany.tpl:10
-#: templates/admin/user/view.tpl:76
-#: templates/admin/user/include_displayItemListOne.tpl:7
-#: templates/admin/forum/display.tpl:44
-#: templates/admin/forum/include_displayItemListMany.tpl:10
-#: templates/admin/forum/view.tpl:76
-#: templates/admin/forum/include_displayItemListOne.tpl:7
-#: templates/admin/category/include_displayItemListMany.tpl:10
-#: templates/admin/category/include_displayItemListOne.tpl:7
-#: templates/user/posting/include_displayItemListMany.tpl:78
-#: templates/user/posting/view.tpl:182 templates/user/posting/view.tpl:200
-#: templates/user/posting/include_displayItemListOne.tpl:7
-#: templates/user/abo/include_displayItemListMany.tpl:10
-#: templates/user/abo/include_displayItemListOne.tpl:7
-#: templates/user/rank/include_displayItemListMany.tpl:10
-#: templates/user/rank/include_displayItemListOne.tpl:7
-#: templates/user/user/display.tpl:23
-#: templates/user/user/include_displayItemListMany.tpl:10
-#: templates/user/user/view.tpl:74
-#: templates/user/user/include_displayItemListOne.tpl:7
-#: templates/user/forum/include_displayItemListMany.tpl:52
-#: templates/user/forum/view.tpl:74
-#: templates/user/forum/include_displayItemListOne.tpl:7
-#: templates/user/category/include_displayItemListMany.tpl:10
-#: templates/user/category/include_displayItemListOne.tpl:7
-msgid "Open quick view window"
-msgstr ""
-
-#: templates/admin/posting/display.tpl:115
-#: templates/admin/posting/display.tpl:138
-#: templates/admin/posting/include_displayItemListMany.tpl:11
-#: templates/admin/posting/view.tpl:184 templates/admin/posting/view.tpl:202
-#: templates/admin/posting/include_displayItemListOne.tpl:8
-#: templates/admin/abo/include_displayItemListMany.tpl:11
-#: templates/admin/abo/include_displayItemListOne.tpl:8
-#: templates/admin/rank/include_displayItemListMany.tpl:11
-#: templates/admin/rank/include_displayItemListOne.tpl:8
-#: templates/admin/user/display.tpl:26
-#: templates/admin/user/include_displayItemListMany.tpl:11
-#: templates/admin/user/view.tpl:77
-#: templates/admin/user/include_displayItemListOne.tpl:8
-#: templates/admin/forum/display.tpl:45
-#: templates/admin/forum/include_displayItemListMany.tpl:11
-#: templates/admin/forum/view.tpl:77
-#: templates/admin/forum/include_displayItemListOne.tpl:8
-#: templates/admin/category/include_displayItemListMany.tpl:11
-#: templates/admin/category/include_displayItemListOne.tpl:8
-#: templates/user/posting/include_displayItemListMany.tpl:79
-#: templates/user/posting/view.tpl:183 templates/user/posting/view.tpl:201
-#: templates/user/posting/include_displayItemListOne.tpl:8
-#: templates/user/abo/include_displayItemListMany.tpl:11
-#: templates/user/abo/include_displayItemListOne.tpl:8
-#: templates/user/rank/include_displayItemListMany.tpl:11
-#: templates/user/rank/include_displayItemListOne.tpl:8
-#: templates/user/user/display.tpl:24
-#: templates/user/user/include_displayItemListMany.tpl:11
-#: templates/user/user/view.tpl:75
-#: templates/user/user/include_displayItemListOne.tpl:8
-#: templates/user/forum/include_displayItemListMany.tpl:53
-#: templates/user/forum/view.tpl:75
-#: templates/user/forum/include_displayItemListOne.tpl:8
-#: templates/user/category/include_displayItemListMany.tpl:11
-#: templates/user/category/include_displayItemListOne.tpl:8
-msgid "Quick view"
-msgstr ""
-
 #: templates/admin/posting/display.tpl:127
 #: templates/admin/posting/display.tpl:150 templates/admin/user/display.tpl:38
 #: templates/admin/forum/display.tpl:57 templates/user/user/display.tpl:36
@@ -1437,45 +1658,6 @@ msgstr ""
 #: templates/user/forum/include_selectEditOne.tpl:18
 #: templates/user/category/include_selectEditOne.tpl:18
 msgid "This function requires JavaScript activated!"
-msgstr ""
-
-#: templates/admin/posting/view.tpl:21 templates/admin/abo/view.tpl:21
-#: templates/admin/rank/view.tpl:21 templates/admin/user/view.tpl:21
-#: templates/admin/forum/view.tpl:21 templates/admin/category/view.tpl:21
-#: templates/user/posting/view.tpl:19 templates/user/abo/view.tpl:19
-#: templates/user/rank/view.tpl:19 templates/user/user/view.tpl:19
-#: templates/user/forum/view.tpl:19 templates/user/category/view.tpl:19
-msgid "Back to paginated view"
-msgstr ""
-
-#: templates/admin/posting/view.tpl:27 templates/admin/abo/view.tpl:27
-#: templates/admin/rank/view.tpl:27 templates/admin/user/view.tpl:27
-#: templates/admin/forum/view.tpl:27 templates/admin/category/view.tpl:27
-#: templates/user/posting/view.tpl:25 templates/user/abo/view.tpl:25
-#: templates/user/rank/view.tpl:25 templates/user/user/view.tpl:25
-#: templates/user/forum/view.tpl:25 templates/user/category/view.tpl:25
-msgid "Show all entries"
-msgstr ""
-
-#: templates/admin/posting/view.tpl:55 templates/admin/posting/edit.tpl:38
-#: templates/admin/posting/view.csv:3 templates/admin/forum/view.tpl:44
-#: templates/admin/forum/edit.tpl:30 templates/admin/forum/view.csv:3
-#: templates/admin/category/view.tpl:43 templates/admin/category/edit.tpl:30
-#: templates/admin/category/view.csv:3 templates/user/posting/edit.tpl:43
-#: templates/user/posting/view.csv:3 templates/user/forum/view.tpl:42
-#: templates/user/forum/edit.tpl:25 templates/user/forum/view.csv:3
-#: templates/user/category/view.tpl:41 templates/user/category/edit.tpl:25
-#: templates/user/category/view.csv:3
-msgid "Title"
-msgstr ""
-
-#: templates/admin/posting/view.tpl:87 templates/admin/abo/view.tpl:55
-#: templates/admin/rank/view.tpl:63 templates/admin/user/view.tpl:55
-#: templates/admin/forum/view.tpl:55 templates/admin/category/view.tpl:51
-#: templates/user/posting/view.tpl:86 templates/user/abo/view.tpl:53
-#: templates/user/rank/view.tpl:61 templates/user/user/view.tpl:53
-#: templates/user/forum/view.tpl:53 templates/user/category/view.tpl:49
-msgid "Actions"
 msgstr ""
 
 #: templates/admin/posting/view.tpl:193 templates/admin/posting/view.tpl:211
@@ -1952,35 +2134,6 @@ msgstr ""
 msgid "Create new rank"
 msgstr ""
 
-#: templates/admin/import.tpl:18
-msgid "Here you can import datas of Dizkus."
-msgstr ""
-
-#: templates/admin/import.tpl:20
-msgid "Host"
-msgstr ""
-
-#: templates/admin/import.tpl:24
-msgid "DB Name"
-msgstr ""
-
-#: templates/admin/import.tpl:28 templates/admin/user/display.tpl:4
-#: templates/user/user/display.tpl:4
-msgid "User"
-msgstr ""
-
-#: templates/admin/import.tpl:32
-msgid "Password"
-msgstr ""
-
-#: templates/admin/import.tpl:36
-msgid "Tables of dizkus"
-msgstr ""
-
-#: templates/admin/import.tpl:42
-msgid "Start import"
-msgstr ""
-
 #: templates/admin/user/display.tpl:14 templates/admin/user/view.tpl:47
 #: templates/admin/user/edit.tpl:36 templates/admin/user/view.csv:3
 #: templates/user/user/display.tpl:12 templates/user/user/view.tpl:45
@@ -2044,26 +2197,6 @@ msgstr ""
 
 #: templates/admin/user/delete.tpl:11
 msgid "Do you really want to delete this user ?"
-msgstr ""
-
-#: templates/admin/forum/display.tpl:33 templates/admin/forum/view.tpl:47
-#: templates/admin/forum/edit.tpl:35 templates/admin/forum/view.csv:3
-#: templates/admin/category/display.tpl:33
-#: templates/admin/category/view.tpl:46 templates/admin/category/edit.tpl:35
-#: templates/admin/category/view.csv:3 templates/user/forum/view.tpl:45
-#: templates/user/forum/edit.tpl:30 templates/user/forum/view.csv:3
-#: templates/user/category/view.tpl:44 templates/user/category/edit.tpl:30
-#: templates/user/category/view.csv:3
-msgid "Description"
-msgstr ""
-
-#: templates/admin/forum/display.tpl:35 templates/admin/forum/view.tpl:50
-#: templates/admin/forum/view.csv:3 templates/admin/category/display.tpl:35
-#: templates/admin/category/view.tpl:49 templates/admin/category/view.csv:3
-#: templates/user/forum/view.tpl:48 templates/user/forum/edit.tpl:35
-#: templates/user/forum/view.csv:3 templates/user/category/view.tpl:47
-#: templates/user/category/edit.tpl:35 templates/user/category/view.csv:3
-msgid "Pos"
 msgstr ""
 
 #: templates/admin/forum/display.tpl:37 templates/admin/forum/view.tpl:53
@@ -2164,18 +2297,6 @@ msgstr ""
 #: templates/admin/category/view.rss:12 templates/admin/category/view.atom:5
 #: templates/user/category/view.rss:12 templates/user/category/view.atom:5
 msgid "A direct feed showing the list of categories"
-msgstr ""
-
-#: templates/admin/category/view.tpl:13 templates/admin/category/edit.tpl:10
-#: templates/admin/category/edit.tpl:88 templates/user/category/view.tpl:11
-#: templates/user/category/edit.tpl:9 templates/user/category/edit.tpl:83
-msgid "Create category"
-msgstr ""
-
-#: templates/admin/category/view.tpl:82 templates/user/category/view.tpl:103
-#: templates/mailz/itemlist_Category_text.tpl:7
-#: templates/mailz/itemlist_Category_html.tpl:11
-msgid "No categories found."
 msgstr ""
 
 #: templates/admin/category/edit.tpl:7 templates/admin/category/edit.tpl:13
@@ -2345,48 +2466,12 @@ msgstr ""
 msgid "Issue:"
 msgstr ""
 
-#: templates/user/posting/display.tpl:19
-#: templates/user/posting/include_displayItemListMany.tpl:18
-msgid "Mark this issue as solved!"
-msgstr ""
-
-#: templates/user/posting/display.tpl:30
-#: templates/user/posting/include_displayItemListMany.tpl:29
-msgid "This issue is marked as solved! Mark it as unsolved! "
-msgstr ""
-
 #: templates/user/posting/display.tpl:40
 msgid "Created: "
 msgstr ""
 
 #: templates/user/posting/display.tpl:43 templates/user/posting/display.tpl:45
 msgid "Back to"
-msgstr ""
-
-#: templates/user/posting/display.tpl:58
-#: templates/user/posting/include_displayItemListMany.tpl:58
-msgid "Issue is open! You have permissions to close this issue!"
-msgstr ""
-
-#: templates/user/posting/display.tpl:66
-#: templates/user/posting/include_displayItemListMany.tpl:62
-msgid "Issue is closed. You have permissions to reopen this issue!"
-msgstr ""
-
-#: templates/user/posting/include_displayItemListMany.tpl:12
-msgid "Important issue"
-msgstr ""
-
-#: templates/user/posting/include_displayItemListMany.tpl:43
-msgid "Writer:"
-msgstr ""
-
-#: templates/user/posting/include_displayItemListMany.tpl:52
-msgid "Move issue to another forum!"
-msgstr ""
-
-#: templates/user/posting/include_displayItemListMany.tpl:96
-msgid "Be the first who created an issue!"
 msgstr ""
 
 #: templates/user/posting/view.tpl:54
@@ -2426,21 +2511,8 @@ msgstr ""
 msgid "Delete upload image ?"
 msgstr ""
 
-#: templates/user/forum/include_displayItemListMany.tpl:67
-#: templates/user/category/view.tpl:71
-msgid "There are no forums in this category!"
-msgstr ""
-
 #: templates/user/forum/edit.tpl:36
 msgid "Enter the pos of the forum"
-msgstr ""
-
-#: templates/user/category/display.tpl:40 templates/user/category/view.tpl:124
-msgid "Number of issues"
-msgstr ""
-
-#: templates/user/category/display.tpl:41 templates/user/category/view.tpl:125
-msgid "Number of postings"
 msgstr ""
 
 #: templates/user/category/edit.tpl:36
