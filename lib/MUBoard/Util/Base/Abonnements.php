@@ -75,8 +75,10 @@ class MUBoard_Util_Base_Abonnements extends Zikula_AbstractBase
 
         $toaddress = self::getForumAbos($forumid, $createdUserId);
         foreach ($toaddress as $address) {
-            $messagecontent = self::getMailContent($from, $fromaddress, $address, $forum, $title, $text, $url , $kind, $parent);
-            ModUtil::apiFunc('Mailer', 'user', 'sendmessage', $messagecontent);
+            if (filter_var($address, FILTER_VALIDATE_EMAIL)) {
+                $messagecontent = self::getMailContent($from, $fromaddress, $address, $forum, $title, $text, $url , $kind, $parent);
+                ModUtil::apiFunc('Mailer', 'user', 'sendmessage', $messagecontent);
+            }
         }
     }
 

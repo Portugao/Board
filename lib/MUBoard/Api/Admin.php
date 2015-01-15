@@ -146,24 +146,6 @@ class MUBoard_Api_Admin extends MUBoard_Api_Base_Admin
                 }
             }
             
-            // we get all subscriptions
-            $result = DBUtil::executeSQL('SELECT * FROM `z_dizkus_subscription`');
-            $subscriptions = $result->fetchAll(Doctrine::FETCH_ASSOC);
-            
-            foreach ($subscriptions as $subscription) {
-
-                $values2 = "('" . $subscription['forum_id'] . "', '" . $subscription['user_id'] . "')";
-            
-                $sql2 = 'INSERT INTO muboard_abo (forumid, userid) VALUES ' . $values2;
-            
-                $stmt2 = $connection->prepare($sql2);
-                try {
-                    $stmt2->execute();
-                } catch (Exception $e) {
-                    LogUtil::registerError($e);
-                }
-            }
-            
             $sqlContact2->close();
         }
 
