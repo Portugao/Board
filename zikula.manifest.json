@@ -1,0 +1,16 @@
+{
+    "extension": {
+        "title": "MUBoard"
+    },
+    "version": {
+        "semver": "1.1.0",
+        "dependencies": {
+            "zikula/core": ">=1.3.5 <1.4"
+        },
+        "composerpath": "composer.json",
+        "description": "MUBoard is a small forum module for Zikula",
+        "urls": {
+            "issues": "https://github.com/Portugao/MUBoard/issues"
+        }
+    }
+}
