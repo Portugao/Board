@@ -17,6 +17,22 @@
 class MUBoard_Installer extends MUBoard_Base_Installer
 {
     /**
+     * Install the MUBoard application.
+     *
+     * @return boolean True on success, or false.
+     */
+    public function install()
+    {
+        parent::install();
+        
+        $uid = UserUtil::getVar('uid');
+        MUBoard_Util_View::actualUser($uid, 1);
+        
+        // update successful
+        return true;
+        
+    }
+    /**
      * Upgrade the MUBoard application from an older version.
      *
      * If the upgrade fails at some point, it returns the last upgraded version.
