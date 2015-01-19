@@ -19,6 +19,10 @@ Changes in MUBoard 1.1.0
 
 # fixed #72 no error messages after import; deletion of import for subsriptions
 
+# fixed #73 french translation is complete
+
+# fixed #75 calculation of postings fixed
+
 Some other fixes
 
 # fixed issue with preview answering to an issue; now we get the complete preview shown in chrome too
