@@ -167,10 +167,10 @@ class MUBoard_Api_Admin extends MUBoard_Api_Base_Admin
                 // we get all posts of this topic
                 $result = DBUtil::executeSQL('SELECT * FROM `z_dizkus_posts` WHERE `topic_id` = ' . $topic['topic_id']);
                 $posts = $result->fetchAll(Doctrine::FETCH_ASSOC);
-                if (isset($posts)) {
+                if (isset($posts) && count($posts) > 0) {
                     $firstId = $posts[0]['post_id'];
                     $text = $posts[0]['post_text'];
-                }
+                
                 $text = $sqlContact3->real_escape_string($text);
                 $title = $sqlContact3->real_escape_string($topic['topic_title']);
                 $values = "('" . $firstId . "', NULL, '" . $topic['forum_id'] . "', '" . $title . "', '" . $text . "', '" . $topic['topic_views'] . "', '" . "1" . "', '" . $topic['topic_poster'] . "', '" . $topic['topic_time'] . "', 'a:0:{}', 'a:0:{}', 'a:0:{}', 'a:0:{}', 'a:0:{}', 'a:0:{}')";
@@ -198,6 +198,7 @@ class MUBoard_Api_Admin extends MUBoard_Api_Base_Admin
 
                 } catch (Exception $e) {
                     LogUtil::registerError($e);
+                }
                 }
             }
             $sqlContact3->close();
