@@ -1,5 +1,8 @@
 CHANGELOG
 ---------
+Changes in MUBoard 1.1.1
+
+# fix for import of dizkus by maiwald, thx for that
 
 Changes in MUBoard 1.1.0
 

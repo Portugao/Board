@@ -214,12 +214,10 @@ button.muboardInlineButton {
 .children {
     background: #369;
     color: #eee;
-    width: 5%;
 }
 
 .calls {
     background: #cc6;
-    width: 5%;
 }
 
 /* .muboard-user-category-header {
@@ -257,7 +255,6 @@ border-bottom: 1px solid #ddd;
 /*********Forums*****************/
 
 .muboard-user-forum {
-  /* background: #ddd;*/
    margin: 5px 0;
    padding: 3px 1%;
    border-bottom: 1px solid #333;
@@ -277,7 +274,7 @@ border-bottom: 1px solid #ddd;
 
 .muboard-user-forum-header-title {
     float: left;
-    width: 30%;
+    width: 50%;
 }
 
 .muboard-user-forum-header-title h2 {
@@ -291,7 +288,8 @@ border-bottom: 1px solid #ddd;
 .muboard-user-forum-header-statistic {
     padding: 5px 10px;
     margin: 5px 0 0 10px;
-    float: left;
+    float: right;
+
     border-radius: 5px;
     border-bottom: 1px solid #999;
 }
@@ -299,7 +297,8 @@ border-bottom: 1px solid #ddd;
 .muboard-user-forum-header-category {
     padding: 5px 10px;
     margin: 5px 0 0 10px;
-    float: left;
+    float: right;
+    width: 35%;
     font-size: 1.2em;
     border-radius: 5px;
     border-bottom: 1px solid #999;
@@ -309,6 +308,7 @@ border-bottom: 1px solid #ddd;
     padding: 5px 10px;
     margin: 5px 10px 0 10px;
     float: right;
+    width: 10%;
     font-size: 1.2em;
     border-radius: 5px;
     border-bottom: 1px solid #999;  
@@ -424,13 +424,13 @@ border-bottom: 1px solid #ddd;
 }
 
 .muboard-user-posting-header-title {
-    float: left;
-    width: 45%;
+   /* float: left;
+    width: 45%;*/
 }
 
 .muboard-user-posting-header-action {
-    float: left;
-    width: 35%;
+    /*float: left;
+    width: 35%;*/
 }
 
 .muboard-user-posting-header-action-category {
@@ -470,14 +470,11 @@ border-bottom: 1px solid #ddd;
 }
 
 .muboard-user-posting-user {
-    float: left;
-    width: 30%;
+
 }
 
 .muboard-user-posting-content {
-    position: relative;
-    float: right;
-    width: 68%;
+
     border-left: 1px solid #ccc;
 }
 
@@ -529,16 +526,12 @@ border-bottom: 1px solid #ddd;
 
 .muboard-user-posting-avatar {
     padding: 2%;
-    float: left;
-    width: 30%;
     font-size: 0.8em;
     text-align: center;
 }
 
 .muboard-user-posting-datas {
     padding: 2%;
-    float: right;
-    width: 55%;
     font-size: 0.8em;
 }
 .muboard-user-posting-created {

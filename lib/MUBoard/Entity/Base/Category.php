@@ -120,6 +120,7 @@ abstract class MUBoard_Entity_Base_Category extends Zikula_EntityAccess
      *
      * @ORM\OneToMany(targetEntity="MUBoard_Entity_Forum", mappedBy="category", cascade={"remove"})
      * @ORM\JoinTable(name="muboard_categoryforum")
+     * @ORM\OrderBy({"pos" = "ASC"})
      * @var MUBoard_Entity_Forum[] $forum.
      */
     protected $forum = null;

@@ -60,7 +60,10 @@ class MUBoard_Installer extends MUBoard_Base_Installer
                 $this->setVar('showStatisticOnBottom', false);
 
             case '1.1.0':
-                // for later updates
+                // nothing to do
+                
+            case '1.1.1':
+            		// for later updates
         }
 
         // update successful
