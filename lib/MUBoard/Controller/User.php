@@ -15,7 +15,6 @@
 /**
  * This is the User controller class providing navigation and interaction functionality.
  */
-use Doctrine\DBAL\Types\StringType;
 class MUBoard_Controller_User extends MUBoard_Controller_Base_User
 {
 

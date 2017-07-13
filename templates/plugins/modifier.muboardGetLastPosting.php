@@ -19,7 +19,5 @@
  */
 function smarty_modifier_muboardGetLastPosting($id)
 {
-	$out = MUBoard_Util_View::getLastPostingOfForum($id);
-
-	return $out;
+	return MUBoard_Util_View::getLastPostingOfForum($id);
 }

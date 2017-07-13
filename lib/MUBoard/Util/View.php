@@ -1,5 +1,5 @@
 <?php
-use DoctrineExtensions\PHPUnit\Operations\Truncate;
+
 
 /**
  * MUBoard.
@@ -246,28 +246,17 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
     public static function getLastPostingOfForum($forumid)
     {
         $dom = ZLanguage::getModuleDomain('MUBoard');
+        $out = __('No postings available!', $dom);
 
-        // get repositoy for forum
-        $repository = MUBoard_Util_Model::getForumRepository();
-        // get forum by id
-        $forum = $repository->selectById($forumid);
-        // get postings of this forum
-        $postings = $forum->getPosting();
-        // we look for the last posting
-        $postingid = 0;
+        // get last posting for forum
+        $postingRepository = MUBoard_Util_Model::getPostingRepository();
 
-        foreach ($postings as $posting) {
-            if ($posting['id'] > $postingid) {
-                $postingid = $posting['id'];
-            }
+        $posting = $postingRepository->getLastPost($forumid);
+        if (null === $posting) {
+            return $out;
         }
+        $lastposting = $posting;
 
-        // we get a repository for posting
-        $repository2 = MUBoard_Util_Model::getPostingRepository();
-        // if postingid > 0, we have posting in the forum
-        if ($postingid > 0) {
-            // we get the last posting
-            $lastposting = $repository2->selectById($postingid);
             // we check if last posting is parent or answer
             $parent = $lastposting->getParent_id();
             if ($parent != NULL) {
@@ -302,9 +291,6 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
             $out .= substr($issuetitle, 0, 50);
             $out .= "</a><br />";
 
-        } else {
-            $out = __('No postings available!', $dom);
-        }
         return $out;
     }
 

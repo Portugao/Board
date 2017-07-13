@@ -26,7 +26,7 @@
     {/if}    
     </div>
     <div class="muboard-user-category-header-lastposting">
-    {$item.id|muboardGetLastPosting:$item.id}
+    {$item.id|muboardGetLastPosting}
     </div>
     <div class="muboard-user-posting-header-infos">
     {* <a id="muboard-user-posting-header-infos-close" href="{modurl modname='muboard' type='admin' func='take' ot='abo' posting=$posting.id}">
