@@ -260,7 +260,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
             // we check if last posting is parent or answer
             $parent = $lastposting->getParent_id();
             if ($parent != NULL) {
-                $issue = $repository2->selectById($parent);
+                $issue = $postingRepository->selectById($parent);
                 $issuetitle = $issue->getTitle();
                 $id = $issue->getId();
             } else {
