@@ -159,16 +159,10 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
      */
     public static function getPostingsOfForum($forumid)
     {
-        // get repositoy for Forum
-        $repository = MUBoard_Util_Model::getForumRepository();
-        // get forum by id
-        $forum = $repository->selectById($forumid);
-        // get forums of this category
-        $postings = $forum->getPosting();
-         
-        $count = count($postings);
-         
-        return $count;
+        // get repository for posting
+        $repository = MUBoard_Util_Model::getPostingRepository();
+        // get number of postings
+        return $postingCount = $repository->getNumberPostingsOfForum($forumid);
     }
 
     /**

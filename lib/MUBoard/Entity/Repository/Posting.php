@@ -109,4 +109,18 @@ class MUBoard_Entity_Repository_Posting extends MUBoard_Entity_Repository_Base_P
         return count($results) > 0 ? $results[0] : null;
     
     }
+    /**
+     * @param integer $forumid
+     * @return ArrayCollection collection containing number of postings in a forum
+     */
+    public function getNumberPostingsOfForm($forumid) {
+    	$qb = $this->getEntityManager()->createQueryBuilder();
+    	   	$qb->select('tbl')
+    	   	   ->from('MUBoard_Entity_Posting', 'tbl')
+    	   	   ->where('tbl.forum = :forum')->setParameter('forum', $forumid);
+    
+        $query = $qb->getQuery();
+    	$results = $query->getResult();
+        return count($results) > 0 ? count($results) : 0;
+    }
 }
