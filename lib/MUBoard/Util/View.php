@@ -125,17 +125,11 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
         $count = 0;
 
         // get repositoy for Forum
-        $repository = MUBoard_Util_Model::getForumRepository();
-        // get forum by id
-        $forum = $repository->selectById($forumid);
-        // get forums of this category
-        $postings = $forum->getPosting();
-        // we look if postings are parent postings -> issue
-        foreach ($postings as $posting) {
-            if ($posting['parent_id'] === NULL) {
-                $count = $count + 1;
-            }
-        }
+        $repository = MUBoard_Util_Model::getPostingRepository();
+        // get postings
+        $postings = $repository->getIssuesOfForum($forumid);
+        // count postings
+        $count = count($postings);
         return $count;
     }
 
@@ -175,14 +169,12 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
 
         // get repositoy for Posting
         $repository = MUBoard_Util_Model::getPostingRepository();
-        // get posting by id
-        $posting = $repository->selectById($postingid);
-        // get answers of this posting
-        $children = $posting->getChildren();
+        // get children
+        $children = $repository->getAnswersOfPost($posting);
 
         $count = count($children);
          
-        return $count;
+        return $count > 0 ? $count : 0;
          
     }
 
@@ -196,23 +188,13 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
         
         // get repositoy for posting
         $repository = MUBoard_Util_Model::getPostingRepository();
-        // get posting by id
-        $posting = $repository->selectById($id);
-        // getchildren of this posting
-        $children = $posting->getChildren();
-        // we look for the last posting
-        $childid = 0;
+        // get last answer by id
+        $lastposting = $repository->getLastAnswer($id);
+        
 
-        foreach ($children as $child) {
-            if ($child['id'] > $childid) {
-                $childid = $child['id'];
-            }
-        }
-
-        // if childid > 0, we have child for the issue
-        if ($childid > 0) {
-            // we get the last posting
-            $lastposting = $repository->selectById($childid);
+        // if lastposting we get datas and build out
+        if ($lastposting) {
+        	$lastposting = $lastposting[0];
 
             $url = ModUtil::url('MUBoard', 'user', 'display', array('ot' => 'posting', 'id' => $id));
 
