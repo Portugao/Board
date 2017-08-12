@@ -16,8 +16,8 @@
             {* {gt text='Category:'} *} {$category.title|notifyfilters:'muboard.filterhook.categories'}
             </h2>
         </div>
-        <div class="muboard-user-category-header-statistic issues">{$category.id|muboardGetNumberOfIssuesOfCategory:$category.id}</div>   
-        <div class="muboard-user-category-header-statistic postings">{$category.id|muboardGetNumberOfPostingsOfCategory:$category.id}</div>
+        <div class="muboard-user-category-header-statistic issues">{$category.id|muboardGetNumberOfIssuesOfCategory}</div>   
+        <div class="muboard-user-category-header-statistic postings">{$category.id|muboardGetNumberOfPostingsOfCategory}</div>
         </div>
         <div class=muboard-user-category-content>
             {if isset($category.forum) && $category.forum ne null}
