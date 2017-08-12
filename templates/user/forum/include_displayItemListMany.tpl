@@ -20,9 +20,8 @@
 <div class="muboard-user-forum-right">
     <div class="muboard-user-category-header-statistic-container">
     {if $modvars.MUBoard.showStatisticInDetails eq 1}    
-    <div class="muboard-user-category-header-statistic issues">{$item.id|muboardGetNumberOfIssuesOfForum:$item.id}
-    </div>
-    <div class="muboard-user-category-header-statistic postings">{$item.posting|@count}</div>
+    <div class="muboard-user-category-header-statistic issues">{$item.id|muboardGetNumberOfIssuesOfForum}</div>
+    <div class="muboard-user-category-header-statistic postings">{$item.id|muboardGetNumberOfPostingsOfForum}</div>
     {/if}    
     </div>
     <div class="muboard-user-category-header-lastposting">
