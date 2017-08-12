@@ -91,6 +91,58 @@ class MUBoard_Entity_Repository_Posting extends MUBoard_Entity_Repository_Base_P
     }
     
     /**
+     * @param integer categoryid
+     */
+    public function getIssuesOfCategory($categoryid)
+    {
+    	$qb = $this->getEntityManager()->createQueryBuilder();
+    	$qb->select('tbl')
+    	->from('MUBoard_Entity_Posting', 'tbl')
+    	->where('tbl.forum = :forum')->setParameter('forum', $forumid)
+    	->orderBy('tbl.id', 'DESC')
+    	->setMaxResults(1);
+    	
+    	$query = $qb->getQuery();
+    	$results = $query->getResult();
+    	return count($results) > 0 ? $results[0] : null;    	
+    }
+    
+    /**
+     * @param integer categoryid
+     */
+    public function getPostingsOfCategory($categoryid)
+    {
+    	$qb = $this->getEntityManager()->createQueryBuilder();
+    	$qb->select('tbl')
+    	->from('MUBoard_Entity_Posting', 'tbl')
+    	->where('tbl.forum = :forum')->setParameter('forum', $forumid)
+    	->orderBy('tbl.id', 'DESC')
+    	->setMaxResults(1);
+    	 
+    	$query = $qb->getQuery();
+    	$results = $query->getResult();
+    	return count($results) > 0 ? $results[0] : null;
+    }
+    
+    /**
+     * @param integer forumid
+     * @return number of issues for a forum
+     */
+    public function getIssuesOfForum($forumid)
+    {
+    	//die('Form: ' . $forumid);
+    	$qb = $this->getEntityManager()->createQueryBuilder();
+    	   	$qb->select('tbl')
+    	   	   ->from('MUBoard_Entity_Posting', 'tbl')
+    	   	   ->where('tbl.forum = :forum')->setParameter('forum', $forumid)
+    	   	   ->andWhere('tbl.parent = :value')->setParameter('value', NULL);
+    
+        $query = $qb->getQuery();
+    	$results = $query->getResult();
+        return $results;
+    }
+    
+    /**
      *
      * @param integer $forumid
      * @return ArrayCollection collection containing retrieved MUBoard_Entity_Posting instances
@@ -109,6 +161,45 @@ class MUBoard_Entity_Repository_Posting extends MUBoard_Entity_Repository_Base_P
         return count($results) > 0 ? $results[0] : null;
     
     }
+    
+    /**
+     *
+     * @param integer $postingid
+     * @return ArrayCollection collection containing retrieved MUBoard_Entity_Posting instances,
+     * that are answers for an issue
+     */
+    public function getAnswersOfPost($postingid)
+    {
+    	$qb = $this->getEntityManager()->createQueryBuilder();
+    	$qb->select('tbl')
+    	->from('MUBoard_Entity_Posting', 'tbl')
+    	->where('tbl.parent_id = :posting')->setParameter('posting', $postingid);
+    
+    	$query = $qb->getQuery();
+    	$results = $query->getResult();
+    	return $results;
+    
+    }
+    
+    /*
+    * @param integer $postingid
+    * @return ArrayCollection collection containing retrieved the last MUBoard_Entity_Posting instance as answer
+    */
+    public function getLastAnswer($postingid)
+    {
+    	$qb = $this->getEntityManager()->createQueryBuilder();
+    	$qb->select('tbl')
+    	->from('MUBoard_Entity_Posting', 'tbl')
+    	->where('tbl.parent = :posting')->setParameter('posting', $postingid)
+    	->orderBy('tbl.id', 'DESC')
+    	->setMaxResults(1);
+    
+    	$query = $qb->getQuery();
+    	$results = $query->getResult();
+    	return $results;
+    
+    }
+    
     /**
      * @param integer $forumid
      * @return ArrayCollection collection containing number of postings in a forum
