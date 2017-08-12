@@ -113,7 +113,7 @@ class MUBoard_Entity_Repository_Posting extends MUBoard_Entity_Repository_Base_P
      * @param integer $forumid
      * @return ArrayCollection collection containing number of postings in a forum
      */
-    public function getNumberPostingsOfForm($forumid) {
+    public function getNumberPostingsOfForum($forumid) {
     	$qb = $this->getEntityManager()->createQueryBuilder();
     	   	$qb->select('tbl')
     	   	   ->from('MUBoard_Entity_Posting', 'tbl')
