@@ -14,21 +14,56 @@
             '@MUBoardModule/Form/bootstrap_3.html.twig',
             'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
         ] %}
-        {{ form_start(form, {attr: {id: 'postingEditForm', class: 'muboard-edit-form'}}) }}
+        {% set returnUrl = path('muboardmodule_category_view') %}
+        {% if mode == 'create' %}
+        {{ form_start(form, {attr: {id: 'entryEditForm'}, action: path('muboardmodule_posting_edit', { returnTo: returnUrl }) }) }}
+        {% else %}
+        {{ form_start(form, {attr: {id: 'entryEditForm'} }) }}
+        {% endif %}
         {{ form_errors(form) }}
         <fieldset>
             <legend>{{ __('Content') }}</legend>
             {{ form_row(form.title) }}
             {{ form_row(form.text) }}
+            <div class="hidden">
             {{ form_row(form.invocations) }}
             {{ form_row(form.state) }}
             {{ form_row(form.solved) }}
+            </div>
+            {% set images = getModVar('MUBoardModule', 'uploadImages') %}
+            {% set numberImages = getModVar('MUBoardModule', 'numberImages') %}
+            {% if images == 0 %}
+                <div class="hidden">
+            {% endif %}
+            {% if numberImages == 1 or numberImages == 2 or numberImages == 3 %}
             {{ form_row(form.firstImage) }}
+            {% endif %}
+            {% if numberImages == 2 or numberImages == 3 %}
             {{ form_row(form.secondImage) }}
+            {% endif %}
+            {% if numberImages == 3 %}
             {{ form_row(form.thirdImage) }}
+            {% endif %}
+             {% if images == 0 %}
+                </div>
+            {% endif %}
+            {% set files = getModVar('MUBoardModule', 'uploadFiles') %}
+            {% set numberFiles = getModVar('MUBoardModule', 'numberFiles') %}
+            {% if files == 0 %}
+                <div class="hidden">
+            {% endif %}             
+            {% if numberFiles == 1 or numberFiles == 2 or numberFiles == 3 %}          
             {{ form_row(form.firstFile) }}
+            {% endif %}            
+            {% if numberFiles == 2 or numberFiles == 3 %}   
             {{ form_row(form.secondFile) }}
+            {% endif %}            
+            {% if numberFiles == 3 %}   
             {{ form_row(form.thirdFile) }}
+            {% endif %}            
+            {% if files == 0 %}
+                </div>
+            {% endif %}            
         </fieldset>
         
         {{ include(
