@@ -1,4 +1,0 @@
-{* purpose of this template: categories display xml view in user area *}
-{muboardTemplateHeaders contentType='text/xml'}<?xml version="1.0" encoding="{charset}" ?>
-{getbaseurl assign='baseurl'}
-{include file='user/category/include.xml' item=$category}

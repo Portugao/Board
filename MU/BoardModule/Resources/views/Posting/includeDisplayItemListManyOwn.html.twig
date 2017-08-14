@@ -1,0 +1,35 @@
+{# purpose of this template: inclusion template for display of related forums #}
+{% set hasAdminPermission = hasPermission('MUBoardModule:Forum:', '::', 'ACCESS_EDIT') %}
+{% if noLink is not defined %}
+    {% set noLink = false %}
+{% endif %}
+{% if items|default and items|length > 0 %}
+<div class="list-group muboardmodule-related-item-list forum">
+{% for item in items %}
+    {% if hasAdminPermission or item.workflowState == 'approved' %}
+    {% if item.parent_id == NULL %}
+    <div class="list-group-item col-md-12">
+    <div class="col-md-5">
+<h4 class="list-group-item-heading">
+{% spaceless %}
+{% if item.state == 0 %}<span class="state-green"><i class="fa fa-unlock" aria-hidden="true"></i></span>{% else %}<span class="state-red"><i class="fa fa-lock" aria-hidden="true"></i></span>{% endif %} 
+{% if not noLink %}
+    <a class="forum-include-link" href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'display', {'id': item.getId()}) }}" title="{{ item|muboardmodule_formattedTitle|e('html_attr') }}">
+{% endif %}
+    {{ item|muboardmodule_formattedTitle }}
+{% if not noLink %}
+    </a>
+    {#<a id="forumItem{{ item.getKey() }}Display" href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'display', {'id': item.getId(), raw: 1}) }}" title="{{ __('Open quick view window') }}" class="muboard-inline-window hidden" data-modal-title="{{ item|muboardmodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>#}
+{% endif %}
+{% endspaceless %}
+</h4>
+    </div>
+    <div class="col-md-7">
+        {{ __('Last answer') }}:
+    </div>
+    </div>
+    {% endif %}
+{% endif %}
+{% endfor %}
+</div>
+{% endif %}

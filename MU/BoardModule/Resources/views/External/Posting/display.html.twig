@@ -1,0 +1,51 @@
+{# Purpose of this template: Display one certain posting within an external context #}
+{{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js')) }}
+{{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css')) }}
+{{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.js')) }}
+<div id="posting{{ posting.getKey() }}" class="muboardmodule-external-posting">
+{% if displayMode == 'link' %}
+    <p class="muboardmodule-external-link">
+    <a href="{{ path('muboardmodule_posting_display', {'id': posting.getId()}) }}" title="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}">
+    {{ posting|muboardmodule_formattedTitle|notifyFilters('board.filter_hooks.postings.filter')|safeHtml }}
+    </a>
+    </p>
+{% endif %}
+{% if hasPermission('MUBoardModule::', '::', 'ACCESS_EDIT') %}
+    {# for normal users without edit permission show only the actual file per default #}
+    {% if displayMode == 'embed' %}
+        <p class="muboardmodule-external-title">
+            <strong>{{ posting|muboardmodule_formattedTitle|notifyFilters('board.filter_hooks.postings.filter')|safeHtml }}</strong>
+        </p>
+    {% endif %}
+{% endif %}
+
+{% if displayMode == 'link' %}
+{% elseif displayMode == 'embed' %}
+    <div class="muboardmodule-external-snippet">
+        {% if posting.firstImage is not empty and posting.firstImageMeta|default %}
+                    <a href="{{ posting.firstImageUrl }}" title="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}"{% if posting.firstImageMeta.isImage %} class="image-link"{% endif %}>
+        {% if posting.firstImageMeta.isImage %}
+            {% set thumbOptions = attribute(thumbRuntimeOptions, 'postingFirstImage') %}
+            <img src="{{ posting.firstImage.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+        {% else %}
+            {{ __('Download') }} ({{ posting.firstImageMeta.size|muboardmodule_fileSize(posting.firstImage.getPathname(), false, false) }})
+        {% endif %}
+        </a>
+        {% else %}&nbsp;{% endif %}
+    </div>
+
+    {# you can distinguish the context like this: #}
+    {# % if source == 'contentType' %}
+        ...
+    {% elseif source == 'scribite' %}
+        ...
+    {% endif % #}
+
+    {# you can enable more details about the item: #}
+    {#
+        <p class="muboardmodule-external-description">
+            {% if posting.text is not empty %}{{ posting.text }}<br />{% endif %}
+        </p>
+    #}
+{% endif %}
+</div>

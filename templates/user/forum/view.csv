@@ -1,6 +1,0 @@
-{* purpose of this template: forums view csv view in user area *}
-{muboardTemplateHeaders contentType='text/comma-separated-values; charset=iso-8859-15' asAttachment=true filename='Forums.csv'}
-"{gt text='Title'}";"{gt text='Description'}";"{gt text='Pos'}""{gt text='Category'}"
-{foreach item='forum' from=$items}
-"{$forum.title|replace:"\"":""}";"{$forum.description|replace:"\"":""}";"{$forum.pos|replace:"\"":""}"{if isset($forum.Category) && $forum.Category ne null}{$forum.Category.title|default:""}{/if}{/foreach}
-

@@ -1,0 +1,56 @@
+{# purpose of this template: postings atom feed #}
+<?xml version="1.0" encoding="{% set charset = pageGetVar('meta.charset') %}{% if charset == 'ISO-8859-15' %}ISO-8859-1{% else %}{{ charset }}{% endif %}" ?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title type="text">{{ __('Latest postings') }}</title>
+    <subtitle type="text">{{ __('A direct feed showing the list of postings') }} - {{ getModVar('ZConfig', 'slogan') }}</subtitle>
+    <author>
+        <name>{{ getModVar('ZConfig', 'sitename') }}</name>
+    </author>
+{% set amountOfItems = items|length %}
+{% if amountOfItems > 0 %}
+{% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({'http://': '', '/': ''}) }},{{ items.first.createdDate|date('Y-m-d') }}:{{ path('muboardmodule_posting_' ~ routeArea ~ 'display', {'id': items.first.getId()}) }}{% endset %}
+    <id>{{ uniqueID }}</id>
+    <updated>{{ items[0].updatedDate|date('Y-m-dTH:M:SZ') }}</updated>
+{% endif %}
+    <link rel="alternate" type="text/html" hreflang="{{ app.request.locale }}" href="{{ url('muboardmodule_posting_' ~ routeArea ~ 'index') }}" />
+    <link rel="self" type="application/atom+xml" href="{{ app.request.getSchemeAndHttpHost() ~ app.request.getBasePath() }}" />
+    <rights>Copyright (c) {{ 'now'|date('Y') }}, {{ app.request.getSchemeAndHttpHost()|e }}</rights>
+{% for posting in items %}
+    {{ block('entry') }}
+{% endfor %}
+</feed>
+{% block entry %}
+    <entry>
+        {{ block('entry_content') }}
+    </entry>
+{% endblock %}
+{% block entry_content %}
+    <title type="html">{{ posting|muboardmodule_formattedTitle|notifyFilters('muboardmodule.filterhook.postings')|safeHtml }}</title>
+    <link rel="alternate" type="text/html" href="{{ url('muboardmodule_posting_' ~ routeArea ~ 'display', {'id': posting.getId()}) }}" />
+    {% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ posting.createdDate|date('Y-m-d') }}:{{ path('muboardmodule_posting_' ~ routeArea ~ 'display', {'id': posting.getId()}) }}{% endset %}
+    <id>{{ uniqueID }}</id>
+    {% if posting.updatedDate|default %}
+        <updated>{{ posting.updatedDate|date('Y-m-dTH:M:SZ') }}</updated>
+    {% endif %}
+    {% if posting.createdDate|default %}
+        <published>{{ posting.createdDate|date('Y-m-dTH:M:SZ') }}</published>
+    {% endif %}
+    {% if posting.createdBy|default and posting.createdBy.getUid() > 0 %}
+        {% set creatorAttributes = posting.createdBy.getAttributes() %}
+        <author>
+           <name>{{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(posting.createdBy.getUname()) }}</name>
+           <uri>{{ creatorAttributes.get('_UYOURHOMEPAGE')|default('-') }}</uri>
+           <email>{{ posting.createdBy.getEmail() }}</email>
+        </author>
+    {% endif %}
+    <summary type="html">
+        <![CDATA[
+        {{ posting.text|truncate(150, true, '&hellip;')|default('-') }}
+        ]]>
+    </summary>
+    <content type="html">
+        <![CDATA[
+        {{ posting.title|replace({ '<br>': '<br />' }) }}
+        ]]>
+    </content>
+{% endblock %}

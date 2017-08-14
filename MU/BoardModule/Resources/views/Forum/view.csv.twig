@@ -1,0 +1,18 @@
+{# purpose of this template: forums view csv view #}
+{% spaceless %}"{{ __('Title') }}";"{{ __('Description') }}";"{{ __('Pos') }}";"{{ __('Workflow state') }}"
+;"{{ __('Category') }}"
+;"{{ __('Posting') }}"
+{% endspaceless %}
+{% for forum in items %}
+{% spaceless %}
+    "{{ forum.title }}";"{{ forum.description|safeHtml }}";"{{ forum.pos }}";"{{ forum.workflowState|muboardmodule_objectState(false)|lower }}"
+    ;"{% if forum.category|default %}{{ forum.category|muboardmodule_formattedTitle }}{% endif %}"
+    ;"
+    {% if forum.posting|default %}
+        {% for relatedItem in forum.posting %}
+        {{ relatedItem|muboardmodule_formattedTitle }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    {% endif %}
+    "
+{% endspaceless %}
+{% endfor %}

@@ -1,0 +1,16 @@
+{# Purpose of this template: Display item information for previewing from other modules #}
+<dl id="posting{{ posting.getKey() }}">
+<dt>{{ posting|muboardmodule_formattedTitle|notifyFilters('board.filter_hooks.postings.filter')|safeHtml }}</dt>
+<dd>{% if posting.firstImage is not empty and posting.firstImageMeta|default %}
+            <a href="{{ posting.firstImageUrl }}" title="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}"{% if posting.firstImageMeta.isImage %} class="image-link"{% endif %}>
+{% if posting.firstImageMeta.isImage %}
+    {% set thumbOptions = attribute(thumbRuntimeOptions, 'postingFirstImage') %}
+    <img src="{{ posting.firstImage.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+{% else %}
+    {{ __('Download') }} ({{ posting.firstImageMeta.size|muboardmodule_fileSize(posting.firstImage.getPathname(), false, false) }})
+{% endif %}
+</a>
+{% else %}&nbsp;{% endif %}
+</dd>
+{% if posting.text is not empty %}<dd>{{ posting.text }}</dd>{% endif %}
+</dl>

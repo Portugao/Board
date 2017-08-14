@@ -1,0 +1,50 @@
+{# purpose of this template: abos admin display view #}
+{% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : 'adminBase' %}
+{% extends 'MUBoardModule::' ~ baseTemplate ~ '.html.twig' %}
+{% block pageTitle %}{{ abo|muboardmodule_formattedTitle|default(__('Abo')) }}{% endblock %}
+{% block title %}
+    {% set templateTitle = abo|muboardmodule_formattedTitle|default(__('Abo')) %}
+    {{ templateTitle|notifyFilters('muboardmodule.filter_hooks.abos.filter')|safeHtml }}
+    {% set itemActions = knp_menu_get('MUBoardModule:ItemActionsMenu:menu', [], {entity: abo, area: routeArea, context: 'display'}) %}
+    <div class="dropdown">
+        <a id="itemActions{{ abo.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
+        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
+    </div>
+{% endblock %}
+{% block admin_page_icon 'eye' %}
+{% block content %}
+    {% set isQuickView = app.request.query.getBoolean('raw', false) %}
+    <div class="muboardmodule-abo muboardmodule-display">
+
+    <dl>
+        {% if abo.userid is not empty %}
+            <dt>{{ __('Userid') }}</dt>
+            <dd>{{ abo.userid }}</dd>
+        {% endif %}
+        {% if abo.catid is not empty %}
+            <dt>{{ __('Catid') }}</dt>
+            <dd>{{ abo.catid }}</dd>
+        {% endif %}
+        {% if abo.forumid is not empty %}
+            <dt>{{ __('Forumid') }}</dt>
+            <dd>{{ abo.forumid }}</dd>
+        {% endif %}
+        {% if abo.postingid is not empty %}
+            <dt>{{ __('Postingid') }}</dt>
+            <dd>{{ abo.postingid }}</dd>
+        {% endif %}
+        
+    </dl>
+
+    {{ include('@MUBoardModule/Helper/includeStandardFieldsDisplay.html.twig', {obj: abo}) }}
+
+    {{ block('display_hooks') }}
+</div>
+{% endblock %}
+{% block display_hooks %}
+    {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.abos.display_view', id=abo.getKey(), urlObject=currentUrlObject) %}
+    {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
+        <h4>{{ providerArea }}</h4>
+        {{ hook }}
+    {% endfor %}
+{% endblock %}

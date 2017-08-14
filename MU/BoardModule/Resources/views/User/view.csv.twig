@@ -1,0 +1,10 @@
+{# purpose of this template: users view csv view #}
+{% spaceless %}"{{ __('Userid') }}";"{{ __('Number postings') }}";"{{ __('Last visit') }}";"{{ __('Workflow state') }}"
+;"{{ __('Rank') }}"
+{% endspaceless %}
+{% for user in items %}
+{% spaceless %}
+    "{{ user.userid }}";"{{ user.numberPostings }}";"{{ user.lastVisit|localizeddate('medium', 'short') }}";"{{ user.workflowState|muboardmodule_objectState(false)|lower }}"
+    ;"{% if user.rank|default %}{{ user.rank|muboardmodule_formattedTitle }}{% endif %}"
+{% endspaceless %}
+{% endfor %}

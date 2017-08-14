@@ -1,0 +1,140 @@
+{# purpose of this template: abos admin list view #}
+{% extends 'MUBoardModule::adminBase.html.twig' %}
+{% block title own ? __('My abos') : __('Abos list') %}
+{% block admin_page_icon 'list-alt' %}
+{% block content %}
+<div class="muboardmodule-abo muboardmodule-view">
+
+    {{ block('page_nav_links') }}
+
+    {{ include('@MUBoardModule/Abo/Admin/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
+
+    {% if routeArea == 'admin' %}
+    <form action="{{ path('muboardmodule_abo_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="abosViewForm" class="form-horizontal" role="form">
+        <div>
+    {% endif %}
+        <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover{% if routeArea == 'admin' %} table-condensed{% endif %}">
+            <colgroup>
+                {% if routeArea == 'admin' %}
+                    <col id="cSelect" />
+                {% endif %}
+                <col id="cItemActions" />
+                <col id="cUserid" />
+                <col id="cCatid" />
+                <col id="cForumid" />
+                <col id="cPostingid" />
+            </colgroup>
+            <thead>
+            <tr>
+                {% if routeArea == 'admin' %}
+                    <th id="hSelect" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}text-center z-w02">
+                        <input type="checkbox" class="muboard-mass-toggle" />
+                    </th>
+                {% endif %}
+                <th id="hItemActions" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}z-order-unsorted z-w02">{{ __('Actions') }}</th>
+                <th id="hUserid" scope="col" class="text-right">
+                    <a href="{{ sort.userid.url }}" title="{{ __f('Sort by %s', {'%s': 'userid'}) }}" class="{{ sort.userid.class }}">{{ __('Userid') }}</a>
+                </th>
+                <th id="hCatid" scope="col" class="text-right">
+                    <a href="{{ sort.catid.url }}" title="{{ __f('Sort by %s', {'%s': 'catid'}) }}" class="{{ sort.catid.class }}">{{ __('Catid') }}</a>
+                </th>
+                <th id="hForumid" scope="col" class="text-right">
+                    <a href="{{ sort.forumid.url }}" title="{{ __f('Sort by %s', {'%s': 'forumid'}) }}" class="{{ sort.forumid.class }}">{{ __('Forumid') }}</a>
+                </th>
+                <th id="hPostingid" scope="col" class="text-right">
+                    <a href="{{ sort.postingid.url }}" title="{{ __f('Sort by %s', {'%s': 'postingid'}) }}" class="{{ sort.postingid.class }}">{{ __('Postingid') }}</a>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+        
+        {% for abo in items %}
+            <tr>
+                {% if routeArea == 'admin' %}
+                    <td headers="hSelect" class="fixed-column text-center z-w02">
+                        <input type="checkbox" name="items[]" value="{{ abo.getKey() }}" class="muboard-toggle-checkbox" />
+                    </td>
+                {% endif %}
+                <td id="itemActions{{ abo.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
+                    {% set itemActions = knp_menu_get('MUBoardModule:ItemActionsMenu:menu', [], {entity: abo, area: routeArea, context: 'view'}) %}
+                    <div class="dropdown">
+                        <a id="itemActions{{ abo.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
+                    </div>
+                </td>
+                <td headers="hUserid" class="text-right">
+                    {{ abo.userid }}
+                </td>
+                <td headers="hCatid" class="text-right">
+                    {{ abo.catid }}
+                </td>
+                <td headers="hForumid" class="text-right">
+                    {{ abo.forumid }}
+                </td>
+                <td headers="hPostingid" class="text-right">
+                    {{ abo.postingid }}
+                </td>
+            </tr>
+        {% else %}
+            <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}6{% else %}5{% endif %}">
+            {{ __('No abos found.') }}
+              </td>
+            </tr>
+        {% endfor %}
+        
+            </tbody>
+        </table>
+        </div>
+        
+        {% if all != 1 and pager|default %}
+            {{ pager({rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'muboardmodule_abo_' ~ routeArea ~ 'view'}) }}
+        {% endif %}
+    {% if routeArea == 'admin' %}
+            <fieldset>
+                <label for="mUBoardModuleAction" class="col-sm-3 control-label">{{ __('With selected abos') }}</label>
+                <div class="col-sm-6">
+                    <select id="mUBoardModuleAction" name="action" class="form-control input-sm">
+                        <option value="">{{ __('Choose action') }}</option>
+                        <option value="delete" title="{{ __('Delete content permanently.') }}">{{ __('Delete') }}</option>
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <input type="submit" value="{{ __('Submit') }}" class="btn btn-default btn-sm" />
+                </div>
+            </fieldset>
+        </div>
+    </form>
+    {% endif %}
+
+    {{ block('display_hooks') }}
+</div>
+{% endblock %}
+{% block page_nav_links %}
+    <p>
+        {% if canBeCreated %}
+            {% if hasPermission('MUBoardModule:Abo:', '::', 'ACCESS_EDIT') %}
+                {% set createTitle = __('Create abo') %}
+                <a href="{{ path('muboardmodule_abo_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+            {% endif %}
+        {% endif %}
+        {% if all == 1 %}
+            {% set linkTitle = __('Back to paginated view') %}
+            <a href="{{ path('muboardmodule_abo_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+        {% else %}
+            {% set linkTitle = __('Show all entries') %}
+            <a href="{{ path('muboardmodule_abo_' ~ routeArea ~ 'view', {all: 1}) }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+        {% endif %}
+    </p>
+{% endblock %}
+{% block display_hooks %}
+    
+    {# here you can activate calling display hooks for the view page if you need it #}
+    {# % if routeArea != 'admin' %}
+        {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.abos.display_view', urlObject=currentUrlObject) %}
+        {% for providerArea, hook in hooks %}
+            {{ hook }}
+        {% endfor %}
+    {% endif % #}
+{% endblock %}

@@ -1,0 +1,304 @@
+{# purpose of this template: postings user list view #}
+{% extends 'MUBoardModule::base.html.twig' %}
+{% block title own ? __('My postings') : __('Postings list') %}
+{% block content %}
+<div class="muboardmodule-posting muboardmodule-view">
+
+    {{ block('page_nav_links') }}
+
+    {{ include('@MUBoardModule/Posting/viewQuickNav.html.twig') }}{# see template file for available options #}
+
+    {% if routeArea == 'admin' %}
+    <form action="{{ path('muboardmodule_posting_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="postingsViewForm" class="form-horizontal" role="form">
+        <div>
+    {% endif %}
+        <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover table-condensed">
+            <colgroup>
+                {% if routeArea == 'admin' %}
+                    <col id="cSelect" />
+                {% endif %}
+                <col id="cItemActions" />
+                {% if routeArea == 'admin' %}
+                <col id="cWorkflowState" />
+                {% endif %}
+                <col id="cParent_id" />
+                <col id="cTitle" />
+                <col id="cText" />
+                <col id="cInvocations" />
+                <col id="cState" />
+                <col id="cSolved" />
+                <col id="cFirstImage" />
+                <col id="cSecondImage" />
+                <col id="cThirdImage" />
+                <col id="cFirstFile" />
+                <col id="cSecondFile" />
+                <col id="cThirdFile" />
+                <col id="cParent" />
+                <col id="cForum" />
+            </colgroup>
+            <thead>
+            <tr>
+                {% if routeArea == 'admin' %}
+                    <th id="hSelect" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}text-center z-w02">
+                        <input type="checkbox" class="muboard-mass-toggle" />
+                    </th>
+                {% endif %}
+                <th id="hItemActions" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}z-order-unsorted z-w02">{{ __('Actions') }}</th>
+                {% if routeArea == 'admin' %}
+                <th id="hWorkflowState" scope="col" class="text-left">
+                    <a href="{{ sort.workflowState.url }}" title="{{ __f('Sort by %s', {'%s': 'state'}) }}" class="{{ sort.workflowState.class }}">{{ __('State') }}</a>
+                </th>
+                {% endif %}
+                <th id="hParent_id" scope="col" class="text-right">
+                    <a href="{{ sort.parent_id.url }}" title="{{ __f('Sort by %s', {'%s': 'parent_id'}) }}" class="{{ sort.parent_id.class }}">{{ __('Parent_id') }}</a>
+                </th>
+                <th id="hTitle" scope="col" class="text-left">
+                    <a href="{{ sort.title.url }}" title="{{ __f('Sort by %s', {'%s': 'title'}) }}" class="{{ sort.title.class }}">{{ __('Title') }}</a>
+                </th>
+                <th id="hText" scope="col" class="text-left">
+                    <a href="{{ sort.text.url }}" title="{{ __f('Sort by %s', {'%s': 'text'}) }}" class="{{ sort.text.class }}">{{ __('Text') }}</a>
+                </th>
+                <th id="hInvocations" scope="col" class="text-right">
+                    <a href="{{ sort.invocations.url }}" title="{{ __f('Sort by %s', {'%s': 'invocations'}) }}" class="{{ sort.invocations.class }}">{{ __('Invocations') }}</a>
+                </th>
+                <th id="hState" scope="col" class="text-center">
+                    <a href="{{ sort.state.url }}" title="{{ __f('Sort by %s', {'%s': 'state'}) }}" class="{{ sort.state.class }}">{{ __('State') }}</a>
+                </th>
+                <th id="hSolved" scope="col" class="text-center">
+                    <a href="{{ sort.solved.url }}" title="{{ __f('Sort by %s', {'%s': 'solved'}) }}" class="{{ sort.solved.class }}">{{ __('Solved') }}</a>
+                </th>
+                <th id="hFirstImage" scope="col" class="text-left">
+                    <a href="{{ sort.firstImage.url }}" title="{{ __f('Sort by %s', {'%s': 'first image'}) }}" class="{{ sort.firstImage.class }}">{{ __('First image') }}</a>
+                </th>
+                <th id="hSecondImage" scope="col" class="text-left">
+                    <a href="{{ sort.secondImage.url }}" title="{{ __f('Sort by %s', {'%s': 'second image'}) }}" class="{{ sort.secondImage.class }}">{{ __('Second image') }}</a>
+                </th>
+                <th id="hThirdImage" scope="col" class="text-left">
+                    <a href="{{ sort.thirdImage.url }}" title="{{ __f('Sort by %s', {'%s': 'third image'}) }}" class="{{ sort.thirdImage.class }}">{{ __('Third image') }}</a>
+                </th>
+                <th id="hFirstFile" scope="col" class="text-left">
+                    <a href="{{ sort.firstFile.url }}" title="{{ __f('Sort by %s', {'%s': 'first file'}) }}" class="{{ sort.firstFile.class }}">{{ __('First file') }}</a>
+                </th>
+                <th id="hSecondFile" scope="col" class="text-left">
+                    <a href="{{ sort.secondFile.url }}" title="{{ __f('Sort by %s', {'%s': 'second file'}) }}" class="{{ sort.secondFile.class }}">{{ __('Second file') }}</a>
+                </th>
+                <th id="hThirdFile" scope="col" class="text-left">
+                    <a href="{{ sort.thirdFile.url }}" title="{{ __f('Sort by %s', {'%s': 'third file'}) }}" class="{{ sort.thirdFile.class }}">{{ __('Third file') }}</a>
+                </th>
+                <th id="hParent" scope="col" class="text-left">
+                    <a href="{{ sort.parent.url }}" title="{{ __f('Sort by %s', {'%s': 'parent'}) }}" class="{{ sort.parent.class }}">{{ __('Parent') }}</a>
+                </th>
+                <th id="hForum" scope="col" class="text-left">
+                    <a href="{{ sort.forum.url }}" title="{{ __f('Sort by %s', {'%s': 'forum'}) }}" class="{{ sort.forum.class }}">{{ __('Forum') }}</a>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+        
+        {% for posting in items %}
+            <tr>
+                {% if routeArea == 'admin' %}
+                    <td headers="hSelect" class="fixed-column text-center z-w02">
+                        <input type="checkbox" name="items[]" value="{{ posting.getKey() }}" class="muboard-toggle-checkbox" />
+                    </td>
+                {% endif %}
+                <td id="itemActions{{ posting.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
+                    {% set itemActions = knp_menu_get('MUBoardModule:ItemActionsMenu:menu', [], {entity: posting, area: routeArea, context: 'view'}) %}
+                    <div class="dropdown">
+                        <a id="itemActions{{ posting.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
+                    </div>
+                </td>
+                {% if routeArea == 'admin' %}<td headers="hWorkflowState" class="text-left nowrap">
+                    {{ posting.workflowState|muboardmodule_objectState }}
+                </td>
+                {% endif %}<td headers="hParent_id" class="text-right">
+                    {{ posting.parent_id }}
+                </td>
+                <td headers="hTitle" class="text-left">
+                    <a href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'display', {'id': posting.getId()}) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ posting.title|notifyFilters('muboardmodule.filterhook.postings')|safeHtml }}</a>
+                </td>
+                <td headers="hText" class="text-left">
+                    {{ posting.text|striptags|truncate(50) }}
+                </td>
+                <td headers="hInvocations" class="text-right">
+                    {{ posting.invocations }}
+                </td>
+                <td headers="hState" class="text-center">
+                    {% set itemId = posting.getKey() %}
+                    <a id="toggleState{{ itemId }}" href="javascript:void(0);" class="muboard-ajax-toggle hidden" data-object-type="posting" data-field-name="state" data-item-id="{{ itemId }}">
+                        <i class="fa fa-check{% if not posting.state %} hidden{% endif %}" id="yesState{{ itemId }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
+                        <i class="fa fa-times{% if posting.state %} hidden{% endif %}" id="noState{{ itemId }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
+                    </a>
+                    <noscript><div id="noscriptState{{ itemId }}">
+                        {% if posting.state %}
+                            <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+                        {% else %}
+                            <i class="fa fa-times" title="{{ __('No') }}"></i>
+                        {% endif %}
+                    </div></noscript>
+                </td>
+                <td headers="hSolved" class="text-center">
+                    {% if posting.solved %}
+                        <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+                    {% else %}
+                        <i class="fa fa-times" title="{{ __('No') }}"></i>
+                    {% endif %}
+                </td>
+                <td headers="hFirstImage" class="text-left">
+                    {% if posting.firstImage is not empty and posting.firstImageMeta|default %}
+                                <a href="{{ posting.firstImageUrl }}" title="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}"{% if posting.firstImageMeta.isImage %} class="image-link"{% endif %}>
+                    {% if posting.firstImageMeta.isImage %}
+                        {% set thumbOptions = attribute(thumbRuntimeOptions, 'postingFirstImage') %}
+                        <img src="{{ posting.firstImage.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+                    {% else %}
+                        {{ __('Download') }} ({{ posting.firstImageMeta.size|muboardmodule_fileSize(posting.firstImage.getPathname(), false, false) }})
+                    {% endif %}
+                    </a>
+                    {% else %}&nbsp;{% endif %}
+                </td>
+                <td headers="hSecondImage" class="text-left">
+                    {% if posting.secondImage is not empty and posting.secondImageMeta|default %}
+                                <a href="{{ posting.secondImageUrl }}" title="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}"{% if posting.secondImageMeta.isImage %} class="image-link"{% endif %}>
+                    {% if posting.secondImageMeta.isImage %}
+                        {% set thumbOptions = attribute(thumbRuntimeOptions, 'postingSecondImage') %}
+                        <img src="{{ posting.secondImage.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+                    {% else %}
+                        {{ __('Download') }} ({{ posting.secondImageMeta.size|muboardmodule_fileSize(posting.secondImage.getPathname(), false, false) }})
+                    {% endif %}
+                    </a>
+                    {% else %}&nbsp;{% endif %}
+                </td>
+                <td headers="hThirdImage" class="text-left">
+                    {% if posting.thirdImage is not empty and posting.thirdImageMeta|default %}
+                                <a href="{{ posting.thirdImageUrl }}" title="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}"{% if posting.thirdImageMeta.isImage %} class="image-link"{% endif %}>
+                    {% if posting.thirdImageMeta.isImage %}
+                        {% set thumbOptions = attribute(thumbRuntimeOptions, 'postingThirdImage') %}
+                        <img src="{{ posting.thirdImage.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+                    {% else %}
+                        {{ __('Download') }} ({{ posting.thirdImageMeta.size|muboardmodule_fileSize(posting.thirdImage.getPathname(), false, false) }})
+                    {% endif %}
+                    </a>
+                    {% else %}&nbsp;{% endif %}
+                </td>
+                <td headers="hFirstFile" class="text-left">
+                    {% if posting.firstFile is not empty and posting.firstFileMeta|default %}
+                                <a href="{{ posting.firstFileUrl }}" title="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}"{% if posting.firstFileMeta.isImage %} class="image-link"{% endif %}>
+                    {% if posting.firstFileMeta.isImage %}
+                        {% set thumbOptions = attribute(thumbRuntimeOptions, 'postingFirstFile') %}
+                        <img src="{{ posting.firstFile.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+                    {% else %}
+                        {{ __('Download') }} ({{ posting.firstFileMeta.size|muboardmodule_fileSize(posting.firstFile.getPathname(), false, false) }})
+                    {% endif %}
+                    </a>
+                    {% else %}&nbsp;{% endif %}
+                </td>
+                <td headers="hSecondFile" class="text-left">
+                    {% if posting.secondFile is not empty and posting.secondFileMeta|default %}
+                                <a href="{{ posting.secondFileUrl }}" title="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}"{% if posting.secondFileMeta.isImage %} class="image-link"{% endif %}>
+                    {% if posting.secondFileMeta.isImage %}
+                        {% set thumbOptions = attribute(thumbRuntimeOptions, 'postingSecondFile') %}
+                        <img src="{{ posting.secondFile.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+                    {% else %}
+                        {{ __('Download') }} ({{ posting.secondFileMeta.size|muboardmodule_fileSize(posting.secondFile.getPathname(), false, false) }})
+                    {% endif %}
+                    </a>
+                    {% else %}&nbsp;{% endif %}
+                </td>
+                <td headers="hThirdFile" class="text-left">
+                    {% if posting.thirdFile is not empty and posting.thirdFileMeta|default %}
+                                <a href="{{ posting.thirdFileUrl }}" title="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}"{% if posting.thirdFileMeta.isImage %} class="image-link"{% endif %}>
+                    {% if posting.thirdFileMeta.isImage %}
+                        {% set thumbOptions = attribute(thumbRuntimeOptions, 'postingThirdFile') %}
+                        <img src="{{ posting.thirdFile.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+                    {% else %}
+                        {{ __('Download') }} ({{ posting.thirdFileMeta.size|muboardmodule_fileSize(posting.thirdFile.getPathname(), false, false) }})
+                    {% endif %}
+                    </a>
+                    {% else %}&nbsp;{% endif %}
+                </td>
+                <td headers="hParent" class="text-left">
+                    {% if posting.parent|default %}
+                        <a href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'display', {'id': posting.parent.getId()}) }}">{% spaceless %}
+                          {{ posting.parent|muboardmodule_formattedTitle }}
+                        {% endspaceless %}</a>
+                        <a id="postingItem{{ posting.getKey() }}_rel_{{ posting.parent.getKey() }}Display" href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'display', {'id': posting.parent.getId(), raw: 1}) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muboard-inline-window hidden" data-modal-title="{{ posting.parent|muboardmodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+                    {% else %}
+                        {{ __('Not set.') }}
+                    {% endif %}
+                </td>
+                <td headers="hForum" class="text-left">
+                    {% if posting.forum|default %}
+                        <a href="{{ path('muboardmodule_forum_' ~ routeArea ~ 'display', {'id': posting.forum.getId()}) }}">{% spaceless %}
+                          {{ posting.forum|muboardmodule_formattedTitle }}
+                        {% endspaceless %}</a>
+                        <a id="forumItem{{ posting.getKey() }}_rel_{{ posting.forum.getKey() }}Display" href="{{ path('muboardmodule_forum_' ~ routeArea ~ 'display', {'id': posting.forum.getId(), raw: 1}) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muboard-inline-window hidden" data-modal-title="{{ posting.forum|muboardmodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+                    {% else %}
+                        {{ __('Not set.') }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}17{% else %}16{% endif %}">
+            {{ __('No postings found.') }}
+              </td>
+            </tr>
+        {% endfor %}
+        
+            </tbody>
+        </table>
+        </div>
+        
+        {% if all != 1 and pager|default %}
+            {{ pager({rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'muboardmodule_posting_' ~ routeArea ~ 'view'}) }}
+        {% endif %}
+    {% if routeArea == 'admin' %}
+            <fieldset>
+                <label for="mUBoardModuleAction" class="col-sm-3 control-label">{{ __('With selected postings') }}</label>
+                <div class="col-sm-6">
+                    <select id="mUBoardModuleAction" name="action" class="form-control input-sm">
+                        <option value="">{{ __('Choose action') }}</option>
+                        <option value="approve" title="{{ __('Update content and approve for immediate publishing.') }}">{{ __('Approve') }}</option>
+                        <option value="delete" title="{{ __('Delete content permanently.') }}">{{ __('Delete') }}</option>
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <input type="submit" value="{{ __('Submit') }}" class="btn btn-default btn-sm" />
+                </div>
+            </fieldset>
+        </div>
+    </form>
+    {% endif %}
+
+    {{ block('display_hooks') }}
+</div>
+{% endblock %}
+{% block page_nav_links %}
+    <p>
+        {% if canBeCreated %}
+            {% if hasPermission('MUBoardModule:Posting:', '::', 'ACCESS_COMMENT') %}
+                {% set createTitle = __('Create posting') %}
+                <a href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+            {% endif %}
+        {% endif %}
+        {% if all == 1 %}
+            {% set linkTitle = __('Back to paginated view') %}
+            <a href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+        {% else %}
+            {% set linkTitle = __('Show all entries') %}
+            <a href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'view', {all: 1}) }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+        {% endif %}
+    </p>
+{% endblock %}
+{% block display_hooks %}
+    
+    {# here you can activate calling display hooks for the view page if you need it #}
+    {# % if routeArea != 'admin' %}
+        {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.postings.display_view', urlObject=currentUrlObject) %}
+        {% for providerArea, hook in hooks %}
+            {{ hook }}
+        {% endfor %}
+    {% endif % #}
+{% endblock %}

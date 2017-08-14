@@ -1,0 +1,84 @@
+{# purpose of this template: forums admin display view #}
+{% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : 'adminBase' %}
+{% extends 'MUBoardModule::' ~ baseTemplate ~ '.html.twig' %}
+{% block pageTitle %}{{ forum|muboardmodule_formattedTitle|default(__('Forum')) }}{% endblock %}
+{% block title %}
+    {% set templateTitle = forum|muboardmodule_formattedTitle|default(__('Forum')) %}
+    {{ templateTitle|notifyFilters('muboardmodule.filter_hooks.forums.filter')|safeHtml }}
+    {% set itemActions = knp_menu_get('MUBoardModule:ItemActionsMenu:menu', [], {entity: forum, area: routeArea, context: 'display'}) %}
+    <div class="dropdown">
+        <a id="itemActions{{ forum.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
+        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
+    </div>
+{% endblock %}
+{% block admin_page_icon 'eye' %}
+{% block content %}
+    {% set isQuickView = app.request.query.getBoolean('raw', false) %}
+    <div class="muboardmodule-forum muboardmodule-display">
+
+    <div class="row">
+        <div class="col-sm-9">
+    <dl>
+        {% if forum.title is not empty %}
+            <dt>{{ __('Title') }}</dt>
+            <dd>{{ forum.title }}</dd>
+        {% endif %}
+        {% if forum.description is not empty %}
+            <dt>{{ __('Description') }}</dt>
+            <dd>{{ forum.description|safeHtml }}</dd>
+        {% endif %}
+        {% if forum.category|default %}
+            <dt>{{ __('Category') }}</dt>
+            <dd>
+              {% if not isQuickView %}
+                  <a href="{{ path('muboardmodule_category_' ~ routeArea ~ 'display', {'id': forum.category.getId()}) }}">{% spaceless %}
+                    {{ forum.category|muboardmodule_formattedTitle }}
+                  {% endspaceless %}</a>
+                  <a id="categoryItem{{ forum.category.getKey() }}Display" href="{{ path('muboardmodule_category_' ~ routeArea ~ 'display', {'id': forum.category.getId(), raw: 1}) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muboard-inline-window hidden" data-modal-title="{{ forum.category|muboardmodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+              {% else %}
+                  {{ forum.category|muboardmodule_formattedTitle }}
+              {% endif %}
+            </dd>
+        {% endif %}
+        
+    </dl>
+
+    {{ include('@MUBoardModule/Helper/includeStandardFieldsDisplay.html.twig', {obj: forum}) }}
+
+    {{ block('display_hooks') }}
+        </div>
+        <div class="col-sm-3">
+            {{ block('related_items') }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block related_items %}
+    {% if routeArea == 'admin' %}
+        <h4>{{ __('Postings') }}</h4>
+    {% else %}
+        <h3>{{ __('Postings') }}</h3>
+    {% endif %}
+    
+    {% if forum.posting|default %}
+        {{ include(
+            '@MUBoardModule/Posting/Admin/includeDisplayItemListMany.html.twig',
+            {items: forum.posting}
+        ) }}
+    {% endif %}
+    
+    {% set mayManage = hasPermission('MUBoardModule:Posting:', '::', 'ACCESS_COMMENT') %}
+    {% if mayManage %}
+        <p class="managelink">
+            {% set createTitle = __('Create posting') %}
+            <a href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'edit', {forum: forum.getKey()}) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+        </p>
+    {% endif %}
+{% endblock %}
+{% block display_hooks %}
+    {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.forums.display_view', id=forum.getKey(), urlObject=currentUrlObject) %}
+    {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
+        <h4>{{ providerArea }}</h4>
+        {{ hook }}
+    {% endfor %}
+{% endblock %}

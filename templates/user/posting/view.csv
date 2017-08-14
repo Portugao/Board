@@ -1,7 +1,0 @@
-{* purpose of this template: postings view csv view in user area *}
-{muboardTemplateHeaders contentType='text/comma-separated-values; charset=iso-8859-15' asAttachment=true filename='Postings.csv'}
-"{gt text='Parent_id'}";"{gt text='Title'}";"{gt text='Text'}";"{gt text='Invocations'}";"{gt text='First image'}";"{gt text='Second image'}";"{gt text='Third image'}";"{gt text='First file'}";"{gt text='Second file'}";"{gt text='Third file'}""{gt text='Parent'}"
-"{gt text='Forum'}"
-{foreach item='posting' from=$items}
-"{$posting.parent_id|replace:"\"":""}";"{$posting.title|replace:"\"":""}";"{$posting.text|replace:"\"":""}";"{$posting.invocations|replace:"\"":""}";"{$posting.firstImage}";"{$posting.secondImage}";"{$posting.thirdImage}";"{$posting.firstFile}";"{$posting.secondFile}";"{$posting.thirdFile}"{if isset($posting.Parent) && $posting.Parent ne null}{$posting.Parent.title|default:""}{/if}{if isset($posting.Forum) && $posting.Forum ne null}{$posting.Forum.title|default:""}{/if}{/foreach}
-

@@ -1,3 +1,0 @@
-{* purpose of this template: postings display json view in user area *}
-{muboardTemplateHeaders contentType='application/json'}
-{$posting->toJson()}

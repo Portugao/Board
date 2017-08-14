@@ -1,0 +1,13 @@
+{# Purpose of this template: Display forums within an external context #}
+<dl>
+    {% for forum in items %}
+        <dt>{{ forum|muboardmodule_formattedTitle }}</dt>
+        {% if forum.description %}
+            <dd>{{ forum.description|striptags|truncate(200, true, '&hellip;') }}</dd>
+        {% endif %}
+        <dd><a href="{{ path('muboardmodule_forum_display', {'id': forum.getId()}) }}">{{ __('Read more') }}</a>
+        </dd>
+    {% else %}
+        <dt>{{ __('No entries found.') }}</dt>
+    {% endfor %}
+</dl>

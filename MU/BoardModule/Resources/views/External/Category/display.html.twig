@@ -1,0 +1,39 @@
+{# Purpose of this template: Display one certain category within an external context #}
+<div id="category{{ category.getKey() }}" class="muboardmodule-external-category">
+{% if displayMode == 'link' %}
+    <p class="muboardmodule-external-link">
+    <a href="{{ path('muboardmodule_category_display', {'id': category.getId()}) }}" title="{{ category|muboardmodule_formattedTitle|e('html_attr') }}">
+    {{ category|muboardmodule_formattedTitle|notifyFilters('board.filter_hooks.categories.filter')|safeHtml }}
+    </a>
+    </p>
+{% endif %}
+{% if hasPermission('MUBoardModule::', '::', 'ACCESS_EDIT') %}
+    {# for normal users without edit permission show only the actual file per default #}
+    {% if displayMode == 'embed' %}
+        <p class="muboardmodule-external-title">
+            <strong>{{ category|muboardmodule_formattedTitle|notifyFilters('board.filter_hooks.categories.filter')|safeHtml }}</strong>
+        </p>
+    {% endif %}
+{% endif %}
+
+{% if displayMode == 'link' %}
+{% elseif displayMode == 'embed' %}
+    <div class="muboardmodule-external-snippet">
+        &nbsp;
+    </div>
+
+    {# you can distinguish the context like this: #}
+    {# % if source == 'contentType' %}
+        ...
+    {% elseif source == 'scribite' %}
+        ...
+    {% endif % #}
+
+    {# you can enable more details about the item: #}
+    {#
+        <p class="muboardmodule-external-description">
+            {% if category.description is not empty %}{{ category.description }}<br />{% endif %}
+        </p>
+    #}
+{% endif %}
+</div>

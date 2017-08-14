@@ -1,0 +1,18 @@
+{# purpose of this template: inclusion template for display of related posting #}
+{% set removeImage = '<span class="fa fa-trash-o"></span>' %}
+
+<input type="hidden" id="{{ idPrefix }}Mode" name="{{ idPrefix }}Mode" value="0" />
+
+<ul id="{{ idPrefix }}ReferenceList">
+{% if item is defined and item.getKey()|default %}
+{% set idPrefixItem = idPrefix ~ 'Reference_' ~ item.getKey() %}
+<li id="{{ idPrefixItem }}">
+    {{ item|muboardmodule_formattedTitle }}
+     <a id="{{ idPrefixItem }}Remove" href="javascript:mUBoardRemoveRelatedItem('{{ idPrefix }}', '{{ item.getKey() }}');">{{ removeImage|raw }}</a>
+    <br />
+    {% if item.firstImage is not empty and item.firstImageMeta.isImage %}
+        <img src="{{ item.firstImage.getPathname()|imagine_filter('zkroot', relationThumbRuntimeOptions) }}" alt="{{ item|muboardmodule_formattedTitle|e('html_attr') }}" width="{{ relationThumbRuntimeOptions.thumbnail.size[0] }}" height="{{ relationThumbRuntimeOptions.thumbnail.size[1] }}" class="img-rounded" />
+    {% endif %}
+</li>
+{% endif %}
+</ul>

@@ -1,0 +1,75 @@
+{# purpose of this template: postings view filter form #}
+{% if hasPermission('MUBoardModule:Posting:', '::', 'ACCESS_EDIT') %}
+    {% form_theme quickNavForm with [
+        'bootstrap_3_layout.html.twig'
+    ] %}
+    {{ form_start(quickNavForm, {attr: {id: 'mUBoardModulePostingQuickNavForm', class: 'muboardmodule-quicknav navbar-form', role: 'navigation'}}) }}
+    {{ form_errors(quickNavForm) }}
+    <a href="#collapsePostingQuickNav" role="button" data-toggle="collapse" class="btn btn-default" aria-expanded="false" aria-controls="collapsePostingQuickNav">
+        <i class="fa fa-filter" aria-hidden="true"></i> {{ __('Filter') }}
+    </a>
+    <div id="collapsePostingQuickNav" class="collapse">
+        <fieldset>
+            <h3>{{ __('Quick navigation') }}</h3>
+            {% if postingFilter is defined and postingFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.parent) }}
+            {% if postingFilter is defined and postingFilter != true %}
+                </div>
+            {% endif %}
+            {% if forumFilter is defined and forumFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.forum) }}
+            {% if forumFilter is defined and forumFilter != true %}
+                </div>
+            {% endif %}
+            {% if workflowStateFilter is defined and workflowStateFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.workflowState) }}
+            {% if workflowStateFilter is defined and workflowStateFilter != true %}
+                </div>
+            {% endif %}
+            {% if searchFilter is defined and searchFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.q) }}
+            {% if searchFilter is defined and searchFilter != true %}
+                </div>
+            {% endif %}
+            {% if sorting is defined and sorting != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.sort) }}
+                {{ form_row(quickNavForm.sortdir) }}
+            {% if sorting is defined and sorting != true %}
+                </div>
+            {% endif %}
+            {% if pageSizeSelector is defined and pageSizeSelector != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.num) }}
+            {% if pageSizeSelector is defined and pageSizeSelector != true %}
+                </div>
+            {% endif %}
+            {% if stateFilter is defined and stateFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.state) }}
+            {% if stateFilter is defined and stateFilter != true %}
+                </div>
+            {% endif %}
+            {% if solvedFilter is defined and solvedFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.solved) }}
+            {% if solvedFilter is defined and solvedFilter != true %}
+                </div>
+            {% endif %}
+            {{ form_widget(quickNavForm.updateview) }}
+        </fieldset>
+    </div>
+    {{ form_end(quickNavForm) }}
+{% endif %}

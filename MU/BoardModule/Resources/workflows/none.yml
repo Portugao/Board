@@ -1,0 +1,28 @@
+workflow:
+    workflows:
+        muboardmodule_none:
+            type: state_machine
+            marking_store:
+                type: single_state
+                arguments:
+                    - workflowState
+            supports:
+                - MU\BoardModule\Entity\CategoryEntity
+                - MU\BoardModule\Entity\ForumEntity
+                - MU\BoardModule\Entity\AboEntity
+                - MU\BoardModule\Entity\UserEntity
+                - MU\BoardModule\Entity\RankEntity
+            places:
+                - initial
+                - approved
+                - deleted
+            transitions:
+                submit:
+                    from: initial
+                    to: approved
+                updateapproved:
+                    from: approved
+                    to: approved
+                delete:
+                    from: approved
+                    to: deleted

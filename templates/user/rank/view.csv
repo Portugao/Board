@@ -1,5 +1,0 @@
-{* purpose of this template: ranks view csv view in user area *}
-{muboardTemplateHeaders contentType='text/comma-separated-values; charset=iso-8859-15' asAttachment=true filename='Ranks.csv'}
-"{gt text='Name'}";"{gt text='Min postings'}";"{gt text='Max postings'}";"{gt text='Number of icons'}";"{gt text='Upload image'}";"{gt text='Special'}"{foreach item='rank' from=$items}
-"{$rank.name|replace:"\"":""}";"{$rank.minPostings|replace:"\"":""}";"{$rank.maxPostings|replace:"\"":""}";"{$rank.numberOfIcons|replace:"\"":""}";"{$rank.uploadImage}";"{$rank.special|yesno:true}"{/foreach}
-

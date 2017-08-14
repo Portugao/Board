@@ -1,0 +1,10 @@
+{# Purpose of this template: Display abos within an external context #}
+<dl>
+    {% for abo in items %}
+        <dt>{{ abo|muboardmodule_formattedTitle }}</dt>
+        <dd><a href="{{ path('muboardmodule_abo_display', {'id': abo.getId()}) }}">{{ __('Read more') }}</a>
+        </dd>
+    {% else %}
+        <dt>{{ __('No entries found.') }}</dt>
+    {% endfor %}
+</dl>

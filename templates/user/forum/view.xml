@@ -1,9 +1,0 @@
-{* purpose of this template: forums view xml view in user area *}
-{muboardTemplateHeaders contentType='text/xml'}<?xml version="1.0" encoding="{charset}" ?>
-<forums>
-{foreach item='item' from=$items}
-    {include file='user/forum/include.xml'}
-{foreachelse}
-    <noForum />
-{/foreach}
-</forums>

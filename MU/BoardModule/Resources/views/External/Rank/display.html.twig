@@ -1,0 +1,51 @@
+{# Purpose of this template: Display one certain rank within an external context #}
+{{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js')) }}
+{{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css')) }}
+{{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.js')) }}
+<div id="rank{{ rank.getKey() }}" class="muboardmodule-external-rank">
+{% if displayMode == 'link' %}
+    <p class="muboardmodule-external-link">
+    <a href="{{ path('muboardmodule_rank_display', {'id': rank.getId()}) }}" title="{{ rank|muboardmodule_formattedTitle|e('html_attr') }}">
+    {{ rank|muboardmodule_formattedTitle|notifyFilters('board.filter_hooks.ranks.filter')|safeHtml }}
+    </a>
+    </p>
+{% endif %}
+{% if hasPermission('MUBoardModule::', '::', 'ACCESS_EDIT') %}
+    {# for normal users without edit permission show only the actual file per default #}
+    {% if displayMode == 'embed' %}
+        <p class="muboardmodule-external-title">
+            <strong>{{ rank|muboardmodule_formattedTitle|notifyFilters('board.filter_hooks.ranks.filter')|safeHtml }}</strong>
+        </p>
+    {% endif %}
+{% endif %}
+
+{% if displayMode == 'link' %}
+{% elseif displayMode == 'embed' %}
+    <div class="muboardmodule-external-snippet">
+        {% if rank.uploadImage is not empty and rank.uploadImageMeta|default %}
+                    <a href="{{ rank.uploadImageUrl }}" title="{{ rank|muboardmodule_formattedTitle|e('html_attr') }}"{% if rank.uploadImageMeta.isImage %} class="image-link"{% endif %}>
+        {% if rank.uploadImageMeta.isImage %}
+            {% set thumbOptions = attribute(thumbRuntimeOptions, 'rankUploadImage') %}
+            <img src="{{ rank.uploadImage.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ rank|muboardmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+        {% else %}
+            {{ __('Download') }} ({{ rank.uploadImageMeta.size|muboardmodule_fileSize(rank.uploadImage.getPathname(), false, false) }})
+        {% endif %}
+        </a>
+        {% else %}&nbsp;{% endif %}
+    </div>
+
+    {# you can distinguish the context like this: #}
+    {# % if source == 'contentType' %}
+        ...
+    {% elseif source == 'scribite' %}
+        ...
+    {% endif % #}
+
+    {# you can enable more details about the item: #}
+    {#
+        <p class="muboardmodule-external-description">
+            {% if rank.name is not empty %}{{ rank.name }}<br />{% endif %}
+        </p>
+    #}
+{% endif %}
+</div>

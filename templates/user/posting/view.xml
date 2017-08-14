@@ -1,9 +1,0 @@
-{* purpose of this template: postings view xml view in user area *}
-{muboardTemplateHeaders contentType='text/xml'}<?xml version="1.0" encoding="{charset}" ?>
-<postings>
-{foreach item='item' from=$items}
-    {include file='user/posting/include.xml'}
-{foreachelse}
-    <noPosting />
-{/foreach}
-</postings>

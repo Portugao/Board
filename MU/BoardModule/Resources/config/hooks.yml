@@ -1,0 +1,127 @@
+services:
+    mu_board_module.hook_subscriber.filter_hooks.categories:
+        class: MU\BoardModule\HookSubscriber\CategoryFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muboardmodule.filter_hooks.categories' }
+
+    mu_board_module.hook_subscriber.form_aware_hook.categories:
+        class: MU\BoardModule\HookSubscriber\CategoryFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muboardmodule.form_aware_hook.categories' }
+
+    mu_board_module.hook_subscriber.ui_hooks.categories:
+        class: MU\BoardModule\HookSubscriber\CategoryUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muboardmodule.ui_hooks.categories' }
+
+    mu_board_module.hook_subscriber.filter_hooks.forums:
+        class: MU\BoardModule\HookSubscriber\ForumFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muboardmodule.filter_hooks.forums' }
+
+    mu_board_module.hook_subscriber.form_aware_hook.forums:
+        class: MU\BoardModule\HookSubscriber\ForumFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muboardmodule.form_aware_hook.forums' }
+
+    mu_board_module.hook_subscriber.ui_hooks.forums:
+        class: MU\BoardModule\HookSubscriber\ForumUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muboardmodule.ui_hooks.forums' }
+
+    mu_board_module.hook_subscriber.filter_hooks.postings:
+        class: MU\BoardModule\HookSubscriber\PostingFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muboardmodule.filter_hooks.postings' }
+
+    mu_board_module.hook_subscriber.form_aware_hook.postings:
+        class: MU\BoardModule\HookSubscriber\PostingFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muboardmodule.form_aware_hook.postings' }
+
+    mu_board_module.hook_subscriber.ui_hooks.postings:
+        class: MU\BoardModule\HookSubscriber\PostingUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muboardmodule.ui_hooks.postings' }
+
+    mu_board_module.hook_subscriber.filter_hooks.abos:
+        class: MU\BoardModule\HookSubscriber\AboFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muboardmodule.filter_hooks.abos' }
+
+    mu_board_module.hook_subscriber.form_aware_hook.abos:
+        class: MU\BoardModule\HookSubscriber\AboFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muboardmodule.form_aware_hook.abos' }
+
+    mu_board_module.hook_subscriber.ui_hooks.abos:
+        class: MU\BoardModule\HookSubscriber\AboUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muboardmodule.ui_hooks.abos' }
+
+    mu_board_module.hook_subscriber.filter_hooks.users:
+        class: MU\BoardModule\HookSubscriber\UserFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muboardmodule.filter_hooks.users' }
+
+    mu_board_module.hook_subscriber.form_aware_hook.users:
+        class: MU\BoardModule\HookSubscriber\UserFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muboardmodule.form_aware_hook.users' }
+
+    mu_board_module.hook_subscriber.ui_hooks.users:
+        class: MU\BoardModule\HookSubscriber\UserUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muboardmodule.ui_hooks.users' }
+
+    mu_board_module.hook_subscriber.filter_hooks.ranks:
+        class: MU\BoardModule\HookSubscriber\RankFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muboardmodule.filter_hooks.ranks' }
+
+    mu_board_module.hook_subscriber.form_aware_hook.ranks:
+        class: MU\BoardModule\HookSubscriber\RankFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muboardmodule.form_aware_hook.ranks' }
+
+    mu_board_module.hook_subscriber.ui_hooks.ranks:
+        class: MU\BoardModule\HookSubscriber\RankUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.muboardmodule.ui_hooks.ranks' }
+

@@ -1,0 +1,173 @@
+{# purpose of this template: ranks user list view #}
+{% extends 'MUBoardModule::base.html.twig' %}
+{% block title own ? __('My ranks') : __('Ranks list') %}
+{% block content %}
+<div class="muboardmodule-rank muboardmodule-view">
+
+    {{ block('page_nav_links') }}
+
+    {{ include('@MUBoardModule/Rank/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
+
+    {% if routeArea == 'admin' %}
+    <form action="{{ path('muboardmodule_rank_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="ranksViewForm" class="form-horizontal" role="form">
+        <div>
+    {% endif %}
+        <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover{% if routeArea == 'admin' %} table-condensed{% endif %}">
+            <colgroup>
+                {% if routeArea == 'admin' %}
+                    <col id="cSelect" />
+                {% endif %}
+                <col id="cItemActions" />
+                <col id="cName" />
+                <col id="cMinPostings" />
+                <col id="cMaxPostings" />
+                <col id="cNumberOfIcons" />
+                <col id="cUploadImage" />
+                <col id="cSpecial" />
+            </colgroup>
+            <thead>
+            <tr>
+                {% if routeArea == 'admin' %}
+                    <th id="hSelect" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}text-center z-w02">
+                        <input type="checkbox" class="muboard-mass-toggle" />
+                    </th>
+                {% endif %}
+                <th id="hItemActions" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}z-order-unsorted z-w02">{{ __('Actions') }}</th>
+                <th id="hName" scope="col" class="text-left">
+                    <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
+                </th>
+                <th id="hMinPostings" scope="col" class="text-right">
+                    <a href="{{ sort.minPostings.url }}" title="{{ __f('Sort by %s', {'%s': 'min postings'}) }}" class="{{ sort.minPostings.class }}">{{ __('Min postings') }}</a>
+                </th>
+                <th id="hMaxPostings" scope="col" class="text-right">
+                    <a href="{{ sort.maxPostings.url }}" title="{{ __f('Sort by %s', {'%s': 'max postings'}) }}" class="{{ sort.maxPostings.class }}">{{ __('Max postings') }}</a>
+                </th>
+                <th id="hNumberOfIcons" scope="col" class="text-right">
+                    <a href="{{ sort.numberOfIcons.url }}" title="{{ __f('Sort by %s', {'%s': 'number of icons'}) }}" class="{{ sort.numberOfIcons.class }}">{{ __('Number of icons') }}</a>
+                </th>
+                <th id="hUploadImage" scope="col" class="text-left">
+                    <a href="{{ sort.uploadImage.url }}" title="{{ __f('Sort by %s', {'%s': 'upload image'}) }}" class="{{ sort.uploadImage.class }}">{{ __('Upload image') }}</a>
+                </th>
+                <th id="hSpecial" scope="col" class="text-center">
+                    <a href="{{ sort.special.url }}" title="{{ __f('Sort by %s', {'%s': 'special'}) }}" class="{{ sort.special.class }}">{{ __('Special') }}</a>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+        
+        {% for rank in items %}
+            <tr>
+                {% if routeArea == 'admin' %}
+                    <td headers="hSelect" class="fixed-column text-center z-w02">
+                        <input type="checkbox" name="items[]" value="{{ rank.getKey() }}" class="muboard-toggle-checkbox" />
+                    </td>
+                {% endif %}
+                <td id="itemActions{{ rank.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
+                    {% set itemActions = knp_menu_get('MUBoardModule:ItemActionsMenu:menu', [], {entity: rank, area: routeArea, context: 'view'}) %}
+                    <div class="dropdown">
+                        <a id="itemActions{{ rank.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
+                    </div>
+                </td>
+                <td headers="hName" class="text-left">
+                    <a href="{{ path('muboardmodule_rank_' ~ routeArea ~ 'display', {'id': rank.getId()}) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ rank.name|notifyFilters('muboardmodule.filterhook.ranks')|safeHtml }}</a>
+                </td>
+                <td headers="hMinPostings" class="text-right">
+                    {{ rank.minPostings }}
+                </td>
+                <td headers="hMaxPostings" class="text-right">
+                    {{ rank.maxPostings }}
+                </td>
+                <td headers="hNumberOfIcons" class="text-right">
+                    {{ rank.numberOfIcons }}
+                </td>
+                <td headers="hUploadImage" class="text-left">
+                    {% if rank.uploadImage is not empty and rank.uploadImageMeta|default %}
+                                <a href="{{ rank.uploadImageUrl }}" title="{{ rank|muboardmodule_formattedTitle|e('html_attr') }}"{% if rank.uploadImageMeta.isImage %} class="image-link"{% endif %}>
+                    {% if rank.uploadImageMeta.isImage %}
+                        {% set thumbOptions = attribute(thumbRuntimeOptions, 'rankUploadImage') %}
+                        <img src="{{ rank.uploadImage.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ rank|muboardmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+                    {% else %}
+                        {{ __('Download') }} ({{ rank.uploadImageMeta.size|muboardmodule_fileSize(rank.uploadImage.getPathname(), false, false) }})
+                    {% endif %}
+                    </a>
+                    {% else %}&nbsp;{% endif %}
+                </td>
+                <td headers="hSpecial" class="text-center">
+                    {% set itemId = rank.getKey() %}
+                    <a id="toggleSpecial{{ itemId }}" href="javascript:void(0);" class="muboard-ajax-toggle hidden" data-object-type="rank" data-field-name="special" data-item-id="{{ itemId }}">
+                        <i class="fa fa-check{% if not rank.special %} hidden{% endif %}" id="yesSpecial{{ itemId }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
+                        <i class="fa fa-times{% if rank.special %} hidden{% endif %}" id="noSpecial{{ itemId }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
+                    </a>
+                    <noscript><div id="noscriptSpecial{{ itemId }}">
+                        {% if rank.special %}
+                            <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+                        {% else %}
+                            <i class="fa fa-times" title="{{ __('No') }}"></i>
+                        {% endif %}
+                    </div></noscript>
+                </td>
+            </tr>
+        {% else %}
+            <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}8{% else %}7{% endif %}">
+            {{ __('No ranks found.') }}
+              </td>
+            </tr>
+        {% endfor %}
+        
+            </tbody>
+        </table>
+        </div>
+        
+        {% if all != 1 and pager|default %}
+            {{ pager({rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'muboardmodule_rank_' ~ routeArea ~ 'view'}) }}
+        {% endif %}
+    {% if routeArea == 'admin' %}
+            <fieldset>
+                <label for="mUBoardModuleAction" class="col-sm-3 control-label">{{ __('With selected ranks') }}</label>
+                <div class="col-sm-6">
+                    <select id="mUBoardModuleAction" name="action" class="form-control input-sm">
+                        <option value="">{{ __('Choose action') }}</option>
+                        <option value="delete" title="{{ __('Delete content permanently.') }}">{{ __('Delete') }}</option>
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <input type="submit" value="{{ __('Submit') }}" class="btn btn-default btn-sm" />
+                </div>
+            </fieldset>
+        </div>
+    </form>
+    {% endif %}
+
+    {{ block('display_hooks') }}
+</div>
+{% endblock %}
+{% block page_nav_links %}
+    <p>
+        {% if canBeCreated %}
+            {% if hasPermission('MUBoardModule:Rank:', '::', 'ACCESS_EDIT') %}
+                {% set createTitle = __('Create rank') %}
+                <a href="{{ path('muboardmodule_rank_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+            {% endif %}
+        {% endif %}
+        {% if all == 1 %}
+            {% set linkTitle = __('Back to paginated view') %}
+            <a href="{{ path('muboardmodule_rank_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+        {% else %}
+            {% set linkTitle = __('Show all entries') %}
+            <a href="{{ path('muboardmodule_rank_' ~ routeArea ~ 'view', {all: 1}) }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+        {% endif %}
+    </p>
+{% endblock %}
+{% block display_hooks %}
+    
+    {# here you can activate calling display hooks for the view page if you need it #}
+    {# % if routeArea != 'admin' %}
+        {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.ranks.display_view', urlObject=currentUrlObject) %}
+        {% for providerArea, hook in hooks %}
+            {{ hook }}
+        {% endfor %}
+    {% endif % #}
+{% endblock %}

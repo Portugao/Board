@@ -1,0 +1,108 @@
+{# purpose of this template: ranks user display view #}
+{% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : 'base' %}
+{% extends 'MUBoardModule::' ~ baseTemplate ~ '.html.twig' %}
+{% block pageTitle %}{{ rank|muboardmodule_formattedTitle|default(__('Rank')) }}{% endblock %}
+{% block title %}
+    {% set templateTitle = rank|muboardmodule_formattedTitle|default(__('Rank')) %}
+    {{ templateTitle|notifyFilters('muboardmodule.filter_hooks.ranks.filter')|safeHtml }}
+    {% set itemActions = knp_menu_get('MUBoardModule:ItemActionsMenu:menu', [], {entity: rank, area: routeArea, context: 'display'}) %}
+    <div class="dropdown">
+        <a id="itemActions{{ rank.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
+        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
+    </div>
+{% endblock %}
+{% block content %}
+    {% set isQuickView = app.request.query.getBoolean('raw', false) %}
+    <div class="muboardmodule-rank muboardmodule-display">
+
+    <div class="row">
+        <div class="col-sm-9">
+    <dl>
+        {% if rank.name is not empty %}
+            <dt>{{ __('Name') }}</dt>
+            <dd>{{ rank.name }}</dd>
+        {% endif %}
+        {% if rank.minPostings is not empty %}
+            <dt>{{ __('Min postings') }}</dt>
+            <dd>{{ rank.minPostings }}</dd>
+        {% endif %}
+        {% if rank.maxPostings is not empty %}
+            <dt>{{ __('Max postings') }}</dt>
+            <dd>{{ rank.maxPostings }}</dd>
+        {% endif %}
+        {% if rank.numberOfIcons is not empty %}
+            <dt>{{ __('Number of icons') }}</dt>
+            <dd>{{ rank.numberOfIcons }}</dd>
+        {% endif %}
+        {% if rank.uploadImage is not empty %}
+            <dt>{{ __('Upload image') }}</dt>
+            <dd>{% if rank.uploadImage is not empty and rank.uploadImageMeta|default %}
+                        <a href="{{ rank.uploadImageUrl }}" title="{{ rank|muboardmodule_formattedTitle|e('html_attr') }}"{% if rank.uploadImageMeta.isImage %} class="image-link"{% endif %}>
+            {% if rank.uploadImageMeta.isImage %}
+                {% set thumbOptions = attribute(thumbRuntimeOptions, 'rankUploadImage') %}
+                <img src="{{ rank.uploadImage.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ rank|muboardmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+            {% else %}
+                {{ __('Download') }} ({{ rank.uploadImageMeta.size|muboardmodule_fileSize(rank.uploadImage.getPathname(), false, false) }})
+            {% endif %}
+            </a>
+            {% else %}&nbsp;{% endif %}
+            </dd>
+        {% endif %}
+        {% if rank.special is not empty %}
+            <dt>{{ __('Special') }}</dt>
+            <dd>{% set itemId = rank.getKey() %}
+            <a id="toggleSpecial{{ itemId }}" href="javascript:void(0);" class="muboard-ajax-toggle hidden" data-object-type="rank" data-field-name="special" data-item-id="{{ itemId }}">
+                <i class="fa fa-check{% if not rank.special %} hidden{% endif %}" id="yesSpecial{{ itemId }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
+                <i class="fa fa-times{% if rank.special %} hidden{% endif %}" id="noSpecial{{ itemId }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
+            </a>
+            <noscript><div id="noscriptSpecial{{ itemId }}">
+                {% if rank.special %}
+                    <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+                {% else %}
+                    <i class="fa fa-times" title="{{ __('No') }}"></i>
+                {% endif %}
+            </div></noscript>
+            </dd>
+        {% endif %}
+        
+    </dl>
+
+    {{ include('@MUBoardModule/Helper/includeStandardFieldsDisplay.html.twig', {obj: rank}) }}
+
+    {{ block('display_hooks') }}
+        </div>
+        <div class="col-sm-3">
+            {{ block('related_items') }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block related_items %}
+    {% if routeArea == 'admin' %}
+        <h4>{{ __('Users') }}</h4>
+    {% else %}
+        <h3>{{ __('Users') }}</h3>
+    {% endif %}
+    
+    {% if rank.user|default %}
+        {{ include(
+            '@MUBoardModule/User/includeDisplayItemListMany.html.twig',
+            {items: rank.user}
+        ) }}
+    {% endif %}
+    
+    {% set mayManage = hasPermission('MUBoardModule:User:', '::', 'ACCESS_EDIT') %}
+    {% if mayManage %}
+        <p class="managelink">
+            {% set createTitle = __('Create user') %}
+            <a href="{{ path('muboardmodule_user_' ~ routeArea ~ 'edit', {rank: rank.getKey()}) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+        </p>
+    {% endif %}
+{% endblock %}
+{% block display_hooks %}
+    {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.ranks.display_view', id=rank.getKey(), urlObject=currentUrlObject) %}
+    {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
+        <h4>{{ providerArea }}</h4>
+        {{ hook }}
+    {% endfor %}
+{% endblock %}

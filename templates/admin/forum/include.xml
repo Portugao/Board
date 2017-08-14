@@ -1,8 +1,0 @@
-{* purpose of this template: forums xml inclusion template in admin area *}
-<forum id="{$item.id}" createdon="{$item.createdDate|dateformat}" updatedon="{$item.updatedDate|dateformat}">
-    <id>{$item.id}</id>
-    <title><![CDATA[{$item.title}]]></title>
-    <description><![CDATA[{$item.description}]]></description>
-    <pos>{$item.pos}</pos>
-    <category>{if isset($item.Category) && $item.Category ne null}{$item.Category.title|default:""}{/if}</category>
-</forum>

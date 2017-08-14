@@ -1,9 +1,0 @@
-{* purpose of this template: ranks view xml view in user area *}
-{muboardTemplateHeaders contentType='text/xml'}<?xml version="1.0" encoding="{charset}" ?>
-<ranks>
-{foreach item='item' from=$items}
-    {include file='user/rank/include.xml'}
-{foreachelse}
-    <noRank />
-{/foreach}
-</ranks>

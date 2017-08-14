@@ -1,0 +1,110 @@
+services:
+    # Helper services
+    mu_board_module.collection_filter_helper:
+        class: MU\BoardModule\Helper\CollectionFilterHelper
+        arguments:
+            - "@request_stack"
+            - "@zikula_users_module.current_user"
+            - "@=service('zikula_extensions_module.api.variable').get('MUBoardModule', 'showOnlyOwnEntries', false)"
+    
+    mu_board_module.controller_helper:
+        class: MU\BoardModule\Helper\ControllerHelper
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@logger"
+            - "@form.factory"
+            - "@zikula_extensions_module.api.variable"
+            - "@mu_board_module.entity_factory"
+            - "@mu_board_module.collection_filter_helper"
+            - "@mu_board_module.model_helper"
+            - "@mu_board_module.image_helper"
+    
+    mu_board_module.entity_display_helper:
+        class: MU\BoardModule\Helper\EntityDisplayHelper
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@mu_board_module.listentries_helper"
+    
+    mu_board_module.hook_helper:
+        class: MU\BoardModule\Helper\HookHelper
+        arguments:
+            - "@hook_dispatcher"
+    
+    mu_board_module.image_helper:
+        class: MU\BoardModule\Helper\ImageHelper
+        arguments:
+            - "@translator.default"
+            - "@session"
+            - "@zikula_extensions_module.api.variable"
+    
+    mu_board_module.listentries_helper:
+        class: MU\BoardModule\Helper\ListEntriesHelper
+        arguments:
+            - "@translator.default"
+    
+    mu_board_module.model_helper:
+        class: MU\BoardModule\Helper\ModelHelper
+        arguments:
+            - "@mu_board_module.entity_factory"
+    
+    mu_board_module.notification_helper:
+        class: MU\BoardModule\Helper\NotificationHelper
+        arguments:
+            - "@kernel"
+            - "@translator.default"
+            - "@session"
+            - "@router"
+            - "@request_stack"
+            - "@zikula_extensions_module.api.variable"
+            - "@twig"
+            - "@zikula_mailer_module.api.mailer"
+            - "@zikula_groups_module.group_repository"
+            - "@mu_board_module.entity_display_helper"
+            - "@mu_board_module.workflow_helper"
+    
+    mu_board_module.search_helper:
+        class: MU\BoardModule\Helper\SearchHelper
+        arguments:
+            - "@translator.default"
+            - "@zikula_permissions_module.api.permission"
+            - "@session"
+            - "@request_stack"
+            - "@mu_board_module.entity_factory"
+            - "@mu_board_module.controller_helper"
+            - "@mu_board_module.entity_display_helper"
+        tags:
+            - { name: zikula.searchable_module, bundleName: MUBoardModule }
+    
+    mu_board_module.upload_helper:
+        class: MU\BoardModule\Helper\UploadHelper
+        arguments:
+            - "@translator.default"
+            - "@session"
+            - "@logger"
+            - "@zikula_users_module.current_user"
+            - "@=service('zikula_extensions_module.api.variable').getAll('MUBoardModule')"
+            - "%datadir%"
+    
+    mu_board_module.view_helper:
+        class: MU\BoardModule\Helper\ViewHelper
+        arguments:
+            - "@twig"
+            - "@twig.loader"
+            - "@request_stack"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_core.common.theme.pagevars"
+            - "@mu_board_module.controller_helper"
+    
+    mu_board_module.workflow_helper:
+        class: MU\BoardModule\Helper\WorkflowHelper
+        arguments:
+            - "@translator.default"
+            - "@workflow.registry"
+            - "@logger"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_users_module.current_user"
+            - "@mu_board_module.entity_factory"
+            - "@mu_board_module.listentries_helper"

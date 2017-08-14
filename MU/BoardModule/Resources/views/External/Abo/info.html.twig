@@ -1,0 +1,4 @@
+{# Purpose of this template: Display item information for previewing from other modules #}
+<dl id="abo{{ abo.getKey() }}">
+<dt>{{ abo|muboardmodule_formattedTitle|notifyFilters('board.filter_hooks.abos.filter')|safeHtml }}</dt>
+</dl>

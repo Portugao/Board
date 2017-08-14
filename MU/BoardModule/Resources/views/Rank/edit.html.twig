@@ -1,0 +1,108 @@
+{# purpose of this template: build the user form to edit an instance of rank #}
+{% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : 'base' %}
+{% extends 'MUBoardModule::' ~ baseTemplate ~ '.html.twig' %}
+
+{% block header %}
+    {{ parent() }}
+    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.Validation.js'), 98) }}
+    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.EditFunctions.js'), 99) }}
+{% endblock %}
+{% block title mode == 'create' ? __('Create rank') : __('Edit rank') %}
+{% block content %}
+    <div class="muboardmodule-rank muboardmodule-edit">
+        {% form_theme form with [
+            '@MUBoardModule/Form/bootstrap_3.html.twig',
+            'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
+        ] %}
+        {{ form_start(form, {attr: {id: 'rankEditForm', class: 'muboard-edit-form'}}) }}
+        {{ form_errors(form) }}
+        <fieldset>
+            <legend>{{ __('Content') }}</legend>
+            {{ form_row(form.name) }}
+            {{ form_row(form.minPostings) }}
+            {{ form_row(form.maxPostings) }}
+            {{ form_row(form.numberOfIcons) }}
+            {{ form_row(form.uploadImage) }}
+            {{ form_row(form.special) }}
+        </fieldset>
+        
+        {{ include(
+            '@MUBoardModule/User/includeSelectEditMany.html.twig',
+            {group: 'rank', alias: 'user', aliasReverse: 'rank', mandatory: false, idPrefix: 'boardRank_User', linkingItem: rank, displayMode: 'choices'}
+        ) }}
+        {% if mode != 'create' %}
+            {{ include('@MUBoardModule/Helper/includeStandardFieldsEdit.html.twig', {obj: rank}) }}
+        {% endif %}
+        
+        {% if formHookTemplates|length > 0 %}
+            <fieldset>
+                {% for hookTemplate in formHookTemplates %}
+                    {{ include(hookTemplate.0, hookTemplate.1, ignore_missing = true) }}
+                {% endfor %}
+            </fieldset>
+        {% endif %}
+        
+        {% if form.moderationSpecificCreator is defined %}
+            <fieldset id="moderationFieldsSection">
+                <legend>{{ __('Moderation') }} <i class="fa fa-expand"></i></legend>
+                <div id="moderationFieldsContent">
+                    {{ form_row(form.moderationSpecificCreator) }}
+                    {{ form_row(form.moderationSpecificCreationDate) }}
+                </div>
+            </fieldset>
+        {% endif %}
+        
+        {# include return control #}
+        {% if mode == 'create' %}
+            <fieldset>
+                <legend>{{ __('Return control') }}</legend>
+                {{ form_row(form.repeatCreation) }}
+            </fieldset>
+        {% endif %}
+        
+        {# include possible submit actions #}
+        <div class="form-group form-buttons">
+            <div class="col-sm-offset-3 col-sm-9">
+                {% for action in actions %}
+                    {{ form_widget(attribute(form, action.id)) }}
+                {% endfor %}
+                {{ form_widget(form.reset) }}
+                {{ form_widget(form.cancel) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+        {% set hookId = mode != 'create' ? rank.id : null %}
+        {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.ranks.form_edit', id=hookId) %}
+        {% if hooks is iterable and hooks|length > 0 %}
+            <h3>{{ __('Hooks') }}</h3>
+            {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
+                <h4>{{ providerArea }}</h4>
+                {{ hook }}
+            {% endfor %}
+        {% endif %}
+        
+    </div>
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
+    {% set editImage = '<span class="fa fa-pencil-square-o"></span>' %}
+    {% set removeImage = '<span class="fa fa-trash-o"></span>' %}
+    {% set formInitScript %}
+        <script type="text/javascript">
+        /* <![CDATA[ */
+            
+            ( function($) {
+                $(document).ready(function() {
+                    // initialise auto completion for user fields
+                    {% if form.moderationSpecificCreator is defined %}
+                        initUserLiveSearch('muboardmodule_rank_moderationSpecificCreator');
+                    {% endif %}
+                    mUBoardInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ rank.id }}{% endif %}');
+                    mUBoardInitUploadField('muboardmodule_rank_uploadImage_uploadImage');
+                });
+            })(jQuery);
+        /* ]]> */
+        </script>
+    {% endset %}
+    {{ pageAddAsset('footer', formInitScript) }}
+{% endblock %}

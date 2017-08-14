@@ -1,0 +1,8 @@
+{# purpose of this template: abos view csv view #}
+{% spaceless %}"{{ __('Userid') }}";"{{ __('Catid') }}";"{{ __('Forumid') }}";"{{ __('Postingid') }}";"{{ __('Workflow state') }}"
+{% endspaceless %}
+{% for abo in items %}
+{% spaceless %}
+    "{{ abo.userid }}";"{{ abo.catid }}";"{{ abo.forumid }}";"{{ abo.postingid }}";"{{ abo.workflowState|muboardmodule_objectState(false)|lower }}"
+{% endspaceless %}
+{% endfor %}

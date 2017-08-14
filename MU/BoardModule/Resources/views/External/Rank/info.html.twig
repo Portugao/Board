@@ -1,0 +1,16 @@
+{# Purpose of this template: Display item information for previewing from other modules #}
+<dl id="rank{{ rank.getKey() }}">
+<dt>{{ rank|muboardmodule_formattedTitle|notifyFilters('board.filter_hooks.ranks.filter')|safeHtml }}</dt>
+<dd>{% if rank.uploadImage is not empty and rank.uploadImageMeta|default %}
+            <a href="{{ rank.uploadImageUrl }}" title="{{ rank|muboardmodule_formattedTitle|e('html_attr') }}"{% if rank.uploadImageMeta.isImage %} class="image-link"{% endif %}>
+{% if rank.uploadImageMeta.isImage %}
+    {% set thumbOptions = attribute(thumbRuntimeOptions, 'rankUploadImage') %}
+    <img src="{{ rank.uploadImage.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ rank|muboardmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+{% else %}
+    {{ __('Download') }} ({{ rank.uploadImageMeta.size|muboardmodule_fileSize(rank.uploadImage.getPathname(), false, false) }})
+{% endif %}
+</a>
+{% else %}&nbsp;{% endif %}
+</dd>
+{% if rank.name is not empty %}<dd>{{ rank.name }}</dd>{% endif %}
+</dl>

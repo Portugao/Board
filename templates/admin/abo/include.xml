@@ -1,8 +1,0 @@
-{* purpose of this template: abos xml inclusion template in admin area *}
-<abo id="{$item.id}" createdon="{$item.createdDate|dateformat}" updatedon="{$item.updatedDate|dateformat}">
-    <id>{$item.id}</id>
-    <userid>{$item.userid}</userid>
-    <catid>{$item.catid}</catid>
-    <forumid>{$item.forumid}</forumid>
-    <postingid>{$item.postingid}</postingid>
-</abo>

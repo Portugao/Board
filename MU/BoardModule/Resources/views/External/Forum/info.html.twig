@@ -1,0 +1,5 @@
+{# Purpose of this template: Display item information for previewing from other modules #}
+<dl id="forum{{ forum.getKey() }}">
+<dt>{{ forum|muboardmodule_formattedTitle|notifyFilters('board.filter_hooks.forums.filter')|safeHtml }}</dt>
+{% if forum.description is not empty %}<dd>{{ forum.description }}</dd>{% endif %}
+</dl>

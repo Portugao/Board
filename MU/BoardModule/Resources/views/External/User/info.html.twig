@@ -1,0 +1,4 @@
+{# Purpose of this template: Display item information for previewing from other modules #}
+<dl id="user{{ user.getKey() }}">
+<dt>{{ user|muboardmodule_formattedTitle|notifyFilters('board.filter_hooks.users.filter')|safeHtml }}</dt>
+</dl>

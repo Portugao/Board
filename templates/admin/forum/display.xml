@@ -1,4 +1,0 @@
-{* purpose of this template: forums display xml view in admin area *}
-{muboardTemplateHeaders contentType='text/xml'}<?xml version="1.0" encoding="{charset}" ?>
-{getbaseurl assign='baseurl'}
-{include file='admin/forum/include.xml' item=$forum}

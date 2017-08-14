@@ -1,0 +1,113 @@
+{# Purpose of this template: Display a popup selector of postings for scribite integration #}
+{% set useFinder = true %}
+{% extends 'MUBoardModule::raw.html.twig' %}
+{% block title __('Search and select posting') %}
+{% block content %}
+    <div class="container">
+        <div class="zikula-bootstrap-tab-container">
+            <ul class="nav nav-tabs">
+            {% set activatedObjectTypes = getModVar('MUBoardModule', 'enabledFinderTypes', []) %}
+            {% if 'category' in activatedObjectTypes %}
+                <li{{ objectType == 'category' ? ' class="active"' : '' }}><a href="{{ path('muboardmodule_external_finder', {objectType: 'category', editor: editorName}) }}" title="{{ __('Search and select category') }}">{{ __('Categories') }}</a></li>
+            {% endif %}
+            {% if 'forum' in activatedObjectTypes %}
+                <li{{ objectType == 'forum' ? ' class="active"' : '' }}><a href="{{ path('muboardmodule_external_finder', {objectType: 'forum', editor: editorName}) }}" title="{{ __('Search and select forum') }}">{{ __('Forums') }}</a></li>
+            {% endif %}
+            {% if 'posting' in activatedObjectTypes %}
+                <li{{ objectType == 'posting' ? ' class="active"' : '' }}><a href="{{ path('muboardmodule_external_finder', {objectType: 'posting', editor: editorName}) }}" title="{{ __('Search and select posting') }}">{{ __('Postings') }}</a></li>
+            {% endif %}
+            {% if 'abo' in activatedObjectTypes %}
+                <li{{ objectType == 'abo' ? ' class="active"' : '' }}><a href="{{ path('muboardmodule_external_finder', {objectType: 'abo', editor: editorName}) }}" title="{{ __('Search and select abo') }}">{{ __('Abos') }}</a></li>
+            {% endif %}
+            {% if 'user' in activatedObjectTypes %}
+                <li{{ objectType == 'user' ? ' class="active"' : '' }}><a href="{{ path('muboardmodule_external_finder', {objectType: 'user', editor: editorName}) }}" title="{{ __('Search and select user') }}">{{ __('Users') }}</a></li>
+            {% endif %}
+            {% if 'rank' in activatedObjectTypes %}
+                <li{{ objectType == 'rank' ? ' class="active"' : '' }}><a href="{{ path('muboardmodule_external_finder', {objectType: 'rank', editor: editorName}) }}" title="{{ __('Search and select rank') }}">{{ __('Ranks') }}</a></li>
+            {% endif %}
+            </ul>
+        </div>
+        {% form_theme finderForm with [
+            '@MUBoardModule/Form/bootstrap_3.html.twig',
+            'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
+        ] %}
+        {{ form_start(finderForm, {attr: {id: 'mUBoardModuleSelectorForm'}}) }}
+        {{ form_errors(finderForm) }}
+        <fieldset>
+            <legend>{{ __('Search and select posting') }}</legend>
+            {{ form_row(finderForm.onlyImages) }}
+            <div id="imageFieldRow">
+                {{ form_row(finderForm.imageField) }}
+            </div>
+            {{ form_row(finderForm.pasteAs) }}
+            <br />
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{ __('Posting') }}:</label>
+                <div class="col-sm-9">
+                    <div id="muboardmoduleItemContainer">
+                        {% if not onlyImages %}
+                            <ul>
+                        {% endif %}
+                            {% for posting in items %}
+                                {% if not onlyImages or (attribute(posting, imageField) is not empty and attribute(posting, imageField ~ 'Meta').isImage) %}
+                                {% if not onlyImages %}
+                                    <li>
+                                {% endif %}
+                                    {% set itemId = posting.getKey() %}
+                                    <a href="#" data-itemid="{{ itemId }}">
+                                        {% if onlyImages %}
+                                            {% set thumbOptions = attribute(thumbRuntimeOptions, 'posting' ~ imageField[:1]|upper ~ imageField[1:]) %}
+                                            <img src="{{ attribute(posting, imageField).getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-rounded" />
+                                        {% else %}
+                                            {{ posting|muboardmodule_formattedTitle }}
+                                        {% endif %}
+                                    </a>
+                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('muboardmodule_posting_display', {'id': posting.getId()}) }}" />
+                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('muboardmodule_posting_display', {'id': posting.getId()}) }}" />
+                                    <input type="hidden" id="title{{ itemId }}" value="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}" />
+                                    <input type="hidden" id="desc{{ itemId }}" value="{% set description %}{% if posting.text is not empty %}{{ posting.text }}{% endif %}
+                                    {% endset %}{{ description|striptags|e('html_attr') }}" />
+                                    {% if onlyImages %}
+                                        <input type="hidden" id="imagePath{{ itemId }}" value="/{{ attribute(posting, imageField).getPathname() }}" />
+                                    {% endif %}
+                                {% if not onlyImages %}
+                                    </li>
+                                {% endif %}
+                                {% endif %}
+                            {% else %}
+                                {% if not onlyImages %}<li>{% endif %}{{ __('No postings found.') }}{% if not onlyImages %}</li>{% endif %}
+                            {% endfor %}
+                        {% if not onlyImages %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {{ form_row(finderForm.sort) }}
+            {{ form_row(finderForm.sortdir) }}
+            {{ form_row(finderForm.num) }}
+            <div id="searchTermRow">
+                {{ form_row(finderForm.q) }}
+            </div>
+            <div>
+                {{ pager({display: 'page', rowcount: pager.numitems, limit: pager.itemsperpage, posvar: 'pos', maxpages: 10, route: 'muboardmodule_external_finder'}) }}
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    {{ form_widget(finderForm.update) }}
+                    {{ form_widget(finderForm.cancel) }}
+                </div>
+            </div>
+        </fieldset>
+        {{ form_end(finderForm) }}
+    </div>
+
+    {#
+    <div class="muboardmodule-finderform">
+        <fieldset>
+            {{ render(controller('MUBoardModule:Posting:edit')) }}
+        </fieldset>
+    </div>
+    #}
+{% endblock %}

@@ -1,7 +1,0 @@
-{* purpose of this template: categories xml inclusion template in admin area *}
-<category id="{$item.id}" createdon="{$item.createdDate|dateformat}" updatedon="{$item.updatedDate|dateformat}">
-    <id>{$item.id}</id>
-    <title><![CDATA[{$item.title}]]></title>
-    <description><![CDATA[{$item.description}]]></description>
-    <pos>{$item.pos}</pos>
-</category>

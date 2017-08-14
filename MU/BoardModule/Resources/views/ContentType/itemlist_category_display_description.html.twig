@@ -1,0 +1,13 @@
+{# Purpose of this template: Display categories within an external context #}
+<dl>
+    {% for category in items %}
+        <dt>{{ category|muboardmodule_formattedTitle }}</dt>
+        {% if category.description %}
+            <dd>{{ category.description|striptags|truncate(200, true, '&hellip;') }}</dd>
+        {% endif %}
+        <dd><a href="{{ path('muboardmodule_category_display', {'id': category.getId()}) }}">{{ __('Read more') }}</a>
+        </dd>
+    {% else %}
+        <dt>{{ __('No entries found.') }}</dt>
+    {% endfor %}
+</dl>

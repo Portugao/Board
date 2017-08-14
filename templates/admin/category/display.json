@@ -1,3 +1,0 @@
-{* purpose of this template: categories display json view in admin area *}
-{muboardTemplateHeaders contentType='application/json'}
-{$category->toJson()}

@@ -1,0 +1,39 @@
+{# Purpose of this template: Display one certain forum within an external context #}
+<div id="forum{{ forum.getKey() }}" class="muboardmodule-external-forum">
+{% if displayMode == 'link' %}
+    <p class="muboardmodule-external-link">
+    <a href="{{ path('muboardmodule_forum_display', {'id': forum.getId()}) }}" title="{{ forum|muboardmodule_formattedTitle|e('html_attr') }}">
+    {{ forum|muboardmodule_formattedTitle|notifyFilters('board.filter_hooks.forums.filter')|safeHtml }}
+    </a>
+    </p>
+{% endif %}
+{% if hasPermission('MUBoardModule::', '::', 'ACCESS_EDIT') %}
+    {# for normal users without edit permission show only the actual file per default #}
+    {% if displayMode == 'embed' %}
+        <p class="muboardmodule-external-title">
+            <strong>{{ forum|muboardmodule_formattedTitle|notifyFilters('board.filter_hooks.forums.filter')|safeHtml }}</strong>
+        </p>
+    {% endif %}
+{% endif %}
+
+{% if displayMode == 'link' %}
+{% elseif displayMode == 'embed' %}
+    <div class="muboardmodule-external-snippet">
+        &nbsp;
+    </div>
+
+    {# you can distinguish the context like this: #}
+    {# % if source == 'contentType' %}
+        ...
+    {% elseif source == 'scribite' %}
+        ...
+    {% endif % #}
+
+    {# you can enable more details about the item: #}
+    {#
+        <p class="muboardmodule-external-description">
+            {% if forum.description is not empty %}{{ forum.description }}<br />{% endif %}
+        </p>
+    #}
+{% endif %}
+</div>

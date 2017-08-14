@@ -1,0 +1,73 @@
+{# purpose of this template: categories user list view #}
+{% extends 'MUBoardModule::base.html.twig' %}
+{% block title own ? __('My categories') : __('Categories list') %}
+{% block content %}
+
+<div class="muboardmodule-category muboardmodule-view">
+
+    {{ block('page_nav_links') }}
+
+    {{ include('@MUBoardModule/Category/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
+
+    {% if routeArea != 'admin' %}
+
+        {% for category in items %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="category-view-header">
+                        <div id="category-title">
+                            <h2><a href="{{ path('muboardmodule_category_' ~ routeArea ~ 'display', {'id': category.getId()}) }}" title="{{ category|muboardmodule_formattedTitle|e('html_attr') }}">{{ category.title }}</a></h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="category-view-content">
+                        {% if category.forum|default %}
+                            {{ include(
+                            '@MUBoardModule/Forum/includeDisplayItemListManyOwn.html.twig',
+                            {items: category.forum}
+                            ) }}
+                        {% endif %}
+                    </div>
+                </div>            
+            </div>
+        {% endfor %}
+        
+    {% endif %}
+        
+        {% if all != 1 and pager|default %}
+            {{ pager({rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'muboardmodule_category_' ~ routeArea ~ 'view'}) }}
+        {% endif %}
+
+
+    {{ block('display_hooks') }}
+</div>
+
+{% endblock %}
+{% block page_nav_links %}
+    <p>
+        {% if canBeCreated %}
+            {% if hasPermission('MUBoardModule:Category:', '::', 'ACCESS_EDIT') %}
+                {% set createTitle = __('Create category') %}
+                <a href="{{ path('muboardmodule_category_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+            {% endif %}
+        {% endif %}
+        {% if all == 1 %}
+            {% set linkTitle = __('Back to paginated view') %}
+            <a href="{{ path('muboardmodule_category_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+        {% else %}
+            {% set linkTitle = __('Show all entries') %}
+            <a href="{{ path('muboardmodule_category_' ~ routeArea ~ 'view', {all: 1}) }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+        {% endif %}
+    </p>
+{% endblock %}
+{% block display_hooks %}
+    
+    {# here you can activate calling display hooks for the view page if you need it #}
+    {# % if routeArea != 'admin' %}
+        {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.categories.display_view', urlObject=currentUrlObject) %}
+        {% for providerArea, hook in hooks %}
+            {{ hook }}
+        {% endfor %}
+    {% endif % #}
+{% endblock %}

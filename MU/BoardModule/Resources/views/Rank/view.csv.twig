@@ -1,0 +1,16 @@
+{# purpose of this template: ranks view csv view #}
+{% spaceless %}"{{ __('Name') }}";"{{ __('Min postings') }}";"{{ __('Max postings') }}";"{{ __('Number of icons') }}";"{{ __('Upload image') }}";"{{ __('Special') }}";"{{ __('Workflow state') }}"
+;"{{ __('User') }}"
+{% endspaceless %}
+{% for rank in items %}
+{% spaceless %}
+    "{{ rank.name }}";"{{ rank.minPostings }}";"{{ rank.maxPostings }}";"{{ rank.numberOfIcons }}";"{{ rank.uploadImage }}";"{% if not rank.special %}0{% else %}1{% endif %}";"{{ rank.workflowState|muboardmodule_objectState(false)|lower }}"
+    ;"
+    {% if rank.user|default %}
+        {% for relatedItem in rank.user %}
+        {{ relatedItem|muboardmodule_formattedTitle }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    {% endif %}
+    "
+{% endspaceless %}
+{% endfor %}

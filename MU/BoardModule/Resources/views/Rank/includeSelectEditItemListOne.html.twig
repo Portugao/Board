@@ -1,0 +1,20 @@
+{# purpose of this template: inclusion template for display of related rank #}
+{% set editImage = '<span class="fa fa-pencil-square-o"></span>' %}
+{% set removeImage = '<span class="fa fa-trash-o"></span>' %}
+
+<input type="hidden" id="{{ idPrefix }}Mode" name="{{ idPrefix }}Mode" value="1" />
+
+<ul id="{{ idPrefix }}ReferenceList">
+{% if item is defined and item.getKey()|default %}
+{% set idPrefixItem = idPrefix ~ 'Reference_' ~ item.getKey() %}
+<li id="{{ idPrefixItem }}">
+    {{ item|muboardmodule_formattedTitle }}
+    <a id="{{ idPrefixItem }}Edit" href="{{ path('muboardmodule_rank_' ~ routeArea ~ 'edit', {'id': item.getId()}) }}">{{ editImage|raw }}</a>
+     <a id="{{ idPrefixItem }}Remove" href="javascript:mUBoardRemoveRelatedItem('{{ idPrefix }}', '{{ item.getKey() }}');">{{ removeImage|raw }}</a>
+    <br />
+    {% if item.uploadImage is not empty and item.uploadImageMeta.isImage %}
+        <img src="{{ item.uploadImage.getPathname()|imagine_filter('zkroot', relationThumbRuntimeOptions) }}" alt="{{ item|muboardmodule_formattedTitle|e('html_attr') }}" width="{{ relationThumbRuntimeOptions.thumbnail.size[0] }}" height="{{ relationThumbRuntimeOptions.thumbnail.size[1] }}" class="img-rounded" />
+    {% endif %}
+</li>
+{% endif %}
+</ul>

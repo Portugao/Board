@@ -1,0 +1,5 @@
+muboardmodule:
+    # define routing support for these controllers
+    resource: "@MUBoardModule/Controller"
+    # enable support for defining routes by annotations
+    type: annotation

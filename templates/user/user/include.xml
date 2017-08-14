@@ -1,8 +1,0 @@
-{* purpose of this template: users xml inclusion template in user area *}
-<user id="{$item.id}">
-    <id>{$item.id}</id>
-    <userid>{$item.userid}</userid>
-    <numberPostings>{$item.numberPostings}</numberPostings>
-    <lastVisit>{$item.lastVisit|dateformat:'datetimebrief'}</lastVisit>
-    <rank>{if isset($item.Rank) && $item.Rank ne null}{$item.Rank.name|default:""}{/if}</rank>
-</user>

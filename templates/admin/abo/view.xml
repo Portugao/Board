@@ -1,9 +1,0 @@
-{* purpose of this template: abos view xml view in admin area *}
-{muboardTemplateHeaders contentType='text/xml'}<?xml version="1.0" encoding="{charset}" ?>
-<abos>
-{foreach item='item' from=$items}
-    {include file='admin/abo/include.xml'}
-{foreachelse}
-    <noAbo />
-{/foreach}
-</abos>

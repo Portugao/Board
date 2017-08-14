@@ -1,0 +1,339 @@
+application "Board" {
+    vendor "MU"
+    author "Michael Ueberschaer"
+    email "info@homepages-mit-zikula.de"
+    url "https://homepages-mit-zikula.de"
+    version "1.2.0"
+    prefix "board"
+    generatorSettings {
+        settingsContainer "Settings"
+        targetCoreVersion ZK15
+        amountOfExampleRows 0
+        generateMailzApi false
+        generateNewsletterPlugin false
+        generateRssTemplates true
+        generateAtomTemplates true
+        generateXmlTemplates false
+        generateJsonTemplates false
+        generateKmlTemplates false
+        generateIcsTemplates false
+        generateOnlyBaseClasses false
+        versionAllGeneratedFiles false
+        separateAdminTemplates true
+        generatePoweredByBacklinksIntoFooterTemplates false
+        generateTests false
+        skipFiles ""
+        markFiles ""
+    }
+    entities {
+        entity "category" leading {
+            nameMultiple "categories"
+            displayPattern "#title#"
+            fields {
+                string "title",
+                text "description" {
+                    mandatory false
+                },
+                integer "pos" {
+                    displayType NONE
+                    length 3
+                }
+            }
+            actions {
+                mainAction "Main",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit",
+                deleteAction "Delete"
+            }
+        },
+        entity "forum" {
+            nameMultiple "forums"
+            displayPattern "#title#"
+            fields {
+                string "title",
+                text "description" {
+                    mandatory false
+                },
+                integer "pos" {
+                    displayType NONE
+                    length 3
+                }
+            }
+            actions {
+                mainAction "Main",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit",
+                deleteAction "Delete"
+            }
+        },
+        entity "posting" {
+            nameMultiple "postings"
+            displayPattern "#title#"
+            workflow STANDARD
+            fields {
+                integer "parent_id" nullable {
+                    defaultValue ""
+                    mandatory false
+                },
+                string "title" {
+                    mandatory false
+                },
+                text "text" {
+                    length 20000
+                },
+                integer "invocations" {
+                    defaultValue "0"
+                    mandatory false
+                },
+                boolean "state" ajaxTogglability {
+                    defaultValue "1"
+                    mandatory false
+                },
+                boolean "solved" {
+                    defaultValue "0"
+                    mandatory false
+                },
+                upload "firstImage" {
+                    mandatory false
+                maxSize "200k"
+                },
+                upload "secondImage" {
+                    mandatory false
+                maxSize "200k"
+                },
+                upload "thirdImage" {
+                    mandatory false
+                maxSize "200k"
+                },
+                upload "firstFile" {
+                    mandatory false
+                    allowedExtensions "pdf"
+                maxSize "2M"
+                    mimeTypes "application/*"
+                },
+                upload "secondFile" {
+                    mandatory false
+                    allowedExtensions "pdf"
+                maxSize "2M"
+                    mimeTypes "application/*"
+                },
+                upload "thirdFile" {
+                    mandatory false
+                    allowedExtensions "pdf"
+                maxSize "2M"
+                    mimeTypes "application/*"
+                }
+            }
+            actions {
+                mainAction "Main",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit",
+                deleteAction "Delete"
+            }
+        },
+        entity "abo" {
+            nameMultiple "abos"
+            displayPattern "#userid#"
+            fields {
+                integer "userid",
+                integer "catid" {
+                    mandatory false
+                },
+                integer "forumid" {
+                    mandatory false
+                },
+                integer "postingid" {
+                    mandatory false
+                }
+            }
+            actions {
+                mainAction "Main",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit",
+                deleteAction "Delete"
+            }
+        },
+        entity "user" {
+            nameMultiple "users"
+            displayPattern "#userid#"
+            standardFields false
+            fields {
+                integer "userid",
+                integer "numberPostings",
+                datetime "lastVisit"
+            }
+            actions {
+                mainAction "Main",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit",
+                deleteAction "Delete"
+            }
+        },
+        entity "rank" {
+            nameMultiple "ranks"
+            displayPattern "#name#"
+            fields {
+                string "name" {
+                    length 100
+                },
+                integer "minPostings" {
+                    mandatory false
+                },
+                integer "maxPostings" {
+                    mandatory false
+                },
+                integer "numberOfIcons" {
+                    defaultValue ""
+                    length 2
+                },
+                upload "uploadImage" {
+                    mandatory false
+                },
+                boolean "special" ajaxTogglability {
+                    mandatory false
+                }
+            }
+            actions {
+                mainAction "Main",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit",
+                deleteAction "Delete"
+            }
+        }
+    }
+    relations {
+        one2many bidirectional {
+            source "category"
+            sourceAlias "category"
+            target "forum"
+            targetAlias "forum"
+            editType ACTIVE_EDIT_PASSIVE_EDIT
+            cascade REMOVE
+            orderBy ""
+        },
+        one2many bidirectional {
+            source "posting"
+            sourceAlias "parent"
+            sourceField "parent_id"
+            target "posting"
+            targetAlias "children"
+            cascade REMOVE
+            orderBy ""
+        },
+        one2many bidirectional {
+            source "forum"
+            sourceAlias "forum"
+            target "posting"
+            targetAlias "posting"
+            editType ACTIVE_EDIT_PASSIVE_EDIT
+            cascade REMOVE
+            orderBy ""
+        },
+        one2many bidirectional {
+            source "rank"
+            sourceAlias "rank"
+            target "user"
+            targetAlias "user"
+            editType ACTIVE_EDIT_PASSIVE_EDIT
+        }
+    }
+    variables {
+        varContainer "General" {
+            vars {
+                boolVar "uploadImages" {
+                    value "1"
+                },
+                textVar "allowedSizeOfImages" {
+                    value "200k"
+                },
+                listVar "numberImages" {
+                    value ""
+                    items {
+                        listVarItem default "1",
+                        listVarItem "2",
+                        listVarItem "3"
+                    }
+                },
+                boolVar "uploadFiles" {
+                    value "1"
+                },
+                textVar "allowedSizeOfFiles",
+                listVar "numberFiles" {
+                    items {
+                        listVarItem default "1",
+                        listVarItem "2",
+                        listVarItem "3"
+                    }
+                },
+                boolVar "editPostings" {
+                    value "1"
+                },
+                intVar "editTime" {
+                    documentation "Time of editing allowed in hours."
+                    value "6"
+                },
+                intVar "latestPostings" {
+                    documentation "In Hours."
+                    value "24"
+                },
+                listVar "sortingCategories" {
+                    items {
+                        listVarItem default "descending",
+                        listVarItem "ascending"
+                    }
+                },
+                listVar "sortingForums" {
+                    items {
+                        listVarItem default "descending",
+                        listVarItem "ascending"
+                    }
+                },
+                listVar "sortingPostings" {
+                    items {
+                        listVarItem default "descending",
+                        listVarItem "ascending"
+                    }
+                },
+                intVar "pagesize" {
+                    value "10"
+                },
+                filePathVar "standardIcon" {
+                    documentation "This icon will be used for ranks to show; for example a star."
+                    value "images/icons/extrasmall/favorites.png"
+                },
+                filePathVar "specialIcon" {
+                    documentation "This icon will be used for special ranks to show; for example a heart."
+                    value "images/icons/extrasmall/package_favorite.png"
+                }
+            }
+        },
+        varContainer "Layout" {
+            sortOrder 2
+            vars {
+                listVar "iconSet" {
+                    items {
+                        listVarItem default "1",
+                        listVarItem "2",
+                        listVarItem "3"
+                    }
+                },
+                listVar "template" {
+                    items {
+                        listVarItem default "normal",
+                        listVarItem "jquery"
+                    }
+                },
+                boolVar "showStatisticInDetails" {
+                    value "1"
+                },
+                boolVar "showStatisticOnBottom"
+            }
+        }
+    }
+}
