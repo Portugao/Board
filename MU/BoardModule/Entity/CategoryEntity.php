@@ -27,7 +27,35 @@ use Doctrine\ORM\Mapping as ORM;
  * )
  */
 class CategoryEntity extends BaseEntity
-{
+{	
+	/**
+	 * @var integer $countIssues
+	 */
+	protected $countIssues = 0;
+	
+	/**
+	 * Returns the countIssues.
+	 *
+	 * @return integer
+	 */
+	public function getCountIssues()
+	{
+		return $this->countIssues;
+	}
+	
+	/**
+	 * Sets the countIssues.
+	 *
+	 * @param integer $countIssues
+	 *
+	 * @return void
+	 */
+	public function setCountIssues($countIssues)
+	{
+		if (intval($this->countIssues) !== intval($countIssues)) {
+			$this->countIssues = intval($countIssues);
+		}
+	}
     /**
      * @var integer $countPostings
      */

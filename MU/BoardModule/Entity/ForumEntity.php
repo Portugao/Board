@@ -15,6 +15,7 @@ namespace MU\BoardModule\Entity;
 use MU\BoardModule\Entity\Base\AbstractForumEntity as BaseEntity;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * Entity class that defines the entity structure and behaviours.
  *
@@ -28,5 +29,60 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ForumEntity extends BaseEntity
 {
-    // feel free to add your own methods here
+	/**
+	 * @var integer $countIssues
+	 */
+	protected $countIssues = 0;
+	
+	/**
+	 * Returns the countIssues.
+	 *
+	 * @return integer
+	 */
+	public function getCountIssues()
+	{
+		return $this->countIssues;
+	}
+	
+	/**
+	 * Sets the countIssues.
+	 *
+	 * @param integer $countIssues
+	 *
+	 * @return void
+	 */
+	public function setCountIssues($countIssues)
+	{
+		if (intval($this->countIssues) !== intval($countIssues)) {
+			$this->countIssues = intval($countIssues);
+		}
+	}
+    /**
+     * @var integer $countPostings
+     */
+    protected $countPostings = 0;
+    
+    /**
+     * Returns the countPostings.
+     *
+     * @return integer
+     */
+    public function getCountPostings()
+    {
+    	return $this->countPostings;
+    }
+    
+    /**
+     * Sets the countPostings.
+     *
+     * @param integer $countPostings
+     *
+     * @return void
+     */
+    public function setCountPostings($countPostings)
+    {
+    	if (intval($this->countPostings) !== intval($countPostings)) {
+    		$this->countPostings = intval($countPostings);
+    	}
+    }
 }
