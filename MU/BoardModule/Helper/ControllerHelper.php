@@ -34,25 +34,38 @@ class ControllerHelper extends AbstractControllerHelper
      *
      * @return array Enriched template parameters used for creating the response
      */
-    /*public function processViewActionParameters($objectType, SortableColumns $sortableColumns, array $templateParameters = [], $hasHookSubscriber = false)
+    public function processViewActionParameters($objectType, SortableColumns $sortableColumns, array $templateParameters = [], $hasHookSubscriber = false)
     {
     	$templateParameters = parent::processViewActionParameters($objectType, $sortableColumns, $templateParameters);
+    	if ($objectType == 'category') {
     	$entries = $templateParameters['items'];
     	unset($templateParameters['items']);
+    	$postingsRepository = $this->entityFactory->getRepository('posting');
     	$countPostings = 0;
     	foreach ($entries as $entry) {
     		if ($objectType == 'category') {
     			$forums = $entry['forum'];
     			foreach ($forums as $forum) {
+    				$where = 'tbl.parent_id is NULL';
+    				$countIssues = $postingsRepository->selectCount($where);
     				$countPostings = $countPostings + count($forum['posting']);
+    			}
+    			foreach ($forums as $forum) {
+    				$forum['countPostings'] = count($forum['posting']);
+    				$newForums[] = $forum;
     			}
     		}
 
-    		$newEntries['countPostings'] = $countPostings;
-    		$templateParameters['items'] = $newEntries;
+            //$entry['forum'] = $newForums;
+    		$entry['countIssues'] = $countIssues;
+    		$entry['countPostings'] = $countPostings;
+    		$newEntries[] = $entry;
+    		
     	}
+    	$templateParameters['items'] = $newEntries;
+        }
     	
     	return $templateParameters;
     
-    }*/
+    }
 }
