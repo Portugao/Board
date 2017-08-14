@@ -13,11 +13,36 @@
 namespace MU\BoardModule\Twig;
 
 use MU\BoardModule\Twig\Base\AbstractTwigExtension;
+use Symfony\Component\HttpKernel\Controller\ControllerReference;
+use ServiceUtil;
 
 /**
  * Twig extension implementation class.
  */
 class TwigExtension extends AbstractTwigExtension
-{
-    // feel free to add your own Twig extension methods here
+{	
+	/**
+	 * Returns a list of custom Twig functions.
+	 *
+	 * @return \Twig_SimpleFunction[]
+	 */
+	public function getFunctions()
+	{
+        $functions = parent::getFunctions();
+        $functions[] = new \Twig_SimpleFunction('muboardmodule_showEditForm', [$this, 'showEditForm'], ['is_safe' => ['html']]);
+        
+        return $functions;
+	}
+	
+    public function showEditForm()
+    {
+    	$request = \ServiceUtil::get('request_stack')->getMasterRequest();
+    	$request->attributes->set('_zkModule', 'MUBoardModule');
+    
+    	$fragmentHandler = \ServiceUtil::get('fragment.handler');
+    
+    	$ref = new ControllerReference('MUBoardModule:Posting:edit');
+    
+    	return $fragmentHandler->render($ref, 'inline', []);
+    }
 }

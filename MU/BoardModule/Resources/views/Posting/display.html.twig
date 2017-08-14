@@ -16,25 +16,36 @@
     <div class="muboardmodule-posting muboardmodule-display">
     
         <div class="row">
-        <div class="col-sm-12">
+            <div class="col-sm-12">
             <div class="posting-display-header">
-                <div id="posting-title">
-                    {% set templateTitle = posting|muboardmodule_formattedTitle|default(__('Posting')) %}
-                    <h2>{{ templateTitle|notifyFilters('muboardmodule.filter_hooks.forums.filter')|safeHtml }}</h2>
+                <div class="col-sm-4">       
+                    <div id="posting-title">
+                        {% set templateTitle = posting|muboardmodule_formattedTitle|default(__('Posting')) %}
+                        <h2>{{ templateTitle|notifyFilters('muboardmodule.filter_hooks.forums.filter')|safeHtml }}</h2>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+            
+                </div>
+                <div class="col-sm-4">
+                    <h4>{{ __('Category') }}: {{ posting.forum.category.title }}</h4>
+                    <h4>{{ __('Forum') }}: {{ posting.forum.title }}</h4>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-12">
-            <div class="posting-display-content">
-            {% if posting.children|default %}
-                {{ include(
-                    '@MUBoardModule/Posting/includeDisplayItemListManyOwnChildren.html.twig',
-                    {items: posting.children}
-                ) }}
-            {% endif %}
             </div>
-        </div>
-    <div>
+            <div class="col-sm-12">
+                <div class="posting-display-content">
+                {% if posting.children|default %}
+                    {{ include(
+                        '@MUBoardModule/Posting/includeDisplayItemListManyOwnChildren.html.twig',
+                        {items: posting.children}
+                    ) }}
+                {% endif %}
+                </div>
+            </div>
+        <div>
+        
+        <div class="col-md-12">{{ muboardmodule_showEditForm() }}</div>
 
     {#<div class="row">
         <div class="col-sm-9">
