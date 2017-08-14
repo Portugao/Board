@@ -1,5 +1,10 @@
 CHANGELOG
 ---------
+Changes in MUBoard 1.1.2
+
+See https://github.com/Portugao/MUBoard/milestone/7?closed=1
+
+
 Changes in MUBoard 1.1.1
 
 # fix for import of dizkus by maiwald, thx for that
