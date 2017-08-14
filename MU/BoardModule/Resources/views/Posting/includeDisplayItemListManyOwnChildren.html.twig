@@ -10,11 +10,20 @@
 {% if items|default and items|length > 0 %}
 <div class="list-group muboardmodule-related-item-list forum">
 {% for item in items %}
-    <div class="col-md-6">
-        {{ include('@MUBoardModule/Helper/includeStandardFieldsDisplay2.html.twig', {obj: item}) }}
+    <div class="col-md-12">
+    <div class="col-md-4">
+        <div class="children-include-user">
+            {{ include('@MUBoardModule/Helper/includeStandardFieldsDisplay2.html.twig', {obj: item}) }}
+        </div>
     </div>
-    <div class="col-md-6">
-    
+    <div class="col-md-8">
+        <div class="children-include-header">
+            {{ include('@MUBoardModule/Helper/includeStandardFieldsDisplay3.html.twig', {obj: item}) }}
+        </div>
+        <div class="children-include-content">
+            {{ item.text|safeHtml }}
+        </div>
+    </div>
     </div>
 {% endfor %}
 </div>

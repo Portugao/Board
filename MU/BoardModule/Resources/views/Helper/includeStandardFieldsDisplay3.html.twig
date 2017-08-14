@@ -1,0 +1,9 @@
+{# purpose of this template: reusable display of standard fields #}
+{% if (obj.createdBy|default and obj.createdBy.getUid() > 0) or (obj.updatedBy|default and obj.updatedBy.getUid() > 0) %}
+    {% if obj.createdBy|default and obj.createdBy.getUid() > 0 %}
+        {% set profileLink = obj.createdBy.getUid()|profileLinkByUserId() %}
+        <span>
+            {{ __f('Created on %date', {'%date': obj.createdDate|localizeddate('medium', 'short')})|raw }}
+        </span>
+    {% endif %}
+{% endif %}

@@ -24,10 +24,15 @@
 </h4>
     </div>
     <div class="col-md-3">
-        Statistik
+        <button class="btn btn-primary btn-xs" type="button">
+            {{ __('Issues') }} <span class="badge">{#{ item.forum.countIssues }#}</span>
+        </button>
+        <button class="btn btn-primary btn-xs" type="button">
+            {{ __('Postings') }} <span class="badge">{#{ item.forum.countPostings }#}</span>
+        </button> 
     </div>
     <div class="col-md-5">
-        {{ __('Last post') }}:
+
     </div>
     </div>
     {% endif %}

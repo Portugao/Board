@@ -9,10 +9,10 @@
     {% if hasAdminPermission or item.workflowState == 'approved' %}
     {% if item.parent_id == NULL %}
     <div class="list-group-item col-md-12">
-    <div class="col-md-5">
+    <div class="col-md-4">
 <h4 class="list-group-item-heading">
 {% spaceless %}
-{% if item.state == 0 %}<span class="state-green"><i class="fa fa-unlock" aria-hidden="true"></i></span>{% else %}<span class="state-red"><i class="fa fa-lock" aria-hidden="true"></i></span>{% endif %} 
+{% if item.state == 0 %}<span class="state-green posting-state"><i class="fa fa-unlock" aria-hidden="true"></i></span>{% else %}<span class="state-red posting-state"><i class="fa fa-lock" aria-hidden="true"></i></span>{% endif %} 
 {% if not noLink %}
     <a class="forum-include-link" href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'display', {'id': item.getId()}) }}" title="{{ item|muboardmodule_formattedTitle|e('html_attr') }}">
 {% endif %}
@@ -24,10 +24,28 @@
 {% endspaceless %}
 </h4>
     </div>
-    <div class="col-md-7">
+    <div class="col-md-8">
         {{ __('Last answer') }}:
     </div>
     </div>
+    <script>
+var MU = jQuery.noConflict();
+    MU(document).ready(function() {
+        MU('.posting-state').click(function() {
+        var state = MU(this);
+            MU(this).append('<img style="width: 16px; height: 16px;" src="/zik15/images/ajax/indicator.white.gif" />');
+            MU.get('{{ path('muboardmodule_ajax_togglestate', {'id': item.getId()}) }}', function(data) {
+                if(data) {
+                    state.after('<span class="newstate">{{ __('The state of the posting was changed') }}</span>').find('img').delay(2000).hide('slow');
+                    state.next('span').delay(2000).hide('slow');
+                    state.find('span').has('state-green').delay(2000).remove();
+
+                }
+            });
+        });
+    });
+
+</script>
     {% endif %}
 {% endif %}
 {% endfor %}
