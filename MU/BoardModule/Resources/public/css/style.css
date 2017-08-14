@@ -137,8 +137,6 @@ div.muboardmodule-view .avatar img {
 
 /*********************OWN*************************/
 
-/**************Categories*********************/
-
 .category-view-header,
 .category-display-header,
 .forum-display-header,
@@ -151,6 +149,13 @@ div.muboardmodule-view .avatar img {
 	padding-left: 15px;
 	padding-right: 15px;
 	padding-bottom: 6px;
+	float: left;
+    width: 100%;
+}
+
+.posting-display-header {
+    float: left;
+    width: 100%;
 }
 
 .category-view-content,
@@ -170,10 +175,40 @@ div.muboardmodule-view .avatar img {
 	right: 0;
 }
 
+.children-include-header {
+	padding: 5px;
+    border-bottom: 1px solid #bbb;
+}
+
+.children-include-user,
+.children-include-content {
+	padding: 5px;
+	float: left;
+	height: 100%;
+}
+
+.children-include-user {
+	text-align: center;
+	border-right: 1px solid #bbb;
+	width: 100%;
+}
+
+#posting-title {
+	
+}
+
+.state-green,
+.state-red {
+	cursor: pointer;
+}
+
 .state-green {
 	color: #22dd33;
 }
-
-}
 .state-red {
 	color: #ff2233;
+}
+
+.newstate {
+	font-size: 0.8em;
+}
