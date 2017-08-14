@@ -2,6 +2,7 @@ CHANGELOG
 ---------
 Changes in MUBoard 1.1.2
 
+2 fixes in this version
 See https://github.com/Portugao/MUBoard/milestone/7?closed=1
 
 

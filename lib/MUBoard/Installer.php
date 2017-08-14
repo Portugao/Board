@@ -63,7 +63,10 @@ class MUBoard_Installer extends MUBoard_Base_Installer
                 // nothing to do
                 
             case '1.1.1':
-            		// for later updates
+                // nothing to do
+                
+            case '1.1.2':
+            	// for later use
         }
 
         // update successful
