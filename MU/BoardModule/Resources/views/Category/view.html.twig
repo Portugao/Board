@@ -14,9 +14,22 @@
         {% for category in items %}
             <div class="row">
                 <div class="col-md-12">
-                    <div class="category-view-header">
+                <div class="category-view-header">            
+                    <div class="col-md-5">             
                         <div id="category-title">
                             <h2><a href="{{ path('muboardmodule_category_' ~ routeArea ~ 'display', {'id': category.getId()}) }}" title="{{ category|muboardmodule_formattedTitle|e('html_attr') }}">{{ category.title }}</a></h2>
+                        </div>
+                        </div>
+                        <div class="col-md-4"> 
+                            <button class="btn btn-primary btn-xs" type="button">
+                            {{ __('Issues') }} <span class="badge">{{ category.countIssues }}</span>
+                            </button> 
+                            <button class="btn btn-primary btn-xs" type="button">
+                            {{ __('Postings') }} <span class="badge">{{ category.countPostings }}</span>
+                            </button>                        
+                        </div>
+                        <div class="col-md-3"> 
+
                         </div>
                     </div>
                 </div>
