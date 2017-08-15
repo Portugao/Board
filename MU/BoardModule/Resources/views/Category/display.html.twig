@@ -14,14 +14,29 @@
 {% block content %}
     {% set isQuickView = app.request.query.getBoolean('raw', false) %}
     <div class="muboardmodule-category muboardmodule-display">
-
+    {% set detailStatistic = getModVar('MUBoardModule','showStatisticInDetails') %}
     <div class="row">
         <div class="col-sm-12">
             <div class="category-display-header">
+            <div class="col-sm-5">
                 <div id="category-title">
                     {% set templateTitle = category|muboardmodule_formattedTitle|default(__('Forum')) %}
                     <h2>{{ templateTitle|notifyFilters('muboardmodule.filter_hooks.forums.filter')|safeHtml }}</h2>
                 </div>
+            </div>
+            <div class="col-sm-4">
+            {% if detailStatistic == 1 %}
+                <button class="btn btn-success btn-xs" type="button">
+                    {{ __('Issues') }} <span class="badge">{{ category.countIssues }}</span>
+                </button> 
+                <button class="btn btn-info btn-xs" type="button">
+                    {{ __('Postings') }} <span class="badge">{{ category.countPostings }}</span>
+                </button>
+            {% endif %}   
+            </div>
+            <div class="col-sm-3">
+            
+            </div>
             </div>
         </div>
         <div class="col-sm-12">
