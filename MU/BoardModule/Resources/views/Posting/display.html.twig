@@ -34,8 +34,8 @@
                 </div>
                 </div>
                 <div class="col-sm-3">
-                    <h4>{{ __('Category') }}: {{ posting.forum.category.title }}</h4>
-                    <h4>{{ __('Forum') }}: {{ posting.forum.title }}</h4>
+                    <h4>{{ __('Category') }}<br /><a href="{{ path('muboardmodule_category_' ~ routeArea ~ 'display', {'id': posting.forum.category.id}) }}">{{ posting.forum.category.title }}</a></h4>
+                    <h4>{{ __('Forum') }}<br /><a href="{{ path('muboardmodule_forum_' ~ routeArea ~ 'display', {'id': posting.forum.id}) }}">{{ posting.forum.title }}</a></h4>
                 </div>
             </div>
             </div>
