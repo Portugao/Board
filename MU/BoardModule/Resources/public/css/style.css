@@ -156,6 +156,7 @@ div.muboardmodule-view .avatar img {
 .posting-display-header {
     float: left;
     width: 100%;
+    border-bottom: 5px solid #fedefe;
 }
 
 .category-view-content,
