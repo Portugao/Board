@@ -15,7 +15,7 @@ namespace MU\BoardModule\Helper;
 use MU\BoardModule\Helper\Base\AbstractControllerHelper;
 
 use Zikula\Component\SortableColumns\SortableColumns;
-use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
+use Zikula\Core\RouteUrl;
 
 
 /**
@@ -37,7 +37,7 @@ class ControllerHelper extends AbstractControllerHelper
     public function processViewActionParameters($objectType, SortableColumns $sortableColumns, array $templateParameters = [], $hasHookSubscriber = false)
     {
     	$templateParameters = parent::processViewActionParameters($objectType, $sortableColumns, $templateParameters);
-    	if ($objectType == 'category') {
+    	if ($objectType == 'category' && $this->variableApi->get('MUBoardModule', 'showStatisticInDetails') == 1) {
     	$entries = $templateParameters['items'];
     	unset($templateParameters['items']);
     	$postingsRepository = $this->entityFactory->getRepository('posting');
@@ -71,7 +71,6 @@ class ControllerHelper extends AbstractControllerHelper
     				unset($forum);
     			}
     			unset($forums);
-
     			}
     		}
 
@@ -87,7 +86,59 @@ class ControllerHelper extends AbstractControllerHelper
     	$templateParameters['items'] = $newEntries;
         }
     	
-    	return $templateParameters;
+    	return $templateParameters;    
+    }
     
+    /**
+     * Processes the parameters for a display action.
+     *
+     * @param string  $objectType         Name of treated entity type
+     * @param array   $templateParameters Template data
+     * @param boolean $hasHookSubscriber  Whether hook subscribers are supported or not
+     *
+     * @return array Enriched template parameters used for creating the response
+     */
+    public function processDisplayActionParameters($objectType, array $templateParameters = [], $hasHookSubscriber = false)
+    {
+    	$contextArgs = ['controller' => $objectType, 'action' => 'display'];
+    	if (!in_array($objectType, $this->getObjectTypes('controllerAction', $contextArgs))) {
+    		throw new \Exception($this->__('Error! Invalid object type received.'));
+    	}
+    
+    	if (true === $hasHookSubscriber) {
+    		// build RouteUrl instance for display hooks
+    		$entity = $templateParameters[$objectType];
+    		$urlParameters = $entity->createUrlArgs();
+    		$urlParameters['_locale'] = $this->request->getLocale();
+    		$templateParameters['currentUrlObject'] = new RouteUrl('muboardmodule_' . strtolower($objectType) . '_display', $urlParameters);
+    	}
+    	if ($objectType == 'category' && $this->variableApi->get('MUBoardModule', 'showStatisticInDetails') == 1) {
+    		$forums = $templateParameters[$objectType]['forum'];
+    		$postingsRepository = $this->entityFactory->getRepository('posting');
+   		    $countIssues = 0;
+   		    $countPostings = 0;
+    		if ($forums != NULL) {
+    		    foreach ($forums as $forum) {
+    		    	// where clause for issues
+    		    	$where = 'tbl.parent_id is NULL';
+    		    	$where .= ' AND ';
+    		    	$where .= 'tbl.forum = ' . $forum['id'];
+    		    	// where clause for postings
+    		    	$where2 = 'tbl.forum = ' . $forum['id'];
+    		    	// count issues for categories
+    		    	$countIssues = $countIssues + $postingsRepository->selectCount($where);
+    		    	// count postings for categories
+    		    	$countPostings = $countPostings + count($forum['posting']);
+    		    	// count issues for forums
+    		    	$countIssuesForum = $postingsRepository->getLastPost($forum['id']);
+    		    	
+    		    }
+    		$templateParameters['category']['countIssues'] = $countIssues;
+    		$templateParameters['category']['countPostings'] = $countPostings;    		
+    		}
+
+    	}
+    
+    	return $this->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);
     }
 }
