@@ -3,43 +3,47 @@
 {% extends 'MUBoardModule::' ~ baseTemplate ~ '.html.twig' %}
 {% block pageTitle %}{{ category|muboardmodule_formattedTitle|default(__('Category')) }}{% endblock %}
 {% block title %}
-    {% set templateTitle = category|muboardmodule_formattedTitle|default(__('Category')) %}
-    {{ templateTitle|notifyFilters('muboardmodule.filter_hooks.categories.filter')|safeHtml }}
+    {#% set templateTitle = category|muboardmodule_formattedTitle|default(__('Category')) %}
+    {{ templateTitle|notifyFilters('muboardmodule.filter_hooks.categories.filter')|safeHtml }#}
     {% set itemActions = knp_menu_get('MUBoardModule:ItemActionsMenu:menu', [], {entity: category, area: routeArea, context: 'display'}) %}
-    <div class="dropdown">
+    {#<div class="dropdown">
         <a id="itemActions{{ category.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
         {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
-    </div>
+    </div>#}
 {% endblock %}
 {% block content %}
     {% set isQuickView = app.request.query.getBoolean('raw', false) %}
     <div class="muboardmodule-category muboardmodule-display">
 
     <div class="row">
-        <div class="col-sm-9">
-    <dl>
-        {% if category.title is not empty %}
-            <dt>{{ __('Title') }}</dt>
-            <dd>{{ category.title }}</dd>
-        {% endif %}
-        {% if category.description is not empty %}
-            <dt>{{ __('Description') }}</dt>
-            <dd>{{ category.description|safeHtml }}</dd>
-        {% endif %}
-        
-    </dl>
+        <div class="col-sm-12">
+            <div class="category-display-header">
+                <div id="category-title">
+                    {% set templateTitle = category|muboardmodule_formattedTitle|default(__('Forum')) %}
+                    <h2>{{ templateTitle|notifyFilters('muboardmodule.filter_hooks.forums.filter')|safeHtml }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="category-display-content">
+            {% if category.forum|default %}
+                {{ include(
+                    '@MUBoardModule/Forum/includeDisplayItemListManyOwn.html.twig',
+                    {items: category.forum}
+                ) }}
+            {% endif %}
+            </div>
+        </div>
+    <div>
 
-    {{ include('@MUBoardModule/Helper/includeStandardFieldsDisplay.html.twig', {obj: category}) }}
+    {#{ include('@MUBoardModule/Helper/includeStandardFieldsDisplay.html.twig', {obj: category}) }#}
 
     {{ block('display_hooks') }}
-        </div>
-        <div class="col-sm-3">
-            {{ block('related_items') }}
         </div>
     </div>
 </div>
 {% endblock %}
-{% block related_items %}
+{#% block related_items %}
     {% if routeArea == 'admin' %}
         <h4>{{ __('Forums') }}</h4>
     {% else %}
@@ -60,7 +64,7 @@
             <a href="{{ path('muboardmodule_forum_' ~ routeArea ~ 'edit', {category: category.getKey()}) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
         </p>
     {% endif %}
-{% endblock %}
+{% endblock %#}
 {% block display_hooks %}
     {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.categories.display_view', id=category.getKey(), urlObject=currentUrlObject) %}
     {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
