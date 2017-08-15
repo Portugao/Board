@@ -21,5 +21,16 @@ use MU\BoardModule\Entity\Repository\Base\AbstractPostingRepository;
  */
 class PostingRepository extends AbstractPostingRepository
 {
-    // feel free to add your own methods here, like for example reusable DQL queries
+    public function getLastPost($forumid) {
+    	$qb = $this->getEntityManager()->createQueryBuilder();
+    	$qb->select('tbl');
+    	$qb->from('MUBoardModule_Entity_Posting', 'tbl');
+    	$qb->where('tbl.forum = :forum')->setParameter('forum', $forumid);
+    	$qb->setMaxResults(1);
+    	$qb->orderBy('DESC', 'createdDate');
+    	
+        $query = $qb->getQuery();
+        $result = $query->getResult();
+        return $result;
+    }
 }
