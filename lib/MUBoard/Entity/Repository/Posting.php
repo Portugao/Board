@@ -135,7 +135,7 @@ class MUBoard_Entity_Repository_Posting extends MUBoard_Entity_Repository_Base_P
     	   	$qb->select('tbl')
     	   	   ->from('MUBoard_Entity_Posting', 'tbl')
     	   	   ->where('tbl.forum = :forum')->setParameter('forum', $forumid)
-    	   	   ->andWhere('tbl.parent = :value')->setParameter('value', NULL);
+    	   	   ->andWhere('tbl.parent is NULL');
     
         $query = $qb->getQuery();
     	$results = $query->getResult();

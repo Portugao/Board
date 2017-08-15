@@ -124,7 +124,7 @@ class MUBoard_Util_View extends MUBoard_Util_Base_View
     {
         $count = 0;
 
-        // get repositoy for Forum
+        // get repository for Forum
         $repository = MUBoard_Util_Model::getPostingRepository();
         // get postings
         $postings = $repository->getIssuesOfForum($forumid);
