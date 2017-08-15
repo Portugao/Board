@@ -178,6 +178,7 @@ div.muboardmodule-view .avatar img {
 .children-include-header {
 	padding: 5px;
     border-bottom: 1px solid #bbb;
+    font-size: 0.9em;
 }
 
 .children-include-user,
