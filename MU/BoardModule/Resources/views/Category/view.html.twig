@@ -4,10 +4,9 @@
 {% block content %}
 
 <div class="muboardmodule-category muboardmodule-view">
-    {% set detailStatistic = getModVar('MUBoardModule','showStatisticInDetails') %}
+    
     {{ block('page_nav_links') }}
-
-
+    {% set detailStatistic = getModVar('MUBoardModule','showStatisticInDetails') %}
     {#{ include('@MUBoardModule/Category/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
 
     {% if routeArea != 'admin' %}
