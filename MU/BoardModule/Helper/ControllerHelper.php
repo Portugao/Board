@@ -41,27 +41,49 @@ class ControllerHelper extends AbstractControllerHelper
     	$entries = $templateParameters['items'];
     	unset($templateParameters['items']);
     	$postingsRepository = $this->entityFactory->getRepository('posting');
+    	$countIssues = 0;
     	$countPostings = 0;
     	foreach ($entries as $entry) {
     		if ($objectType == 'category') {
     			$forums = $entry['forum'];
+    			//unset($entry['forum']);
+    			if ($forums != NULL) {
     			foreach ($forums as $forum) {
+    				// where clause for issues
     				$where = 'tbl.parent_id is NULL';
-    				$countIssues = $postingsRepository->selectCount($where);
+    				$where .= ' AND ';
+    				$where .= 'tbl.forum = ' . $forum['id'];
+    				// where clause for postings
+    				$where2 = 'tbl.forum = ' . $forum['id'];
+    				// count issues for categories
+    				$countIssues = $countIssues + $postingsRepository->selectCount($where);
+    				// count postings for categories
     				$countPostings = $countPostings + count($forum['posting']);
-    			}
-    			foreach ($forums as $forum) {
-    				$forum['countPostings'] = count($forum['posting']);
+    				// count issues for forums
+    				$countIssuesForum = $postingsRepository->selectCount($where);
+    				// count postings for forums    				
+    				$countPostingsForum = $postingsRepository->selectCount($where2);
+    				$forum['countIssues'] = $countIssuesForum;
+    				$forum['countPostings'] = $countPostingsForum;
+    				$countIssuesForum = 0;
+    				$countPostingsForum = 0;
     				$newForums[] = $forum;
+    				unset($forum);
+    			}
+    			unset($forums);
+
     			}
     		}
 
-            //$entry['forum'] = $newForums;
+    		$entry['forum'] = $newForums;
+    		unset($newForums);
     		$entry['countIssues'] = $countIssues;
     		$entry['countPostings'] = $countPostings;
-    		$newEntries[] = $entry;
-    		
+    		$countIssues = 0;
+    		$countPostings = 0;
+    		$newEntries[] = $entry;    		
     	}
+    	
     	$templateParameters['items'] = $newEntries;
         }
     	

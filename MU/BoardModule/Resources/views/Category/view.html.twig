@@ -4,10 +4,11 @@
 {% block content %}
 
 <div class="muboardmodule-category muboardmodule-view">
-
+    {% set detailStatistic = getModVar('MUBoardModule','showStatisticInDetails') %}
     {{ block('page_nav_links') }}
 
-    {{ include('@MUBoardModule/Category/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
+
+    {#{ include('@MUBoardModule/Category/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
 
     {% if routeArea != 'admin' %}
 
@@ -20,13 +21,15 @@
                             <h2><a href="{{ path('muboardmodule_category_' ~ routeArea ~ 'display', {'id': category.getId()}) }}" title="{{ category|muboardmodule_formattedTitle|e('html_attr') }}">{{ category.title }}</a></h2>
                         </div>
                         </div>
-                        <div class="col-md-4"> 
-                            <button class="btn btn-primary btn-xs" type="button">
+                        <div class="col-md-4">
+                        {% if detailStatistic == 1 %}
+                            <button class="btn btn-success btn-xs" type="button">
                             {{ __('Issues') }} <span class="badge">{{ category.countIssues }}</span>
                             </button> 
-                            <button class="btn btn-primary btn-xs" type="button">
+                            <button class="btn btn-info btn-xs" type="button">
                             {{ __('Postings') }} <span class="badge">{{ category.countPostings }}</span>
-                            </button>                        
+                            </button>
+                        {% endif %}                        
                         </div>
                         <div class="col-md-3"> 
 

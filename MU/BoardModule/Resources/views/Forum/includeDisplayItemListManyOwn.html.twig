@@ -1,6 +1,6 @@
 {# purpose of this template: inclusion template for display of related forums #}
 {% set hasAdminPermission = hasPermission('MUBoardModule:Forum:', '::', 'ACCESS_EDIT') %}
-
+{% set detailStatistic = getModVar('MUBoardModule','showStatisticInDetails') %}
 {% if noLink is not defined %}
     {% set noLink = false %}
 {% endif %}
@@ -9,7 +9,7 @@
 {% for item in items %}
     {% if hasAdminPermission or item.workflowState == 'approved' %}
     <div class="list-group-item col-md-12">
-    <div class="col-md-4">
+    <div class="col-md-5">
 <h4 class="list-group-item-heading">
 {% spaceless %}
 {% if not noLink %}
@@ -23,15 +23,17 @@
 {% endspaceless %}
 </h4>
     </div>
-    <div class="col-md-3">
-        <button class="btn btn-primary btn-xs" type="button">
-            {{ __('Issues') }} <span class="badge">{#{ item.forum.countIssues }#}</span>
+    <div class="col-md-4">
+    {% if detailStatistic == 1 %}
+        <button class="btn btn-success btn-xs" type="button">
+            {{ __('Issues') }} <span class="badge">{{ item.countIssues }}</span>
         </button>
-        <button class="btn btn-primary btn-xs" type="button">
-            {{ __('Postings') }} <span class="badge">{#{ item.forum.countPostings }#}</span>
-        </button> 
+        <button class="btn btn-info btn-xs" type="button">
+            {{ __('Postings') }} <span class="badge">{{ item.countPostings }}</span>
+        </button>
+    {% endif %}
     </div>
-    <div class="col-md-5">
+    <div class="col-md-3">
 
     </div>
     </div>
