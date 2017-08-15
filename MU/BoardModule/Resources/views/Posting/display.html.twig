@@ -21,13 +21,19 @@
                 <div class="col-sm-4">       
                     <div id="posting-title">
                         {% set templateTitle = posting|muboardmodule_formattedTitle|default(__('Posting')) %}
-                        <h2>{{ templateTitle|notifyFilters('muboardmodule.filter_hooks.forums.filter')|safeHtml }}</h2>
+                        <h3>{{ templateTitle|notifyFilters('muboardmodule.filter_hooks.forums.filter')|safeHtml }}</h3>
                     </div>
                 </div>
-                <div class="col-sm-4">
-            
+                <div class="col-sm-5">
+                <div class="col-sm-5">
+                {{ userAvatar(posting.createdBy.getUid(), {rating: 'g'}) }}
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-7">
+                {% set profileLink = posting.createdBy.getUid()|profileLinkByUserId() %}
+                    {{ __f('Created by %user on %date', {'%user': profileLink, '%date': posting.createdDate|localizeddate('medium', 'short')})|raw }}
+                </div>
+                </div>
+                <div class="col-sm-3">
                     <h4>{{ __('Category') }}: {{ posting.forum.category.title }}</h4>
                     <h4>{{ __('Forum') }}: {{ posting.forum.title }}</h4>
                 </div>
