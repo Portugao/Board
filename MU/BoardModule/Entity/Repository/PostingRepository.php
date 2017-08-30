@@ -24,10 +24,10 @@ class PostingRepository extends AbstractPostingRepository
     public function getLastPost($forumid) {
     	$qb = $this->getEntityManager()->createQueryBuilder();
     	$qb->select('tbl');
-    	$qb->from('MUBoardModule_Entity_Posting', 'tbl');
+    	$qb->from($this->mainEntityClass, 'tbl');
     	$qb->where('tbl.forum = :forum')->setParameter('forum', $forumid);
     	$qb->setMaxResults(1);
-    	$qb->orderBy('DESC', 'createdDate');
+    	$qb->orderBy('tbl.createdDate', 'DESC');
     	
         $query = $qb->getQuery();
         $result = $query->getResult();
