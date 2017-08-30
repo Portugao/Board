@@ -63,6 +63,9 @@ class ControllerHelper extends AbstractControllerHelper
     				$countIssuesForum = $postingsRepository->selectCount($where);
     				// count postings for forums    				
     				$countPostingsForum = $postingsRepository->selectCount($where2);
+    				// get last posting of forum
+    				$last = $postingsRepository->getLastPost($forum['id']);
+    				$forum['last'] = $postingsRepository->find($last[0]['id']);
     				$forum['countIssues'] = $countIssuesForum;
     				$forum['countPostings'] = $countPostingsForum;
     				$countIssuesForum = 0;
@@ -129,12 +132,16 @@ class ControllerHelper extends AbstractControllerHelper
     		    	$countIssues = $countIssues + $postingsRepository->selectCount($where);
     		    	// count postings for categories
     		    	$countPostings = $countPostings + count($forum['posting']);
-    		    	// count issues for forums
-    		    	$countIssuesForum = $postingsRepository->getLastPost($forum['id']);
+    		    	// get last for forum
+    		    	$forum['last'] = $postingsRepository->getLastPost($forum['id']);
+    		    	$newForums[] = $forum;
+    		    	
     		    	
     		    }
+    		//unset($templateParameters[$objectType]['forum']);
     		$templateParameters['category']['countIssues'] = $countIssues;
-    		$templateParameters['category']['countPostings'] = $countPostings;    		
+    		$templateParameters['category']['countPostings'] = $countPostings;
+    		$templateParameters['category']['forum'] = $newForums;
     		}
 
     	}
