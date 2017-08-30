@@ -14,7 +14,7 @@
 {% spaceless %}
 {% if item.state == 0 %}<span class="state-green posting-state"><i class="fa fa-unlock" aria-hidden="true"></i></span>{% else %}<span class="state-red posting-state"><i class="fa fa-lock" aria-hidden="true"></i></span>{% endif %} 
 {% if not noLink %}
-    <a class="forum-include-link" href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'display', {'id': item.getId()}) }}" title="{{ item|muboardmodule_formattedTitle|e('html_attr') }}">
+    <a class="forum-include-link" href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'display', {'id': item.getId()}) }}" title="{{ item|muboardmodule_formattedTitle|e('html_attr') }}" data-posting-id="{{ item.id }}">
 {% endif %}
     {{ item|muboardmodule_formattedTitle }}
 {% if not noLink %}
@@ -28,26 +28,33 @@
         {{ __('Last answer') }}:
     </div>
     </div>
+
+    {% endif %}
+{% endif %}
+{% endfor %}
+</div>
     <script>
-var MU = jQuery.noConflict();
+    var MU = jQuery.noConflict();
     MU(document).ready(function() {
         MU('.posting-state').click(function() {
-        var state = MU(this);
-            MU(this).append('<img style="width: 16px; height: 16px;" src="/zik15/images/ajax/indicator.white.gif" />');
-            MU.get('{{ path('muboardmodule_ajax_togglestate', {'id': item.getId()}) }}', function(data) {
+        var postingId = MU(this).next().attr('data-posting-id');
+        var postingLink = MU(this).next();
+        var postingState = MU(this);
+            MU(this).append('<img class="ajax-indicator" style="width: 16px; height: 16px;" src="/zik15/images/ajax/indicator.white.gif" />');
+            MU.get('{{ path('muboardmodule_ajax_togglestate')}}?id=' + postingId, function(data) {
                 if(data) {
-                    state.after('<span class="newstate">{{ __('The state of the posting was changed') }}</span>').find('img').delay(2000).hide('slow');
-                    state.next('span').delay(2000).hide('slow');
-                    state.find('span').has('state-green').delay(2000).remove();
-
+                if (postingState.hasClass('state-green') == true) {
+                        postingState.removeClass('state-green').addClass('state-red');
+                    } else {
+                        postingState.removeClass('state-red').addClass('state-green');
+                    }
+                    MU('.ajax-indicator').hide('slow').remove();
+                    postingLink.after('<span id="statusmessage">{{ __('The state of this issue was changed') }}</span>');
+                    MU('#statusmessage').delay(4000).hide('slow');
                 }
             });
         });
     });
 
 </script>
-    {% endif %}
-{% endif %}
-{% endfor %}
-</div>
 {% endif %}
