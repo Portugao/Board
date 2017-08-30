@@ -34,7 +34,9 @@
     {% endif %}
     </div>
     <div class="col-md-3">
-
+        {{ ('Last posting') }}: 
+        {% if item.last %}<span class="last-posting">{{ item.last.text|safeHtml|truncate(30) }} <br />{{ __('by') }}
+        <span class="posting-avatar">{{ userAvatar(item.createdBy.getUid(), {rating: 'g'}) }}</span> {% set profileLink = item.createdBy.getUid()|profileLinkByUserId() %} {{ profileLink|raw }}<br />{{ __('on') }}  {{ item.createdDate|localizeddate('medium', 'short')}} {% else %}{{ __('No posting available') }}{% endif %}
     </div>
     </div>
     {% endif %}
