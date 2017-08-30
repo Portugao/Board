@@ -133,7 +133,8 @@ class ControllerHelper extends AbstractControllerHelper
     		    	// count postings for categories
     		    	$countPostings = $countPostings + count($forum['posting']);
     		    	// get last for forum
-    		    	$forum['last'] = $postingsRepository->getLastPost($forum['id']);
+    		    	$last = $postingsRepository->getLastPost($forum['id']);
+    		    	$forum['last'] = $postingsRepository->find($last[0]['id']);
     		    	$newForums[] = $forum;
     		    	
     		    	
@@ -145,6 +146,55 @@ class ControllerHelper extends AbstractControllerHelper
     		}
 
     	}
+    	
+    	if ($objectType == 'forum' && $this->variableApi->get('MUBoardModule', 'showStatisticInDetails') == 1) {
+    		
+    		$countIssues = 0;
+    		$countPostings = 0;
+    		
+    		$postings = $templateParameters[$objectType]['posting'];
+    		$postingsRepository = $this->entityFactory->getRepository('posting');    		
+    		
+    		// where clause for issues
+    		$where = 'tbl.parent is NULL';
+    		$where .= ' AND ';
+    		$where .= 'tbl.forum = ' . $entity['id'];
+    		
+    		// where clause for postings
+    		$where2 = 'tbl.forum = ' . $entity['id'];
+    		// count issues for forum
+    		$countIssues = $countIssues + $postingsRepository->selectCount($where);
+    		// count postings for forum
+    		$countPostings = $countPostings + count($entity['posting']);
+    		
+    		// get issues for forum
+    		$issues = $postingsRepository->selectWhere($where);		
+
+    		if ($issues) {
+    			foreach ($issues as $posting) {
+    				if ($posting['parent'] === NULL) {
+    					
+    					$posting['countAnswers'] = count($posting['children']);
+
+    				    // get last for issue
+    				    $last = $postingsRepository->getLastAnswer($posting['id']);
+    				    if ($last) {
+    				        $posting['last'] = $postingsRepository->find($last[0]['id']);
+    				    }
+    				
+    				}	
+    				$newPostings[] = $posting;	
+    			}
+    			//unset($templateParameters[$objectType]['posting']);
+
+    			$templateParameters['forum']['posting'] = $newPostings;
+    		}
+    		$templateParameters['forum']['countIssues'] = $countIssues;
+    		$templateParameters['forum']['countPostings'] = $countPostings;
+    	
+    	}
+    	
+
     
     	return $this->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);
     }
