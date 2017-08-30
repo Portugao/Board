@@ -1,5 +1,11 @@
 {# purpose of this template: build the user form to edit an instance of posting #}
-{% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : 'base' %}
+{% set entry = app.request.query.getAlpha('ot', 'posting') %}
+{% set func = app.request.query.getAlpha('func' , 'view') %}
+{% if func != 'display' and entry != 'posting' %}
+{% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
+{% else %}
+{% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base2') %}
+{% endif %}
 {% extends 'MUBoardModule::' ~ baseTemplate ~ '.html.twig' %}
 
 {% block header %}
