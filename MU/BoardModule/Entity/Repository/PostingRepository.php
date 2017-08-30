@@ -21,6 +21,10 @@ use MU\BoardModule\Entity\Repository\Base\AbstractPostingRepository;
  */
 class PostingRepository extends AbstractPostingRepository
 {
+	/**
+	 * 
+	 * @param integer $forumid
+	 */
     public function getLastPost($forumid) {
     	$qb = $this->getEntityManager()->createQueryBuilder();
     	$qb->select('tbl');
@@ -32,5 +36,21 @@ class PostingRepository extends AbstractPostingRepository
         $query = $qb->getQuery();
         $result = $query->getResult();
         return $result;
+    }
+    
+    /**
+     * @param integer $issueid
+     */
+    public function getLastAnswer($issueid) {
+    	$qb = $this->getEntityManager()->createQueryBuilder();
+    	$qb->select('tbl');
+    	$qb->from($this->mainEntityClass, 'tbl');
+    	$qb->where('tbl.parent = :issue')->setParameter('issue', $issueid);
+    	$qb->setMaxResults(1);
+    	$qb->orderBy('tbl.createdDate', 'DESC');
+    	 
+    	$query = $qb->getQuery();
+    	$result = $query->getResult();
+    	return $result;    	
     }
 }
