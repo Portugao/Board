@@ -28,5 +28,61 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PostingEntity extends BaseEntity
 {
-    // feel free to add your own methods here
+    /**
+     * @var \MU\BoardModule\Entity\PostingEntity $last
+     */
+    protected $last = '';
+    
+    /**
+     * Returns the last.
+     *
+     * @return object
+     */
+    public function getLast()
+    {
+    	return $this->last;
+    }
+    
+    /**
+     * Sets the last.
+     *
+     * @param object $last
+     *
+     * @return void
+     */
+    public function setLast($last)
+    {
+    	if ($this->last !== $last) {
+    		$this->last = $last;
+    	}
+    }
+    
+    /**
+     * @var integer $countAnswers
+     */
+    protected $countAnswers = 0;
+    
+    /**
+     * Returns the countAnswers.
+     *
+     * @return integer
+     */
+    public function getCountAnswers()
+    {
+    	return $this->countAnswers;
+    }
+    
+    /**
+     * Sets the countAnswers.
+     *
+     * @param integer $countAnswers
+     *
+     * @return void
+     */
+    public function setCountAnswers($countAnswers)
+    {
+    	if (intval($this->countAnswers) !== intval($countAnswers)) {
+    		$this->countAnswers = intval($countAnswers);
+    	}
+    }
 }
