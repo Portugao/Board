@@ -90,6 +90,7 @@ abstract class AbstractCategoryEntity extends EntityAccess
      *
      * @ORM\OneToMany(targetEntity="MU\BoardModule\Entity\ForumEntity", mappedBy="category", cascade={"remove"})
      * @ORM\JoinTable(name="mu_board_categoryforum")
+     * @ORM\OrderBy({"pos" = "ASC"})
      * @var \MU\BoardModule\Entity\ForumEntity[] $forum
      */
     protected $forum = null;

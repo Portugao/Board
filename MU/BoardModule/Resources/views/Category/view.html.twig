@@ -2,7 +2,7 @@
 {% extends 'MUBoardModule::base.html.twig' %}
 {% block title own ? __('My categories') : __('Categories list') %}
 {% block content %}
-
+{% set hasAdminPermission = hasPermission('MUBoardModule::', '::', 'ACCESS_ADMIN') %}
 <div class="muboardmodule-category muboardmodule-view">
     
     {{ block('page_nav_links') }}
@@ -85,4 +85,33 @@
             {{ hook }}
         {% endfor %}
     {% endif % #}
+    {% if hasAdminPermission %}
+<script>
+var MU = jQuery.noConflict();
+		MU('.forum').each(function() {
+		MU(this).sortable({
+			update: function(event, ui) {
+				var sortedIDs = MU(this).sortable('toArray').toString();
+				//var sorted = MU(this).sortable( "serialize", { key: "id" } );
+				MU.get('{{ path('muboardmodule_ajax_saveforumposition') }}',{forums:sortedIDs} , function(data) {
+                if(data) {
+                    alert(data.message);
+                }
+             });
+			}
+		});
+		});
+    
+    /*MU('.forum').on('sortchange', function( event, ui ) {
+    var sortedIDs = MU('.forum').sortable( "toArray" ).toString();
+    var sorted = MU('forum').sortable( "serialize", { key: "id" } );
+    MU.get('{{ path('muboardmodule_ajax_saveforumposition') }}',{pictures:sortedIDs} , function(data) {
+        if(data) {
+            alert(data.message);
+        }
+    });
+    });*/
+
+</script>
+{% endif %}
 {% endblock %}

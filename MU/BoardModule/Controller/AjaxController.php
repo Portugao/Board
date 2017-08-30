@@ -130,8 +130,69 @@ class AjaxController extends AbstractAjaxController
                 array('content-type' => 'text/html')
                 );
     			
-    			// return response
-    			return $response;
+                // return response
+                return new JsonResponse($state);
+    }
+    
+    /**
+     * Changes a given state (boolean field) by switching between true and false.
+     *
+     * @Route("/saveForumPosition", options={"expose"=true})
+     * @Method("GET")
+     *
+     * @param Request $request Current request instance
+     *
+     * @return JsonResponse
+     *
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
+     */
+    public function saveForumPositionAction(Request $request)
+    {
+    	return $this->saveForumPosition($request);
+    }
+    
+    public function saveForumPosition($request)
+    {
+    	if (!$this->hasPermission('MUBoardModule::Ajax', '::', ACCESS_EDIT)) {
+    		throw new AccessDeniedException();
+    	}
+    	
+    	//$objectType = 'posting';
+    	$forums = $request->query->get('forums');
+    	$forums = explode(',', $forums);
+    	
+    	if ($forums == '') {
+    		$result = $this->__('Error: invalid input.');
+    	}
+    	
+    	// select data from data source
+    	$entityFactory = $this->get('mu_board_module.entity_factory');
+    	$repository = $entityFactory->getRepository('forum');
+    	
+    	$index = 0;
+    	foreach ($forums as $forum) {
+    	
+    	$index = $index + 1;
+    	$thisForum = $repository->selectById($forum);
+    	$thisForum->setPos($index);
+    	//$entityManager->flush();
+    	/*$thisalbum = $thispicture->getAlbum();
+    	$thisAlbumId = $thisalbum['id'];*/
+    	
+    	// save entity back to database
+    	$entityFactory->getObjectManager()->flush();
+    	}
+    	
+    	/*$logger = $this->get('logger');
+    	$logArgs = ['app' => 'MUBoardModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => $objectType, 'id' => $id];
+    	$logger->notice('{app}: User {user} toggled the state of posting  {entity} with id {id}.', $logArgs);*/
+    	
+        $state = 'Hallo';
+    	 
+        // return response
+        return new JsonResponse([
+            'message' => $this->__('The setting has been successfully changed.')
+        ]); 	
     }
 
     // feel free to add your own ajax controller methods here

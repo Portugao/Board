@@ -231,3 +231,7 @@ div.muboardmodule-view .avatar img {
 	padding: 1px;
 	margin: 2px 5px 0 0;
 }
+
+.fa-bars {
+	cursor: move;
+}

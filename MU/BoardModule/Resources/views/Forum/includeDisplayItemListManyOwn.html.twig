@@ -8,8 +8,12 @@
 <div class="list-group muboardmodule-related-item-list forum">
 {% for item in items %}
     {% if hasAdminPermission or item.workflowState == 'approved' %}
-    <div class="list-group-item col-md-12">
-    <div class="col-md-5">
+    {% set listId = 'pictures_' ~ item.id %}
+    <div id={{ item.id }} class="list-group-item col-md-12">
+    <div class="col-md-1"> 
+        <i class="fa fa-bars fa-2x" aria-hidden="true"></i>  
+    </div>
+    <div class="col-md-4">
 <h4 class="list-group-item-heading">
 {% spaceless %}
 {% if not noLink %}
@@ -23,7 +27,7 @@
 {% endspaceless %}
 </h4>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
     {% if detailStatistic == 1 %}
         <button class="btn btn-success btn-xs" type="button">
             {{ __('Issues') }} <span class="badge">{{ item.countIssues }}</span>
@@ -45,6 +49,7 @@
         {% if item.last %}<span class="last-posting"><a href="{{ path('muboardmodule_posting_display', {'id': itemLink }) }}">{{ itemText }}</a><br />{{ __('by') }}
         <span class="posting-avatar">{{ userAvatar(item.last.createdBy.getUid(), {rating: 'g'}) }}</span> {% set profileLink = item.last.createdBy.getUid()|profileLinkByUserId() %} {{ profileLink|raw }}<br />{{ __('on') }}  {{ item.createdDate|localizeddate('medium', 'short')}} {% else %}{{ __('No posting available') }}{% endif %}
     </div>
+    <input name="pictures[]" type="hidden" value={$item.id} />
     </div>
     {% endif %}
 {% endfor %}
