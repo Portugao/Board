@@ -214,3 +214,20 @@ div.muboardmodule-view .avatar img {
 .newstate {
 	font-size: 0.8em;
 }
+
+.last-posting {
+	font-size: 0.85em;
+	display: block;
+	width: 100%;
+	float: left;
+}
+
+.posting-avatar {
+	float: left;
+	width: 25px;
+}
+
+.posting-avatar img {
+	padding: 1px;
+	margin: 2px 5px 0 0;
+}
