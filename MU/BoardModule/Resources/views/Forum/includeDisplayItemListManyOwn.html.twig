@@ -35,8 +35,15 @@
     </div>
     <div class="col-md-3">
         {{ ('Last posting') }}: 
-        {% if item.last %}<span class="last-posting">{{ item.last.text|safeHtml|truncate(30) }} <br />{{ __('by') }}
-        <span class="posting-avatar">{{ userAvatar(item.createdBy.getUid(), {rating: 'g'}) }}</span> {% set profileLink = item.createdBy.getUid()|profileLinkByUserId() %} {{ profileLink|raw }}<br />{{ __('on') }}  {{ item.createdDate|localizeddate('medium', 'short')}} {% else %}{{ __('No posting available') }}{% endif %}
+        {% if item.last.parent is not null %}
+            {% set itemLink = item.last.parent.id %}
+            {% set itemText = item.last.text|truncate(30) %}
+        {% else %}
+            {% set itemLink = item.last.id %}
+            {% set itemText = item.last.title %}
+        {% endif %}
+        {% if item.last %}<span class="last-posting"><a href="{{ path('muboardmodule_posting_display', {'id': itemLink }) }}">{{ itemText }}</a><br />{{ __('by') }}
+        <span class="posting-avatar">{{ userAvatar(item.last.createdBy.getUid(), {rating: 'g'}) }}</span> {% set profileLink = item.last.createdBy.getUid()|profileLinkByUserId() %} {{ profileLink|raw }}<br />{{ __('on') }}  {{ item.createdDate|localizeddate('medium', 'short')}} {% else %}{{ __('No posting available') }}{% endif %}
     </div>
     </div>
     {% endif %}
