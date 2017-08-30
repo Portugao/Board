@@ -1,0 +1,18 @@
+{# purpose of this template: general base layout #}
+{% block header %}
+    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.js')) }}
+{% endblock %}
+
+{% block titleArea %}
+    <h2>{% block title %}{% endblock %}</h2>
+{% endblock %}
+{{ pageSetVar('title', block('pageTitle')|default(block('title'))) }}
+
+{{ include('@MUBoardModule/Helper/includeModerationPanel.html.twig') }}
+
+{{ showflashes() }}
+
+{% block content %}{% endblock %}
+
+{% block footer %}
+{% endblock %}
