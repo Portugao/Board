@@ -85,4 +85,33 @@ class ForumEntity extends BaseEntity
     		$this->countPostings = intval($countPostings);
     	}
     }
+    
+    /**
+     * @var \MU\BoardModule\Entity\PostingEntity $last
+     */
+    protected $last = '';
+    
+    /**
+     * Returns the last.
+     *
+     * @return object
+     */
+    public function getLast()
+    {
+    	return $this->last;
+    }
+    
+    /**
+     * Sets the last.
+     *
+     * @param object $last
+     *
+     * @return void
+     */
+    public function setLast($last)
+    {
+    	if ($this->last !== $last) {
+    		$this->last = $last;
+    	}
+    }
 }
