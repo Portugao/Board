@@ -186,8 +186,6 @@ class AjaxController extends AbstractAjaxController
     	/*$logger = $this->get('logger');
     	$logArgs = ['app' => 'MUBoardModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => $objectType, 'id' => $id];
     	$logger->notice('{app}: User {user} toggled the state of posting  {entity} with id {id}.', $logArgs);*/
-    	
-        $state = 'Hallo';
     	 
         // return response
         return new JsonResponse([
