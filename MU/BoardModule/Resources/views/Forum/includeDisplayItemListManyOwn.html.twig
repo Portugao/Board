@@ -10,8 +10,10 @@
     {% if hasAdminPermission or item.workflowState == 'approved' %}
     {% set listId = 'pictures_' ~ item.id %}
     <div id={{ item.id }} class="list-group-item col-md-12">
-    <div class="col-md-1"> 
-        <i class="fa fa-bars fa-2x" aria-hidden="true"></i>  
+    <div class="col-md-1">
+        <div class="move-forum">
+            <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
+        </div> 
     </div>
     <div class="col-md-4">
 <h4 class="list-group-item-heading">
