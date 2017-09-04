@@ -30,7 +30,15 @@
                 </div>
                 <div class="col-sm-7">
                 {% set profileLink = posting.createdBy.getUid()|profileLinkByUserId() %}
-                    {{ __f('Created by %user on %date', {'%user': profileLink, '%date': posting.createdDate|localizeddate('medium', 'short')})|raw }}
+                {{ __f('Created by %user on %date', {'%user': profileLink, '%date': posting.createdDate|localizeddate('medium', 'short')})|raw }}
+                {{ __('Rank') }}: {{ posting.user.rank.name }}<br />
+                {% set rankAmount = posting.user.rank.numberOficons %}
+                {% set counter = 0 %}
+                {% set icon = getModVar('MUBoardModule', 'standardIcon' ) %}
+                {% for i in 1..rankAmount %}
+                    <img src="../../{{ icon }}" />
+                {% endfor %}
+                
                 </div>
                 </div>
                 <div class="col-sm-3">
