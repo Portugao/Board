@@ -1,7 +1,7 @@
 {# purpose of this template: reusable display of standard fields #}
 {% if (obj.createdBy|default and obj.createdBy.getUid() > 0) or (obj.updatedBy|default and obj.updatedBy.getUid() > 0) %}
 
-    <div class="col-md-6">
+    <div class="col-md-5">
     {% if obj.createdBy|default and obj.createdBy.getUid() > 0 %}
         {% set profileLink = obj.createdBy.getUid()|profileLinkByUserId() %}
         <dd class="avatar">{{ userAvatar(obj.createdBy.getUid(), {rating: 'g', width: '80px'}) }}</dd>
@@ -16,7 +16,14 @@
         </dd>
     {% endif %}
     </div>
-    <div class="col-md-6">
-    
+    <div class="col-md-7">
+        {{ obj.user.rank.name }}<br />
+        {% set rankAmount = obj.user.rank.numberOficons %}
+        {% set counter = 0 %}
+        {% set icon = getModVar('MUBoardModule', 'standardIcon' ) %}
+        {% for i in 1..rankAmount %}
+            <img src="../../{{ icon }}" />
+        {% endfor %}<br />
+        Last visit: {{ obj.user.lastVisit|localizeddate('medium', 'short') }}
     </div>
 {% endif %}
