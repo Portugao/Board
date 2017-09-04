@@ -85,4 +85,33 @@ class PostingEntity extends BaseEntity
     		$this->countAnswers = intval($countAnswers);
     	}
     }
+    
+    /**
+     * @var \MU\BoardModule\Entity\userEntity $last
+     */
+    protected $user = '';
+    
+    /**
+     * Returns the user.
+     *
+     * @return object
+     */
+    public function getUser()
+    {
+    	return $this->user;
+    }
+    
+    /**
+     * Sets the user.
+     *
+     * @param object $user
+     *
+     * @return void
+     */
+    public function setUser($user)
+    {
+    	if ($this->user !== $user) {
+    		$this->user = $user;
+    	}
+    }
 }
