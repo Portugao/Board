@@ -223,8 +223,6 @@ abstract class AbstractPostingQuickNavType extends AbstractType
                     $this->__('Title') => 'title',
                     $this->__('Text') => 'text',
                     $this->__('Invocations') => 'invocations',
-                    $this->__('State') => 'state',
-                    $this->__('Solved') => 'solved',
                     $this->__('First image') => 'firstImage',
                     $this->__('Second image') => 'secondImage',
                     $this->__('Third image') => 'thirdImage',

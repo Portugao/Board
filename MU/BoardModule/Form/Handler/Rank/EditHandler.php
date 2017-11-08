@@ -15,7 +15,7 @@ namespace MU\BoardModule\Form\Handler\Rank;
 use MU\BoardModule\Form\Handler\Rank\Base\AbstractEditHandler;
 
 /**
- * This handler class handles the page events of the Form called by the mUBoardModule_rank_edit() function.
+ * This handler class handles the page events of editing forms.
  * It aims on the rank object type.
  */
 class EditHandler extends AbstractEditHandler

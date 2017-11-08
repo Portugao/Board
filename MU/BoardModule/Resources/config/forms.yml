@@ -154,6 +154,7 @@ services:
             - "@mu_board_module.collection_filter_helper"
             - "@mu_board_module.entity_display_helper"
             - "@mu_board_module.listentries_helper"
+            - "@request_stack"
         tags:
             - { name: form.type }
     

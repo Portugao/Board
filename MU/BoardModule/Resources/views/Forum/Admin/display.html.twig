@@ -34,7 +34,7 @@
                   <a href="{{ path('muboardmodule_category_' ~ routeArea ~ 'display', {'id': forum.category.getId()}) }}">{% spaceless %}
                     {{ forum.category|muboardmodule_formattedTitle }}
                   {% endspaceless %}</a>
-                  <a id="categoryItem{{ forum.category.getKey() }}Display" href="{{ path('muboardmodule_category_' ~ routeArea ~ 'display', {'id': forum.category.getId(), raw: 1}) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muboard-inline-window hidden" data-modal-title="{{ forum.category|muboardmodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+                  <a id="categoryItem{{ forum.category.getKey() }}Display" href="{{ path('muboardmodule_category_' ~ routeArea ~ 'display', {'id': forum.category.getId(), raw: 1}) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muboard-inline-window hidden" data-modal-title="{{ forum.category|muboardmodule_formattedTitle|e('html_attr') }}"><i class="fa fa-id-card-o"></i></a>
               {% else %}
                   {{ forum.category|muboardmodule_formattedTitle }}
               {% endif %}
@@ -55,9 +55,9 @@
 {% endblock %}
 {% block related_items %}
     {% if routeArea == 'admin' %}
-        <h4>{{ __('Postings') }}</h4>
+        <h4>{{ __('Posting') }}</h4>
     {% else %}
-        <h3>{{ __('Postings') }}</h3>
+        <h3>{{ __('Posting') }}</h3>
     {% endif %}
     
     {% if forum.posting|default %}
@@ -71,14 +71,15 @@
     {% if mayManage %}
         <p class="managelink">
             {% set createTitle = __('Create posting') %}
-            <a href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'edit', {forum: forum.getKey()}) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+            <a href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'edit', {forum: forum.getKey()}) }}" title="{{ createTitle|e('html_attr') }}"><i class="fa fa-plus"></i> {{ createTitle }}</a>
         </p>
     {% endif %}
 {% endblock %}
 {% block display_hooks %}
-    {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.forums.display_view', id=forum.getKey(), urlObject=currentUrlObject) %}
-    {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
-        <h4>{{ providerArea }}</h4>
-        {{ hook }}
-    {% endfor %}
+    {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.forums.display_view', id=forum.getKey(), urlObject=currentUrlObject, outputAsArray=true) %}
+    {% if hooks is iterable and hooks|length > 0 %}
+        {% for area, hook in hooks %}
+            <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook|raw }}</div>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

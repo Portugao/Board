@@ -51,7 +51,7 @@ abstract class AbstractItemListBlock extends AbstractBlockHandler
     
         // create query
         $orderBy = $this->get('mu_board_module.model_helper')->resolveSortParameter($objectType, $properties['sorting']);
-        $qb = $repository->genericBaseQuery($properties['filter'], $orderBy);
+        $qb = $repository->getListQueryBuilder($properties['filter'], $orderBy);
     
         // get objects from database
         $currentPage = 1;
@@ -92,7 +92,7 @@ abstract class AbstractItemListBlock extends AbstractBlockHandler
     protected function getDisplayTemplate(array $properties)
     {
         $templateFile = $properties['template'];
-        if ($templateFile == 'custom') {
+        if ($templateFile == 'custom' && null !== $properties['customTemplate'] && $properties['customTemplate'] != '') {
             $templateFile = $properties['customTemplate'];
         }
     
@@ -178,9 +178,8 @@ abstract class AbstractItemListBlock extends AbstractBlockHandler
             'sorting' => 'default',
             'amount' => 5,
             'template' => 'itemlist_display.html.twig',
-            'customTemplate' => '',
+            'customTemplate' => null,
             'filter' => ''
         ];
     }
-    
 }

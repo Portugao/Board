@@ -15,6 +15,8 @@ namespace MU\BoardModule\Controller;
 use MU\BoardModule\Controller\Base\AbstractUserController;
 
 use RuntimeException;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -119,6 +121,7 @@ class UserController extends AbstractUserController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
+     * @ParamConverter("user", class="MUBoardModule:UserEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -142,6 +145,7 @@ class UserController extends AbstractUserController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
+     * @ParamConverter("user", class="MUBoardModule:UserEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      *
      * @param Request $request Current request instance
      * @param UserEntity $user Treated user instance
@@ -207,6 +211,7 @@ class UserController extends AbstractUserController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @ParamConverter("user", class="MUBoardModule:UserEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -231,6 +236,7 @@ class UserController extends AbstractUserController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @ParamConverter("user", class="MUBoardModule:UserEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      *
      * @param Request $request Current request instance
      * @param UserEntity $user Treated user instance
@@ -287,6 +293,26 @@ class UserController extends AbstractUserController
     public function handleSelectedEntriesAction(Request $request)
     {
         return parent::handleSelectedEntriesAction($request);
+    }
+
+    /**
+     * This method cares for a redirect within an inline frame.
+     *
+     * @Route("/user/handleInlineRedirect/{idPrefix}/{commandName}/{id}",
+     *        requirements = {"id" = "\d+"},
+     *        defaults = {"commandName" = "", "id" = 0},
+     *        methods = {"GET"}
+     * )
+     *
+     * @param string  $idPrefix    Prefix for inline window element identifier
+     * @param string  $commandName Name of action to be performed (create or edit)
+     * @param integer $id          Identifier of created user (used for activating auto completion after closing the modal window)
+     *
+     * @return PlainResponse Output
+     */
+    public function handleInlineRedirectAction($idPrefix, $commandName, $id = 0)
+    {
+        return parent::handleInlineRedirectAction($idPrefix, $commandName, $id);
     }
 
     // feel free to add your own controller methods here

@@ -15,7 +15,7 @@ namespace MU\BoardModule\Form\Handler\Category;
 use MU\BoardModule\Form\Handler\Category\Base\AbstractEditHandler;
 
 /**
- * This handler class handles the page events of the Form called by the mUBoardModule_category_edit() function.
+ * This handler class handles the page events of editing forms.
  * It aims on the category object type.
  */
 class EditHandler extends AbstractEditHandler

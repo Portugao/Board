@@ -100,6 +100,7 @@ abstract class AbstractForumEntity extends EntityAccess
      *
      * @ORM\OneToMany(targetEntity="MU\BoardModule\Entity\PostingEntity", mappedBy="forum", cascade={"remove"})
      * @ORM\JoinTable(name="mu_board_forumposting")
+     * @ORM\OrderBy({"createdDate" = "ASC"})
      * @var \MU\BoardModule\Entity\PostingEntity[] $posting
      */
     protected $posting = null;

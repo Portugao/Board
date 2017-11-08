@@ -103,12 +103,22 @@ function mUBoardInitEditForm(mode, entityId)
         }
     });
     editForm.find('button[type=submit]').bind('click keypress', function (event) {
-        triggerValidation = !jQuery(this).attr('formnovalidate');
+        triggerValidation = !jQuery(this).prop('formnovalidate');
     });
     editForm.submit(mUBoardHandleFormSubmit);
 
     if (mode != 'create') {
         mUBoardTriggerFormValidation();
+    }
+}
+
+/**
+ * Initialises a relation field section with optional edit capabilities.
+ */
+function mUBoardInitRelationHandling(objectType, alias, idPrefix, includeEditing, inputType, createUrl)
+{
+    if (includeEditing) {
+        mUBoardInitInlineEditingButtons(objectType, alias, idPrefix, inputType, createUrl);
     }
 }
 

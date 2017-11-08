@@ -17,14 +17,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Zikula\Bundle\HookBundle\Category\FormAwareCategory;
 use Zikula\Bundle\HookBundle\Category\UiHooksCategory;
 use Zikula\Component\SortableColumns\Column;
 use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\Controller\AbstractController;
+use Zikula\Core\Response\PlainResponse;
 use Zikula\Core\RouteUrl;
 use MU\BoardModule\Entity\AboEntity;
 
@@ -35,7 +33,6 @@ abstract class AbstractAboController extends AbstractController
 {
     /**
      * This is the default action handling the main admin area called without defining arguments.
-     * @Cache(expires="+7 days", public=true)
      *
      * @param Request $request Current request instance
      *
@@ -50,7 +47,6 @@ abstract class AbstractAboController extends AbstractController
     
     /**
      * This is the default action handling the main area called without defining arguments.
-     * @Cache(expires="+7 days", public=true)
      *
      * @param Request $request Current request instance
      *
@@ -82,7 +78,6 @@ abstract class AbstractAboController extends AbstractController
     }
     /**
      * This action provides an item list overview in the admin area.
-     * @Cache(expires="+2 hours", public=false)
      *
      * @param Request $request Current request instance
      * @param string $sort         Sorting field
@@ -101,7 +96,6 @@ abstract class AbstractAboController extends AbstractController
     
     /**
      * This action provides an item list overview.
-     * @Cache(expires="+2 hours", public=false)
      *
      * @param Request $request Current request instance
      * @param string $sort         Sorting field
@@ -160,8 +154,6 @@ abstract class AbstractAboController extends AbstractController
     }
     /**
      * This action provides a item detail view in the admin area.
-     * @ParamConverter("abo", class="MUBoardModule:AboEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
-     * @Cache(lastModified="abo.getUpdatedDate()", ETag="'Abo' ~ abo.getid() ~ abo.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param AboEntity $abo Treated abo instance
@@ -178,8 +170,6 @@ abstract class AbstractAboController extends AbstractController
     
     /**
      * This action provides a item detail view.
-     * @ParamConverter("abo", class="MUBoardModule:AboEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
-     * @Cache(lastModified="abo.getUpdatedDate()", ETag="'Abo' ~ abo.getid() ~ abo.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param AboEntity $abo Treated abo instance
@@ -226,7 +216,6 @@ abstract class AbstractAboController extends AbstractController
     }
     /**
      * This action provides a handling of edit requests in the admin area.
-     * @Cache(lastModified="abo.getUpdatedDate()", ETag="'Abo' ~ abo.getid() ~ abo.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      *
@@ -243,7 +232,6 @@ abstract class AbstractAboController extends AbstractController
     
     /**
      * This action provides a handling of edit requests.
-     * @Cache(lastModified="abo.getUpdatedDate()", ETag="'Abo' ~ abo.getid() ~ abo.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      *
@@ -290,8 +278,6 @@ abstract class AbstractAboController extends AbstractController
     }
     /**
      * This action provides a handling of simple delete requests in the admin area.
-     * @ParamConverter("abo", class="MUBoardModule:AboEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
-     * @Cache(lastModified="abo.getUpdatedDate()", ETag="'Abo' ~ abo.getid() ~ abo.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param AboEntity $abo Treated abo instance
@@ -309,8 +295,6 @@ abstract class AbstractAboController extends AbstractController
     
     /**
      * This action provides a handling of simple delete requests.
-     * @ParamConverter("abo", class="MUBoardModule:AboEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
-     * @Cache(lastModified="abo.getUpdatedDate()", ETag="'Abo' ~ abo.getid() ~ abo.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param AboEntity $abo Treated abo instance
@@ -535,5 +519,34 @@ abstract class AbstractAboController extends AbstractController
         }
         
         return $this->redirectToRoute('muboardmodule_abo_' . ($isAdmin ? 'admin' : '') . 'index');
+    }
+
+    /**
+     * This method cares for a redirect within an inline frame.
+     *
+     * @param string  $idPrefix    Prefix for inline window element identifier
+     * @param string  $commandName Name of action to be performed (create or edit)
+     * @param integer $id          Identifier of created abo (used for activating auto completion after closing the modal window)
+     *
+     * @return PlainResponse Output
+     */
+    public function handleInlineRedirectAction($idPrefix, $commandName, $id = 0)
+    {
+        if (empty($idPrefix)) {
+            return false;
+        }
+        
+        $formattedTitle = '';
+        $searchTerm = '';
+        
+        $templateParameters = [
+            'itemId' => $id,
+            'formattedTitle' => $formattedTitle,
+            'searchTerm' => $searchTerm,
+            'idPrefix' => $idPrefix,
+            'commandName' => $commandName
+        ];
+        
+        return new PlainResponse($this->get('twig')->render('@MUBoardModule/Abo/inlineRedirectHandler.html.twig', $templateParameters));
     }
 }

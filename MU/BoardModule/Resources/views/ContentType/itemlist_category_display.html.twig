@@ -1,6 +1,6 @@
 {# Purpose of this template: Display categories within an external context #}
 {% for category in items %}
     <h3>{{ category|muboardmodule_formattedTitle }}</h3>
-    <p><a href="{{ path('muboardmodule_category_display', {'id': category.getId()}) }}">{{ __('Read more') }}</a>
+    <p><a href="{{ path('muboardmodule_category_display', {'id': category.getId()}) }}" title="{{ __('Read more')|e('html_attr') }}">{{ __('Read more') }}</a>
     </p>
 {% endfor %}

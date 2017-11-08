@@ -6,6 +6,7 @@
     {{ parent() }}
     {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.Validation.js'), 98) }}
     {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.EditFunctions.js'), 99) }}
+    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.InlineEditing.js'), 99) }}
 {% endblock %}
 {% block title mode == 'create' ? __('Create user') : __('Edit user') %}
 {% block content %}
@@ -25,7 +26,7 @@
         
         {{ include(
             '@MUBoardModule/Rank/includeSelectEditOne.html.twig',
-            {group: 'user', alias: 'rank', aliasReverse: 'user', mandatory: false, idPrefix: 'boardUser_Rank', linkingItem: user, displayMode: 'choices'}
+            {group: 'user', heading: __('Rank'), alias: 'rank', mandatory: false, idPrefix: 'boardUser_Rank', linkingItem: user, displayMode: 'choices'}
         ) }}
         
         {% if formHookTemplates|length > 0 %}
@@ -36,19 +37,15 @@
             </fieldset>
         {% endif %}
         
-        {# include return control #}
-        {% if mode == 'create' %}
-            <fieldset>
-                <legend>{{ __('Return control') }}</legend>
-                {{ form_row(form.repeatCreation) }}
-            </fieldset>
-        {% endif %}
         
         {# include possible submit actions #}
         <div class="form-group form-buttons">
             <div class="col-sm-offset-3 col-sm-9">
                 {% for action in actions %}
                     {{ form_widget(attribute(form, action.id)) }}
+                    {% if mode == 'create' and action.id == 'submit' and form.submitrepeat is defined %}
+                        {{ form_widget(attribute(form, 'submitrepeat')) }}
+                    {% endif %}
                 {% endfor %}
                 {{ form_widget(form.reset) }}
                 {{ form_widget(form.cancel) }}
@@ -56,12 +53,10 @@
         </div>
         {{ form_end(form) }}
         {% set hookId = mode != 'create' ? user.id : null %}
-        {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.users.form_edit', id=hookId) %}
+        {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.users.form_edit', id=hookId, outputAsArray=true) %}
         {% if hooks is iterable and hooks|length > 0 %}
-            <h3>{{ __('Hooks') }}</h3>
-            {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
-                <h4>{{ providerArea }}</h4>
-                {{ hook }}
+            {% for area, hook in hooks %}
+                <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook|raw }}</div>
             {% endfor %}
         {% endif %}
         
@@ -69,14 +64,24 @@
 {% endblock %}
 {% block footer %}
     {{ parent() }}
-    {% set editImage = '<span class="fa fa-pencil-square-o"></span>' %}
-    {% set removeImage = '<span class="fa fa-trash-o"></span>' %}
     {% set formInitScript %}
         <script type="text/javascript">
         /* <![CDATA[ */
+            var mUBoardInlineEditHandlers = [];
+            var mUBoardEditHandler = null;
+            mUBoardEditHandler = {
+                alias: 'rank',
+                prefix: 'boardUser_RankSelectorDoNew',
+                moduleName: 'MUBoardModule',
+                objectType: 'rank',
+                inputType: 'select-single',
+                windowInstanceId: null
+            };
+            mUBoardInlineEditHandlers.push(mUBoardEditHandler);
             
             ( function($) {
                 $(document).ready(function() {
+                    mUBoardInitRelationHandling('rank', 'rank', 'boardUser_Rank', true, 'select-single', '{{ path('muboardmodule_rank_' ~ routeArea ~ 'edit') }}');
                     mUBoardInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ user.id }}{% endif %}');
                 });
             })(jQuery);

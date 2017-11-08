@@ -10,44 +10,38 @@
 {#<rss version="0.92">#}
     <channel>
         <title>{{ __('Latest forums') }}</title>
-        <link>{{ app.request.getSchemeAndHttpHost() ~ app.request.getBasePath()|e }}</link>
-        <atom:link href="{{ app.request.getSchemeAndHttpHost() ~ app.request.getPathInfo() }}" rel="self" type="application/rss+xml" />
+        <link>{{ app.request.schemeAndHttpHost ~ app.request.basePath }}</link>
+        <atom:link href="{{ app.request.schemeAndHttpHost ~ app.request.basePath ~ app.request.pathInfo }}" rel="self" type="application/rss+xml" />
         <description>{{ __('A direct feed showing the list of forums') }} - {{ getModVar('ZConfig', 'slogan') }}</description>
         <language>{{ app.request.locale }}</language>
         {# commented out as imagepath is not defined and we can't know whether this logo exists or not
         <image>
             <title>{{ getModVar('ZConfig', 'sitename') }}</title>
-            <url>{{ app.request.getSchemeAndHttpHost() ~ app.request.getBasePath()|e }}{{ imagepath }}/logo.jpg</url>
-            <link>{{ app.request.getSchemeAndHttpHost() ~ app.request.getBasePath()|e }}</link>
+            <url>{{ app.request.schemeAndHttpHost ~ app.request.basePath }}{{ imagepath }}/logo.jpg</url>
+            <link>{{ app.request.schemeAndHttpHost ~ app.request.basePath }}</link>
         </image>
         #}
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
-        <copyright>Copyright (c) {{ 'now'|date('Y') }}, {{ app.request.getSchemeAndHttpHost()|e }}</copyright>
-        <webMaster>{{ pageGetVar('adminmail)|e }}</webMaster>
+        <copyright>Copyright (c) {{ 'now'|date('Y') }}, {{ app.request.schemeAndHttpHost }}</copyright>
+        <webMaster>{{ pageGetVar('adminmail') }}</webMaster>
 {% for forum in items %}
-    {{ block('entry') }}
+    <item>
+        <title><![CDATA[{% if forum.updatedDate|default %}{{ forum.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ forum|muboardmodule_formattedTitle|notifyFilters('muboardmodule.filterhook.forums')|safeHtml }}]]></title>
+        <link>{{ url('muboardmodule_forum_' ~ routeArea ~ 'display', {'id': forum.getId()}) }}</link>
+        <guid>{{ url('muboardmodule_forum_' ~ routeArea ~ 'display', {'id': forum.getId()}) }}</guid>
+        {% if forum.createdBy|default and forum.createdBy.getUid() > 0 %}
+            {% set creatorAttributes = forum.createdBy.getAttributes() %}
+            <author>{{ forum.createdBy.getEmail() }} ({{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(forum.createdBy.getUname()) }})</author>
+        {% endif %}
+        <description>
+            <![CDATA[
+            {{ forum.description|replace({'<br>': '<br />'}) }}
+            ]]>
+        </description>
+        {% if forum.createdDate|default %}
+            <pubDate>{{ forum.createdDate|date('r') }}</pubDate>
+        {% endif %}
+    </item>
 {% endfor %}
     </channel>
 </rss>
-{% block entry %}
-    <item>
-        {{ block('entry_content') }}
-    </item>
-{% endblock %}
-{% block entry_content %}
-    <title><![CDATA[{% if forum.updatedDate|default %}{{ forum.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ forum|muboardmodule_formattedTitle|notifyFilters('muboardmodule.filterhook.forums')|safeHtml }}]]></title>
-    <link>{{ url('muboardmodule_forum_' ~ routeArea ~ 'display', {'id': forum.getId()}) }}</link>
-    <guid>{{ url('muboardmodule_forum_' ~ routeArea ~ 'display', {'id': forum.getId()}) }}</guid>
-    {% if forum.createdBy|default and forum.createdBy.getUid() > 0 %}
-        {% set creatorAttributes = forum.createdBy.getAttributes() %}
-        <author>{{ forum.createdBy.getEmail() }} ({{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(forum.createdBy.getUname()) }})</author>
-    {% endif %}
-    <description>
-        <![CDATA[
-        {{ forum.description|replace({'<br>': '<br />'}) }}
-        ]]>
-    </description>
-    {% if forum.createdDate|default %}
-        <pubDate>{{ forum.createdDate|date('a, d b Y T +0100') }}</pubDate>
-    {% endif %}
-{% endblock %}

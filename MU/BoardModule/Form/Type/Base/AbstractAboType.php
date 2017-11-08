@@ -79,7 +79,6 @@ abstract class AbstractAboType extends AbstractType
     {
         $this->addEntityFields($builder, $options);
         $this->addModerationFields($builder, $options);
-        $this->addReturnControlField($builder, $options);
         $this->addSubmitButtons($builder, $options);
     }
 
@@ -97,7 +96,7 @@ abstract class AbstractAboType extends AbstractType
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 11,
-                'class' => ' validate-digits',
+                'class' => '',
                 'title' => $this->__('Enter the userid of the abo.') . ' ' . $this->__('Only digits are allowed.')
             ],
             'required' => true,
@@ -109,7 +108,7 @@ abstract class AbstractAboType extends AbstractType
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 11,
-                'class' => ' validate-digits',
+                'class' => '',
                 'title' => $this->__('Enter the catid of the abo.') . ' ' . $this->__('Only digits are allowed.')
             ],
             'required' => false,
@@ -121,7 +120,7 @@ abstract class AbstractAboType extends AbstractType
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 11,
-                'class' => ' validate-digits',
+                'class' => '',
                 'title' => $this->__('Enter the forumid of the abo.') . ' ' . $this->__('Only digits are allowed.')
             ],
             'required' => false,
@@ -133,7 +132,7 @@ abstract class AbstractAboType extends AbstractType
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 11,
-                'class' => ' validate-digits',
+                'class' => '',
                 'title' => $this->__('Enter the postingid of the abo.') . ' ' . $this->__('Only digits are allowed.')
             ],
             'required' => false,
@@ -158,7 +157,6 @@ abstract class AbstractAboType extends AbstractType
             'label' => $this->__('Creator') . ':',
             'attr' => [
                 'maxlength' => 11,
-                'class' => ' validate-digits',
                 'title' => $this->__('Here you can choose a user which will be set as creator')
             ],
             'empty_data' => 0,
@@ -182,24 +180,6 @@ abstract class AbstractAboType extends AbstractType
     }
 
     /**
-     * Adds the return control field.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addReturnControlField(FormBuilderInterface $builder, array $options)
-    {
-        if ($options['mode'] != 'create') {
-            return;
-        }
-        $builder->add('repeatCreation', CheckboxType::class, [
-            'mapped' => false,
-            'label' => $this->__('Create another item after save'),
-            'required' => false
-        ]);
-    }
-
-    /**
      * Adds submit buttons.
      *
      * @param FormBuilderInterface $builder The form builder
@@ -215,6 +195,16 @@ abstract class AbstractAboType extends AbstractType
                     'class' => $action['buttonClass']
                 ]
             ]);
+            if ($options['mode'] == 'create' && $action['id'] == 'submit') {
+                // add additional button to submit item and return to create form
+                $builder->add('submitrepeat', SubmitType::class, [
+                    'label' => $this->__('Submit and repeat'),
+                    'icon' => 'fa-repeat',
+                    'attr' => [
+                        'class' => $action['buttonClass']
+                    ]
+                ]);
+            }
         }
         $builder->add('reset', ResetType::class, [
             'label' => $this->__('Reset'),

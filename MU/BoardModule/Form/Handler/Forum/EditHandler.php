@@ -15,7 +15,7 @@ namespace MU\BoardModule\Form\Handler\Forum;
 use MU\BoardModule\Form\Handler\Forum\Base\AbstractEditHandler;
 
 /**
- * This handler class handles the page events of the Form called by the mUBoardModule_forum_edit() function.
+ * This handler class handles the page events of editing forms.
  * It aims on the forum object type.
  */
 class EditHandler extends AbstractEditHandler

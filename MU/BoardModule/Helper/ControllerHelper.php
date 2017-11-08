@@ -194,6 +194,27 @@ class ControllerHelper extends AbstractControllerHelper
     	
     	}
     	
+    	if ($objectType == 'posting') {
+    		$posting = $templateParameters[$objectType];
+    		$postingUserId = $posting->getCreatedBy()->getUid();
+    		$userRepository = $this->entityFactory->getRepository('user');
+    		$where = 'tbl.userid = ' . $postingUserId;
+    		$postingUser = $userRepository->selectWhere($where);
+    		$thisPostingUser = $userRepository->selectById($postingUser[0]['id']);
+    		$templateParameters['posting']['user'] = $thisPostingUser;
+    		if ($posting['children'] != NULL) {
+    			foreach ($posting['children'] as $children) {
+    				$childrenUserId = $children->getCreatedBy()->getUid();
+    				$where2 = 'tbl.userid = ' . $childrenUserId;
+    				$childrenUser = $userRepository->selectWhere($where2);    				
+    				$thisChildrenUser = $userRepository->selectById($childrenUser[0]['id']);
+    				$children['user'] = $thisChildrenUser;
+    				$newChildren[] = $children;
+    			}
+    			$templateParameters[$objectType]['children'] = $newChildren;
+    		}
+    	}
+    	
 
     
     	return $this->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);

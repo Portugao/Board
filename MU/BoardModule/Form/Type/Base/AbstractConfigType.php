@@ -54,7 +54,7 @@ abstract class AbstractConfigType extends AbstractType
 
         // prepare group selector values
         foreach (['moderationGroupForPostings'] as $groupFieldName) {
-            $groupId = intval($this->moduleVars[$groupFieldName]);
+            $groupId = isset($this->moduleVars[$groupFieldName]) ? intval($this->moduleVars[$groupFieldName]) : 0;
             if ($groupId < 1) {
                 // fallback to admin group
                 $groupId = GroupsConstant::GROUP_ID_ADMIN;
@@ -157,7 +157,7 @@ abstract class AbstractConfigType extends AbstractType
                 'label' => $this->__('Allowed size of files') . ':',
                 'required' => false,
                 'data' => isset($this->moduleVars['allowedSizeOfFiles']) ? $this->moduleVars['allowedSizeOfFiles'] : '',
-                'empty_data' => '',
+                'empty_data' => '2M',
                 'attr' => [
                     'maxlength' => 255,
                     'title' => $this->__('Enter the allowed size of files.')
@@ -189,9 +189,11 @@ abstract class AbstractConfigType extends AbstractType
                 'label' => $this->__('Edit time') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
-                    'title' => $this->__('Time of editing allowed in hours.')
+                    'title' => $this->__('Time of editing allowed in hours.
+                    0 unlimited.')
                 ],
-                'help' => $this->__('Time of editing allowed in hours.'),
+                'help' => $this->__('Time of editing allowed in hours.
+                0 unlimited.'),
                 'required' => false,
                 'data' => isset($this->moduleVars['editTime']) ? intval($this->moduleVars['editTime']) : intval(6),
                 'empty_data' => intval('6'),
@@ -253,16 +255,6 @@ abstract class AbstractConfigType extends AbstractType
                 ],
                 'choices_as_values' => true,
                 'multiple' => false
-            ])
-            ->add('pagesize', IntegerType::class, [
-                'label' => $this->__('Pagesize') . ':',
-                'required' => false,
-                'data' => isset($this->moduleVars['pagesize']) ? intval($this->moduleVars['pagesize']) : intval(10),
-                'empty_data' => intval('10'),
-                'attr' => [
-                    'maxlength' => 255,
-                    'title' => $this->__('Enter the pagesize.') . ' ' . $this->__('Only digits are allowed.')
-                ],'scale' => 0
             ])
             ->add('standardIcon', TextType::class, [
                 'label' => $this->__('Standard icon') . ':',

@@ -97,7 +97,6 @@ abstract class AbstractUserType extends AbstractType
     {
         $this->addEntityFields($builder, $options);
         $this->addIncomingRelationshipFields($builder, $options);
-        $this->addReturnControlField($builder, $options);
         $this->addSubmitButtons($builder, $options);
     }
 
@@ -115,7 +114,7 @@ abstract class AbstractUserType extends AbstractType
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 11,
-                'class' => ' validate-digits',
+                'class' => '',
                 'title' => $this->__('Enter the userid of the user.') . ' ' . $this->__('Only digits are allowed.')
             ],
             'required' => true,
@@ -127,7 +126,7 @@ abstract class AbstractUserType extends AbstractType
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 11,
-                'class' => ' validate-digits',
+                'class' => '',
                 'title' => $this->__('Enter the number postings of the user.') . ' ' . $this->__('Only digits are allowed.')
             ],
             'required' => true,
@@ -136,7 +135,6 @@ abstract class AbstractUserType extends AbstractType
         
         $builder->add('lastVisit', DateTimeType::class, [
             'label' => $this->__('Last visit') . ':',
-            'empty_data' => '',
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Enter the last visit of the user')
@@ -181,24 +179,6 @@ abstract class AbstractUserType extends AbstractType
     }
 
     /**
-     * Adds the return control field.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addReturnControlField(FormBuilderInterface $builder, array $options)
-    {
-        if ($options['mode'] != 'create') {
-            return;
-        }
-        $builder->add('repeatCreation', CheckboxType::class, [
-            'mapped' => false,
-            'label' => $this->__('Create another item after save'),
-            'required' => false
-        ]);
-    }
-
-    /**
      * Adds submit buttons.
      *
      * @param FormBuilderInterface $builder The form builder
@@ -214,6 +194,16 @@ abstract class AbstractUserType extends AbstractType
                     'class' => $action['buttonClass']
                 ]
             ]);
+            if ($options['mode'] == 'create' && $action['id'] == 'submit' && !$options['inline_usage']) {
+                // add additional button to submit item and return to create form
+                $builder->add('submitrepeat', SubmitType::class, [
+                    'label' => $this->__('Submit and repeat'),
+                    'icon' => 'fa-repeat',
+                    'attr' => [
+                        'class' => $action['buttonClass']
+                    ]
+                ]);
+            }
         }
         $builder->add('reset', ResetType::class, [
             'label' => $this->__('Reset'),

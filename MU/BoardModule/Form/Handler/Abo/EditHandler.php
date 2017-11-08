@@ -15,7 +15,7 @@ namespace MU\BoardModule\Form\Handler\Abo;
 use MU\BoardModule\Form\Handler\Abo\Base\AbstractEditHandler;
 
 /**
- * This handler class handles the page events of the Form called by the mUBoardModule_abo_edit() function.
+ * This handler class handles the page events of editing forms.
  * It aims on the abo object type.
  */
 class EditHandler extends AbstractEditHandler

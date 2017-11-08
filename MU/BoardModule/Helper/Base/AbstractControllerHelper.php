@@ -12,9 +12,6 @@
 
 namespace MU\BoardModule\Helper\Base;
 
-use Psr\Log\LoggerInterface;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -39,11 +36,6 @@ abstract class AbstractControllerHelper
      * @var Request
      */
     protected $request;
-
-    /**
-     * @var LoggerInterface
-     */
-    protected $logger;
 
     /**
      * @var FormFactoryInterface
@@ -80,7 +72,6 @@ abstract class AbstractControllerHelper
      *
      * @param TranslatorInterface $translator      Translator service instance
      * @param RequestStack        $requestStack    RequestStack service instance
-     * @param LoggerInterface     $logger          Logger service instance
      * @param FormFactoryInterface $formFactory    FormFactory service instance
      * @param VariableApiInterface $variableApi     VariableApi service instance
      * @param EntityFactory       $entityFactory   EntityFactory service instance
@@ -91,7 +82,6 @@ abstract class AbstractControllerHelper
     public function __construct(
         TranslatorInterface $translator,
         RequestStack $requestStack,
-        LoggerInterface $logger,
         FormFactoryInterface $formFactory,
         VariableApiInterface $variableApi,
         EntityFactory $entityFactory,
@@ -101,7 +91,6 @@ abstract class AbstractControllerHelper
     ) {
         $this->setTranslator($translator);
         $this->request = $requestStack->getCurrentRequest();
-        $this->logger = $logger;
         $this->formFactory = $formFactory;
         $this->variableApi = $variableApi;
         $this->entityFactory = $entityFactory;
@@ -226,19 +215,22 @@ abstract class AbstractControllerHelper
                     $sort = $fieldValue;
                 } elseif ($fieldName == 'sortdir' && !empty($fieldValue)) {
                     $sortdir = $fieldValue;
-                } else {
+                } elseif (false === stripos($fieldName, 'thumbRuntimeOptions')) {
                     // set filter as query argument, fetched inside repository
                     $request->query->set($fieldName, $fieldValue);
                 }
             }
         }
         $sortableColumns->setOrderBy($sortableColumns->getColumn($sort), strtoupper($sortdir));
+        $resultsPerPage = $templateParameters['num'];
+        $request->query->set('own', $templateParameters['own']);
     
         $urlParameters = $templateParameters;
         foreach ($urlParameters as $parameterName => $parameterValue) {
-            if (false !== stripos($parameterName, 'thumbRuntimeOptions')) {
-                unset($urlParameters[$parameterName]);
+            if (false === stripos($parameterName, 'thumbRuntimeOptions')) {
+                continue;
             }
+            unset($urlParameters[$parameterName]);
         }
     
         $sort = $sortableColumns->getSortColumn()->getName();

@@ -163,8 +163,6 @@ abstract class AbstractPostingFinderType extends AbstractType
                     $this->__('Title') => 'title',
                     $this->__('Text') => 'text',
                     $this->__('Invocations') => 'invocations',
-                    $this->__('State') => 'state',
-                    $this->__('Solved') => 'solved',
                     $this->__('First image') => 'firstImage',
                     $this->__('Second image') => 'secondImage',
                     $this->__('Third image') => 'thirdImage',
@@ -261,7 +259,7 @@ abstract class AbstractPostingFinderType extends AbstractType
             ->setRequired(['object_type', 'editor_name'])
             ->setAllowedTypes('object_type', 'string')
             ->setAllowedTypes('editor_name', 'string')
-            ->setAllowedValues('editor_name', ['tinymce', 'ckeditor'])
+            ->setAllowedValues('editor_name', ['ckeditor', 'quill', 'summernote', 'tinymce'])
         ;
     }
 }

@@ -24,8 +24,6 @@
                     <option value="title"{if $sort eq 'title'} selected="selected"{/if}>{gt text='Title'}</option>
                     <option value="text"{if $sort eq 'text'} selected="selected"{/if}>{gt text='Text'}</option>
                     <option value="invocations"{if $sort eq 'invocations'} selected="selected"{/if}>{gt text='Invocations'}</option>
-                    <option value="state"{if $sort eq 'state'} selected="selected"{/if}>{gt text='State'}</option>
-                    <option value="solved"{if $sort eq 'solved'} selected="selected"{/if}>{gt text='Solved'}</option>
                     <option value="firstImage"{if $sort eq 'firstImage'} selected="selected"{/if}>{gt text='First image'}</option>
                     <option value="secondImage"{if $sort eq 'secondImage'} selected="selected"{/if}>{gt text='Second image'}</option>
                     <option value="thirdImage"{if $sort eq 'thirdImage'} selected="selected"{/if}>{gt text='Third image'}</option>

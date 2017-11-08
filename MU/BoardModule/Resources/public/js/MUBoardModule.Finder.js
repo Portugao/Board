@@ -14,22 +14,26 @@ function getMUBoardModulePopupAttributes()
     pWidth = screen.width * 0.75;
     pHeight = screen.height * 0.66;
 
-    return 'width=' + pWidth + ',height=' + pHeight + ',scrollbars,resizable';
+    return 'width=' + pWidth + ',height=' + pHeight + ',location=no,menubar=no,toolbar=no,dependent=yes,minimizable=no,modal=yes,alwaysRaised=yes,resizable=yes,scrollbars=yes';
 }
 
 /**
- * Open a popup window with the finder triggered by a CKEditor button.
+ * Open a popup window with the finder triggered by an editor button.
  */
-function MUBoardModuleFinderCKEditor(editor, boardUrl)
+function MUBoardModuleFinderOpenPopup(editor, editorName)
 {
+    var popupUrl;
+
     // Save editor for access in selector window
     currentMUBoardModuleEditor = editor;
 
-    editor.popup(
-        Routing.generate('muboardmodule_external_finder', { objectType: 'category', editor: 'ckeditor' }),
-        /*width*/ '80%', /*height*/ '70%',
-        'location=no,menubar=no,toolbar=no,dependent=yes,minimizable=no,modal=yes,alwaysRaised=yes,resizable=yes,scrollbars=yes'
-    );
+    popupUrl = Routing.generate('muboardmodule_external_finder', { objectType: 'category', editor: editorName });
+
+    if (editorName == 'ckeditor') {
+        editor.popup(popupUrl, /*width*/ '80%', /*height*/ '70%', getMUBoardModulePopupAttributes());
+    } else {
+        window.open(popupUrl, '_blank', getMUBoardModulePopupAttributes());
+    }
 }
 
 
@@ -79,9 +83,13 @@ mUBoardModule.finder.handleCancel = function (event)
 
     event.preventDefault();
     editor = jQuery("[id$='editor']").first().val();
-    if ('tinymce' === editor) {
+    if ('ckeditor' === editor) {
         mUBoardClosePopup();
-    } else if ('ckeditor' === editor) {
+    } else if ('quill' === editor) {
+        mUBoardClosePopup();
+    } else if ('summernote' === editor) {
+        mUBoardClosePopup();
+    } else if ('tinymce' === editor) {
         mUBoardClosePopup();
     } else {
         alert('Close Editor: ' + editor);
@@ -148,17 +156,23 @@ mUBoardModule.finder.selectItem = function (itemId)
 {
     var editor, html;
 
+    html = mUBoardGetPasteSnippet('html', itemId);
     editor = jQuery("[id$='editor']").first().val();
-    if ('tinymce' === editor) {
-        html = mUBoardGetPasteSnippet('html', itemId);
-        tinyMCE.activeEditor.execCommand('mceInsertContent', false, html);
-        // other tinymce commands: mceImage, mceInsertLink, mceReplaceContent, see http://www.tinymce.com/wiki.php/Command_identifiers
-    } else if ('ckeditor' === editor) {
+    if ('ckeditor' === editor) {
         if (null !== window.opener.currentMUBoardModuleEditor) {
-            html = mUBoardGetPasteSnippet('html', itemId);
-
             window.opener.currentMUBoardModuleEditor.insertHtml(html);
         }
+    } else if ('quill' === editor) {
+        if (null !== window.opener.currentMUBoardModuleEditor) {
+            window.opener.currentMUBoardModuleEditor.clipboard.dangerouslyPasteHTML(window.opener.currentMUBoardModuleEditor.getLength(), html);
+        }
+    } else if ('summernote' === editor) {
+        if (null !== window.opener.currentMUBoardModuleEditor) {
+            html = jQuery(html).get(0);
+            window.opener.currentMUBoardModuleEditor.invoke('insertNode', html);
+        }
+    } else if ('tinymce' === editor) {
+        window.opener.currentMUBoardModuleEditor.insertContent(html);
     } else {
         alert('Insert into Editor: ' + editor);
     }

@@ -124,11 +124,13 @@ class AjaxController extends AbstractAjaxController
     			$logArgs = ['app' => 'MUBoardModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => $objectType, 'id' => $id];
     			$logger->notice('{app}: User {user} toggled the state of posting  {entity} with id {id}.', $logArgs);
     
-                $response = new Response(
+                /*$response = new Response(
                 'Content',
                 Response::HTTP_OK,
                 array('content-type' => 'text/html')
-                );
+                );*/
+                
+                $state = $this->__('The state of this issue was changed');
     			
                 // return response
                 return new JsonResponse($state);

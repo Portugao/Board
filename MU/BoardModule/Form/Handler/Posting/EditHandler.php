@@ -15,7 +15,7 @@ namespace MU\BoardModule\Form\Handler\Posting;
 use MU\BoardModule\Form\Handler\Posting\Base\AbstractEditHandler;
 
 /**
- * This handler class handles the page events of the Form called by the mUBoardModule_posting_edit() function.
+ * This handler class handles the page events of editing forms.
  * It aims on the posting object type.
  */
 class EditHandler extends AbstractEditHandler

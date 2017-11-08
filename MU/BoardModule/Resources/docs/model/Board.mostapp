@@ -1,4 +1,5 @@
 application "Board" {
+    documentation "Board is a small forum module"
     vendor "MU"
     author "Michael Ueberschaer"
     email "info@homepages-mit-zikula.de"
@@ -23,7 +24,7 @@ application "Board" {
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
         skipFiles ""
-        markFiles ""
+        markFiles "Controller/AjaxController.php,\r\nController/CategoryController.php,\r\nEntity/CategoryEntity.php,\r\nEntity/ForumEntity.php,\r\nEntity/PostingEntity.php,\r\nEntity/Repository/PostingRepository.php,\r\nHelper/ControllerHelper.php,\r\nResources/config/forms.yml,\r\nResources/public/css/style.css,\r\nResources/views/Category/display.html.twig,\r\nResources/views/Category/view.html.twig,\r\nResources/views/Forum/display.html.twig\r\nResources/views/Posting/display.html.twig\r\nResources/views/Forum/includeDisplayItemListMany.html.twig"
     }
     entities {
         entity "category" leading {
@@ -90,10 +91,12 @@ application "Board" {
                 boolean "state" ajaxTogglability {
                     defaultValue "1"
                     mandatory false
+                displayType NONE
                 },
                 boolean "solved" {
                     defaultValue "0"
                     mandatory false
+                displayType VIEW_DISPLAY
                 },
                 upload "firstImage" {
                     mandatory false
@@ -215,7 +218,7 @@ application "Board" {
             targetAlias "forum"
             editType ACTIVE_EDIT_PASSIVE_EDIT
             cascade REMOVE
-            orderBy ""
+            orderBy "pos"
         },
         one2many bidirectional {
             source "posting"
@@ -224,7 +227,7 @@ application "Board" {
             target "posting"
             targetAlias "children"
             cascade REMOVE
-            orderBy ""
+            orderBy "createdDate"
         },
         one2many bidirectional {
             source "forum"
@@ -233,7 +236,7 @@ application "Board" {
             targetAlias "posting"
             editType ACTIVE_EDIT_PASSIVE_EDIT
             cascade REMOVE
-            orderBy ""
+            orderBy "createdDate"
         },
         one2many bidirectional {
             source "rank"
@@ -263,7 +266,9 @@ application "Board" {
                 boolVar "uploadFiles" {
                     value "1"
                 },
-                textVar "allowedSizeOfFiles",
+                textVar "allowedSizeOfFiles" {
+                    value "2M"
+                },
                 listVar "numberFiles" {
                     items {
                         listVarItem default "1",
@@ -275,7 +280,7 @@ application "Board" {
                     value "1"
                 },
                 intVar "editTime" {
-                    documentation "Time of editing allowed in hours."
+                    documentation "Time of editing allowed in hours.\r\n0 unlimited."
                     value "6"
                 },
                 intVar "latestPostings" {
@@ -299,9 +304,6 @@ application "Board" {
                         listVarItem default "descending",
                         listVarItem "ascending"
                     }
-                },
-                intVar "pagesize" {
-                    value "10"
                 },
                 filePathVar "standardIcon" {
                     documentation "This icon will be used for ranks to show; for example a star."

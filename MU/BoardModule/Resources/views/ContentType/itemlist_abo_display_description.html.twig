@@ -2,7 +2,7 @@
 <dl>
     {% for abo in items %}
         <dt>{{ abo|muboardmodule_formattedTitle }}</dt>
-        <dd><a href="{{ path('muboardmodule_abo_display', {'id': abo.getId()}) }}">{{ __('Read more') }}</a>
+        <dd><a href="{{ path('muboardmodule_abo_display', {'id': abo.getId()}) }}" title="{{ __('Read more')|e('html_attr') }}">{{ __('Read more') }}</a>
         </dd>
     {% else %}
         <dt>{{ __('No entries found.') }}</dt>

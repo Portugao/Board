@@ -196,7 +196,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('muboardmodule_category_' . $routeArea . 'view'),
                 'text' => $this->__('Categories', 'muboardmodule'),
-                'title' => $this->__('Category list', 'muboardmodule')
+                'title' => $this->__('Categories list', 'muboardmodule')
             ];
         }
         if (in_array('forum', $allowedObjectTypes)
@@ -204,7 +204,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('muboardmodule_forum_' . $routeArea . 'view'),
                 'text' => $this->__('Forums', 'muboardmodule'),
-                'title' => $this->__('Forum list', 'muboardmodule')
+                'title' => $this->__('Forums list', 'muboardmodule')
             ];
         }
         if (in_array('posting', $allowedObjectTypes)
@@ -212,7 +212,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('muboardmodule_posting_' . $routeArea . 'view'),
                 'text' => $this->__('Postings', 'muboardmodule'),
-                'title' => $this->__('Posting list', 'muboardmodule')
+                'title' => $this->__('Postings list', 'muboardmodule')
             ];
         }
         if (in_array('abo', $allowedObjectTypes)
@@ -220,7 +220,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('muboardmodule_abo_' . $routeArea . 'view'),
                 'text' => $this->__('Abos', 'muboardmodule'),
-                'title' => $this->__('Abo list', 'muboardmodule')
+                'title' => $this->__('Abos list', 'muboardmodule')
             ];
         }
         if (in_array('user', $allowedObjectTypes)
@@ -228,7 +228,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('muboardmodule_user_' . $routeArea . 'view'),
                 'text' => $this->__('Users', 'muboardmodule'),
-                'title' => $this->__('User list', 'muboardmodule')
+                'title' => $this->__('Users list', 'muboardmodule')
             ];
         }
         if (in_array('rank', $allowedObjectTypes)
@@ -236,7 +236,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('muboardmodule_rank_' . $routeArea . 'view'),
                 'text' => $this->__('Ranks', 'muboardmodule'),
-                'title' => $this->__('Rank list', 'muboardmodule')
+                'title' => $this->__('Ranks list', 'muboardmodule')
             ];
         }
         if ($routeArea == 'admin' && $this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {

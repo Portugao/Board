@@ -42,9 +42,9 @@
 {% endblock %}
 {% block related_items %}
     {% if routeArea == 'admin' %}
-        <h4>{{ __('Forums') }}</h4>
+        <h4>{{ __('Forum') }}</h4>
     {% else %}
-        <h3>{{ __('Forums') }}</h3>
+        <h3>{{ __('Forum') }}</h3>
     {% endif %}
     
     {% if category.forum|default %}
@@ -58,14 +58,15 @@
     {% if mayManage %}
         <p class="managelink">
             {% set createTitle = __('Create forum') %}
-            <a href="{{ path('muboardmodule_forum_' ~ routeArea ~ 'edit', {category: category.getKey()}) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+            <a href="{{ path('muboardmodule_forum_' ~ routeArea ~ 'edit', {category: category.getKey()}) }}" title="{{ createTitle|e('html_attr') }}"><i class="fa fa-plus"></i> {{ createTitle }}</a>
         </p>
     {% endif %}
 {% endblock %}
 {% block display_hooks %}
-    {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.categories.display_view', id=category.getKey(), urlObject=currentUrlObject) %}
-    {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
-        <h4>{{ providerArea }}</h4>
-        {{ hook }}
-    {% endfor %}
+    {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.categories.display_view', id=category.getKey(), urlObject=currentUrlObject, outputAsArray=true) %}
+    {% if hooks is iterable and hooks|length > 0 %}
+        {% for area, hook in hooks %}
+            <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook|raw }}</div>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

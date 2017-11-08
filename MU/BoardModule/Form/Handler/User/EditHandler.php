@@ -15,7 +15,7 @@ namespace MU\BoardModule\Form\Handler\User;
 use MU\BoardModule\Form\Handler\User\Base\AbstractEditHandler;
 
 /**
- * This handler class handles the page events of the Form called by the mUBoardModule_user_edit() function.
+ * This handler class handles the page events of editing forms.
  * It aims on the user object type.
  */
 class EditHandler extends AbstractEditHandler

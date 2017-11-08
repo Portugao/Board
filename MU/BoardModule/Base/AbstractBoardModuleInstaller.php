@@ -36,7 +36,15 @@ abstract class AbstractBoardModuleInstaller extends AbstractExtensionInstaller
         // Check if upload directories exist and if needed create them
         try {
             $container = $this->container;
-            $uploadHelper = new \MU\BoardModule\Helper\UploadHelper($container->get('translator.default'), $container->get('session'), $container->get('logger'), $container->get('zikula_users_module.current_user'), $container->get('zikula_extensions_module.api.variable'), $container->getParameter('datadir'));
+            $uploadHelper = new \MU\BoardModule\Helper\UploadHelper(
+                $container->get('translator.default'),
+                $container->get('filesystem'),
+                $container->get('session'),
+                $container->get('logger'),
+                $container->get('zikula_users_module.current_user'),
+                $container->get('zikula_extensions_module.api.variable'),
+                $container->getParameter('datadir')
+            );
             $uploadHelper->checkAndCreateAllUploadFolders();
         } catch (\Exception $exception) {
             $this->addFlash('error', $exception->getMessage());
@@ -59,7 +67,7 @@ abstract class AbstractBoardModuleInstaller extends AbstractExtensionInstaller
         $this->setVar('allowedSizeOfImages', '200k');
         $this->setVar('numberImages',  '1' );
         $this->setVar('uploadFiles', false);
-        $this->setVar('allowedSizeOfFiles', '');
+        $this->setVar('allowedSizeOfFiles', '2M');
         $this->setVar('numberFiles',  '1' );
         $this->setVar('editPostings', false);
         $this->setVar('editTime', '6');
@@ -67,7 +75,6 @@ abstract class AbstractBoardModuleInstaller extends AbstractExtensionInstaller
         $this->setVar('sortingCategories',  'descending' );
         $this->setVar('sortingForums',  'descending' );
         $this->setVar('sortingPostings',  'descending' );
-        $this->setVar('pagesize', '10');
         $this->setVar('standardIcon', 'images/icons/extrasmall/favorites.png');
         $this->setVar('specialIcon', 'images/icons/extrasmall/package_favorite.png');
         $this->setVar('iconSet',  '1' );
@@ -205,14 +212,8 @@ abstract class AbstractBoardModuleInstaller extends AbstractExtensionInstaller
      */
     protected function updateModVarsTo14()
     {
-        $dbName = $this->getDbName();
         $conn = $this->getConnection();
-    
-        $conn->executeQuery("
-            UPDATE $dbName.module_vars
-            SET modname = 'MUBoardModule'
-            WHERE modname = 'Board';
-        ");
+        $conn->update('module_vars', ['modname' => 'MUBoardModule'], ['modname' => 'Board']);
     }
     
     /**
@@ -221,14 +222,7 @@ abstract class AbstractBoardModuleInstaller extends AbstractExtensionInstaller
     protected function updateExtensionInfoFor14()
     {
         $conn = $this->getConnection();
-        $dbName = $this->getDbName();
-    
-        $conn->executeQuery("
-            UPDATE $dbName.modules
-            SET name = 'MUBoardModule',
-                directory = 'MU/BoardModule'
-            WHERE name = 'Board';
-        ");
+        $conn->update('modules', ['name' => 'MUBoardModule', 'directory' => 'MU/BoardModule'], ['name' => 'Board']);
     }
     
     /**
@@ -237,12 +231,10 @@ abstract class AbstractBoardModuleInstaller extends AbstractExtensionInstaller
     protected function renamePermissionsFor14()
     {
         $conn = $this->getConnection();
-        $dbName = $this->getDbName();
-    
         $componentLength = strlen('Board') + 1;
     
         $conn->executeQuery("
-            UPDATE $dbName.group_perms
+            UPDATE group_perms
             SET component = CONCAT('MUBoardModule', SUBSTRING(component, $componentLength))
             WHERE component LIKE 'Board%';
         ");
@@ -254,7 +246,6 @@ abstract class AbstractBoardModuleInstaller extends AbstractExtensionInstaller
     protected function renameTablesFor14()
     {
         $conn = $this->getConnection();
-        $dbName = $this->getDbName();
     
         $oldPrefix = 'board_';
         $oldPrefixLength = strlen($oldPrefix);
@@ -271,8 +262,8 @@ abstract class AbstractBoardModuleInstaller extends AbstractExtensionInstaller
             $newTableName = str_replace($oldPrefix, $newPrefix, $tableName);
     
             $conn->executeQuery("
-                RENAME TABLE $dbName.$tableName
-                TO $dbName.$newTableName;
+                RENAME TABLE $tableName
+                TO $newTableName;
             ");
         }
     }
@@ -291,49 +282,32 @@ abstract class AbstractBoardModuleInstaller extends AbstractExtensionInstaller
     protected function updateHookNamesFor14()
     {
         $conn = $this->getConnection();
-        $dbName = $this->getDbName();
     
-        $conn->executeQuery("
-            UPDATE $dbName.hook_area
-            SET owner = 'MUBoardModule'
-            WHERE owner = 'Board';
-        ");
+        $conn->update('hook_area', ['owner' => 'MUBoardModule'], ['owner' => 'Board']);
     
         $componentLength = strlen('subscriber.board') + 1;
         $conn->executeQuery("
-            UPDATE $dbName.hook_area
+            UPDATE hook_area
             SET areaname = CONCAT('subscriber.muboardmodule', SUBSTRING(areaname, $componentLength))
             WHERE areaname LIKE 'subscriber.board%';
         ");
     
-        $conn->executeQuery("
-            UPDATE $dbName.hook_binding
-            SET sowner = 'MUBoardModule'
-            WHERE sowner = 'Board';
-        ");
+        $conn->update('hook_binding', ['sowner' => 'MUBoardModule'], ['sowner' => 'Board']);
     
-        $conn->executeQuery("
-            UPDATE $dbName.hook_runtime
-            SET sowner = 'MUBoardModule'
-            WHERE sowner = 'Board';
-        ");
+        $conn->update('hook_runtime', ['sowner' => 'MUBoardModule'], ['sowner' => 'Board']);
     
         $componentLength = strlen('board') + 1;
         $conn->executeQuery("
-            UPDATE $dbName.hook_runtime
+            UPDATE hook_runtime
             SET eventname = CONCAT('muboardmodule', SUBSTRING(eventname, $componentLength))
             WHERE eventname LIKE 'board%';
         ");
     
-        $conn->executeQuery("
-            UPDATE $dbName.hook_subscriber
-            SET owner = 'MUBoardModule'
-            WHERE owner = 'Board';
-        ");
+        $conn->update('hook_subscriber', ['owner' => 'MUBoardModule'], ['owner' => 'Board']);
     
         $componentLength = strlen('board') + 1;
         $conn->executeQuery("
-            UPDATE $dbName.hook_subscriber
+            UPDATE hook_subscriber
             SET eventname = CONCAT('muboardmodule', SUBSTRING(eventname, $componentLength))
             WHERE eventname LIKE 'board%';
         ");
@@ -345,13 +319,13 @@ abstract class AbstractBoardModuleInstaller extends AbstractExtensionInstaller
     protected function updateWorkflowsFor14()
     {
         $conn = $this->getConnection();
-        $dbName = $this->getDbName();
-    
-        $conn->executeQuery("
-            UPDATE $dbName.workflows
-            SET module = 'MUBoardModule'
-            WHERE module = 'Board';
-        ");
+        $conn->update('workflows', ['module' => 'MUBoardModule'], ['module' => 'Board']);
+        $conn->update('workflows', ['obj_table' => 'CategoryEntity'], ['module' => 'MUBoardModule', 'obj_table' => 'category']);
+        $conn->update('workflows', ['obj_table' => 'ForumEntity'], ['module' => 'MUBoardModule', 'obj_table' => 'forum']);
+        $conn->update('workflows', ['obj_table' => 'PostingEntity'], ['module' => 'MUBoardModule', 'obj_table' => 'posting']);
+        $conn->update('workflows', ['obj_table' => 'AboEntity'], ['module' => 'MUBoardModule', 'obj_table' => 'abo']);
+        $conn->update('workflows', ['obj_table' => 'UserEntity'], ['module' => 'MUBoardModule', 'obj_table' => 'user']);
+        $conn->update('workflows', ['obj_table' => 'RankEntity'], ['module' => 'MUBoardModule', 'obj_table' => 'rank']);
     }
     
     /**
@@ -362,19 +336,8 @@ abstract class AbstractBoardModuleInstaller extends AbstractExtensionInstaller
     protected function getConnection()
     {
         $entityManager = $this->container->get('doctrine.orm.default_entity_manager');
-        $connection = $entityManager->getConnection();
     
-        return $connection;
-    }
-    
-    /**
-     * Returns the name of the default system database.
-     *
-     * @return string the database name
-     */
-    protected function getDbName()
-    {
-        return $this->container->getParameter('database_name');
+        return $entityManager->getConnection();
     }
     
     /**

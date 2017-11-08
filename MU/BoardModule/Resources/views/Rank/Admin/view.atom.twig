@@ -8,49 +8,43 @@
     </author>
 {% set amountOfItems = items|length %}
 {% if amountOfItems > 0 %}
-{% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({'http://': '', '/': ''}) }},{{ items.first.createdDate|date('Y-m-d') }}:{{ path('muboardmodule_rank_' ~ routeArea ~ 'display', {'id': items.first.getId()}) }}{% endset %}
+{% set uniqueID %}tag:{{ app.request.schemeAndHttpHost|replace({'http://': '', '/': ''}) }},{{ items.first.createdDate|date('Y-m-d') }}:{{ path('muboardmodule_rank_' ~ routeArea ~ 'display', {'id': items.first.getId()}) }}{% endset %}
     <id>{{ uniqueID }}</id>
     <updated>{{ items[0].updatedDate|date('Y-m-dTH:M:SZ') }}</updated>
 {% endif %}
     <link rel="alternate" type="text/html" hreflang="{{ app.request.locale }}" href="{{ url('muboardmodule_rank_' ~ routeArea ~ 'index') }}" />
-    <link rel="self" type="application/atom+xml" href="{{ app.request.getSchemeAndHttpHost() ~ app.request.getBasePath() }}" />
-    <rights>Copyright (c) {{ 'now'|date('Y') }}, {{ app.request.getSchemeAndHttpHost()|e }}</rights>
+    <link rel="self" type="application/atom+xml" href="{{ app.request.schemeAndHttpHost ~ app.request.basePath }}" />
+    <rights>Copyright (c) {{ 'now'|date('Y') }}, {{ app.request.schemeAndHttpHost }}</rights>
 {% for rank in items %}
-    {{ block('entry') }}
+    <entry>
+        <title type="html">{{ rank|muboardmodule_formattedTitle|notifyFilters('muboardmodule.filterhook.ranks')|safeHtml }}</title>
+        <link rel="alternate" type="text/html" href="{{ url('muboardmodule_rank_' ~ routeArea ~ 'display', {'id': rank.getId()}) }}" />
+        {% set uniqueID %}tag:{{ app.request.schemeAndHttpHost|replace({ 'http://': '', '/': '' }) }},{{ rank.createdDate|date('Y-m-d') }}:{{ path('muboardmodule_rank_' ~ routeArea ~ 'display', {'id': rank.getId()}) }}{% endset %}
+        <id>{{ uniqueID }}</id>
+        {% if rank.updatedDate|default %}
+            <updated>{{ rank.updatedDate|date('Y-m-dTH:M:SZ') }}</updated>
+        {% endif %}
+        {% if rank.createdDate|default %}
+            <published>{{ rank.createdDate|date('Y-m-dTH:M:SZ') }}</published>
+        {% endif %}
+        {% if rank.createdBy|default and rank.createdBy.getUid() > 0 %}
+            {% set creatorAttributes = rank.createdBy.getAttributes() %}
+            <author>
+               <name>{{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(rank.createdBy.getUname()) }}</name>
+               <uri>{{ creatorAttributes.get('_UYOURHOMEPAGE')|default('-') }}</uri>
+               <email>{{ rank.createdBy.getEmail() }}</email>
+            </author>
+        {% endif %}
+        <summary type="html">
+            <![CDATA[
+            {{ rank.name|truncate(150, true, '&hellip;')|default('-') }}
+            ]]>
+        </summary>
+        <content type="html">
+            <![CDATA[
+            {{ rank|muboardmodule_formattedTitle|replace({ '<br>': '<br />' }) }}
+            ]]>
+        </content>
+    </entry>
 {% endfor %}
 </feed>
-{% block entry %}
-    <entry>
-        {{ block('entry_content') }}
-    </entry>
-{% endblock %}
-{% block entry_content %}
-    <title type="html">{{ rank|muboardmodule_formattedTitle|notifyFilters('muboardmodule.filterhook.ranks')|safeHtml }}</title>
-    <link rel="alternate" type="text/html" href="{{ url('muboardmodule_rank_' ~ routeArea ~ 'display', {'id': rank.getId()}) }}" />
-    {% set uniqueID %}tag:{{ app.request.getSchemeAndHttpHost()|replace({ 'http://': '', '/': '' }) }},{{ rank.createdDate|date('Y-m-d') }}:{{ path('muboardmodule_rank_' ~ routeArea ~ 'display', {'id': rank.getId()}) }}{% endset %}
-    <id>{{ uniqueID }}</id>
-    {% if rank.updatedDate|default %}
-        <updated>{{ rank.updatedDate|date('Y-m-dTH:M:SZ') }}</updated>
-    {% endif %}
-    {% if rank.createdDate|default %}
-        <published>{{ rank.createdDate|date('Y-m-dTH:M:SZ') }}</published>
-    {% endif %}
-    {% if rank.createdBy|default and rank.createdBy.getUid() > 0 %}
-        {% set creatorAttributes = rank.createdBy.getAttributes() %}
-        <author>
-           <name>{{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(rank.createdBy.getUname()) }}</name>
-           <uri>{{ creatorAttributes.get('_UYOURHOMEPAGE')|default('-') }}</uri>
-           <email>{{ rank.createdBy.getEmail() }}</email>
-        </author>
-    {% endif %}
-    <summary type="html">
-        <![CDATA[
-        {{ rank.name|truncate(150, true, '&hellip;')|default('-') }}
-        ]]>
-    </summary>
-    <content type="html">
-        <![CDATA[
-        {{ rank|muboardmodule_formattedTitle|replace({ '<br>': '<br />' }) }}
-        ]]>
-    </content>
-{% endblock %}

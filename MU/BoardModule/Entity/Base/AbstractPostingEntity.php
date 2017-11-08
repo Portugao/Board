@@ -312,6 +312,7 @@ abstract class AbstractPostingEntity extends EntityAccess
      *      joinColumns={@ORM\JoinColumn(name="parent_id", referencedColumnName="id" )},
      *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" )}
      * )
+     * @ORM\OrderBy({"createdDate" = "ASC"})
      * @var \MU\BoardModule\Entity\PostingEntity[] $children
      */
     protected $children = null;

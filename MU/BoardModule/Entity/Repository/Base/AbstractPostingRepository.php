@@ -60,8 +60,6 @@ abstract class AbstractPostingRepository extends EntityRepository
             'title',
             'text',
             'invocations',
-            'state',
-            'solved',
             'firstImage',
             'secondImage',
             'thirdImage',

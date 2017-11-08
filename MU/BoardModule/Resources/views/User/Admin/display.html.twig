@@ -36,7 +36,7 @@
                   <a href="{{ path('muboardmodule_rank_' ~ routeArea ~ 'display', {'id': user.rank.getId()}) }}">{% spaceless %}
                     {{ user.rank|muboardmodule_formattedTitle }}
                   {% endspaceless %}</a>
-                  <a id="rankItem{{ user.rank.getKey() }}Display" href="{{ path('muboardmodule_rank_' ~ routeArea ~ 'display', {'id': user.rank.getId(), raw: 1}) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muboard-inline-window hidden" data-modal-title="{{ user.rank|muboardmodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+                  <a id="rankItem{{ user.rank.getKey() }}Display" href="{{ path('muboardmodule_rank_' ~ routeArea ~ 'display', {'id': user.rank.getId(), raw: 1}) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muboard-inline-window hidden" data-modal-title="{{ user.rank|muboardmodule_formattedTitle|e('html_attr') }}"><i class="fa fa-id-card-o"></i></a>
               {% else %}
                   {{ user.rank|muboardmodule_formattedTitle }}
               {% endif %}
@@ -50,9 +50,10 @@
 </div>
 {% endblock %}
 {% block display_hooks %}
-    {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.users.display_view', id=user.getKey(), urlObject=currentUrlObject) %}
-    {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
-        <h4>{{ providerArea }}</h4>
-        {{ hook }}
-    {% endfor %}
+    {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.users.display_view', id=user.getKey(), urlObject=currentUrlObject, outputAsArray=true) %}
+    {% if hooks is iterable and hooks|length > 0 %}
+        {% for area, hook in hooks %}
+            <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook|raw }}</div>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

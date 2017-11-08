@@ -164,8 +164,7 @@ div.muboardmodule-view .avatar img {
 .forum-display-content,
 .posting-display-content {
 	background: #ddd;
-	border-bottom-left-radius: 5px;
-	border-bottom-right-radius: 5px;
+	border-radius: 5px;
 	float: left;
 	width: 100%;
 }
@@ -193,6 +192,7 @@ div.muboardmodule-view .avatar img {
 	text-align: center;
 	border-right: 1px solid #bbb;
 	width: 100%;
+	font-size: 0.9em;
 }
 
 #posting-title {
@@ -232,6 +232,10 @@ div.muboardmodule-view .avatar img {
 	margin: 2px 5px 0 0;
 }
 
-.fa-bars {
+.children {
+	border-bottom: 3px solid #c0c0c0;
+}
+
+.move-forum .fa-bars {
 	cursor: move;
 }

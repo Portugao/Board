@@ -17,14 +17,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Zikula\Bundle\HookBundle\Category\FormAwareCategory;
 use Zikula\Bundle\HookBundle\Category\UiHooksCategory;
 use Zikula\Component\SortableColumns\Column;
 use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\Controller\AbstractController;
+use Zikula\Core\Response\PlainResponse;
 use Zikula\Core\RouteUrl;
 use MU\BoardModule\Entity\PostingEntity;
 
@@ -35,7 +33,6 @@ abstract class AbstractPostingController extends AbstractController
 {
     /**
      * This is the default action handling the main admin area called without defining arguments.
-     * @Cache(expires="+7 days", public=true)
      *
      * @param Request $request Current request instance
      *
@@ -50,7 +47,6 @@ abstract class AbstractPostingController extends AbstractController
     
     /**
      * This is the default action handling the main area called without defining arguments.
-     * @Cache(expires="+7 days", public=true)
      *
      * @param Request $request Current request instance
      *
@@ -82,7 +78,6 @@ abstract class AbstractPostingController extends AbstractController
     }
     /**
      * This action provides an item list overview in the admin area.
-     * @Cache(expires="+2 hours", public=false)
      *
      * @param Request $request Current request instance
      * @param string $sort         Sorting field
@@ -101,7 +96,6 @@ abstract class AbstractPostingController extends AbstractController
     
     /**
      * This action provides an item list overview.
-     * @Cache(expires="+2 hours", public=false)
      *
      * @param Request $request Current request instance
      * @param string $sort         Sorting field
@@ -147,8 +141,6 @@ abstract class AbstractPostingController extends AbstractController
             new Column('title'),
             new Column('text'),
             new Column('invocations'),
-            new Column('state'),
-            new Column('solved'),
             new Column('firstImage'),
             new Column('secondImage'),
             new Column('thirdImage'),
@@ -171,8 +163,6 @@ abstract class AbstractPostingController extends AbstractController
     }
     /**
      * This action provides a item detail view in the admin area.
-     * @ParamConverter("posting", class="MUBoardModule:PostingEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
-     * @Cache(lastModified="posting.getUpdatedDate()", ETag="'Posting' ~ posting.getid() ~ posting.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param PostingEntity $posting Treated posting instance
@@ -189,8 +179,6 @@ abstract class AbstractPostingController extends AbstractController
     
     /**
      * This action provides a item detail view.
-     * @ParamConverter("posting", class="MUBoardModule:PostingEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
-     * @Cache(lastModified="posting.getUpdatedDate()", ETag="'Posting' ~ posting.getid() ~ posting.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param PostingEntity $posting Treated posting instance
@@ -237,7 +225,6 @@ abstract class AbstractPostingController extends AbstractController
     }
     /**
      * This action provides a handling of edit requests in the admin area.
-     * @Cache(lastModified="posting.getUpdatedDate()", ETag="'Posting' ~ posting.getid() ~ posting.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      *
@@ -254,7 +241,6 @@ abstract class AbstractPostingController extends AbstractController
     
     /**
      * This action provides a handling of edit requests.
-     * @Cache(lastModified="posting.getUpdatedDate()", ETag="'Posting' ~ posting.getid() ~ posting.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      *
@@ -301,8 +287,6 @@ abstract class AbstractPostingController extends AbstractController
     }
     /**
      * This action provides a handling of simple delete requests in the admin area.
-     * @ParamConverter("posting", class="MUBoardModule:PostingEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
-     * @Cache(lastModified="posting.getUpdatedDate()", ETag="'Posting' ~ posting.getid() ~ posting.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param PostingEntity $posting Treated posting instance
@@ -320,8 +304,6 @@ abstract class AbstractPostingController extends AbstractController
     
     /**
      * This action provides a handling of simple delete requests.
-     * @ParamConverter("posting", class="MUBoardModule:PostingEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
-     * @Cache(lastModified="posting.getUpdatedDate()", ETag="'Posting' ~ posting.getid() ~ posting.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param PostingEntity $posting Treated posting instance
@@ -546,5 +528,42 @@ abstract class AbstractPostingController extends AbstractController
         }
         
         return $this->redirectToRoute('muboardmodule_posting_' . ($isAdmin ? 'admin' : '') . 'index');
+    }
+
+    /**
+     * This method cares for a redirect within an inline frame.
+     *
+     * @param string  $idPrefix    Prefix for inline window element identifier
+     * @param string  $commandName Name of action to be performed (create or edit)
+     * @param integer $id          Identifier of created posting (used for activating auto completion after closing the modal window)
+     *
+     * @return PlainResponse Output
+     */
+    public function handleInlineRedirectAction($idPrefix, $commandName, $id = 0)
+    {
+        if (empty($idPrefix)) {
+            return false;
+        }
+        
+        $formattedTitle = '';
+        $searchTerm = '';
+        if (!empty($id)) {
+            $repository = $this->get('mu_board_module.entity_factory')->getRepository('posting');
+            $posting = $repository->selectById($id);
+            if (null !== $posting) {
+                $formattedTitle = $this->get('mu_board_module.entity_display_helper')->getFormattedTitle($posting);
+                $searchTerm = $posting->getTitle();
+            }
+        }
+        
+        $templateParameters = [
+            'itemId' => $id,
+            'formattedTitle' => $formattedTitle,
+            'searchTerm' => $searchTerm,
+            'idPrefix' => $idPrefix,
+            'commandName' => $commandName
+        ];
+        
+        return new PlainResponse($this->get('twig')->render('@MUBoardModule/Posting/inlineRedirectHandler.html.twig', $templateParameters));
     }
 }
