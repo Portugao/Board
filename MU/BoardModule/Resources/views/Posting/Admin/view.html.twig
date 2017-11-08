@@ -27,7 +27,6 @@
                 <col id="cTitle" />
                 <col id="cText" />
                 <col id="cInvocations" />
-                <col id="cState" />
                 <col id="cSolved" />
                 <col id="cFirstImage" />
                 <col id="cSecondImage" />
@@ -63,11 +62,8 @@
                 <th id="hInvocations" scope="col" class="text-right">
                     <a href="{{ sort.invocations.url }}" title="{{ __f('Sort by %s', {'%s': 'invocations'}) }}" class="{{ sort.invocations.class }}">{{ __('Invocations') }}</a>
                 </th>
-                <th id="hState" scope="col" class="text-center">
-                    <a href="{{ sort.state.url }}" title="{{ __f('Sort by %s', {'%s': 'state'}) }}" class="{{ sort.state.class }}">{{ __('State') }}</a>
-                </th>
-                <th id="hSolved" scope="col" class="text-center">
-                    <a href="{{ sort.solved.url }}" title="{{ __f('Sort by %s', {'%s': 'solved'}) }}" class="{{ sort.solved.class }}">{{ __('Solved') }}</a>
+                <th id="hSolved" scope="col" class="text-center z-order-unsorted">
+                    {{ __('Solved') }}
                 </th>
                 <th id="hFirstImage" scope="col" class="text-left">
                     <a href="{{ sort.firstImage.url }}" title="{{ __f('Sort by %s', {'%s': 'first image'}) }}" class="{{ sort.firstImage.class }}">{{ __('First image') }}</a>
@@ -125,20 +121,6 @@
                 </td>
                 <td headers="hInvocations" class="text-right">
                     {{ posting.invocations }}
-                </td>
-                <td headers="hState" class="text-center">
-                    {% set itemId = posting.getKey() %}
-                    <a id="toggleState{{ itemId }}" href="javascript:void(0);" class="muboard-ajax-toggle hidden" data-object-type="posting" data-field-name="state" data-item-id="{{ itemId }}">
-                        <i class="fa fa-check{% if not posting.state %} hidden{% endif %}" id="yesState{{ itemId }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
-                        <i class="fa fa-times{% if posting.state %} hidden{% endif %}" id="noState{{ itemId }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
-                    </a>
-                    <noscript><div id="noscriptState{{ itemId }}">
-                        {% if posting.state %}
-                            <i class="fa fa-check" title="{{ __('Yes') }}"></i>
-                        {% else %}
-                            <i class="fa fa-times" title="{{ __('No') }}"></i>
-                        {% endif %}
-                    </div></noscript>
                 </td>
                 <td headers="hSolved" class="text-center">
                     {% if posting.solved %}
@@ -224,7 +206,7 @@
                         <a href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'display', {'id': posting.parent.getId()}) }}">{% spaceless %}
                           {{ posting.parent|muboardmodule_formattedTitle }}
                         {% endspaceless %}</a>
-                        <a id="postingItem{{ posting.getKey() }}_rel_{{ posting.parent.getKey() }}Display" href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'display', {'id': posting.parent.getId(), raw: 1}) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muboard-inline-window hidden" data-modal-title="{{ posting.parent|muboardmodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+                        <a id="postingItem{{ posting.getKey() }}_rel_{{ posting.parent.getKey() }}Display" href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'display', {'id': posting.parent.getId(), raw: 1}) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muboard-inline-window hidden" data-modal-title="{{ posting.parent|muboardmodule_formattedTitle|e('html_attr') }}"><i class="fa fa-id-card-o"></i></a>
                     {% else %}
                         {{ __('Not set.') }}
                     {% endif %}
@@ -234,7 +216,7 @@
                         <a href="{{ path('muboardmodule_forum_' ~ routeArea ~ 'display', {'id': posting.forum.getId()}) }}">{% spaceless %}
                           {{ posting.forum|muboardmodule_formattedTitle }}
                         {% endspaceless %}</a>
-                        <a id="forumItem{{ posting.getKey() }}_rel_{{ posting.forum.getKey() }}Display" href="{{ path('muboardmodule_forum_' ~ routeArea ~ 'display', {'id': posting.forum.getId(), raw: 1}) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muboard-inline-window hidden" data-modal-title="{{ posting.forum|muboardmodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+                        <a id="forumItem{{ posting.getKey() }}_rel_{{ posting.forum.getKey() }}Display" href="{{ path('muboardmodule_forum_' ~ routeArea ~ 'display', {'id': posting.forum.getId(), raw: 1}) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="muboard-inline-window hidden" data-modal-title="{{ posting.forum|muboardmodule_formattedTitle|e('html_attr') }}"><i class="fa fa-id-card-o"></i></a>
                     {% else %}
                         {{ __('Not set.') }}
                     {% endif %}
@@ -242,7 +224,7 @@
             </tr>
         {% else %}
             <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
-                <td class="text-left" colspan="{% if routeArea == 'admin' %}17{% else %}16{% endif %}">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}16{% else %}15{% endif %}">
             {{ __('No postings found.') }}
               </td>
             </tr>
@@ -281,15 +263,17 @@
         {% if canBeCreated %}
             {% if hasPermission('MUBoardModule:Posting:', '::', 'ACCESS_COMMENT') %}
                 {% set createTitle = __('Create posting') %}
-                <a href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+                <a href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}"><i class="fa fa-plus"></i> {{ createTitle }}</a>
             {% endif %}
         {% endif %}
         {% if all == 1 %}
             {% set linkTitle = __('Back to paginated view') %}
-            <a href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+            {% set routeArgs = own ? {own: 1} : {} %}
+            <a href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'view', routeArgs) }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-table"></i> {{ linkTitle }}</a>
         {% else %}
             {% set linkTitle = __('Show all entries') %}
-            <a href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'view', {all: 1}) }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+            {% set routeArgs = own ? {all: 1, own: 1} : {all: 1} %}
+            <a href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'view', routeArgs) }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-table"></i> {{ linkTitle }}</a>
         {% endif %}
     </p>
 {% endblock %}
@@ -297,9 +281,11 @@
     
     {# here you can activate calling display hooks for the view page if you need it #}
     {# % if routeArea != 'admin' %}
-        {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.postings.display_view', urlObject=currentUrlObject) %}
-        {% for providerArea, hook in hooks %}
-            {{ hook }}
-        {% endfor %}
+        {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.postings.display_view', urlObject=currentUrlObject, outputAsArray=true) %}
+        {% if hooks is iterable and hooks|length > 0 %}
+            {% for area, hook in hooks %}
+                <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook|raw }}</div>
+            {% endfor %}
+        {% endif %}
     {% endif % #}
 {% endblock %}
