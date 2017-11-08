@@ -20,7 +20,7 @@ use ServiceUtil;
  * Twig extension implementation class.
  */
 class TwigExtension extends AbstractTwigExtension
-{	
+{
 	/**
 	 * Returns a list of custom Twig functions.
 	 *
