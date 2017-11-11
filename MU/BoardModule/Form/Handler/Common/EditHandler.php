@@ -20,5 +20,20 @@ use MU\BoardModule\Form\Handler\Common\Base\AbstractEditHandler;
  */
 abstract class EditHandler extends AbstractEditHandler
 {
-    // feel free to extend the base handler class here
+    /**
+     * Initialise new entity for creation.
+     *
+     * @return EntityAccess|null Desired entity instance or null
+     */
+    protected function initEntityForCreation()
+    {
+        $entity = parent::initEntityForCreation();
+        $postingId = $this->request->query->get('id', 0, true);
+        if ($this->objectType == 'posting' && $postingId > 0) {
+        	//$user = $this->userRepository->find($recipientId);
+        	$entity['parent'] = $postingId;
+        }
+    
+        return $entity;
+    }
 }
