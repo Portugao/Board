@@ -13,11 +13,76 @@
 namespace MU\BoardModule\Helper;
 
 use MU\BoardModule\Helper\Base\AbstractWorkflowHelper;
+use MU\BoardModule\Entity\PostingEntity;
+
+use Zikula\Core\Doctrine\EntityAccess;
 
 /**
  * Helper implementation class for workflow methods.
  */
 class WorkflowHelper extends AbstractWorkflowHelper
 {
-    // feel free to add your own convenience methods here
+	/**
+     * Executes a certain workflow action for a given entity object.
+     *
+     * @param EntityAccess $entity    The given entity instance
+     * @param string       $actionId  Name of action to be executed
+     * @param bool         $recursive True if the function called itself
+     *
+     * @return bool False on error or true if everything worked well
+     */
+    public function executeAction(EntityAccess $entity, $actionId = '', $recursive = false)
+    {
+        $workflow = $this->workflowRegistry->get($entity);
+        if (!$workflow->can($entity, $actionId)) {
+            return false;
+        }
+    
+        // get entity manager
+        $entityManager = $this->entityFactory->getObjectManager();
+        $logArgs = ['app' => 'MUBoardModule', 'user' => $this->currentUserApi->get('uname')];
+    
+        $result = false;
+    
+        try {
+            $workflow->apply($entity, $actionId);
+    
+            if ($actionId == 'delete') {
+                $entityManager->remove($entity);
+            } else {
+            	if ($actionId == 'submit') {
+            		if ($entity instanceof PostingEntity) {
+            			
+            		}
+                $entityManager->persist($entity);
+            	}
+            }
+            $entityManager->flush();
+    
+            $result = true;
+            if ($actionId == 'delete') {
+                $this->logger->notice('{app}: User {user} deleted an entity.', $logArgs);
+            } else {
+                $this->logger->notice('{app}: User {user} updated an entity.', $logArgs);
+            }
+        } catch (\Exception $exception) {
+            if ($actionId == 'delete') {
+                $this->logger->error('{app}: User {user} tried to delete an entity, but failed.', $logArgs);
+            } else {
+                $this->logger->error('{app}: User {user} tried to update an entity, but failed.', $logArgs);
+            }
+            throw new \RuntimeException($exception->getMessage());
+        }
+    
+        if (false !== $result && !$recursive) {
+            $entities = $entity->getRelatedObjectsToPersist();
+            foreach ($entities as $rel) {
+                if ($rel->getWorkflowState() == 'initial') {
+                    $this->executeAction($rel, $actionId, true);
+                }
+            }
+        }
+    
+        return (false !== $result);
+    }
 }
