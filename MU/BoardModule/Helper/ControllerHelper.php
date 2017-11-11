@@ -65,7 +65,9 @@ class ControllerHelper extends AbstractControllerHelper
     				$countPostingsForum = $postingsRepository->selectCount($where2);
     				// get last posting of forum
     				$last = $postingsRepository->getLastPost($forum['id']);
+    				if ($last) {
     				$forum['last'] = $postingsRepository->find($last[0]['id']);
+    				}
     				$forum['countIssues'] = $countIssuesForum;
     				$forum['countPostings'] = $countPostingsForum;
     				$countIssuesForum = 0;
@@ -200,8 +202,12 @@ class ControllerHelper extends AbstractControllerHelper
     		$userRepository = $this->entityFactory->getRepository('user');
     		$where = 'tbl.userid = ' . $postingUserId;
     		$postingUser = $userRepository->selectWhere($where);
-    		$thisPostingUser = $userRepository->selectById($postingUser[0]['id']);
+    		if ($postingUser) { 		
+    		    $thisPostingUser = $userRepository->selectById($postingUser[0]['id']);
+    		}
+    		if (isset($thisPostingUser)) {
     		$templateParameters['posting']['user'] = $thisPostingUser;
+    		}
     		if ($posting['children'] != NULL) {
     			foreach ($posting['children'] as $children) {
     				$childrenUserId = $children->getCreatedBy()->getUid();
@@ -211,7 +217,9 @@ class ControllerHelper extends AbstractControllerHelper
     				$children['user'] = $thisChildrenUser;
     				$newChildren[] = $children;
     			}
+    			if (isset($newChildren)) {
     			$templateParameters[$objectType]['children'] = $newChildren;
+    			}
     		}
     	}
     	

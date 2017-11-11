@@ -31,12 +31,14 @@
     </div>
     <div class="col-md-8">
         {{ __('Last answer') }}:
-        {% if item.last.parent is not null %}
+        {% if item.last.parent is defined %}
             {% set itemLink = item.last.parent.id %}
             {% set itemText = item.last.text|truncate(30) %}
         {% else %}
+        {% if item.last is defined and item.last is not null and item.last != '' %}
             {% set itemLink = item.last.id %}
             {% set itemText = item.last.title %}
+        {% endif %}
         {% endif %}
         {% if item.last %}<span class="last-posting"><a href="{{ path('muboardmodule_posting_display', {'id': itemLink }) }}">{{ itemText }}</a><br />{{ __('by') }}
         <span class="posting-avatar">{{ userAvatar(item.last.createdBy.getUid(), {rating: 'g'}) }}</span> {% set profileLink = item.last.createdBy.getUid()|profileLinkByUserId() %} {{ profileLink|raw }}<br />{{ __('on') }}  {{ item.createdDate|localizeddate('medium', 'short')}} {% else %}{{ __('No posting available') }}{% endif %}
