@@ -123,6 +123,7 @@ class LinkContainer extends AbstractLinkContainer
                 'title' => $this->__('Category list', 'muboardmodule')
             ];
         }
+        if ($routeArea == 'admin') {
         if (in_array('forum', $allowedObjectTypes)
             && $this->permissionApi->hasPermission($this->getBundleName() . ':Forum:', '::', $permLevel)) {
             $links[] = [
@@ -162,6 +163,7 @@ class LinkContainer extends AbstractLinkContainer
                 'text' => $this->__('Ranks', 'muboardmodule'),
                 'title' => $this->__('Rank list', 'muboardmodule')
             ];
+        }
         }
         if ($routeArea == 'admin' && $this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
             $links[] = [
