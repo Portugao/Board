@@ -13,11 +13,21 @@
 namespace MU\BoardModule\Form\Type;
 
 use MU\BoardModule\Form\Type\Base\AbstractPostingType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 /**
  * Posting editing form type implementation class.
  */
 class PostingType extends AbstractPostingType
 {
-    // feel free to extend the posting editing form type class here
+    /**
+     * @inheritDoc
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        parent::buildForm($builder, $options);
+        $builder->add('parent', HiddenType::class);
+        $builder->add('forum', HiddenType::class);
+    }
 }
