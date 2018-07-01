@@ -354,13 +354,25 @@ abstract class AbstractNotificationHelper
         if ($this->recipientType == 'moderator' || $this->recipientType == 'superModerator' || $this->usesDesignatedEntityFields()) {
             if ($this->action == 'submit') {
                 $mailSubject = $this->__('New content has been submitted');
+            } elseif ($this->action == 'demote') {
+                $mailSubject = $this->__('Content has been demoted');
+            } elseif ($this->action == 'accept') {
+                $mailSubject = $this->__('Content has been accepted');
+            } elseif ($this->action == 'approve') {
+                $mailSubject = $this->__('Content has been approved');
             } elseif ($this->action == 'delete') {
                 $mailSubject = $this->__('Content has been deleted');
             } else {
                 $mailSubject = $this->__('Content has been updated');
             }
         } elseif ($this->recipientType == 'creator') {
-            if ($this->action == 'delete') {
+            if ($this->action == 'accept') {
+                $mailSubject = $this->__('Your submission has been accepted');
+            } elseif ($this->action == 'approve') {
+                $mailSubject = $this->__('Your submission has been approved');
+            } elseif ($this->action == 'reject') {
+                $mailSubject = $this->__('Your submission has been rejected');
+            } elseif ($this->action == 'delete') {
                 $mailSubject = $this->__('Your submission has been deleted');
             } else {
                 $mailSubject = $this->__('Your submission has been updated');
@@ -373,7 +385,7 @@ abstract class AbstractNotificationHelper
     /**
      * Collects data used by the email templates.
      *
-     * @return array
+     * @return array Email template data
      */
     protected function prepareEmailData()
     {
@@ -393,15 +405,13 @@ abstract class AbstractNotificationHelper
         $displayUrl = $hasDisplayAction ? $this->router->generate($routePrefix . 'display', $urlArgs, true) : '';
         $editUrl = $hasEditAction ? $this->router->generate($routePrefix . 'edit', $urlArgs, true) : '';
     
-        $emailData = [
+        return [
             'name' => $this->entityDisplayHelper->getFormattedTitle($this->entity),
             'newState' => $stateInfo['text'],
             'remarks' => $remarks,
             'displayUrl' => $displayUrl,
             'editUrl' => $editUrl
         ];
-    
-        return $emailData;
     }
     
     /**

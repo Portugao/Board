@@ -309,7 +309,7 @@ abstract class AbstractEditHandler
      *
      * @throws RuntimeException Thrown if the workflow actions can not be determined
      */
-    public function processForm(array $templateParameters)
+    public function processForm(array $templateParameters = [])
     {
         $this->templateParameters = $templateParameters;
         $this->templateParameters['inlineUsage'] = $this->request->query->getBoolean('raw', false);
@@ -331,10 +331,9 @@ abstract class AbstractEditHandler
             $this->returnTo = $this->request->getSession()->get($refererSessionVar);
         }
         // store current uri for repeated creations
-        $this->repeatReturnUrl = $this->request->getSchemeAndHttpHost() . $this->request->getBasePath() . $this->request->getPathInfo();
+        $this->repeatReturnUrl = $this->request->getUri();
     
         $this->permissionComponent = 'MUBoardModule:' . $this->objectTypeCapital . ':';
-    
         $this->idField = $this->entityFactory->getIdField($this->objectType);
     
         // retrieve identifier of the object we wish to edit
@@ -364,7 +363,7 @@ abstract class AbstractEditHandler
                 if (true === $this->hasPageLockSupport && $this->kernel->isBundle('ZikulaPageLockModule') && null !== $this->lockingApi) {
                     // try to guarantee that only one person at a time can be editing this entity
                     $lockName = 'MUBoardModule' . $this->objectTypeCapital . $entity->getKey();
-                    $this->lockingApi->addLock($lockName, $this->getRedirectUrl(null));
+                    $this->lockingApi->addLock($lockName, $this->getRedirectUrl(['commandName' => '']));
                     // reload entity as the addLock call above has triggered the preUpdate event
                     $this->entityFactory->getObjectManager()->refresh($entity);
                 }
@@ -426,6 +425,14 @@ abstract class AbstractEditHandler
     
         // handle form request and check validity constraints of edited entity
         if ($this->form->handleRequest($this->request) && $this->form->isSubmitted()) {
+            if ($this->form->get('cancel')->isClicked()) {
+                if (true === $this->hasPageLockSupport && $this->templateParameters['mode'] == 'edit' && $this->kernel->isBundle('ZikulaPageLockModule') && null !== $this->lockingApi) {
+                    $lockName = 'MUBoardModule' . $this->objectTypeCapital . $entity->getKey();
+                    $this->lockingApi->releaseLock($lockName);
+                }
+    
+                return new RedirectResponse($this->getRedirectUrl(['commandName' => 'cancel']), 302);
+            }
             if ($this->form->isValid()) {
                 $result = $this->handleCommand();
                 if (false === $result) {
@@ -433,9 +440,6 @@ abstract class AbstractEditHandler
                 }
     
                 return $result;
-            }
-            if ($this->form->get('cancel')->isClicked()) {
-                return new RedirectResponse($this->getRedirectUrl(['commandName' => 'cancel']), 302);
             }
         }
     
@@ -452,6 +456,17 @@ abstract class AbstractEditHandler
     {
         // to be customised in sub classes
         return null;
+    }
+    
+    /**
+     * Returns the form options.
+     *
+     * @return array
+     */
+    protected function getFormOptions()
+    {
+        // to be customised in sub classes
+        return [];
     }
     
     
@@ -540,20 +555,15 @@ abstract class AbstractEditHandler
                 $args['commandName'] = $action['id'];
             }
         }
-        if ($this->templateParameters['mode'] == 'create' && $this->form->get('submitrepeat')->isClicked()) {
+        if ($this->templateParameters['mode'] == 'create' && $this->form->has('submitrepeat') && $this->form->get('submitrepeat')->isClicked()) {
             $args['commandName'] = 'submit';
             $this->repeatCreateAction = true;
         }
-        if ($this->form->get('cancel')->isClicked()) {
-            $args['commandName'] = 'cancel';
-        }
     
         $action = $args['commandName'];
-        $isRegularAction = !in_array($action, ['delete', 'cancel']);
+        $isRegularAction = $action != 'delete';
     
-        if ($isRegularAction || $action == 'delete') {
-            $this->fetchInputData();
-        }
+        $this->fetchInputData();
     
         // get treated entity reference from persisted member var
         $entity = $this->entityRef;
@@ -572,29 +582,27 @@ abstract class AbstractEditHandler
             }
         }
     
-        if ($isRegularAction || $action == 'delete') {
-            $success = $this->applyAction($args);
-            if (!$success) {
-                // the workflow operation failed
-                return false;
+        $success = $this->applyAction($args);
+        if (!$success) {
+            // the workflow operation failed
+            return false;
+        }
+    
+        if ($entity->supportsHookSubscribers()) {
+            $routeUrl = null;
+            if ($action != 'delete') {
+                $urlArgs = $entity->createUrlArgs();
+                $urlArgs['_locale'] = $this->request->getLocale();
+                $routeUrl = new RouteUrl('muboardmodule_' . $this->objectTypeLower . '_display', $urlArgs);
             }
     
-            if ($entity->supportsHookSubscribers()) {
-                $routeUrl = null;
-                if ($action != 'delete') {
-                    $urlArgs = $entity->createUrlArgs();
-                    $urlArgs['_locale'] = $this->request->getLocale();
-                    $routeUrl = new RouteUrl('muboardmodule_' . $this->objectTypeLower . '_display', $urlArgs);
-                }
+            // Call form aware processing hooks
+            $hookType = $action == 'delete' ? FormAwareCategory::TYPE_PROCESS_DELETE : FormAwareCategory::TYPE_PROCESS_EDIT;
+            $this->hookHelper->callFormProcessHooks($this->form, $entity, $hookType, $routeUrl);
     
-                // Call form aware processing hooks
-                $hookType = $action == 'delete' ? FormAwareCategory::TYPE_PROCESS_DELETE : FormAwareCategory::TYPE_PROCESS_EDIT;
-                $this->hookHelper->callFormProcessHooks($this->form, $entity, $hookType, $routeUrl);
-    
-                // Let any ui hooks know that we have created, updated or deleted an item
-                $hookType = $action == 'delete' ? UiHooksCategory::TYPE_PROCESS_DELETE : UiHooksCategory::TYPE_PROCESS_EDIT;
-                $this->hookHelper->callProcessHooks($entity, $hookType, $routeUrl);
-            }
+            // Let any ui hooks know that we have created, updated or deleted an item
+            $hookType = $action == 'delete' ? UiHooksCategory::TYPE_PROCESS_DELETE : UiHooksCategory::TYPE_PROCESS_EDIT;
+            $this->hookHelper->callProcessHooks($entity, $hookType, $routeUrl);
         }
     
         if (true === $this->hasPageLockSupport && $this->templateParameters['mode'] == 'edit' && $this->kernel->isBundle('ZikulaPageLockModule') && null !== $this->lockingApi) {
@@ -608,8 +616,8 @@ abstract class AbstractEditHandler
     /**
      * Get success or error message for default operations.
      *
-     * @param array   $args    arguments from handleCommand method
-     * @param Boolean $success true if this is a success, false for default error
+     * @param array   $args    List of arguments from handleCommand method
+     * @param boolean $success Becomes true if this is a success, false for default error
      *
      * @return String desired status or error message
      */
@@ -646,8 +654,8 @@ abstract class AbstractEditHandler
     /**
      * Add success or error message to session.
      *
-     * @param array   $args    arguments from handleCommand method
-     * @param Boolean $success true if this is a success, false for default error
+     * @param array   $args    List of arguments from handleCommand method
+     * @param boolean $success Becomes true if this is a success, false for default error
      *
      * @throws RuntimeException Thrown if executing the workflow action fails
      */
@@ -696,9 +704,9 @@ abstract class AbstractEditHandler
     /**
      * This method executes a certain workflow action.
      *
-     * @param array $args Arguments from handleCommand method
+     * @param array $args List of arguments from handleCommand method
      *
-     * @return bool Whether everything worked well or not
+     * @return boolean Whether everything worked well or not
      */
     public function applyAction(array $args = [])
     {
@@ -709,7 +717,7 @@ abstract class AbstractEditHandler
     /**
      * Prepares properties related to advanced workflows.
      *
-     * @param bool $enterprise Whether the enterprise workflow is used instead of the standard workflow
+     * @param boolean $enterprise Whether the enterprise workflow is used instead of the standard workflow
      *
      * @return array List of additional form options
      */

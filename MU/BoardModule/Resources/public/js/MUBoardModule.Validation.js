@@ -1,7 +1,6 @@
 'use strict';
 
-function mUBoardToday(format)
-{
+function mUBoardToday(format) {
     var timestamp, todayDate, month, day, hours, minutes, seconds;
 
     timestamp = new Date();
@@ -40,8 +39,7 @@ function mUBoardToday(format)
 }
 
 // returns YYYY-MM-DD even if date is in DD.MM.YYYY
-function mUBoardReadDate(val, includeTime)
-{
+function mUBoardReadDate(val, includeTime) {
     // look if we have YYYY-MM-DD
     if (val.substr(4, 1) === '-' && val.substr(7, 1) === '-') {
         return val;
@@ -58,16 +56,14 @@ function mUBoardReadDate(val, includeTime)
     }
 }
 
-function mUBoardValidateNoSpace(val)
-{
+function mUBoardValidateNoSpace(val) {
     var valStr;
     valStr = new String(val);
 
     return (valStr.indexOf(' ') === -1);
 }
 
-function mUBoardValidateUploadExtension(val, elem)
-{
+function mUBoardValidateUploadExtension(val, elem) {
     var fileExtension, allowedExtensions;
     if (val === '') {
         return true;
@@ -84,20 +80,12 @@ function mUBoardValidateUploadExtension(val, elem)
 /**
  * Runs special validation rules.
  */
-function mUBoardExecuteCustomValidationConstraints(objectType, currentEntityId)
-{
-    jQuery('.validate-nospace').each( function() {
-        if (!mUBoardValidateNoSpace(jQuery(this).val())) {
-            document.getElementById(jQuery(this).attr('id')).setCustomValidity(Translator.__('This value must not contain spaces.'));
-        } else {
-            document.getElementById(jQuery(this).attr('id')).setCustomValidity('');
-        }
-    });
-    jQuery('.validate-upload').each( function() {
+function mUBoardExecuteCustomValidationConstraints(objectType, currentEntityId) {
+    jQuery('.validate-upload').each(function () {
         if (!mUBoardValidateUploadExtension(jQuery(this).val(), jQuery(this))) {
-            document.getElementById(jQuery(this).attr('id')).setCustomValidity(Translator.__('Please select a valid file extension.'));
+            jQuery(this).get(0).setCustomValidity(Translator.__('Please select a valid file extension.'));
         } else {
-            document.getElementById(jQuery(this).attr('id')).setCustomValidity('');
+            jQuery(this).get(0).setCustomValidity('');
         }
     });
 }

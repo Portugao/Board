@@ -6,43 +6,35 @@ services:
             - "@service_container"
             - "@event_dispatcher"
             - "@logger"
-        tags:
-            - { name: doctrine.event_subscriber }
+        tags: ['doctrine.event_subscriber']
     
     mu_board_module.kernel_listener:
         class: MU\BoardModule\Listener\KernelListener
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_board_module.installer_listener:
         class: MU\BoardModule\Listener\InstallerListener
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_board_module.moduledispatch_listener:
         class: MU\BoardModule\Listener\ModuleDispatchListener
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_board_module.mailer_listener:
         class: MU\BoardModule\Listener\MailerListener
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_board_module.theme_listener:
         class: MU\BoardModule\Listener\ThemeListener
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_board_module.userlogin_listener:
         class: MU\BoardModule\Listener\UserLoginListener
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_board_module.userlogout_listener:
         class: MU\BoardModule\Listener\UserLogoutListener
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_board_module.user_listener:
         class: MU\BoardModule\Listener\UserListener
@@ -51,23 +43,19 @@ services:
             - "@mu_board_module.entity_factory"
             - "@zikula_users_module.current_user"
             - "@logger"
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_board_module.userregistration_listener:
         class: MU\BoardModule\Listener\UserRegistrationListener
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_board_module.users_listener:
         class: MU\BoardModule\Listener\UsersListener
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_board_module.group_listener:
         class: MU\BoardModule\Listener\GroupListener
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_board_module.thirdparty_listener:
         class: MU\BoardModule\Listener\ThirdPartyListener
@@ -75,14 +63,12 @@ services:
             - "@filesystem"
             - "@request_stack"
             - "@mu_board_module.workflow_helper"
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_board_module.workflow_events_listener:
         class: MU\BoardModule\Listener\WorkflowEventsListener
         arguments:
             - "@zikula_permissions_module.api.permission"
             - "@mu_board_module.notification_helper"
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     

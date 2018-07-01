@@ -86,7 +86,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
      *
      * @param string $type The type to collect links for
      *
-     * @return array Array of header links
+     * @return array List of header links
      */
     public function getLinks($type = LinkContainerInterface::TYPE_ADMIN)
     {
@@ -242,7 +242,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
         if ($routeArea == 'admin' && $this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
             $links[] = [
                 'url' => $this->router->generate('muboardmodule_config_config'),
-                'text' => $this->__('Configuration', 'muboardmodule'),
+                'text' => $this->__('Settings', 'muboardmodule'),
                 'title' => $this->__('Manage settings for this application', 'muboardmodule'),
                 'icon' => 'wrench'
             ];

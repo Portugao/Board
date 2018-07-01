@@ -34,7 +34,7 @@ abstract class AbstractEditHandler extends EditHandler
      *
      * @return boolean False in case of initialisation errors, otherwise true
      */
-    public function processForm(array $templateParameters)
+    public function processForm(array $templateParameters = [])
     {
         $this->objectType = 'posting';
         $this->objectTypeCapital = 'Posting';
@@ -100,11 +100,21 @@ abstract class AbstractEditHandler extends EditHandler
      */
     protected function createForm()
     {
+        return $this->formFactory->create(PostingType::class, $this->entityRef, $this->getFormOptions());
+    }
+    
+    /**
+     * Returns the form options.
+     *
+     * @return array
+     */
+    protected function getFormOptions()
+    {
         $options = [
             'entity' => $this->entityRef,
             'mode' => $this->templateParameters['mode'],
             'actions' => $this->templateParameters['actions'],
-            'has_moderate_permission' => $this->permissionApi->hasPermission($this->permissionComponent, $this->idValue . '::', ACCESS_MODERATE),
+            'has_moderate_permission' => $this->permissionApi->hasPermission($this->permissionComponent, $this->idValue . '::', ACCESS_ADMIN),
             'filter_by_ownership' => !$this->permissionApi->hasPermission($this->permissionComponent, $this->idValue . '::', ACCESS_ADD),
             'inline_usage' => $this->templateParameters['inlineUsage']
         ];
@@ -112,7 +122,7 @@ abstract class AbstractEditHandler extends EditHandler
         $workflowRoles = $this->prepareWorkflowAdditions(false);
         $options = array_merge($options, $workflowRoles);
     
-        return $this->formFactory->create(PostingType::class, $this->entityRef, $options);
+        return $options;
     }
 
 
@@ -166,7 +176,7 @@ abstract class AbstractEditHandler extends EditHandler
      *
      * @return string The default redirect url
      */
-    protected function getDefaultReturnUrl($args)
+    protected function getDefaultReturnUrl(array $args = [])
     {
         $objectIsPersisted = $args['commandName'] != 'delete' && !($this->templateParameters['mode'] == 'create' && $args['commandName'] == 'cancel');
     
@@ -210,12 +220,9 @@ abstract class AbstractEditHandler extends EditHandler
                 $args['commandName'] = $action['id'];
             }
         }
-        if ($this->templateParameters['mode'] == 'create' && $this->form->get('submitrepeat')->isClicked()) {
+        if ($this->templateParameters['mode'] == 'create' && $this->form->has('submitrepeat') && $this->form->get('submitrepeat')->isClicked()) {
             $args['commandName'] = 'submit';
             $this->repeatCreateAction = true;
-        }
-        if ($this->form->get('cancel')->isClicked()) {
-            $args['commandName'] = 'cancel';
         }
     
         return new RedirectResponse($this->getRedirectUrl($args), 302);
@@ -224,8 +231,8 @@ abstract class AbstractEditHandler extends EditHandler
     /**
      * Get success or error message for default operations.
      *
-     * @param array   $args    Arguments from handleCommand method
-     * @param Boolean $success Becomes true if this is a success, false for default error
+     * @param array   $args    List of arguments from handleCommand method
+     * @param boolean $success Becomes true if this is a success, false for default error
      *
      * @return String desired status or error message
      */
@@ -258,9 +265,9 @@ abstract class AbstractEditHandler extends EditHandler
     /**
      * This method executes a certain workflow action.
      *
-     * @param array $args Arguments from handleCommand method
+     * @param array $args List of arguments from handleCommand method
      *
-     * @return bool Whether everything worked well or not
+     * @return boolean Whether everything worked well or not
      *
      * @throws RuntimeException Thrown if concurrent editing is recognised or another error occurs
      */
@@ -299,7 +306,7 @@ abstract class AbstractEditHandler extends EditHandler
      *
      * @return string The redirect url
      */
-    protected function getRedirectUrl($args)
+    protected function getRedirectUrl(array $args = [])
     {
         if ($this->repeatCreateAction) {
             return $this->repeatReturnUrl;

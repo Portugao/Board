@@ -12,6 +12,7 @@
 
 namespace MU\BoardModule\Helper\Base;
 
+use Imagine\Image\ImageInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
@@ -71,7 +72,7 @@ abstract class AbstractImageHelper
      *
      * @return array The selected runtime options
      */
-    public function getRuntimeOptions($objectType = '', $fieldName = '', $context = '', $args = [])
+    public function getRuntimeOptions($objectType = '', $fieldName = '', $context = '', array $args = [])
     {
         $this->checkIfImagineCacheDirectoryExists();
     
@@ -100,20 +101,20 @@ abstract class AbstractImageHelper
     /**
      * This method returns an Imagine runtime options array for the given arguments.
      *
-     * @param string $objectType Currently treated entity type
-     * @param string $fieldName  Name of upload field
+     * @param string $objectType  Currently treated entity type
+     * @param string $fieldName   Name of upload field
      * @param string $contextName Name of desired context
-     * @param string $context    Usage context (allowed values: controllerAction, api, actionHandler, block, contentType)
-     * @param array  $args       Additional arguments
+     * @param string $context     Usage context (allowed values: controllerAction, api, actionHandler, block, contentType)
+     * @param array  $args        Additional arguments
      *
      * @return array The selected runtime options
      */
-    public function getCustomRuntimeOptions($objectType = '', $fieldName = '', $contextName = '', $context = '', $args = [])
+    public function getCustomRuntimeOptions($objectType = '', $fieldName = '', $contextName = '', $context = '', array $args = [])
     {
         $options = [
             'thumbnail' => [
                 'size'      => [100, 100], // thumbnail width and height in pixels
-                'mode'      => $this->variableApi->get('MUBoardModule', 'thumbnailMode' . ucfirst($objectType) . ucfirst($fieldName), 'inset'),
+                'mode'      => $this->variableApi->get('MUBoardModule', 'thumbnailMode' . ucfirst($objectType) . ucfirst($fieldName), ImageInterface::THUMBNAIL_INSET),
                 'extension' => null        // file extension for thumbnails (jpg, png, gif; null for original file type)
             ]
         ];

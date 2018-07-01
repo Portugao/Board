@@ -22,7 +22,6 @@ use Zikula\Bundle\HookBundle\Category\UiHooksCategory;
 use Zikula\Component\SortableColumns\Column;
 use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\Controller\AbstractController;
-use Zikula\Core\Response\PlainResponse;
 use Zikula\Core\RouteUrl;
 use MU\BoardModule\Entity\CategoryEntity;
 
@@ -76,6 +75,7 @@ abstract class AbstractCategoryController extends AbstractController
         
         return $this->redirectToRoute('muboardmodule_category_' . $templateParameters['routeArea'] . 'view');
     }
+    
     /**
      * This action provides an item list overview in the admin area.
      *
@@ -146,10 +146,20 @@ abstract class AbstractCategoryController extends AbstractController
         
         $templateParameters = $controllerHelper->processViewActionParameters($objectType, $sortableColumns, $templateParameters, true);
         
+        // filter by permissions
+        $filteredEntities = [];
+        foreach ($templateParameters['items'] as $category) {
+            if (!$this->hasPermission('MUBoardModule:' . ucfirst($objectType) . ':', $category->getKey() . '::', $permLevel)) {
+                continue;
+            }
+            $filteredEntities[] = $category;
+        }
+        $templateParameters['items'] = $filteredEntities;
         
         // fetch and return the appropriate template
         return $viewHelper->processTemplate($objectType, 'view', $templateParameters);
     }
+    
     /**
      * This action provides a item detail view in the admin area.
      *
@@ -212,6 +222,7 @@ abstract class AbstractCategoryController extends AbstractController
         
         return $response;
     }
+    
     /**
      * This action provides a handling of edit requests in the admin area.
      *
@@ -274,6 +285,7 @@ abstract class AbstractCategoryController extends AbstractController
         // fetch and return the appropriate template
         return $this->get('mu_board_module.view_helper')->processTemplate($objectType, 'edit', $templateParameters);
     }
+    
     /**
      * This action provides a handling of simple delete requests in the admin area.
      *
@@ -401,7 +413,7 @@ abstract class AbstractCategoryController extends AbstractController
         // fetch and return the appropriate template
         return $this->get('mu_board_module.view_helper')->processTemplate($objectType, 'delete', $templateParameters);
     }
-
+    
     /**
      * Process status changes for multiple items.
      *
@@ -440,7 +452,7 @@ abstract class AbstractCategoryController extends AbstractController
      * This method includes the common implementation code for adminHandleSelectedEntriesAction() and handleSelectedEntriesAction().
      *
      * @param Request $request Current request instance
-     * @param Boolean $isAdmin Whether the admin area is used or not
+     * @param boolean $isAdmin Whether the admin area is used or not
      */
     protected function handleSelectedEntriesActionInternal(Request $request, $isAdmin = false)
     {
@@ -518,41 +530,5 @@ abstract class AbstractCategoryController extends AbstractController
         
         return $this->redirectToRoute('muboardmodule_category_' . ($isAdmin ? 'admin' : '') . 'index');
     }
-
-    /**
-     * This method cares for a redirect within an inline frame.
-     *
-     * @param string  $idPrefix    Prefix for inline window element identifier
-     * @param string  $commandName Name of action to be performed (create or edit)
-     * @param integer $id          Identifier of created category (used for activating auto completion after closing the modal window)
-     *
-     * @return PlainResponse Output
-     */
-    public function handleInlineRedirectAction($idPrefix, $commandName, $id = 0)
-    {
-        if (empty($idPrefix)) {
-            return false;
-        }
-        
-        $formattedTitle = '';
-        $searchTerm = '';
-        if (!empty($id)) {
-            $repository = $this->get('mu_board_module.entity_factory')->getRepository('category');
-            $category = $repository->selectById($id);
-            if (null !== $category) {
-                $formattedTitle = $this->get('mu_board_module.entity_display_helper')->getFormattedTitle($category);
-                $searchTerm = $category->getTitle();
-            }
-        }
-        
-        $templateParameters = [
-            'itemId' => $id,
-            'formattedTitle' => $formattedTitle,
-            'searchTerm' => $searchTerm,
-            'idPrefix' => $idPrefix,
-            'commandName' => $commandName
-        ];
-        
-        return new PlainResponse($this->get('twig')->render('@MUBoardModule/Category/inlineRedirectHandler.html.twig', $templateParameters));
-    }
+    
 }

@@ -2,12 +2,6 @@
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : 'adminBase' %}
 {% extends 'MUBoardModule::' ~ baseTemplate ~ '.html.twig' %}
 
-{% block header %}
-    {{ parent() }}
-    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.Validation.js'), 98) }}
-    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.EditFunctions.js'), 99) }}
-    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.InlineEditing.js'), 99) }}
-{% endblock %}
 {% block title mode == 'create' ? __('Create rank') : __('Edit rank') %}
 {% block admin_page_icon mode == 'create' ? 'plus' : 'pencil-square-o' %}
 {% block content %}
@@ -28,10 +22,6 @@
             {{ form_row(form.special) }}
         </fieldset>
         
-        {{ include(
-            '@MUBoardModule/User/Admin/includeSelectEditMany.html.twig',
-            {group: 'rank', heading: __('User'), alias: 'user', mandatory: false, idPrefix: 'boardRank_User', linkingItem: rank, displayMode: 'choices'}
-        ) }}
         {% if mode != 'create' %}
             {{ include('@MUBoardModule/Helper/includeStandardFieldsEdit.html.twig', {obj: rank}) }}
         {% endif %}
@@ -81,30 +71,19 @@
 {% endblock %}
 {% block footer %}
     {{ parent() }}
+    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.Validation.js'), 98) }}
+    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.EditFunctions.js'), 99) }}
     {% set formInitScript %}
-        <script type="text/javascript">
+        <script>
         /* <![CDATA[ */
-            var mUBoardInlineEditHandlers = [];
-            var mUBoardEditHandler = null;
-            mUBoardEditHandler = {
-                alias: 'user',
-                prefix: 'boardRank_UserSelectorDoNew',
-                moduleName: 'MUBoardModule',
-                objectType: 'user',
-                inputType: 'select-multi',
-                windowInstanceId: null
-            };
-            mUBoardInlineEditHandlers.push(mUBoardEditHandler);
             
             ( function($) {
                 $(document).ready(function() {
-                    // initialise auto completion for user fields
+                    mUBoardInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ rank.id }}{% endif %}');
+                    mUBoardInitUploadField('muboardmodule_rank_uploadImage_uploadImage');
                     {% if form.moderationSpecificCreator is defined %}
                         initUserLiveSearch('muboardmodule_rank_moderationSpecificCreator');
                     {% endif %}
-                    mUBoardInitRelationHandling('user', 'user', 'boardRank_User', true, 'select-multi', '{{ path('muboardmodule_user_' ~ routeArea ~ 'edit') }}');
-                    mUBoardInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ rank.id }}{% endif %}');
-                    mUBoardInitUploadField('muboardmodule_rank_uploadImage_uploadImage');
                 });
             })(jQuery);
         /* ]]> */

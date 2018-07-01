@@ -2,12 +2,6 @@
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : 'adminBase' %}
 {% extends 'MUBoardModule::' ~ baseTemplate ~ '.html.twig' %}
 
-{% block header %}
-    {{ parent() }}
-    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.Validation.js'), 98) }}
-    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.EditFunctions.js'), 99) }}
-    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.InlineEditing.js'), 99) }}
-{% endblock %}
 {% block title mode == 'create' ? __('Create category') : __('Edit category') %}
 {% block admin_page_icon mode == 'create' ? 'plus' : 'pencil-square-o' %}
 {% block content %}
@@ -25,10 +19,6 @@
             {{ form_row(form.pos) }}
         </fieldset>
         
-        {{ include(
-            '@MUBoardModule/Forum/Admin/includeSelectEditMany.html.twig',
-            {group: 'category', heading: __('Forum'), alias: 'forum', mandatory: false, idPrefix: 'boardCategory_Forum', linkingItem: category, displayMode: 'choices'}
-        ) }}
         {% if mode != 'create' %}
             {{ include('@MUBoardModule/Helper/includeStandardFieldsEdit.html.twig', {obj: category}) }}
         {% endif %}
@@ -78,29 +68,18 @@
 {% endblock %}
 {% block footer %}
     {{ parent() }}
+    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.Validation.js'), 98) }}
+    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.EditFunctions.js'), 99) }}
     {% set formInitScript %}
-        <script type="text/javascript">
+        <script>
         /* <![CDATA[ */
-            var mUBoardInlineEditHandlers = [];
-            var mUBoardEditHandler = null;
-            mUBoardEditHandler = {
-                alias: 'forum',
-                prefix: 'boardCategory_ForumSelectorDoNew',
-                moduleName: 'MUBoardModule',
-                objectType: 'forum',
-                inputType: 'select-multi',
-                windowInstanceId: null
-            };
-            mUBoardInlineEditHandlers.push(mUBoardEditHandler);
             
             ( function($) {
                 $(document).ready(function() {
-                    // initialise auto completion for user fields
+                    mUBoardInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ category.id }}{% endif %}');
                     {% if form.moderationSpecificCreator is defined %}
                         initUserLiveSearch('muboardmodule_category_moderationSpecificCreator');
                     {% endif %}
-                    mUBoardInitRelationHandling('forum', 'forum', 'boardCategory_Forum', true, 'select-multi', '{{ path('muboardmodule_forum_' ~ routeArea ~ 'edit') }}');
-                    mUBoardInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ category.id }}{% endif %}');
                 });
             })(jQuery);
         /* ]]> */

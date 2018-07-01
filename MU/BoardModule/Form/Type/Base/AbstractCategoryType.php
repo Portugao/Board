@@ -12,9 +12,7 @@
 
 namespace MU\BoardModule\Form\Type\Base;
 
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -99,7 +97,6 @@ abstract class AbstractCategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addEntityFields($builder, $options);
-        $this->addOutgoingRelationshipFields($builder, $options);
         $this->addModerationFields($builder, $options);
         $this->addSubmitButtons($builder, $options);
     }
@@ -110,7 +107,7 @@ abstract class AbstractCategoryType extends AbstractType
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
-    public function addEntityFields(FormBuilderInterface $builder, array $options)
+    public function addEntityFields(FormBuilderInterface $builder, array $options = [])
     {
         
         $builder->add('title', TextType::class, [
@@ -119,7 +116,7 @@ abstract class AbstractCategoryType extends AbstractType
             'attr' => [
                 'maxlength' => 255,
                 'class' => '',
-                'title' => $this->__('Enter the title of the category')
+                'title' => $this->__('Enter the title of the category.')
             ],
             'required' => true,
         ]);
@@ -131,7 +128,7 @@ abstract class AbstractCategoryType extends AbstractType
             'attr' => [
                 'maxlength' => 2000,
                 'class' => '',
-                'title' => $this->__('Enter the description of the category')
+                'title' => $this->__('Enter the description of the category.')
             ],
             'required' => false,
         ]);
@@ -150,43 +147,12 @@ abstract class AbstractCategoryType extends AbstractType
     }
 
     /**
-     * Adds fields for outgoing relationships.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addOutgoingRelationshipFields(FormBuilderInterface $builder, array $options)
-    {
-        $queryBuilder = function(EntityRepository $er) {
-            // select without joins
-            return $er->getListQueryBuilder('', '', false);
-        };
-        $entityDisplayHelper = $this->entityDisplayHelper;
-        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
-            return $entityDisplayHelper->getFormattedTitle($entity);
-        };
-        $builder->add('forum', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
-            'class' => 'MUBoardModule:ForumEntity',
-            'choice_label' => $choiceLabelClosure,
-            'by_reference' => false,
-            'multiple' => true,
-            'expanded' => false,
-            'query_builder' => $queryBuilder,
-            'required' => false,
-            'label' => $this->__('Forum'),
-            'attr' => [
-                'title' => $this->__('Choose the forum')
-            ]
-        ]);
-    }
-
-    /**
      * Adds special fields for moderators.
      *
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
-    public function addModerationFields(FormBuilderInterface $builder, array $options)
+    public function addModerationFields(FormBuilderInterface $builder, array $options = [])
     {
         if (!$options['has_moderate_permission']) {
             return;
@@ -200,25 +166,25 @@ abstract class AbstractCategoryType extends AbstractType
             'label' => $this->__('Creator') . ':',
             'attr' => [
                 'maxlength' => 11,
-                'title' => $this->__('Here you can choose a user which will be set as creator')
+                'title' => $this->__('Here you can choose a user which will be set as creator.')
             ],
             'empty_data' => 0,
             'required' => false,
-            'help' => $this->__('Here you can choose a user which will be set as creator')
+            'help' => $this->__('Here you can choose a user which will be set as creator.')
         ]);
         $builder->add('moderationSpecificCreationDate', DateTimeType::class, [
             'mapped' => false,
             'label' => $this->__('Creation date') . ':',
             'attr' => [
                 'class' => '',
-                'title' => $this->__('Here you can choose a custom creation date')
+                'title' => $this->__('Here you can choose a custom creation date.')
             ],
             'empty_data' => '',
             'required' => false,
             'with_seconds' => true,
             'date_widget' => 'single_text',
             'time_widget' => 'single_text',
-            'help' => $this->__('Here you can choose a custom creation date')
+            'help' => $this->__('Here you can choose a custom creation date.')
         ]);
     }
 
@@ -228,7 +194,7 @@ abstract class AbstractCategoryType extends AbstractType
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
-    public function addSubmitButtons(FormBuilderInterface $builder, array $options)
+    public function addSubmitButtons(FormBuilderInterface $builder, array $options = [])
     {
         foreach ($options['actions'] as $action) {
             $builder->add($action['id'], SubmitType::class, [

@@ -7,8 +7,8 @@
     {{ templateTitle|notifyFilters('muboardmodule.filter_hooks.forums.filter')|safeHtml }}
     {% set itemActions = knp_menu_get('MUBoardModule:ItemActionsMenu:menu', [], {entity: forum, area: routeArea, context: 'display'}) %}
     <div class="dropdown">
-        <a id="itemActions{{ forum.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
-        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
+        <a id="itemActions{{ forum.getKey() }}DropDownToggleStart" role="button" data-toggle="dropdown" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
+        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:bootstrap_fontawesome.html.twig'}) }}
     </div>
 {% endblock %}
 {% block admin_page_icon 'eye' %}

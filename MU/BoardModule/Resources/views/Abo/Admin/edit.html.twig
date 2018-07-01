@@ -2,12 +2,6 @@
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : 'adminBase' %}
 {% extends 'MUBoardModule::' ~ baseTemplate ~ '.html.twig' %}
 
-{% block header %}
-    {{ parent() }}
-    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.Validation.js'), 98) }}
-    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.EditFunctions.js'), 99) }}
-    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.InlineEditing.js'), 99) }}
-{% endblock %}
 {% block title mode == 'create' ? __('Create abo') : __('Edit abo') %}
 {% block admin_page_icon mode == 'create' ? 'plus' : 'pencil-square-o' %}
 {% block content %}
@@ -75,17 +69,18 @@
 {% endblock %}
 {% block footer %}
     {{ parent() }}
+    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.Validation.js'), 98) }}
+    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.EditFunctions.js'), 99) }}
     {% set formInitScript %}
-        <script type="text/javascript">
+        <script>
         /* <![CDATA[ */
             
             ( function($) {
                 $(document).ready(function() {
-                    // initialise auto completion for user fields
+                    mUBoardInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ abo.id }}{% endif %}');
                     {% if form.moderationSpecificCreator is defined %}
                         initUserLiveSearch('muboardmodule_abo_moderationSpecificCreator');
                     {% endif %}
-                    mUBoardInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ abo.id }}{% endif %}');
                 });
             })(jQuery);
         /* ]]> */

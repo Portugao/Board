@@ -1,4 +1,4 @@
-application "Board" {
+application "Board" targets ZK20 {
     documentation "Board is a small forum module"
     vendor "MU"
     author "Michael Ueberschaer"
@@ -6,9 +6,6 @@ application "Board" {
     url "https://homepages-mit-zikula.de"
     version "1.2.0"
     prefix "board"
-    generatorSettings {
-        settingsContainer "Settings"
-        targetCoreVersion ZK15
         amountOfExampleRows 0
         generateMailzApi false
         generateNewsletterPlugin false
@@ -23,9 +20,9 @@ application "Board" {
         separateAdminTemplates true
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
-        skipFiles ""
-        markFiles "Controller/AjaxController.php,\r\nController/CategoryController.php,\r\nEntity/CategoryEntity.php,\r\nEntity/ForumEntity.php,\r\nEntity/PostingEntity.php,\r\nEntity/Repository/PostingRepository.php,\r\nHelper/ControllerHelper.php,\r\nResources/config/forms.yml,\r\nResources/public/css/style.css,\r\nResources/views/Category/display.html.twig,\r\nResources/views/Category/view.html.twig,\r\nResources/views/Forum/display.html.twig\r\nResources/views/Posting/display.html.twig\r\nResources/views/Forum/includeDisplayItemListMany.html.twig"
-    }
+        skipFiles "Container/LinkContainer.php,\r\nController/AjaxController.php,\r\nController/CategoryController.php,\r\nEntity/CategoryEntity.php,\r\nEntity/ForumEntity.php,\r\nEntity/PostingEntity.php,\r\nEntity/Repository/PostingRepository.php,\r\nHelper/ControllerHelper.php,\r\nHelper/WorkflowHelper.php"
+        markFiles "Resources/config/forms.yml,\r\nResources/public/css/style.css,\r\nResources/views/Category/display.html.twig,\r\nResources/views/Category/view.html.twig,\r\nResources/views/Forum/display.html.twig,\r\nResources/views/Posting/display.html.twig,\r\nResources/views/Forum/includeDisplayItemListMany.html.twig"
+
     entities {
         entity "category" leading {
             nameMultiple "categories"
@@ -216,7 +213,6 @@ application "Board" {
             sourceAlias "category"
             target "forum"
             targetAlias "forum"
-            editType ACTIVE_EDIT_PASSIVE_EDIT
             cascade REMOVE
             orderBy "pos"
         },
@@ -234,7 +230,6 @@ application "Board" {
             sourceAlias "forum"
             target "posting"
             targetAlias "posting"
-            editType ACTIVE_EDIT_PASSIVE_EDIT
             cascade REMOVE
             orderBy "createdDate"
         },
@@ -243,99 +238,6 @@ application "Board" {
             sourceAlias "rank"
             target "user"
             targetAlias "user"
-            editType ACTIVE_EDIT_PASSIVE_EDIT
-        }
-    }
-    variables {
-        varContainer "General" {
-            vars {
-                boolVar "uploadImages" {
-                    value "1"
-                },
-                textVar "allowedSizeOfImages" {
-                    value "200k"
-                },
-                listVar "numberImages" {
-                    value ""
-                    items {
-                        listVarItem default "1",
-                        listVarItem "2",
-                        listVarItem "3"
-                    }
-                },
-                boolVar "uploadFiles" {
-                    value "1"
-                },
-                textVar "allowedSizeOfFiles" {
-                    value "2M"
-                },
-                listVar "numberFiles" {
-                    items {
-                        listVarItem default "1",
-                        listVarItem "2",
-                        listVarItem "3"
-                    }
-                },
-                boolVar "editPostings" {
-                    value "1"
-                },
-                intVar "editTime" {
-                    documentation "Time of editing allowed in hours.\r\n0 unlimited."
-                    value "6"
-                },
-                intVar "latestPostings" {
-                    documentation "In Hours."
-                    value "24"
-                },
-                listVar "sortingCategories" {
-                    items {
-                        listVarItem default "descending",
-                        listVarItem "ascending"
-                    }
-                },
-                listVar "sortingForums" {
-                    items {
-                        listVarItem default "descending",
-                        listVarItem "ascending"
-                    }
-                },
-                listVar "sortingPostings" {
-                    items {
-                        listVarItem default "descending",
-                        listVarItem "ascending"
-                    }
-                },
-                filePathVar "standardIcon" {
-                    documentation "This icon will be used for ranks to show; for example a star."
-                    value "images/icons/extrasmall/favorites.png"
-                },
-                filePathVar "specialIcon" {
-                    documentation "This icon will be used for special ranks to show; for example a heart."
-                    value "images/icons/extrasmall/package_favorite.png"
-                }
-            }
-        },
-        varContainer "Layout" {
-            sortOrder 2
-            vars {
-                listVar "iconSet" {
-                    items {
-                        listVarItem default "1",
-                        listVarItem "2",
-                        listVarItem "3"
-                    }
-                },
-                listVar "template" {
-                    items {
-                        listVarItem default "normal",
-                        listVarItem "jquery"
-                    }
-                },
-                boolVar "showStatisticInDetails" {
-                    value "1"
-                },
-                boolVar "showStatisticOnBottom"
-            }
         }
     }
 }

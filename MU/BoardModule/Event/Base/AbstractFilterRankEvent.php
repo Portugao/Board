@@ -36,7 +36,7 @@ class AbstractFilterRankEvent extends Event
      * @param RankEntity $rank Processed entity
      * @param array $entityChangeSet Change set for preUpdate events
      */
-    public function __construct(RankEntity $rank, $entityChangeSet = [])
+    public function __construct(RankEntity $rank, array $entityChangeSet = [])
     {
         $this->rank = $rank;
         $this->entityChangeSet = $entityChangeSet;
@@ -55,7 +55,7 @@ class AbstractFilterRankEvent extends Event
     /**
      * Returns the change set.
      *
-     * @return array
+     * @return array Entity change set
      */
     public function getEntityChangeSet()
     {

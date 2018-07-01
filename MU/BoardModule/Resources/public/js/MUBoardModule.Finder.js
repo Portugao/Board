@@ -7,8 +7,7 @@ var currentMUBoardModuleInput = null;
  * Returns the attributes used for the popup window. 
  * @return {String}
  */
-function getMUBoardModulePopupAttributes()
-{
+function getMUBoardModulePopupAttributes() {
     var pWidth, pHeight;
 
     pWidth = screen.width * 0.75;
@@ -20,8 +19,7 @@ function getMUBoardModulePopupAttributes()
 /**
  * Open a popup window with the finder triggered by an editor button.
  */
-function MUBoardModuleFinderOpenPopup(editor, editorName)
-{
+function MUBoardModuleFinderOpenPopup(editor, editorName) {
     var popupUrl;
 
     // Save editor for access in selector window
@@ -41,8 +39,7 @@ var mUBoardModule = {};
 
 mUBoardModule.finder = {};
 
-mUBoardModule.finder.onLoad = function (baseId, selectedId)
-{
+mUBoardModule.finder.onLoad = function (baseId, selectedId) {
     var imageModeEnabled;
 
     if (jQuery('#mUBoardModuleSelectorForm').length < 1) {
@@ -72,13 +69,11 @@ mUBoardModule.finder.onLoad = function (baseId, selectedId)
     });
 };
 
-mUBoardModule.finder.onParamChanged = function ()
-{
+mUBoardModule.finder.onParamChanged = function () {
     jQuery('#mUBoardModuleSelectorForm').submit();
 };
 
-mUBoardModule.finder.handleCancel = function (event)
-{
+mUBoardModule.finder.handleCancel = function (event) {
     var editor;
 
     event.preventDefault();
@@ -97,8 +92,7 @@ mUBoardModule.finder.handleCancel = function (event)
 };
 
 
-function mUBoardGetPasteSnippet(mode, itemId)
-{
+function mUBoardGetPasteSnippet(mode, itemId) {
     var quoteFinder;
     var itemPath;
     var itemUrl;
@@ -152,8 +146,7 @@ function mUBoardGetPasteSnippet(mode, itemId)
 
 
 // User clicks on "select item" button
-mUBoardModule.finder.selectItem = function (itemId)
-{
+mUBoardModule.finder.selectItem = function (itemId) {
     var editor, html;
 
     html = mUBoardGetPasteSnippet('html', itemId);
@@ -179,12 +172,11 @@ mUBoardModule.finder.selectItem = function (itemId)
     mUBoardClosePopup();
 };
 
-function mUBoardClosePopup()
-{
+function mUBoardClosePopup() {
     window.opener.focus();
     window.close();
 }
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     mUBoardModule.finder.onLoad();
 });

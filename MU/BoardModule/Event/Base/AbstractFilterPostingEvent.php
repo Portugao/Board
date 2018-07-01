@@ -36,7 +36,7 @@ class AbstractFilterPostingEvent extends Event
      * @param PostingEntity $posting Processed entity
      * @param array $entityChangeSet Change set for preUpdate events
      */
-    public function __construct(PostingEntity $posting, $entityChangeSet = [])
+    public function __construct(PostingEntity $posting, array $entityChangeSet = [])
     {
         $this->posting = $posting;
         $this->entityChangeSet = $entityChangeSet;
@@ -55,7 +55,7 @@ class AbstractFilterPostingEvent extends Event
     /**
      * Returns the change set.
      *
-     * @return array
+     * @return array Entity change set
      */
     public function getEntityChangeSet()
     {

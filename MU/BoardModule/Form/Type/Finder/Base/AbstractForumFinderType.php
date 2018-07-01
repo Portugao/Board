@@ -94,7 +94,7 @@ abstract class AbstractForumFinderType extends AbstractType
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
-    public function addPasteAsField(FormBuilderInterface $builder, array $options)
+    public function addPasteAsField(FormBuilderInterface $builder, array $options = [])
     {
         $builder->add('pasteAs', ChoiceType::class, [
             'label' => $this->__('Paste as') . ':',
@@ -104,7 +104,6 @@ abstract class AbstractForumFinderType extends AbstractType
                 $this->__('Absolute url to the forum') => 2,
                 $this->__('ID of forum') => 3
             ],
-            'choices_as_values' => true,
             'multiple' => false,
             'expanded' => false
         ]);
@@ -116,7 +115,7 @@ abstract class AbstractForumFinderType extends AbstractType
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
-    public function addSortingFields(FormBuilderInterface $builder, array $options)
+    public function addSortingFields(FormBuilderInterface $builder, array $options = [])
     {
         $builder
             ->add('sort', ChoiceType::class, [
@@ -130,7 +129,6 @@ abstract class AbstractForumFinderType extends AbstractType
                     $this->__('Update date') => 'updatedDate',
                     $this->__('Updater') => 'updatedBy'
                 ],
-                'choices_as_values' => true,
                 'multiple' => false,
                 'expanded' => false
             ])
@@ -141,7 +139,6 @@ abstract class AbstractForumFinderType extends AbstractType
                     $this->__('Ascending') => 'asc',
                     $this->__('Descending') => 'desc'
                 ],
-                'choices_as_values' => true,
                 'multiple' => false,
                 'expanded' => false
             ])
@@ -154,7 +151,7 @@ abstract class AbstractForumFinderType extends AbstractType
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
-    public function addAmountField(FormBuilderInterface $builder, array $options)
+    public function addAmountField(FormBuilderInterface $builder, array $options = [])
     {
         $builder->add('num', ChoiceType::class, [
             'label' => $this->__('Page size') . ':',
@@ -171,7 +168,6 @@ abstract class AbstractForumFinderType extends AbstractType
                 $this->__('50') => 50,
                 $this->__('100') => 100
             ],
-            'choices_as_values' => true,
             'multiple' => false,
             'expanded' => false
         ]);
@@ -183,7 +179,7 @@ abstract class AbstractForumFinderType extends AbstractType
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
-    public function addSearchField(FormBuilderInterface $builder, array $options)
+    public function addSearchField(FormBuilderInterface $builder, array $options = [])
     {
         $builder->add('q', SearchType::class, [
             'label' => $this->__('Search for') . ':',

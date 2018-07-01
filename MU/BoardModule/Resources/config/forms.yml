@@ -311,7 +311,5 @@ services:
         class: MU\BoardModule\Form\Type\ConfigType
         arguments:
             - "@translator.default"
-            - "@=service('zikula_extensions_module.api.variable').getAll('MUBoardModule')"
-            - "@zikula_groups_module.group_repository"
-        tags:
-            - { name: form.type }
+            - "@mu_board_module.listentries_helper"
+        tags: ['form.type']

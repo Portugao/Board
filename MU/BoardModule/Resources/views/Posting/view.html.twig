@@ -18,7 +18,7 @@
                 {% if routeArea == 'admin' %}
                     <col id="cSelect" />
                 {% endif %}
-                <col id="cItemActions" />
+                <col id="cItemActionsStart" />
                 {% if routeArea == 'admin' %}
                 <col id="cWorkflowState" />
                 {% endif %}
@@ -39,11 +39,11 @@
             <thead>
             <tr>
                 {% if routeArea == 'admin' %}
-                    <th id="hSelect" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}text-center z-w02">
+                    <th id="hSelect" scope="col" class="text-center z-w02">
                         <input type="checkbox" class="muboard-mass-toggle" />
                     </th>
                 {% endif %}
-                <th id="hItemActions" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}z-order-unsorted z-w02">{{ __('Actions') }}</th>
+                <th id="hItemActionsStart" scope="col" class="z-w02">{{ __('Actions') }}</th>
                 {% if routeArea == 'admin' %}
                 <th id="hWorkflowState" scope="col" class="text-left">
                     <a href="{{ sort.workflowState.url }}" title="{{ __f('Sort by %s', {'%s': 'state'}) }}" class="{{ sort.workflowState.class }}">{{ __('State') }}</a>
@@ -61,7 +61,7 @@
                 <th id="hInvocations" scope="col" class="text-right">
                     <a href="{{ sort.invocations.url }}" title="{{ __f('Sort by %s', {'%s': 'invocations'}) }}" class="{{ sort.invocations.class }}">{{ __('Invocations') }}</a>
                 </th>
-                <th id="hSolved" scope="col" class="text-center z-order-unsorted">
+                <th id="hSolved" scope="col" class="text-center unsorted">
                     {{ __('Solved') }}
                 </th>
                 <th id="hFirstImage" scope="col" class="text-left">
@@ -95,15 +95,15 @@
         {% for posting in items %}
             <tr>
                 {% if routeArea == 'admin' %}
-                    <td headers="hSelect" class="fixed-column text-center z-w02">
+                    <td headers="hSelect" class="text-center z-w02">
                         <input type="checkbox" name="items[]" value="{{ posting.getKey() }}" class="muboard-toggle-checkbox" />
                     </td>
                 {% endif %}
-                <td id="itemActions{{ posting.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
+                <td id="itemActions{{ posting.getKey() }}Start" headers="hItemActionsStart" class="actions nowrap z-w02">
                     {% set itemActions = knp_menu_get('MUBoardModule:ItemActionsMenu:menu', [], {entity: posting, area: routeArea, context: 'view'}) %}
                     <div class="dropdown">
-                        <a id="itemActions{{ posting.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
-                        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
+                        <a id="itemActions{{ posting.getKey() }}DropDownToggleStart" role="button" data-toggle="dropdown" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:bootstrap_fontawesome.html.twig'}) }}
                     </div>
                 </td>
                 {% if routeArea == 'admin' %}<td headers="hWorkflowState" class="text-left nowrap">
@@ -273,6 +273,15 @@
             {% set linkTitle = __('Show all entries') %}
             {% set routeArgs = own ? {all: 1, own: 1} : {all: 1} %}
             <a href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'view', routeArgs) }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-table"></i> {{ linkTitle }}</a>
+        {% endif %}
+        {% if own == 1 %}
+            {% set linkTitle = __('Show also entries from other users') %}
+            {% set routeArgs = all ? {all: 1} : {} %}
+            <a href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'view', routeArgs) }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-users"></i> {{ linkTitle }}</a>
+        {% else %}
+            {% set linkTitle = __('Show only own entries') %}
+            {% set routeArgs = all ? {all: 1, own: 1} : {own: 1} %}
+            <a href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'view', routeArgs) }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-user"></i> {{ linkTitle }}</a>
         {% endif %}
     </p>
 {% endblock %}

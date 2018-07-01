@@ -33,7 +33,6 @@ abstract class AbstractEntityInitialiser
      */
     public function initCategory(CategoryEntity $entity)
     {
-
         return $entity;
     }
 
@@ -46,7 +45,6 @@ abstract class AbstractEntityInitialiser
      */
     public function initForum(ForumEntity $entity)
     {
-
         return $entity;
     }
 
@@ -59,7 +57,6 @@ abstract class AbstractEntityInitialiser
      */
     public function initPosting(PostingEntity $entity)
     {
-
         return $entity;
     }
 
@@ -72,7 +69,6 @@ abstract class AbstractEntityInitialiser
      */
     public function initAbo(AboEntity $entity)
     {
-
         return $entity;
     }
 
@@ -85,7 +81,6 @@ abstract class AbstractEntityInitialiser
      */
     public function initUser(UserEntity $entity)
     {
-
         return $entity;
     }
 
@@ -98,7 +93,6 @@ abstract class AbstractEntityInitialiser
      */
     public function initRank(RankEntity $entity)
     {
-
         return $entity;
     }
 

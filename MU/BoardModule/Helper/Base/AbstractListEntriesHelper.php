@@ -172,6 +172,25 @@ abstract class AbstractListEntriesHelper
                         break;
                 }
                 break;
+            case 'appSettings':
+                switch ($fieldName) {
+                    case 'thumbnailModePostingFirstImage':
+                        $result = false;
+                        break;
+                    case 'thumbnailModePostingSecondImage':
+                        $result = false;
+                        break;
+                    case 'thumbnailModePostingThirdImage':
+                        $result = false;
+                        break;
+                    case 'thumbnailModeRankUploadImage':
+                        $result = false;
+                        break;
+                    case 'enabledFinderTypes':
+                        $result = true;
+                        break;
+                }
+                break;
         }
     
         return $result;
@@ -236,6 +255,25 @@ abstract class AbstractListEntriesHelper
                         break;
                 }
                 break;
+            case 'appSettings':
+                switch ($fieldName) {
+                    case 'thumbnailModePostingFirstImage':
+                        $entries = $this->getThumbnailModePostingFirstImageEntriesForAppSettings();
+                        break;
+                    case 'thumbnailModePostingSecondImage':
+                        $entries = $this->getThumbnailModePostingSecondImageEntriesForAppSettings();
+                        break;
+                    case 'thumbnailModePostingThirdImage':
+                        $entries = $this->getThumbnailModePostingThirdImageEntriesForAppSettings();
+                        break;
+                    case 'thumbnailModeRankUploadImage':
+                        $entries = $this->getThumbnailModeRankUploadImageEntriesForAppSettings();
+                        break;
+                    case 'enabledFinderTypes':
+                        $entries = $this->getEnabledFinderTypesEntriesForAppSettings();
+                        break;
+                }
+                break;
         }
     
         return $entries;
@@ -258,9 +296,23 @@ abstract class AbstractListEntriesHelper
             'default' => false
         ];
         $states[] = [
+            'value'   => 'trashed',
+            'text'    => $this->__('Trashed'),
+            'title'   => $this->__('Content has been marked as deleted, but is still persisted in the database.'),
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
             'value'   => '!approved',
             'text'    => $this->__('All except approved'),
             'title'   => $this->__('Shows all items except these which are approved'),
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '!trashed',
+            'text'    => $this->__('All except trashed'),
+            'title'   => $this->__('Shows all items except these which are trashed'),
             'image'   => '',
             'default' => false
         ];
@@ -284,9 +336,23 @@ abstract class AbstractListEntriesHelper
             'default' => false
         ];
         $states[] = [
+            'value'   => 'trashed',
+            'text'    => $this->__('Trashed'),
+            'title'   => $this->__('Content has been marked as deleted, but is still persisted in the database.'),
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
             'value'   => '!approved',
             'text'    => $this->__('All except approved'),
             'title'   => $this->__('Shows all items except these which are approved'),
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '!trashed',
+            'text'    => $this->__('All except trashed'),
+            'title'   => $this->__('Shows all items except these which are trashed'),
             'image'   => '',
             'default' => false
         ];
@@ -317,6 +383,13 @@ abstract class AbstractListEntriesHelper
             'default' => false
         ];
         $states[] = [
+            'value'   => 'trashed',
+            'text'    => $this->__('Trashed'),
+            'title'   => $this->__('Content has been marked as deleted, but is still persisted in the database.'),
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
             'value'   => '!waiting',
             'text'    => $this->__('All except waiting'),
             'title'   => $this->__('Shows all items except these which are waiting'),
@@ -327,6 +400,13 @@ abstract class AbstractListEntriesHelper
             'value'   => '!approved',
             'text'    => $this->__('All except approved'),
             'title'   => $this->__('Shows all items except these which are approved'),
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '!trashed',
+            'text'    => $this->__('All except trashed'),
+            'title'   => $this->__('Shows all items except these which are trashed'),
             'image'   => '',
             'default' => false
         ];
@@ -350,9 +430,23 @@ abstract class AbstractListEntriesHelper
             'default' => false
         ];
         $states[] = [
+            'value'   => 'trashed',
+            'text'    => $this->__('Trashed'),
+            'title'   => $this->__('Content has been marked as deleted, but is still persisted in the database.'),
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
             'value'   => '!approved',
             'text'    => $this->__('All except approved'),
             'title'   => $this->__('Shows all items except these which are approved'),
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '!trashed',
+            'text'    => $this->__('All except trashed'),
+            'title'   => $this->__('Shows all items except these which are trashed'),
             'image'   => '',
             'default' => false
         ];
@@ -376,9 +470,23 @@ abstract class AbstractListEntriesHelper
             'default' => false
         ];
         $states[] = [
+            'value'   => 'trashed',
+            'text'    => $this->__('Trashed'),
+            'title'   => $this->__('Content has been marked as deleted, but is still persisted in the database.'),
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
             'value'   => '!approved',
             'text'    => $this->__('All except approved'),
             'title'   => $this->__('Shows all items except these which are approved'),
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '!trashed',
+            'text'    => $this->__('All except trashed'),
+            'title'   => $this->__('Shows all items except these which are trashed'),
             'image'   => '',
             'default' => false
         ];
@@ -402,11 +510,183 @@ abstract class AbstractListEntriesHelper
             'default' => false
         ];
         $states[] = [
+            'value'   => 'trashed',
+            'text'    => $this->__('Trashed'),
+            'title'   => $this->__('Content has been marked as deleted, but is still persisted in the database.'),
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
             'value'   => '!approved',
             'text'    => $this->__('All except approved'),
             'title'   => $this->__('Shows all items except these which are approved'),
             'image'   => '',
             'default' => false
+        ];
+        $states[] = [
+            'value'   => '!trashed',
+            'text'    => $this->__('All except trashed'),
+            'title'   => $this->__('Shows all items except these which are trashed'),
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'thumbnail mode posting first image' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getThumbnailModePostingFirstImageEntriesForAppSettings()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'inset',
+            'text'    => $this->__('Inset'),
+            'title'   => '',
+            'image'   => '',
+            'default' => true
+        ];
+        $states[] = [
+            'value'   => 'outbound',
+            'text'    => $this->__('Outbound'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'thumbnail mode posting second image' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getThumbnailModePostingSecondImageEntriesForAppSettings()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'inset',
+            'text'    => $this->__('Inset'),
+            'title'   => '',
+            'image'   => '',
+            'default' => true
+        ];
+        $states[] = [
+            'value'   => 'outbound',
+            'text'    => $this->__('Outbound'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'thumbnail mode posting third image' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getThumbnailModePostingThirdImageEntriesForAppSettings()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'inset',
+            'text'    => $this->__('Inset'),
+            'title'   => '',
+            'image'   => '',
+            'default' => true
+        ];
+        $states[] = [
+            'value'   => 'outbound',
+            'text'    => $this->__('Outbound'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'thumbnail mode rank upload image' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getThumbnailModeRankUploadImageEntriesForAppSettings()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'inset',
+            'text'    => $this->__('Inset'),
+            'title'   => '',
+            'image'   => '',
+            'default' => true
+        ];
+        $states[] = [
+            'value'   => 'outbound',
+            'text'    => $this->__('Outbound'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'enabled finder types' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getEnabledFinderTypesEntriesForAppSettings()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'category',
+            'text'    => $this->__('Category'),
+            'title'   => '',
+            'image'   => '',
+            'default' => true
+        ];
+        $states[] = [
+            'value'   => 'forum',
+            'text'    => $this->__('Forum'),
+            'title'   => '',
+            'image'   => '',
+            'default' => true
+        ];
+        $states[] = [
+            'value'   => 'posting',
+            'text'    => $this->__('Posting'),
+            'title'   => '',
+            'image'   => '',
+            'default' => true
+        ];
+        $states[] = [
+            'value'   => 'abo',
+            'text'    => $this->__('Abo'),
+            'title'   => '',
+            'image'   => '',
+            'default' => true
+        ];
+        $states[] = [
+            'value'   => 'user',
+            'text'    => $this->__('User'),
+            'title'   => '',
+            'image'   => '',
+            'default' => true
+        ];
+        $states[] = [
+            'value'   => 'rank',
+            'text'    => $this->__('Rank'),
+            'title'   => '',
+            'image'   => '',
+            'default' => true
         ];
     
         return $states;

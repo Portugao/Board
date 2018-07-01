@@ -36,7 +36,7 @@ class AbstractFilterCategoryEvent extends Event
      * @param CategoryEntity $category Processed entity
      * @param array $entityChangeSet Change set for preUpdate events
      */
-    public function __construct(CategoryEntity $category, $entityChangeSet = [])
+    public function __construct(CategoryEntity $category, array $entityChangeSet = [])
     {
         $this->category = $category;
         $this->entityChangeSet = $entityChangeSet;
@@ -55,7 +55,7 @@ class AbstractFilterCategoryEvent extends Event
     /**
      * Returns the change set.
      *
-     * @return array
+     * @return array Entity change set
      */
     public function getEntityChangeSet()
     {

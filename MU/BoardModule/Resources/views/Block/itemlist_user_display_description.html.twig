@@ -1,0 +1,10 @@
+{# Purpose of this template: Display users within an external context #}
+<dl>
+    {% for user in items %}
+        <dt>{{ user|muboardmodule_formattedTitle }}</dt>
+        <dd><a href="{{ path('muboardmodule_user_display', {'id': user.getId()}) }}" title="{{ __('Read more')|e('html_attr') }}">{{ __('Read more') }}</a>
+        </dd>
+    {% else %}
+        <dt>{{ __('No entries found.') }}</dt>
+    {% endfor %}
+</dl>

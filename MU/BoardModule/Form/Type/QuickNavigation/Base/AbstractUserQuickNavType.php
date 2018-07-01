@@ -12,6 +12,7 @@
 
 namespace MU\BoardModule\Form\Type\QuickNavigation\Base;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -109,7 +110,7 @@ abstract class AbstractUserQuickNavType extends AbstractType
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
-    public function addIncomingRelationshipFields(FormBuilderInterface $builder, array $options)
+    public function addIncomingRelationshipFields(FormBuilderInterface $builder, array $options = [])
     {
         $mainSearchTerm = '';
         if ($this->request->query->has('q')) {
@@ -118,6 +119,10 @@ abstract class AbstractUserQuickNavType extends AbstractType
             $this->request->query->remove('q');
         }
     
+        $queryBuilder = function(EntityRepository $er) {
+            // select without joins
+            return $er->getListQueryBuilder('', '', false);
+        };
         $entityDisplayHelper = $this->entityDisplayHelper;
         $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
             return $entityDisplayHelper->getFormattedTitle($entity);
@@ -125,6 +130,7 @@ abstract class AbstractUserQuickNavType extends AbstractType
         $builder->add('rank', EntityType::class, [
             'class' => 'MUBoardModule:RankEntity',
             'choice_label' => $choiceLabelClosure,
+            'query_builder' => $queryBuilder,
             'placeholder' => $this->__('All'),
             'required' => false,
             'label' => $this->__('Rank'),
@@ -145,7 +151,7 @@ abstract class AbstractUserQuickNavType extends AbstractType
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
-    public function addListFields(FormBuilderInterface $builder, array $options)
+    public function addListFields(FormBuilderInterface $builder, array $options = [])
     {
         $listEntries = $this->listHelper->getEntries('user', 'workflowState');
         $choices = [];
@@ -162,7 +168,6 @@ abstract class AbstractUserQuickNavType extends AbstractType
             'required' => false,
             'placeholder' => $this->__('All'),
             'choices' => $choices,
-            'choices_as_values' => true,
             'choice_attr' => $choiceAttributes,
             'multiple' => false,
             'expanded' => false
@@ -175,7 +180,7 @@ abstract class AbstractUserQuickNavType extends AbstractType
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
-    public function addSearchField(FormBuilderInterface $builder, array $options)
+    public function addSearchField(FormBuilderInterface $builder, array $options = [])
     {
         $builder->add('q', SearchType::class, [
             'label' => $this->__('Search'),
@@ -194,7 +199,7 @@ abstract class AbstractUserQuickNavType extends AbstractType
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
-    public function addSortingFields(FormBuilderInterface $builder, array $options)
+    public function addSortingFields(FormBuilderInterface $builder, array $options = [])
     {
         $builder
             ->add('sort', ChoiceType::class, [
@@ -207,7 +212,6 @@ abstract class AbstractUserQuickNavType extends AbstractType
                     $this->__('Number postings') => 'numberPostings',
                     $this->__('Last visit') => 'lastVisit'
                 ],
-                'choices_as_values' => true,
                 'required' => true,
                 'expanded' => false
             ])
@@ -221,7 +225,6 @@ abstract class AbstractUserQuickNavType extends AbstractType
                     $this->__('Ascending') => 'asc',
                     $this->__('Descending') => 'desc'
                 ],
-                'choices_as_values' => true,
                 'required' => true,
                 'expanded' => false
             ])
@@ -234,7 +237,7 @@ abstract class AbstractUserQuickNavType extends AbstractType
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
-    public function addAmountField(FormBuilderInterface $builder, array $options)
+    public function addAmountField(FormBuilderInterface $builder, array $options = [])
     {
         $builder->add('num', ChoiceType::class, [
             'label' => $this->__('Page size'),
@@ -251,7 +254,6 @@ abstract class AbstractUserQuickNavType extends AbstractType
                 $this->__('50') => 50,
                 $this->__('100') => 100
             ],
-            'choices_as_values' => true,
             'required' => false,
             'expanded' => false
         ]);

@@ -14,7 +14,6 @@ namespace MU\BoardModule\Form\Type\Base;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -106,7 +105,7 @@ abstract class AbstractUserType extends AbstractType
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
-    public function addEntityFields(FormBuilderInterface $builder, array $options)
+    public function addEntityFields(FormBuilderInterface $builder, array $options = [])
     {
         
         $builder->add('userid', IntegerType::class, [
@@ -137,7 +136,7 @@ abstract class AbstractUserType extends AbstractType
             'label' => $this->__('Last visit') . ':',
             'attr' => [
                 'class' => '',
-                'title' => $this->__('Enter the last visit of the user')
+                'title' => $this->__('Enter the last visit of the user.')
             ],
             'required' => true,
             'empty_data' => date('Y-m-d H:i:s'),
@@ -153,7 +152,7 @@ abstract class AbstractUserType extends AbstractType
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
-    public function addIncomingRelationshipFields(FormBuilderInterface $builder, array $options)
+    public function addIncomingRelationshipFields(FormBuilderInterface $builder, array $options = [])
     {
         $queryBuilder = function(EntityRepository $er) {
             // select without joins
@@ -169,11 +168,11 @@ abstract class AbstractUserType extends AbstractType
             'multiple' => false,
             'expanded' => false,
             'query_builder' => $queryBuilder,
-            'placeholder' => $this->__('Please choose an option'),
+            'placeholder' => $this->__('Please choose an option.'),
             'required' => false,
             'label' => $this->__('Rank'),
             'attr' => [
-                'title' => $this->__('Choose the rank')
+                'title' => $this->__('Choose the rank.')
             ]
         ]);
     }
@@ -184,7 +183,7 @@ abstract class AbstractUserType extends AbstractType
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
-    public function addSubmitButtons(FormBuilderInterface $builder, array $options)
+    public function addSubmitButtons(FormBuilderInterface $builder, array $options = [])
     {
         foreach ($options['actions'] as $action) {
             $builder->add($action['id'], SubmitType::class, [

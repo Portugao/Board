@@ -1,6 +1,12 @@
 services:
     # Form field types
     
+    mu_board_module.form.type.field.multilist:
+        class: MU\BoardModule\Form\Type\Field\MultiListType
+        arguments:
+            - "@mu_board_module.listentries_helper"
+        tags: ['form.type']
+    
     mu_board_module.form.type.field.upload:
         class: MU\BoardModule\Form\Type\Field\UploadType
         arguments:
@@ -8,5 +14,4 @@ services:
             - "@request_stack"
             - "@mu_board_module.image_helper"
             - "@mu_board_module.upload_helper"
-        tags:
-            - { name: form.type }
+        tags: ['form.type']

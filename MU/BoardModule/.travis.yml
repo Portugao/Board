@@ -12,8 +12,6 @@ php:
 matrix:
   fast_finish: true
   allow_failures:
-    - php: 7.0
-    - php: 7.1
     - php: nightly
 
 services:
@@ -35,10 +33,10 @@ before_install:
 install:
     - composer install
     - zip -qr MUBoardModule.zip .
-    - wget https://github.com/zikula/core/releases/download/1.5.2/Zikula_Core-1.5.2.tar.gz
-    - tar -xpzf Zikula_Core-1.5.2.tar.gz
-    - rm Zikula_Core-1.5.2.tar.gz
-    - cd 1.5
+    - wget https://github.com/zikula/core/releases/download/2.0.7/Zikula_Core-2.0.7.tar.gz
+    - tar -xpzf Zikula_Core-2.0.7.tar.gz
+    - rm Zikula_Core-2.0.7.tar.gz
+    - cd 2.0
     - php app/console zikula:install:start -n --database_user=root --database_name=zk_test --password=12345678 --email=admin@example.com --router:request_context:host=localhost
     - php app/console zikula:install:finish
     - cd modules
@@ -49,13 +47,12 @@ install:
     - unzip -q ../../../../MUBoardModule
     - cd  ../../..
     - php app/console bootstrap:bundles
-    - mysql -e "INSERT INTO zk_test.modules (id, name, type, displayname, url, description, directory, version, capabilities, state, securityschema, core_min, core_max) VALUES (NULL, 'MUBoardModule', '3', 'Board', 'board', 'Board is a small forum module', 'mu/board-module', '1.2.0', 'N;', '3', 'N;', '1.5.2', '3.0.0');"
+    - mysql -e "INSERT INTO zk_test.modules (id, name, type, displayname, url, description, directory, version, capabilities, state, securityschema, core_min, core_max) VALUES (NULL, 'MUBoardModule', '3', 'Board', 'board', 'Board is a small forum module', 'mu/board-module', '1.2.0', 'N;', '3', 'N;', '2.0.7', '3.0.0');"
     - php app/console cache:warmup
 
 script:
     - php app/console lint:yaml modules/mu/board-module/Resources
     - php app/console lint:twig @MUBoardModule
-    - phpunit --configuration modules/mu/board-module/phpunit.xml.dist --coverage-text --coverage-clover=coverage.clover -v
 
 after_script:
     - wget https://scrutinizer-ci.com/ocular.phar

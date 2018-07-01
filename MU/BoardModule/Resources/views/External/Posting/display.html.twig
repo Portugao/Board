@@ -1,6 +1,6 @@
 {# Purpose of this template: Display one certain posting within an external context #}
-{{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js')) }}
-{{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css')) }}
+{{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js'), 90) }}
+{{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css'), 90) }}
 {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.js')) }}
 <div id="posting{{ posting.getKey() }}" class="muboardmodule-external-posting">
 {% if displayMode == 'link' %}

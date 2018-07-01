@@ -132,9 +132,8 @@ abstract class AbstractPostingType extends AbstractType
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
-    public function addEntityFields(FormBuilderInterface $builder, array $options)
+    public function addEntityFields(FormBuilderInterface $builder, array $options = [])
     {
-        
         
         $builder->add('title', TextType::class, [
             'label' => $this->__('Title') . ':',
@@ -142,7 +141,7 @@ abstract class AbstractPostingType extends AbstractType
             'attr' => [
                 'maxlength' => 255,
                 'class' => '',
-                'title' => $this->__('Enter the title of the posting')
+                'title' => $this->__('Enter the title of the posting.')
             ],
             'required' => false,
         ]);
@@ -154,7 +153,7 @@ abstract class AbstractPostingType extends AbstractType
             'attr' => [
                 'maxlength' => 20000,
                 'class' => '',
-                'title' => $this->__('Enter the text of the posting')
+                'title' => $this->__('Enter the text of the posting.')
             ],
             'required' => true,
         ]);
@@ -193,7 +192,7 @@ abstract class AbstractPostingType extends AbstractType
             'label' => $this->__('First image') . ':',
             'attr' => [
                 'class' => ' validate-upload',
-                'title' => $this->__('Enter the first image of the posting')
+                'title' => $this->__('Enter the first image of the posting.')
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
@@ -205,7 +204,7 @@ abstract class AbstractPostingType extends AbstractType
             'label' => $this->__('Second image') . ':',
             'attr' => [
                 'class' => ' validate-upload',
-                'title' => $this->__('Enter the second image of the posting')
+                'title' => $this->__('Enter the second image of the posting.')
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
@@ -217,7 +216,7 @@ abstract class AbstractPostingType extends AbstractType
             'label' => $this->__('Third image') . ':',
             'attr' => [
                 'class' => ' validate-upload',
-                'title' => $this->__('Enter the third image of the posting')
+                'title' => $this->__('Enter the third image of the posting.')
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
@@ -229,7 +228,7 @@ abstract class AbstractPostingType extends AbstractType
             'label' => $this->__('First file') . ':',
             'attr' => [
                 'class' => ' validate-upload',
-                'title' => $this->__('Enter the first file of the posting')
+                'title' => $this->__('Enter the first file of the posting.')
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
@@ -241,7 +240,7 @@ abstract class AbstractPostingType extends AbstractType
             'label' => $this->__('Second file') . ':',
             'attr' => [
                 'class' => ' validate-upload',
-                'title' => $this->__('Enter the second file of the posting')
+                'title' => $this->__('Enter the second file of the posting.')
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
@@ -253,7 +252,7 @@ abstract class AbstractPostingType extends AbstractType
             'label' => $this->__('Third file') . ':',
             'attr' => [
                 'class' => ' validate-upload',
-                'title' => $this->__('Enter the third file of the posting')
+                'title' => $this->__('Enter the third file of the posting.')
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
@@ -268,7 +267,7 @@ abstract class AbstractPostingType extends AbstractType
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
-    public function addIncomingRelationshipFields(FormBuilderInterface $builder, array $options)
+    public function addIncomingRelationshipFields(FormBuilderInterface $builder, array $options = [])
     {
         $queryBuilder = function(EntityRepository $er) {
             // select without joins
@@ -284,11 +283,11 @@ abstract class AbstractPostingType extends AbstractType
             'multiple' => false,
             'expanded' => false,
             'query_builder' => $queryBuilder,
-            'placeholder' => $this->__('Please choose an option'),
+            'placeholder' => $this->__('Please choose an option.'),
             'required' => false,
             'label' => $this->__('Parent'),
             'attr' => [
-                'title' => $this->__('Choose the parent')
+                'title' => $this->__('Choose the parent.')
             ]
         ]);
         $queryBuilder = function(EntityRepository $er) {
@@ -305,11 +304,11 @@ abstract class AbstractPostingType extends AbstractType
             'multiple' => false,
             'expanded' => false,
             'query_builder' => $queryBuilder,
-            'placeholder' => $this->__('Please choose an option'),
+            'placeholder' => $this->__('Please choose an option.'),
             'required' => false,
             'label' => $this->__('Forum'),
             'attr' => [
-                'title' => $this->__('Choose the forum')
+                'title' => $this->__('Choose the forum.')
             ]
         ]);
     }
@@ -320,7 +319,7 @@ abstract class AbstractPostingType extends AbstractType
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
-    public function addAdditionalNotificationRemarksField(FormBuilderInterface $builder, array $options)
+    public function addAdditionalNotificationRemarksField(FormBuilderInterface $builder, array $options = [])
     {
         $helpText = '';
         if ($options['is_moderator']) {
@@ -350,7 +349,7 @@ abstract class AbstractPostingType extends AbstractType
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
-    public function addModerationFields(FormBuilderInterface $builder, array $options)
+    public function addModerationFields(FormBuilderInterface $builder, array $options = [])
     {
         if (!$options['has_moderate_permission']) {
             return;
@@ -364,25 +363,25 @@ abstract class AbstractPostingType extends AbstractType
             'label' => $this->__('Creator') . ':',
             'attr' => [
                 'maxlength' => 11,
-                'title' => $this->__('Here you can choose a user which will be set as creator')
+                'title' => $this->__('Here you can choose a user which will be set as creator.')
             ],
             'empty_data' => 0,
             'required' => false,
-            'help' => $this->__('Here you can choose a user which will be set as creator')
+            'help' => $this->__('Here you can choose a user which will be set as creator.')
         ]);
         $builder->add('moderationSpecificCreationDate', DateTimeType::class, [
             'mapped' => false,
             'label' => $this->__('Creation date') . ':',
             'attr' => [
                 'class' => '',
-                'title' => $this->__('Here you can choose a custom creation date')
+                'title' => $this->__('Here you can choose a custom creation date.')
             ],
             'empty_data' => '',
             'required' => false,
             'with_seconds' => true,
             'date_widget' => 'single_text',
             'time_widget' => 'single_text',
-            'help' => $this->__('Here you can choose a custom creation date')
+            'help' => $this->__('Here you can choose a custom creation date.')
         ]);
     }
 
@@ -392,7 +391,7 @@ abstract class AbstractPostingType extends AbstractType
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
-    public function addSubmitButtons(FormBuilderInterface $builder, array $options)
+    public function addSubmitButtons(FormBuilderInterface $builder, array $options = [])
     {
         foreach ($options['actions'] as $action) {
             $builder->add($action['id'], SubmitType::class, [

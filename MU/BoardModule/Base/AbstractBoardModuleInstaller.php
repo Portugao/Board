@@ -63,77 +63,59 @@ abstract class AbstractBoardModuleInstaller extends AbstractExtensionInstaller
         }
     
         // set up all our vars with initial values
-        $this->setVar('uploadImages', false);
-        $this->setVar('allowedSizeOfImages', '200k');
-        $this->setVar('numberImages',  '1' );
-        $this->setVar('uploadFiles', false);
-        $this->setVar('allowedSizeOfFiles', '2M');
-        $this->setVar('numberFiles',  '1' );
-        $this->setVar('editPostings', false);
-        $this->setVar('editTime', '6');
-        $this->setVar('latestPostings', '24');
-        $this->setVar('sortingCategories',  'descending' );
-        $this->setVar('sortingForums',  'descending' );
-        $this->setVar('sortingPostings',  'descending' );
-        $this->setVar('standardIcon', 'images/icons/extrasmall/favorites.png');
-        $this->setVar('specialIcon', 'images/icons/extrasmall/package_favorite.png');
-        $this->setVar('iconSet',  '1' );
-        $this->setVar('template',  'normal' );
-        $this->setVar('showStatisticInDetails', false);
-        $this->setVar('showStatisticOnBottom', false);
-        $this->setVar('moderationGroupForPostings', '2');
-        $this->setVar('categoryEntriesPerPage', '10');
+        $this->setVar('moderationGroupForPostings', 2);
+        $this->setVar('categoryEntriesPerPage', 10);
         $this->setVar('linkOwnCategoriesOnAccountPage', true);
-        $this->setVar('forumEntriesPerPage', '10');
+        $this->setVar('forumEntriesPerPage', 10);
         $this->setVar('linkOwnForumsOnAccountPage', true);
-        $this->setVar('postingEntriesPerPage', '10');
+        $this->setVar('postingEntriesPerPage', 10);
         $this->setVar('linkOwnPostingsOnAccountPage', true);
-        $this->setVar('aboEntriesPerPage', '10');
+        $this->setVar('aboEntriesPerPage', 10);
         $this->setVar('linkOwnAbosOnAccountPage', true);
-        $this->setVar('userEntriesPerPage', '10');
-        $this->setVar('rankEntriesPerPage', '10');
+        $this->setVar('userEntriesPerPage', 10);
+        $this->setVar('rankEntriesPerPage', 10);
         $this->setVar('linkOwnRanksOnAccountPage', true);
         $this->setVar('enableShrinkingForPostingFirstImage', false);
-        $this->setVar('shrinkWidthPostingFirstImage', '800');
-        $this->setVar('shrinkHeightPostingFirstImage', '600');
-        $this->setVar('thumbnailModePostingFirstImage',  'inset' );
-        $this->setVar('thumbnailWidthPostingFirstImageView', '32');
-        $this->setVar('thumbnailHeightPostingFirstImageView', '24');
-        $this->setVar('thumbnailWidthPostingFirstImageDisplay', '240');
-        $this->setVar('thumbnailHeightPostingFirstImageDisplay', '180');
-        $this->setVar('thumbnailWidthPostingFirstImageEdit', '240');
-        $this->setVar('thumbnailHeightPostingFirstImageEdit', '180');
+        $this->setVar('shrinkWidthPostingFirstImage', 800);
+        $this->setVar('shrinkHeightPostingFirstImage', 600);
+        $this->setVar('thumbnailModePostingFirstImage', 'inset');
+        $this->setVar('thumbnailWidthPostingFirstImageView', 32);
+        $this->setVar('thumbnailHeightPostingFirstImageView', 24);
+        $this->setVar('thumbnailWidthPostingFirstImageDisplay', 240);
+        $this->setVar('thumbnailHeightPostingFirstImageDisplay', 180);
+        $this->setVar('thumbnailWidthPostingFirstImageEdit', 240);
+        $this->setVar('thumbnailHeightPostingFirstImageEdit', 180);
         $this->setVar('enableShrinkingForPostingSecondImage', false);
-        $this->setVar('shrinkWidthPostingSecondImage', '800');
-        $this->setVar('shrinkHeightPostingSecondImage', '600');
-        $this->setVar('thumbnailModePostingSecondImage',  'inset' );
-        $this->setVar('thumbnailWidthPostingSecondImageView', '32');
-        $this->setVar('thumbnailHeightPostingSecondImageView', '24');
-        $this->setVar('thumbnailWidthPostingSecondImageDisplay', '240');
-        $this->setVar('thumbnailHeightPostingSecondImageDisplay', '180');
-        $this->setVar('thumbnailWidthPostingSecondImageEdit', '240');
-        $this->setVar('thumbnailHeightPostingSecondImageEdit', '180');
+        $this->setVar('shrinkWidthPostingSecondImage', 800);
+        $this->setVar('shrinkHeightPostingSecondImage', 600);
+        $this->setVar('thumbnailModePostingSecondImage', 'inset');
+        $this->setVar('thumbnailWidthPostingSecondImageView', 32);
+        $this->setVar('thumbnailHeightPostingSecondImageView', 24);
+        $this->setVar('thumbnailWidthPostingSecondImageDisplay', 240);
+        $this->setVar('thumbnailHeightPostingSecondImageDisplay', 180);
+        $this->setVar('thumbnailWidthPostingSecondImageEdit', 240);
+        $this->setVar('thumbnailHeightPostingSecondImageEdit', 180);
         $this->setVar('enableShrinkingForPostingThirdImage', false);
-        $this->setVar('shrinkWidthPostingThirdImage', '800');
-        $this->setVar('shrinkHeightPostingThirdImage', '600');
-        $this->setVar('thumbnailModePostingThirdImage',  'inset' );
-        $this->setVar('thumbnailWidthPostingThirdImageView', '32');
-        $this->setVar('thumbnailHeightPostingThirdImageView', '24');
-        $this->setVar('thumbnailWidthPostingThirdImageDisplay', '240');
-        $this->setVar('thumbnailHeightPostingThirdImageDisplay', '180');
-        $this->setVar('thumbnailWidthPostingThirdImageEdit', '240');
-        $this->setVar('thumbnailHeightPostingThirdImageEdit', '180');
+        $this->setVar('shrinkWidthPostingThirdImage', 800);
+        $this->setVar('shrinkHeightPostingThirdImage', 600);
+        $this->setVar('thumbnailModePostingThirdImage', 'inset');
+        $this->setVar('thumbnailWidthPostingThirdImageView', 32);
+        $this->setVar('thumbnailHeightPostingThirdImageView', 24);
+        $this->setVar('thumbnailWidthPostingThirdImageDisplay', 240);
+        $this->setVar('thumbnailHeightPostingThirdImageDisplay', 180);
+        $this->setVar('thumbnailWidthPostingThirdImageEdit', 240);
+        $this->setVar('thumbnailHeightPostingThirdImageEdit', 180);
         $this->setVar('enableShrinkingForRankUploadImage', false);
-        $this->setVar('shrinkWidthRankUploadImage', '800');
-        $this->setVar('shrinkHeightRankUploadImage', '600');
-        $this->setVar('thumbnailModeRankUploadImage',  'inset' );
-        $this->setVar('thumbnailWidthRankUploadImageView', '32');
-        $this->setVar('thumbnailHeightRankUploadImageView', '24');
-        $this->setVar('thumbnailWidthRankUploadImageDisplay', '240');
-        $this->setVar('thumbnailHeightRankUploadImageDisplay', '180');
-        $this->setVar('thumbnailWidthRankUploadImageEdit', '240');
-        $this->setVar('thumbnailHeightRankUploadImageEdit', '180');
-        $this->setVar('enabledFinderTypes', [ 'category' ,  'forum' ,  'posting' ,  'abo' ,  'user' ,  'rank' ]);
+        $this->setVar('shrinkWidthRankUploadImage', 800);
+        $this->setVar('shrinkHeightRankUploadImage', 600);
+        $this->setVar('thumbnailModeRankUploadImage', 'inset');
+        $this->setVar('thumbnailWidthRankUploadImageView', 32);
+        $this->setVar('thumbnailHeightRankUploadImageView', 24);
+        $this->setVar('thumbnailWidthRankUploadImageDisplay', 240);
+        $this->setVar('thumbnailHeightRankUploadImageDisplay', 180);
+        $this->setVar('thumbnailWidthRankUploadImageEdit', 240);
+        $this->setVar('thumbnailHeightRankUploadImageEdit', 180);
+        $this->setVar('enabledFinderTypes', 'category###forum###posting###abo###user###rank');
     
         // initialisation successful
         return true;
@@ -170,174 +152,10 @@ abstract class AbstractBoardModuleInstaller extends AbstractExtensionInstaller
                     return false;
                 }
         }
-    
-        // Note there are several helpers available for making migrating your extension from Zikula 1.3 to 1.4 easier.
-        // The following convenience methods are each responsible for a single aspect of upgrading to Zikula 1.4.x.
-    
-        // here is a possible usage example
-        // of course 1.2.3 should match the number you used for the last stable 1.3.x module version.
-        /* if ($oldVersion = '1.2.3') {
-            // rename module for all modvars
-            $this->updateModVarsTo14();
-            
-            // update extension information about this app
-            $this->updateExtensionInfoFor14();
-            
-            // rename existing permission rules
-            $this->renamePermissionsFor14();
-            
-            // rename all tables
-            $this->renameTablesFor14();
-            
-            // remove event handler definitions from database
-            $this->dropEventHandlersFromDatabase();
-            
-            // update module name in the hook tables
-            $this->updateHookNamesFor14();
-            
-            // update module name in the workflows table
-            $this->updateWorkflowsFor14();
-        } * /
-    
-        // remove obsolete persisted hooks from the database
-        //$this->hookApi->uninstallSubscriberHooks($this->bundle->getMetaData());
     */
     
         // update successful
         return true;
-    }
-    
-    /**
-     * Renames the module name for variables in the module_vars table.
-     */
-    protected function updateModVarsTo14()
-    {
-        $conn = $this->getConnection();
-        $conn->update('module_vars', ['modname' => 'MUBoardModule'], ['modname' => 'Board']);
-    }
-    
-    /**
-     * Renames this application in the core's extensions table.
-     */
-    protected function updateExtensionInfoFor14()
-    {
-        $conn = $this->getConnection();
-        $conn->update('modules', ['name' => 'MUBoardModule', 'directory' => 'MU/BoardModule'], ['name' => 'Board']);
-    }
-    
-    /**
-     * Renames all permission rules stored for this app.
-     */
-    protected function renamePermissionsFor14()
-    {
-        $conn = $this->getConnection();
-        $componentLength = strlen('Board') + 1;
-    
-        $conn->executeQuery("
-            UPDATE group_perms
-            SET component = CONCAT('MUBoardModule', SUBSTRING(component, $componentLength))
-            WHERE component LIKE 'Board%';
-        ");
-    }
-    
-    /**
-     * Renames all (existing) tables of this app.
-     */
-    protected function renameTablesFor14()
-    {
-        $conn = $this->getConnection();
-    
-        $oldPrefix = 'board_';
-        $oldPrefixLength = strlen($oldPrefix);
-        $newPrefix = 'mu_board_';
-    
-        $sm = $conn->getSchemaManager();
-        $tables = $sm->listTables();
-        foreach ($tables as $table) {
-            $tableName = $table->getName();
-            if (substr($tableName, 0, $oldPrefixLength) != $oldPrefix) {
-                continue;
-            }
-    
-            $newTableName = str_replace($oldPrefix, $newPrefix, $tableName);
-    
-            $conn->executeQuery("
-                RENAME TABLE $tableName
-                TO $newTableName;
-            ");
-        }
-    }
-    
-    /**
-     * Removes event handlers from database as they are now described by service definitions and managed by dependency injection.
-     */
-    protected function dropEventHandlersFromDatabase()
-    {
-        \EventUtil::unregisterPersistentModuleHandlers('Board');
-    }
-    
-    /**
-     * Updates the module name in the hook tables.
-     */
-    protected function updateHookNamesFor14()
-    {
-        $conn = $this->getConnection();
-    
-        $conn->update('hook_area', ['owner' => 'MUBoardModule'], ['owner' => 'Board']);
-    
-        $componentLength = strlen('subscriber.board') + 1;
-        $conn->executeQuery("
-            UPDATE hook_area
-            SET areaname = CONCAT('subscriber.muboardmodule', SUBSTRING(areaname, $componentLength))
-            WHERE areaname LIKE 'subscriber.board%';
-        ");
-    
-        $conn->update('hook_binding', ['sowner' => 'MUBoardModule'], ['sowner' => 'Board']);
-    
-        $conn->update('hook_runtime', ['sowner' => 'MUBoardModule'], ['sowner' => 'Board']);
-    
-        $componentLength = strlen('board') + 1;
-        $conn->executeQuery("
-            UPDATE hook_runtime
-            SET eventname = CONCAT('muboardmodule', SUBSTRING(eventname, $componentLength))
-            WHERE eventname LIKE 'board%';
-        ");
-    
-        $conn->update('hook_subscriber', ['owner' => 'MUBoardModule'], ['owner' => 'Board']);
-    
-        $componentLength = strlen('board') + 1;
-        $conn->executeQuery("
-            UPDATE hook_subscriber
-            SET eventname = CONCAT('muboardmodule', SUBSTRING(eventname, $componentLength))
-            WHERE eventname LIKE 'board%';
-        ");
-    }
-    
-    /**
-     * Updates the module name in the workflows table.
-     */
-    protected function updateWorkflowsFor14()
-    {
-        $conn = $this->getConnection();
-        $conn->update('workflows', ['module' => 'MUBoardModule'], ['module' => 'Board']);
-        $conn->update('workflows', ['obj_table' => 'CategoryEntity'], ['module' => 'MUBoardModule', 'obj_table' => 'category']);
-        $conn->update('workflows', ['obj_table' => 'ForumEntity'], ['module' => 'MUBoardModule', 'obj_table' => 'forum']);
-        $conn->update('workflows', ['obj_table' => 'PostingEntity'], ['module' => 'MUBoardModule', 'obj_table' => 'posting']);
-        $conn->update('workflows', ['obj_table' => 'AboEntity'], ['module' => 'MUBoardModule', 'obj_table' => 'abo']);
-        $conn->update('workflows', ['obj_table' => 'UserEntity'], ['module' => 'MUBoardModule', 'obj_table' => 'user']);
-        $conn->update('workflows', ['obj_table' => 'RankEntity'], ['module' => 'MUBoardModule', 'obj_table' => 'rank']);
-    }
-    
-    /**
-     * Returns connection to the database.
-     *
-     * @return Connection the current connection
-     */
-    protected function getConnection()
-    {
-        $entityManager = $this->container->get('doctrine.orm.default_entity_manager');
-    
-        return $entityManager->getConnection();
     }
     
     /**
@@ -374,7 +192,7 @@ abstract class AbstractBoardModuleInstaller extends AbstractExtensionInstaller
     /**
      * Build array with all entity classes for MUBoardModule.
      *
-     * @return array list of class names
+     * @return string[] List of class names
      */
     protected function listEntityClasses()
     {

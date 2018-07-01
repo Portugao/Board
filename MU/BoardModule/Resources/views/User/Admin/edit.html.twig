@@ -2,12 +2,6 @@
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : 'adminBase' %}
 {% extends 'MUBoardModule::' ~ baseTemplate ~ '.html.twig' %}
 
-{% block header %}
-    {{ parent() }}
-    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.Validation.js'), 98) }}
-    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.EditFunctions.js'), 99) }}
-    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.InlineEditing.js'), 99) }}
-{% endblock %}
 {% block title mode == 'create' ? __('Create user') : __('Edit user') %}
 {% block admin_page_icon mode == 'create' ? 'plus' : 'pencil-square-o' %}
 {% block content %}
@@ -26,7 +20,7 @@
         </fieldset>
         
         {{ include(
-            '@MUBoardModule/Rank/Admin/includeSelectEditOne.html.twig',
+            '@MUBoardModule/Rank/Admin/includeSelectOne.html.twig',
             {group: 'user', heading: __('Rank'), alias: 'rank', mandatory: false, idPrefix: 'boardUser_Rank', linkingItem: user, displayMode: 'choices'}
         ) }}
         
@@ -65,24 +59,16 @@
 {% endblock %}
 {% block footer %}
     {{ parent() }}
+    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.Validation.js'), 98) }}
+    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.EditFunctions.js'), 99) }}
     {% set formInitScript %}
-        <script type="text/javascript">
+        <script>
         /* <![CDATA[ */
             var mUBoardInlineEditHandlers = [];
             var mUBoardEditHandler = null;
-            mUBoardEditHandler = {
-                alias: 'rank',
-                prefix: 'boardUser_RankSelectorDoNew',
-                moduleName: 'MUBoardModule',
-                objectType: 'rank',
-                inputType: 'select-single',
-                windowInstanceId: null
-            };
-            mUBoardInlineEditHandlers.push(mUBoardEditHandler);
             
             ( function($) {
                 $(document).ready(function() {
-                    mUBoardInitRelationHandling('rank', 'rank', 'boardUser_Rank', true, 'select-single', '{{ path('muboardmodule_rank_' ~ routeArea ~ 'edit') }}');
                     mUBoardInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ user.id }}{% endif %}');
                 });
             })(jQuery);

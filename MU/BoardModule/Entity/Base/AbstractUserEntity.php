@@ -44,6 +44,7 @@ abstract class AbstractUserEntity extends EntityAccess
     
     /**
      * the current workflow state
+     *
      * @ORM\Column(length=20)
      * @Assert\NotBlank()
      * @BoardAssert\ListEntry(entityName="user", propertyName="workflowState", multiple=false)
@@ -243,10 +244,16 @@ abstract class AbstractUserEntity extends EntityAccess
     public function setLastVisit($lastVisit)
     {
         if ($this->lastVisit !== $lastVisit) {
-            if (is_object($lastVisit) && $lastVisit instanceOf \DateTime) {
+            if (!(null == $lastVisit && empty($lastVisit)) && !(is_object($lastVisit) && $lastVisit instanceOf \DateTimeInterface)) {
+                $lastVisit = new \DateTime($lastVisit);
+            }
+            
+            if (null === $lastVisit || empty($lastVisit)) {
+                $lastVisit = new \DateTime();
+            }
+            
+            if ($this->lastVisit != $lastVisit) {
                 $this->lastVisit = $lastVisit;
-            } else {
-                $this->lastVisit = new \DateTime($lastVisit);
             }
         }
     }
@@ -279,7 +286,7 @@ abstract class AbstractUserEntity extends EntityAccess
     /**
      * Creates url arguments array for easy creation of display urls.
      *
-     * @return array The resulting arguments list
+     * @return array List of resulting arguments
      */
     public function createUrlArgs()
     {
@@ -321,11 +328,11 @@ abstract class AbstractUserEntity extends EntityAccess
     /**
      * Returns an array of all related objects that need to be persisted after clone.
      * 
-     * @param array $objects The objects are added to this array. Default: []
+     * @param array $objects Objects that are added to this array
      * 
-     * @return array of entity objects
+     * @return array List of entity objects
      */
-    public function getRelatedObjectsToPersist(&$objects = []) 
+    public function getRelatedObjectsToPersist(&$objects = [])
     {
         return [];
     }

@@ -47,11 +47,11 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
      * Builds the menu.
      *
      * @param FactoryInterface $factory Menu factory
-     * @param array            $options Additional options
+     * @param array            $options List of additional options
      *
      * @return MenuItem The assembled menu
      */
-    public function menu(FactoryInterface $factory, array $options)
+    public function menu(FactoryInterface $factory, array $options = [])
     {
         $menu = $factory->createItem('itemActions');
         if (!isset($options['entity']) || !isset($options['area']) || !isset($options['context'])) {
@@ -67,7 +67,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
         $permissionApi = $this->container->get('zikula_permissions_module.api.permission');
         $currentUserApi = $this->container->get('zikula_users_module.current_user');
         $entityDisplayHelper = $this->container->get('mu_board_module.entity_display_helper');
-        $menu->setChildrenAttribute('class', 'list-inline');
+        $menu->setChildrenAttribute('class', 'list-inline item-actions');
 
         $currentUserId = $currentUserApi->isLoggedIn() ? $currentUserApi->get('uid') : UsersConstant::USER_ID_ANONYMOUS;
         if ($entity instanceof CategoryEntity) {
@@ -81,46 +81,52 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu->addChild($title, [
                     'route' => $routePrefix . 'display',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-search-plus');
+                ]);
                 $menu[$title]->setLinkAttribute('target', '_blank');
                 $menu[$title]->setLinkAttribute('title', $this->__('Open preview page', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-search-plus');
             }
             if ($context != 'display') {
                 $title = $this->__('Details', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'display',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-eye');
+                ]);
                 $menu[$title]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
+                $menu[$title]->setAttribute('icon', 'fa fa-eye');
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
                 $title = $this->__('Edit', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-pencil-square-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Edit this category', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-pencil-square-o');
                 $title = $this->__('Reuse', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
-                ])->setAttribute('icon', 'fa fa-files-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Reuse for new category', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-files-o');
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
                 $title = $this->__('Delete', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-trash-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Delete this category', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-trash-o');
             }
             if ($context == 'display') {
-                $title = $this->__('Back to overview', 'muboardmodule');
+                $title = $this->__('Categories list', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'view'
-                ])->setAttribute('icon', 'fa fa-reply');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $title);
+                $menu[$title]->setAttribute('icon', 'fa fa-reply');
             }
             
             // more actions for adding new related items
@@ -132,8 +138,9 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu->addChild($title, [
                     'route' => 'muboardmodule_forum_' . $routeArea . 'edit',
                     'routeParameters' => ['category' => $entity->getKey()]
-                ])->setAttribute('icon', 'fa fa-plus');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $title);
+                $menu[$title]->setAttribute('icon', 'fa fa-plus');
             }
         }
         if ($entity instanceof ForumEntity) {
@@ -147,46 +154,52 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu->addChild($title, [
                     'route' => $routePrefix . 'display',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-search-plus');
+                ]);
                 $menu[$title]->setLinkAttribute('target', '_blank');
                 $menu[$title]->setLinkAttribute('title', $this->__('Open preview page', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-search-plus');
             }
             if ($context != 'display') {
                 $title = $this->__('Details', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'display',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-eye');
+                ]);
                 $menu[$title]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
+                $menu[$title]->setAttribute('icon', 'fa fa-eye');
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
                 $title = $this->__('Edit', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-pencil-square-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Edit this forum', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-pencil-square-o');
                 $title = $this->__('Reuse', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
-                ])->setAttribute('icon', 'fa fa-files-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Reuse for new forum', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-files-o');
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
                 $title = $this->__('Delete', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-trash-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Delete this forum', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-trash-o');
             }
             if ($context == 'display') {
-                $title = $this->__('Back to overview', 'muboardmodule');
+                $title = $this->__('Forums list', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'view'
-                ])->setAttribute('icon', 'fa fa-reply');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $title);
+                $menu[$title]->setAttribute('icon', 'fa fa-reply');
             }
             
             // more actions for adding new related items
@@ -198,8 +211,9 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu->addChild($title, [
                     'route' => 'muboardmodule_posting_' . $routeArea . 'edit',
                     'routeParameters' => ['forum' => $entity->getKey()]
-                ])->setAttribute('icon', 'fa fa-plus');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $title);
+                $menu[$title]->setAttribute('icon', 'fa fa-plus');
             }
         }
         if ($entity instanceof PostingEntity) {
@@ -213,46 +227,52 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu->addChild($title, [
                     'route' => $routePrefix . 'display',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-search-plus');
+                ]);
                 $menu[$title]->setLinkAttribute('target', '_blank');
                 $menu[$title]->setLinkAttribute('title', $this->__('Open preview page', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-search-plus');
             }
             if ($context != 'display') {
                 $title = $this->__('Details', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'display',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-eye');
+                ]);
                 $menu[$title]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
+                $menu[$title]->setAttribute('icon', 'fa fa-eye');
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
                 $title = $this->__('Edit', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-pencil-square-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Edit this posting', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-pencil-square-o');
                 $title = $this->__('Reuse', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
-                ])->setAttribute('icon', 'fa fa-files-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Reuse for new posting', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-files-o');
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
                 $title = $this->__('Delete', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-trash-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Delete this posting', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-trash-o');
             }
             if ($context == 'display') {
-                $title = $this->__('Back to overview', 'muboardmodule');
+                $title = $this->__('Postings list', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'view'
-                ])->setAttribute('icon', 'fa fa-reply');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $title);
+                $menu[$title]->setAttribute('icon', 'fa fa-reply');
             }
             
             // more actions for adding new related items
@@ -264,8 +284,9 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu->addChild($title, [
                     'route' => 'muboardmodule_posting_' . $routeArea . 'edit',
                     'routeParameters' => ['parent' => $entity->getKey()]
-                ])->setAttribute('icon', 'fa fa-plus');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $title);
+                $menu[$title]->setAttribute('icon', 'fa fa-plus');
             }
         }
         if ($entity instanceof AboEntity) {
@@ -279,46 +300,52 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu->addChild($title, [
                     'route' => $routePrefix . 'display',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-search-plus');
+                ]);
                 $menu[$title]->setLinkAttribute('target', '_blank');
                 $menu[$title]->setLinkAttribute('title', $this->__('Open preview page', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-search-plus');
             }
             if ($context != 'display') {
                 $title = $this->__('Details', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'display',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-eye');
+                ]);
                 $menu[$title]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
+                $menu[$title]->setAttribute('icon', 'fa fa-eye');
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
                 $title = $this->__('Edit', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-pencil-square-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Edit this abo', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-pencil-square-o');
                 $title = $this->__('Reuse', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
-                ])->setAttribute('icon', 'fa fa-files-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Reuse for new abo', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-files-o');
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
                 $title = $this->__('Delete', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-trash-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Delete this abo', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-trash-o');
             }
             if ($context == 'display') {
-                $title = $this->__('Back to overview', 'muboardmodule');
+                $title = $this->__('Abos list', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'view'
-                ])->setAttribute('icon', 'fa fa-reply');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $title);
+                $menu[$title]->setAttribute('icon', 'fa fa-reply');
             }
         }
         if ($entity instanceof UserEntity) {
@@ -331,46 +358,52 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu->addChild($title, [
                     'route' => $routePrefix . 'display',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-search-plus');
+                ]);
                 $menu[$title]->setLinkAttribute('target', '_blank');
                 $menu[$title]->setLinkAttribute('title', $this->__('Open preview page', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-search-plus');
             }
             if ($context != 'display') {
                 $title = $this->__('Details', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'display',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-eye');
+                ]);
                 $menu[$title]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
+                $menu[$title]->setAttribute('icon', 'fa fa-eye');
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
                 $title = $this->__('Edit', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-pencil-square-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Edit this user', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-pencil-square-o');
                 $title = $this->__('Reuse', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
-                ])->setAttribute('icon', 'fa fa-files-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Reuse for new user', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-files-o');
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
                 $title = $this->__('Delete', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-trash-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Delete this user', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-trash-o');
             }
             if ($context == 'display') {
-                $title = $this->__('Back to overview', 'muboardmodule');
+                $title = $this->__('Users list', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'view'
-                ])->setAttribute('icon', 'fa fa-reply');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $title);
+                $menu[$title]->setAttribute('icon', 'fa fa-reply');
             }
         }
         if ($entity instanceof RankEntity) {
@@ -384,46 +417,52 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu->addChild($title, [
                     'route' => $routePrefix . 'display',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-search-plus');
+                ]);
                 $menu[$title]->setLinkAttribute('target', '_blank');
                 $menu[$title]->setLinkAttribute('title', $this->__('Open preview page', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-search-plus');
             }
             if ($context != 'display') {
                 $title = $this->__('Details', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'display',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-eye');
+                ]);
                 $menu[$title]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
+                $menu[$title]->setAttribute('icon', 'fa fa-eye');
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
                 $title = $this->__('Edit', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-pencil-square-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Edit this rank', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-pencil-square-o');
                 $title = $this->__('Reuse', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
-                ])->setAttribute('icon', 'fa fa-files-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Reuse for new rank', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-files-o');
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
                 $title = $this->__('Delete', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-trash-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Delete this rank', 'muboardmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-trash-o');
             }
             if ($context == 'display') {
-                $title = $this->__('Back to overview', 'muboardmodule');
+                $title = $this->__('Ranks list', 'muboardmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'view'
-                ])->setAttribute('icon', 'fa fa-reply');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $title);
+                $menu[$title]->setAttribute('icon', 'fa fa-reply');
             }
             
             // more actions for adding new related items
@@ -435,8 +474,9 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu->addChild($title, [
                     'route' => 'muboardmodule_user_' . $routeArea . 'edit',
                     'routeParameters' => ['rank' => $entity->getKey()]
-                ])->setAttribute('icon', 'fa fa-plus');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $title);
+                $menu[$title]->setAttribute('icon', 'fa fa-plus');
             }
         }
 

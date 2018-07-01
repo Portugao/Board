@@ -3,8 +3,7 @@
 /**
  * Resets the value of an upload / file input field.
  */
-function mUBoardResetUploadField(fieldName)
-{
+function mUBoardResetUploadField(fieldName) {
     jQuery('#' + fieldName).attr('type', 'input');
     jQuery('#' + fieldName).attr('type', 'file');
 }
@@ -12,8 +11,7 @@ function mUBoardResetUploadField(fieldName)
 /**
  * Initialises the reset button for a certain upload input.
  */
-function mUBoardInitUploadField(fieldName)
-{
+function mUBoardInitUploadField(fieldName) {
     jQuery('#' + fieldName + 'ResetVal').click(function (event) {
         event.preventDefault();
         mUBoardResetUploadField(fieldName);
@@ -23,8 +21,7 @@ function mUBoardInitUploadField(fieldName)
 /**
  * Initialises the reset button for a certain date input.
  */
-function mUBoardInitDateField(fieldName)
-{
+function mUBoardInitDateField(fieldName) {
     jQuery('#' + fieldName + 'ResetVal').click(function (event) {
         event.preventDefault();
         jQuery('#' + fieldName).val('');
@@ -37,8 +34,7 @@ var editForm;
 var formButtons;
 var triggerValidation = true;
 
-function mUBoardTriggerFormValidation()
-{
+function mUBoardTriggerFormValidation() {
     mUBoardExecuteCustomValidationConstraints(editedObjectType, editedEntityId);
 
     if (!editForm.get(0).checkValidity()) {
@@ -48,7 +44,7 @@ function mUBoardTriggerFormValidation()
     }
 }
 
-function mUBoardHandleFormSubmit (event) {
+function mUBoardHandleFormSubmit(event) {
     if (triggerValidation) {
         mUBoardTriggerFormValidation();
         if (!editForm.get(0).checkValidity()) {
@@ -68,8 +64,7 @@ function mUBoardHandleFormSubmit (event) {
 /**
  * Initialises an entity edit form.
  */
-function mUBoardInitEditForm(mode, entityId)
-{
+function mUBoardInitEditForm(mode, entityId) {
     if (jQuery('.muboard-edit-form').length < 1) {
         return;
     }
@@ -97,28 +92,20 @@ function mUBoardInitEditForm(mode, entityId)
     });
 
     formButtons = editForm.find('.form-buttons input');
-    editForm.find('.btn-danger').first().bind('click keypress', function (event) {
-        if (!window.confirm(Translator.__('Do you really want to delete this entry?'))) {
-            event.preventDefault();
-        }
-    });
+    if (editForm.find('.btn-danger').length > 0) {
+        editForm.find('.btn-danger').first().bind('click keypress', function (event) {
+            if (!window.confirm(Translator.__('Do you really want to delete this entry?'))) {
+                event.preventDefault();
+            }
+        });
+    }
     editForm.find('button[type=submit]').bind('click keypress', function (event) {
-        triggerValidation = !jQuery(this).prop('formnovalidate');
+        triggerValidation = !jQuery(this).attr('formnovalidate');
     });
     editForm.submit(mUBoardHandleFormSubmit);
 
     if (mode != 'create') {
         mUBoardTriggerFormValidation();
-    }
-}
-
-/**
- * Initialises a relation field section with optional edit capabilities.
- */
-function mUBoardInitRelationHandling(objectType, alias, idPrefix, includeEditing, inputType, createUrl)
-{
-    if (includeEditing) {
-        mUBoardInitInlineEditingButtons(objectType, alias, idPrefix, inputType, createUrl);
     }
 }
 

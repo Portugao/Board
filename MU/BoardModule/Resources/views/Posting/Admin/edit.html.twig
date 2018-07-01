@@ -2,12 +2,6 @@
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : 'adminBase' %}
 {% extends 'MUBoardModule::' ~ baseTemplate ~ '.html.twig' %}
 
-{% block header %}
-    {{ parent() }}
-    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.Validation.js'), 98) }}
-    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.EditFunctions.js'), 99) }}
-    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.InlineEditing.js'), 99) }}
-{% endblock %}
 {% block title mode == 'create' ? __('Create posting') : __('Edit posting') %}
 {% block admin_page_icon mode == 'create' ? 'plus' : 'pencil-square-o' %}
 {% block content %}
@@ -38,7 +32,7 @@
             {group: 'posting', heading: __('Parent'), alias: 'parent', mandatory: false, idPrefix: 'boardPosting_Parent', linkingItem: posting, displayMode: 'choices'}
         ) }}
         {{ include(
-            '@MUBoardModule/Forum/Admin/includeSelectEditOne.html.twig',
+            '@MUBoardModule/Forum/Admin/includeSelectOne.html.twig',
             {group: 'posting', heading: __('Forum'), alias: 'forum', mandatory: false, idPrefix: 'boardPosting_Forum', linkingItem: posting, displayMode: 'choices'}
         ) }}
         {% if mode != 'create' %}
@@ -95,28 +89,16 @@
 {% endblock %}
 {% block footer %}
     {{ parent() }}
+    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.Validation.js'), 98) }}
+    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.EditFunctions.js'), 99) }}
     {% set formInitScript %}
-        <script type="text/javascript">
+        <script>
         /* <![CDATA[ */
             var mUBoardInlineEditHandlers = [];
             var mUBoardEditHandler = null;
-            mUBoardEditHandler = {
-                alias: 'forum',
-                prefix: 'boardPosting_ForumSelectorDoNew',
-                moduleName: 'MUBoardModule',
-                objectType: 'forum',
-                inputType: 'select-single',
-                windowInstanceId: null
-            };
-            mUBoardInlineEditHandlers.push(mUBoardEditHandler);
             
             ( function($) {
                 $(document).ready(function() {
-                    // initialise auto completion for user fields
-                    {% if form.moderationSpecificCreator is defined %}
-                        initUserLiveSearch('muboardmodule_posting_moderationSpecificCreator');
-                    {% endif %}
-                    mUBoardInitRelationHandling('forum', 'forum', 'boardPosting_Forum', true, 'select-single', '{{ path('muboardmodule_forum_' ~ routeArea ~ 'edit') }}');
                     mUBoardInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ posting.id }}{% endif %}');
                     mUBoardInitUploadField('muboardmodule_posting_firstImage_firstImage');
                     mUBoardInitUploadField('muboardmodule_posting_secondImage_secondImage');
@@ -124,6 +106,9 @@
                     mUBoardInitUploadField('muboardmodule_posting_firstFile_firstFile');
                     mUBoardInitUploadField('muboardmodule_posting_secondFile_secondFile');
                     mUBoardInitUploadField('muboardmodule_posting_thirdFile_thirdFile');
+                    {% if form.moderationSpecificCreator is defined %}
+                        initUserLiveSearch('muboardmodule_posting_moderationSpecificCreator');
+                    {% endif %}
                 });
             })(jQuery);
         /* ]]> */
