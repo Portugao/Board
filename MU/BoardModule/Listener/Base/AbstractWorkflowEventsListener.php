@@ -16,7 +16,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Workflow\Event\Event;
 use Symfony\Component\Workflow\Event\GuardEvent;
 use Zikula\Core\Doctrine\EntityAccess;
-use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
+use MU\BoardModule\Entity\Factory\EntityFactory;
+use MU\BoardModule\Helper\PermissionHelper;
 use MU\BoardModule\Helper\NotificationHelper;
 
 /**
@@ -27,9 +28,14 @@ use MU\BoardModule\Helper\NotificationHelper;
 abstract class AbstractWorkflowEventsListener implements EventSubscriberInterface
 {
     /**
-     * @var PermissionApiInterface
+     * @var EntityFactory
      */
-    protected $permissionApi;
+    protected $entityFactory;
+    
+    /**
+     * @var PermissionHelper
+     */
+    protected $permissionHelper;
     
     /**
      * @var NotificationHelper
@@ -39,12 +45,17 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
     /**
      * WorkflowEventsListener constructor.
      *
-     * @param PermissionApiInterface $permissionApi      PermissionApi service instance
-     * @param NotificationHelper     $notificationHelper NotificationHelper service instance
+     * @param EntityFactory $entityFactory EntityFactory service instance
+     * @param PermissionHelper $permissionHelper PermissionHelper service instance
+     * @param NotificationHelper $notificationHelper NotificationHelper service instance
      */
-    public function __construct(PermissionApiInterface $permissionApi, NotificationHelper $notificationHelper)
+    public function __construct(
+        EntityFactory $entityFactory,
+        PermissionHelper $permissionHelper,
+        NotificationHelper $notificationHelper)
     {
-        $this->permissionApi = $permissionApi;
+        $this->entityFactory = $entityFactory;
+        $this->permissionHelper = $permissionHelper;
         $this->notificationHelper = $notificationHelper;
     }
     
@@ -79,19 +90,6 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
      *
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
-     *
-     * The current request's type: `MASTER_REQUEST` or `SUB_REQUEST`.
-     * If a listener should only be active for the master request,
-     * be sure to check that at the beginning of your method.
-     *     `if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
-     *         return;
-     *     }`
-     *
-     * The kernel instance handling the current request:
-     *     `$kernel = $event->getKernel();`
-     *
-     * The currently handled request:
-     *     `$request = $event->getRequest();`
      *
      * Access the entity: `$entity = $event->getSubject();`
      * Access the marking: `$marking = $event->getMarking();`
@@ -141,7 +139,7 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
                 break;
         }
     
-        if (!$this->permissionApi->hasPermission('MUBoardModule:' . ucfirst($objectType) . ':', $entity->getKey() . '::', $permissionLevel)) {
+        if (!$this->permissionHelper->hasEntityPermission($entity, $permissionLevel)) {
             // no permission for this transition, so disallow it
             $event->setBlocked(true);
     
@@ -176,19 +174,6 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
      *
-     * The current request's type: `MASTER_REQUEST` or `SUB_REQUEST`.
-     * If a listener should only be active for the master request,
-     * be sure to check that at the beginning of your method.
-     *     `if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
-     *         return;
-     *     }`
-     *
-     * The kernel instance handling the current request:
-     *     `$kernel = $event->getKernel();`
-     *
-     * The currently handled request:
-     *     `$request = $event->getRequest();`
-     *
      * Access the entity: `$entity = $event->getSubject();`
      * Access the marking: `$marking = $event->getMarking();`
      * Access the transition: `$transition = $event->getTransition();`
@@ -221,19 +206,6 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
      *
-     * The current request's type: `MASTER_REQUEST` or `SUB_REQUEST`.
-     * If a listener should only be active for the master request,
-     * be sure to check that at the beginning of your method.
-     *     `if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
-     *         return;
-     *     }`
-     *
-     * The kernel instance handling the current request:
-     *     `$kernel = $event->getKernel();`
-     *
-     * The currently handled request:
-     *     `$request = $event->getRequest();`
-     *
      * Access the entity: `$entity = $event->getSubject();`
      * Access the marking: `$marking = $event->getMarking();`
      * Access the transition: `$transition = $event->getTransition();`
@@ -265,19 +237,6 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
      *
-     * The current request's type: `MASTER_REQUEST` or `SUB_REQUEST`.
-     * If a listener should only be active for the master request,
-     * be sure to check that at the beginning of your method.
-     *     `if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
-     *         return;
-     *     }`
-     *
-     * The kernel instance handling the current request:
-     *     `$kernel = $event->getKernel();`
-     *
-     * The currently handled request:
-     *     `$request = $event->getRequest();`
-     *
      * Access the entity: `$entity = $event->getSubject();`
      * Access the marking: `$marking = $event->getMarking();`
      * Access the transition: `$transition = $event->getTransition();`
@@ -308,19 +267,6 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
      *
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
-     *
-     * The current request's type: `MASTER_REQUEST` or `SUB_REQUEST`.
-     * If a listener should only be active for the master request,
-     * be sure to check that at the beginning of your method.
-     *     `if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
-     *         return;
-     *     }`
-     *
-     * The kernel instance handling the current request:
-     *     `$kernel = $event->getKernel();`
-     *
-     * The currently handled request:
-     *     `$request = $event->getRequest();`
      *
      * Access the entity: `$entity = $event->getSubject();`
      * Access the marking: `$marking = $event->getMarking();`
@@ -362,19 +308,6 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
      *
-     * The current request's type: `MASTER_REQUEST` or `SUB_REQUEST`.
-     * If a listener should only be active for the master request,
-     * be sure to check that at the beginning of your method.
-     *     `if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
-     *         return;
-     *     }`
-     *
-     * The kernel instance handling the current request:
-     *     `$kernel = $event->getKernel();`
-     *
-     * The currently handled request:
-     *     `$request = $event->getRequest();`
-     *
      * Access the entity: `$entity = $event->getSubject();`
      * Access the marking: `$marking = $event->getMarking();`
      * Access the transition: `$transition = $event->getTransition();`
@@ -404,19 +337,6 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
      *
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
-     *
-     * The current request's type: `MASTER_REQUEST` or `SUB_REQUEST`.
-     * If a listener should only be active for the master request,
-     * be sure to check that at the beginning of your method.
-     *     `if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
-     *         return;
-     *     }`
-     *
-     * The kernel instance handling the current request:
-     *     `$kernel = $event->getKernel();`
-     *
-     * The currently handled request:
-     *     `$request = $event->getRequest();`
      *
      * Access the entity: `$entity = $event->getSubject();`
      * Access the marking: `$marking = $event->getMarking();`

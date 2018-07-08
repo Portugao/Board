@@ -20,8 +20,8 @@ application "Board" targets ZK20 {
         separateAdminTemplates true
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
-        skipFiles "Container/LinkContainer.php,\r\nController/AjaxController.php,\r\nController/CategoryController.php,\r\nEntity/CategoryEntity.php,\r\nEntity/ForumEntity.php,\r\nEntity/PostingEntity.php,\r\nEntity/Repository/PostingRepository.php,\r\nHelper/ControllerHelper.php,\r\nHelper/WorkflowHelper.php"
-        markFiles "Resources/config/forms.yml,\r\nResources/public/css/style.css,\r\nResources/views/Category/display.html.twig,\r\nResources/views/Category/view.html.twig,\r\nResources/views/Forum/display.html.twig,\r\nResources/views/Posting/display.html.twig,\r\nResources/views/Forum/includeDisplayItemListMany.html.twig"
+        skipFiles "Container/LinkContainer.php,\r\nController/AjaxController.php,\r\nController/CategoryController.php,\r\nEntity/CategoryEntity.php,\r\nEntity/ForumEntity.php,\r\nEntity/PostingEntity.php,\r\nEntity/Repository/PostingRepository.php,\r\nHelper/ControllerHelper.php,\r\nHelper/NotificationHelper.php,\r\nHelper/WorkflowHelper.php"
+        markFiles "Resources/config/forms.yml,\r\nResources/public/css/style.css,\r\nResources/views/Category/display.html.twig,\r\nResources/views/Category/view.html.twig,\r\nResources/views/Forum/display.html.twig,\r\nResources/views/Posting/display.html.twig,\r\nResources/views/Posting/edit.html.twig,\r\nResources/views/Forum/includeDisplayItemListMany.html.twig"
 
     entities {
         entity "category" leading {

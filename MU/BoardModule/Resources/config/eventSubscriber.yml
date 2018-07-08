@@ -68,7 +68,8 @@ services:
     mu_board_module.workflow_events_listener:
         class: MU\BoardModule\Listener\WorkflowEventsListener
         arguments:
-            - "@zikula_permissions_module.api.permission"
+            - "@mu_board_module.entity_factory"
+            - "@mu_board_module.permission_helper"
             - "@mu_board_module.notification_helper"
         tags: ['kernel.event_subscriber']
     

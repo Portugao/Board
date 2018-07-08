@@ -18,12 +18,18 @@ use MU\BoardModule\Entity\PostingEntity;
 use MU\BoardModule\Entity\AboEntity;
 use MU\BoardModule\Entity\UserEntity;
 use MU\BoardModule\Entity\RankEntity;
+use MU\BoardModule\Helper\PermissionHelper;
 
 /**
  * Entity initialiser class used to dynamically apply default values to newly created entities.
  */
 abstract class AbstractEntityInitialiser
 {
+    /**
+     * @var PermissionHelper
+     */
+    protected $permissionHelper;
+
     /**
      * Initialises a given category instance.
      *

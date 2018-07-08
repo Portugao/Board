@@ -18,8 +18,8 @@ use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\Core\Doctrine\EntityAccess;
 use Zikula\Core\LinkContainer\LinkContainerInterface;
 use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
-use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
 use MU\BoardModule\Helper\ControllerHelper;
+use MU\BoardModule\Helper\PermissionHelper;
 
 /**
  * This is the link container service implementation class.
@@ -34,11 +34,6 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
     protected $router;
 
     /**
-     * @var PermissionApiInterface
-     */
-    protected $permissionApi;
-
-    /**
      * @var VariableApiInterface
      */
     protected $variableApi;
@@ -49,26 +44,31 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
     protected $controllerHelper;
 
     /**
+     * @var PermissionHelper
+     */
+    protected $permissionHelper;
+
+    /**
      * LinkContainer constructor.
      *
-     * @param TranslatorInterface    $translator       Translator service instance
-     * @param Routerinterface        $router           Router service instance
-     * @param PermissionApiInterface $permissionApi    PermissionApi service instance
-     * @param VariableApiInterface   $variableApi      VariableApi service instance
-     * @param ControllerHelper       $controllerHelper ControllerHelper service instance
+     * @param TranslatorInterface  $translator       Translator service instance
+     * @param Routerinterface      $router           Router service instance
+     * @param VariableApiInterface $variableApi      VariableApi service instance
+     * @param ControllerHelper     $controllerHelper ControllerHelper service instance
+     * @param PermissionHelper     $permissionHelper PermissionHelper service instance
      */
     public function __construct(
         TranslatorInterface $translator,
         RouterInterface $router,
-        PermissionApiInterface $permissionApi,
         VariableApiInterface $variableApi,
-        ControllerHelper $controllerHelper
+        ControllerHelper $controllerHelper,
+        PermissionHelper $permissionHelper
     ) {
         $this->setTranslator($translator);
         $this->router = $router;
-        $this->permissionApi = $permissionApi;
         $this->variableApi = $variableApi;
         $this->controllerHelper = $controllerHelper;
+        $this->permissionHelper = $permissionHelper;
     }
 
     /**
@@ -99,13 +99,13 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
         $links = [];
 
         if (LinkContainerInterface::TYPE_ACCOUNT == $type) {
-            if (!$this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_OVERVIEW)) {
+            if (!$this->permissionHelper->hasPermission(ACCESS_OVERVIEW)) {
                 return $links;
             }
 
             if (true === $this->variableApi->get('MUBoardModule', 'linkOwnCategoriesOnAccountPage', true)) {
                 $objectType = 'category';
-                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                if ($this->permissionHelper->hasComponentPermission($objectType, ACCESS_READ)) {
                     $links[] = [
                         'url' => $this->router->generate('muboardmodule_' . strtolower($objectType) . '_view', ['own' => 1]),
                         'text' => $this->__('My categories', 'muboardmodule'),
@@ -116,7 +116,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
 
             if (true === $this->variableApi->get('MUBoardModule', 'linkOwnForumsOnAccountPage', true)) {
                 $objectType = 'forum';
-                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                if ($this->permissionHelper->hasComponentPermission($objectType, ACCESS_READ)) {
                     $links[] = [
                         'url' => $this->router->generate('muboardmodule_' . strtolower($objectType) . '_view', ['own' => 1]),
                         'text' => $this->__('My forums', 'muboardmodule'),
@@ -127,7 +127,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
 
             if (true === $this->variableApi->get('MUBoardModule', 'linkOwnPostingsOnAccountPage', true)) {
                 $objectType = 'posting';
-                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                if ($this->permissionHelper->hasComponentPermission($objectType, ACCESS_READ)) {
                     $links[] = [
                         'url' => $this->router->generate('muboardmodule_' . strtolower($objectType) . '_view', ['own' => 1]),
                         'text' => $this->__('My postings', 'muboardmodule'),
@@ -138,7 +138,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
 
             if (true === $this->variableApi->get('MUBoardModule', 'linkOwnAbosOnAccountPage', true)) {
                 $objectType = 'abo';
-                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                if ($this->permissionHelper->hasComponentPermission($objectType, ACCESS_READ)) {
                     $links[] = [
                         'url' => $this->router->generate('muboardmodule_' . strtolower($objectType) . '_view', ['own' => 1]),
                         'text' => $this->__('My abos', 'muboardmodule'),
@@ -149,7 +149,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
 
             if (true === $this->variableApi->get('MUBoardModule', 'linkOwnRanksOnAccountPage', true)) {
                 $objectType = 'rank';
-                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                if ($this->permissionHelper->hasComponentPermission($objectType, ACCESS_READ)) {
                     $links[] = [
                         'url' => $this->router->generate('muboardmodule_' . strtolower($objectType) . '_view', ['own' => 1]),
                         'text' => $this->__('My ranks', 'muboardmodule'),
@@ -158,7 +158,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
                 }
             }
 
-            if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
+            if ($this->permissionHelper->hasPermission(ACCESS_ADMIN)) {
                 $links[] = [
                     'url' => $this->router->generate('muboardmodule_category_adminindex'),
                     'text' => $this->__('Board Backend', 'muboardmodule'),
@@ -172,7 +172,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
 
         $routeArea = LinkContainerInterface::TYPE_ADMIN == $type ? 'admin' : '';
         if (LinkContainerInterface::TYPE_ADMIN == $type) {
-            if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_READ)) {
+            if ($this->permissionHelper->hasPermission(ACCESS_READ)) {
                 $links[] = [
                     'url' => $this->router->generate('muboardmodule_category_index'),
                     'text' => $this->__('Frontend', 'muboardmodule'),
@@ -181,7 +181,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
                 ];
             }
         } else {
-            if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
+            if ($this->permissionHelper->hasPermission(ACCESS_ADMIN)) {
                 $links[] = [
                     'url' => $this->router->generate('muboardmodule_category_adminindex'),
                     'text' => $this->__('Backend', 'muboardmodule'),
@@ -192,7 +192,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
         }
         
         if (in_array('category', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . ':Category:', '::', $permLevel)) {
+            && $this->permissionHelper->hasComponentPermission('category', $permLevel)) {
             $links[] = [
                 'url' => $this->router->generate('muboardmodule_category_' . $routeArea . 'view'),
                 'text' => $this->__('Categories', 'muboardmodule'),
@@ -200,7 +200,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             ];
         }
         if (in_array('forum', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . ':Forum:', '::', $permLevel)) {
+            && $this->permissionHelper->hasComponentPermission('forum', $permLevel)) {
             $links[] = [
                 'url' => $this->router->generate('muboardmodule_forum_' . $routeArea . 'view'),
                 'text' => $this->__('Forums', 'muboardmodule'),
@@ -208,7 +208,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             ];
         }
         if (in_array('posting', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . ':Posting:', '::', $permLevel)) {
+            && $this->permissionHelper->hasComponentPermission('posting', $permLevel)) {
             $links[] = [
                 'url' => $this->router->generate('muboardmodule_posting_' . $routeArea . 'view'),
                 'text' => $this->__('Postings', 'muboardmodule'),
@@ -216,7 +216,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             ];
         }
         if (in_array('abo', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . ':Abo:', '::', $permLevel)) {
+            && $this->permissionHelper->hasComponentPermission('abo', $permLevel)) {
             $links[] = [
                 'url' => $this->router->generate('muboardmodule_abo_' . $routeArea . 'view'),
                 'text' => $this->__('Abos', 'muboardmodule'),
@@ -224,7 +224,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             ];
         }
         if (in_array('user', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . ':User:', '::', $permLevel)) {
+            && $this->permissionHelper->hasComponentPermission('user', $permLevel)) {
             $links[] = [
                 'url' => $this->router->generate('muboardmodule_user_' . $routeArea . 'view'),
                 'text' => $this->__('Users', 'muboardmodule'),
@@ -232,14 +232,14 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             ];
         }
         if (in_array('rank', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . ':Rank:', '::', $permLevel)) {
+            && $this->permissionHelper->hasComponentPermission('rank', $permLevel)) {
             $links[] = [
                 'url' => $this->router->generate('muboardmodule_rank_' . $routeArea . 'view'),
                 'text' => $this->__('Ranks', 'muboardmodule'),
                 'title' => $this->__('Ranks list', 'muboardmodule')
             ];
         }
-        if ($routeArea == 'admin' && $this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
+        if ($routeArea == 'admin' && $this->permissionHelper->hasPermission(ACCESS_ADMIN)) {
             $links[] = [
                 'url' => $this->router->generate('muboardmodule_config_config'),
                 'text' => $this->__('Settings', 'muboardmodule'),

@@ -12,7 +12,6 @@
 
 namespace MU\BoardModule\Controller\Base;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,11 +43,6 @@ abstract class AbstractExternalController extends AbstractController
             $objectType = $controllerHelper->getDefaultObjectType('controllerAction', $contextArgs);
         }
         
-        $component = 'MUBoardModule:' . ucfirst($objectType) . ':';
-        if (!$this->hasPermission($component, $id . '::', ACCESS_READ)) {
-            return '';
-        }
-        
         $entityFactory = $this->get('mu_board_module.entity_factory');
         $repository = $entityFactory->getRepository($objectType);
         
@@ -56,6 +50,10 @@ abstract class AbstractExternalController extends AbstractController
         $entity = $repository->selectById($id);
         if (null === $entity) {
             return new Response($this->__('No such item.'));
+        }
+        
+        if (!$this->get('mu_board_module.permission_helper')->mayRead($entity)) {
+            return '';
         }
         
         $template = $request->query->has('template') ? $request->query->get('template', null) : null;
@@ -99,7 +97,8 @@ abstract class AbstractExternalController extends AbstractController
         $cssAssetBag->add($assetHelper->resolve('@MUBoardModule:css/style.css'));
         $cssAssetBag->add([$assetHelper->resolve('@MUBoardModule:css/custom.css') => 120]);
         
-        $activatedObjectTypes = $this->getVar('enabledFinderTypes', []);
+        $listEntriesHelper = $this->get('mu_board_module.listentries_helper');
+        $activatedObjectTypes = $listEntriesHelper->extractMultiList($this->getVar('enabledFinderTypes', ''));
         if (!in_array($objectType, $activatedObjectTypes)) {
             if (!count($activatedObjectTypes)) {
                 throw new AccessDeniedException();
@@ -111,7 +110,7 @@ abstract class AbstractExternalController extends AbstractController
             return new RedirectResponse($redirectUrl);
         }
         
-        if (!$this->hasPermission('MUBoardModule:' . ucfirst($objectType) . ':', '::', ACCESS_COMMENT)) {
+        if (!$this->get('mu_board_module.permission_helper')->hasComponentPermission($objectType, ACCESS_COMMENT)) {
             throw new AccessDeniedException();
         }
         
@@ -194,6 +193,8 @@ abstract class AbstractExternalController extends AbstractController
         
         $contextArgs = ['controller' => 'external', 'action' => 'display'];
         $templateParameters = $this->get('mu_board_module.controller_helper')->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);
+        
+        $templateParameters['activatedObjectTypes'] = $activatedObjectTypes;
         
         $templateParameters['pager'] = [
             'numitems' => $objectCount,

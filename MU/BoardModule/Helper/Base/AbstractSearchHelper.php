@@ -23,12 +23,12 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\Core\RouteUrl;
-use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
 use Zikula\SearchModule\Entity\SearchResultEntity;
 use Zikula\SearchModule\SearchableInterface;
 use MU\BoardModule\Entity\Factory\EntityFactory;
 use MU\BoardModule\Helper\ControllerHelper;
 use MU\BoardModule\Helper\EntityDisplayHelper;
+use MU\BoardModule\Helper\PermissionHelper;
 
 /**
  * Search helper base class.
@@ -36,11 +36,6 @@ use MU\BoardModule\Helper\EntityDisplayHelper;
 abstract class AbstractSearchHelper implements SearchableInterface
 {
     use TranslatorTrait;
-    
-    /**
-     * @var PermissionApiInterface
-     */
-    protected $permissionApi;
     
     /**
      * @var SessionInterface
@@ -68,32 +63,37 @@ abstract class AbstractSearchHelper implements SearchableInterface
     protected $entityDisplayHelper;
     
     /**
+     * @var PermissionHelper
+     */
+    protected $permissionHelper;
+    
+    /**
      * SearchHelper constructor.
      *
      * @param TranslatorInterface $translator          Translator service instance
-     * @param PermissionApiInterface $permissionApi    PermissionApi service instance
      * @param SessionInterface    $session             Session service instance
      * @param RequestStack        $requestStack        RequestStack service instance
      * @param EntityFactory       $entityFactory       EntityFactory service instance
      * @param ControllerHelper    $controllerHelper    ControllerHelper service instance
      * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
+     * @param PermissionHelper    $permissionHelper    PermissionHelper service instance
      */
     public function __construct(
         TranslatorInterface $translator,
-        PermissionApiInterface $permissionApi,
         SessionInterface $session,
         RequestStack $requestStack,
         EntityFactory $entityFactory,
         ControllerHelper $controllerHelper,
-        EntityDisplayHelper $entityDisplayHelper
+        EntityDisplayHelper $entityDisplayHelper,
+        PermissionHelper $permissionHelper
     ) {
         $this->setTranslator($translator);
-        $this->permissionApi = $permissionApi;
         $this->session = $session;
         $this->request = $requestStack->getCurrentRequest();
         $this->entityFactory = $entityFactory;
         $this->controllerHelper = $controllerHelper;
         $this->entityDisplayHelper = $entityDisplayHelper;
+        $this->permissionHelper = $permissionHelper;
     }
     
     /**
@@ -111,7 +111,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
      */
     public function amendForm(FormBuilderInterface $builder)
     {
-        if (!$this->permissionApi->hasPermission('MUBoardModule::', '::', ACCESS_READ)) {
+        if (!$this->permissionHelper->hasPermission(ACCESS_READ)) {
             return '';
         }
     
@@ -136,7 +136,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
      */
     public function getResults(array $words, $searchType = 'AND', $modVars = null)
     {
-        if (!$this->permissionApi->hasPermission('MUBoardModule::', '::', ACCESS_READ)) {
+        if (!$this->permissionHelper->hasPermission(ACCESS_READ)) {
             return [];
         }
     
@@ -223,8 +223,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
             $hasDisplayAction = in_array($objectType, $entitiesWithDisplayAction);
     
             foreach ($entities as $entity) {
-                // perform permission check
-                if (!$this->permissionApi->hasPermission('MUBoardModule:' . ucfirst($objectType) . ':', $entity->getKey() . '::', ACCESS_OVERVIEW)) {
+                if (!$this->permissionHelper->mayRead($entity)) {
                     continue;
                 }
     

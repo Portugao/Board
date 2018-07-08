@@ -32,13 +32,13 @@ use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\GroupsModule\Constant as GroupsConstant;
 use Zikula\GroupsModule\Entity\Repository\GroupApplicationRepository;
 use Zikula\PageLockModule\Api\ApiInterface\LockingApiInterface;
-use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
 use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 use Zikula\UsersModule\Constant as UsersConstant;
 use MU\BoardModule\Entity\Factory\EntityFactory;
 use MU\BoardModule\Helper\ControllerHelper;
 use MU\BoardModule\Helper\HookHelper;
 use MU\BoardModule\Helper\ModelHelper;
+use MU\BoardModule\Helper\PermissionHelper;
 use MU\BoardModule\Helper\WorkflowHelper;
 
 /**
@@ -69,13 +69,6 @@ abstract class AbstractEditHandler
      * @var string
      */
     protected $objectTypeLower;
-
-    /**
-     * Permission component based on object type.
-     *
-     * @var string
-     */
-    protected $permissionComponent;
 
     /**
      * Reference to treated entity instance.
@@ -170,11 +163,6 @@ abstract class AbstractEditHandler
     protected $logger;
 
     /**
-     * @var PermissionApiInterface
-     */
-    protected $permissionApi;
-
-    /**
      * @var VariableApiInterface
      */
     protected $variableApi;
@@ -200,19 +188,24 @@ abstract class AbstractEditHandler
     protected $controllerHelper;
 
     /**
-     * @var HookHelper
-     */
-    protected $hookHelper;
-
-    /**
      * @var ModelHelper
      */
     protected $modelHelper;
 
     /**
+     * @var PermissionHelper
+     */
+    protected $permissionHelper;
+
+    /**
      * @var WorkflowHelper
      */
     protected $workflowHelper;
+
+    /**
+     * @var HookHelper
+     */
+    protected $hookHelper;
 
     /**
      * Reference to optional locking api.
@@ -244,13 +237,13 @@ abstract class AbstractEditHandler
      * @param RequestStack              $requestStack     RequestStack service instance
      * @param RouterInterface           $router           Router service instance
      * @param LoggerInterface           $logger           Logger service instance
-     * @param PermissionApiInterface    $permissionApi    PermissionApi service instance
      * @param VariableApiInterface      $variableApi      VariableApi service instance
      * @param CurrentUserApiInterface   $currentUserApi   CurrentUserApi service instance
      * @param GroupApplicationRepository $groupApplicationRepository GroupApplicationRepository service instance.
      * @param EntityFactory             $entityFactory    EntityFactory service instance
      * @param ControllerHelper          $controllerHelper ControllerHelper service instance
      * @param ModelHelper               $modelHelper      ModelHelper service instance
+     * @param PermissionHelper          $permissionHelper PermissionHelper service instance
      * @param WorkflowHelper            $workflowHelper   WorkflowHelper service instance
      * @param HookHelper                $hookHelper       HookHelper service instance
      */
@@ -261,13 +254,13 @@ abstract class AbstractEditHandler
         RequestStack $requestStack,
         RouterInterface $router,
         LoggerInterface $logger,
-        PermissionApiInterface $permissionApi,
         VariableApiInterface $variableApi,
         CurrentUserApiInterface $currentUserApi,
         GroupApplicationRepository $groupApplicationRepository,
         EntityFactory $entityFactory,
         ControllerHelper $controllerHelper,
         ModelHelper $modelHelper,
+        PermissionHelper $permissionHelper,
         WorkflowHelper $workflowHelper,
         HookHelper $hookHelper
     ) {
@@ -277,13 +270,13 @@ abstract class AbstractEditHandler
         $this->request = $requestStack->getCurrentRequest();
         $this->router = $router;
         $this->logger = $logger;
-        $this->permissionApi = $permissionApi;
         $this->variableApi = $variableApi;
         $this->currentUserApi = $currentUserApi;
         $this->groupApplicationRepository = $groupApplicationRepository;
         $this->entityFactory = $entityFactory;
         $this->controllerHelper = $controllerHelper;
         $this->modelHelper = $modelHelper;
+        $this->permissionHelper = $permissionHelper;
         $this->workflowHelper = $workflowHelper;
         $this->hookHelper = $hookHelper;
     }
@@ -333,7 +326,6 @@ abstract class AbstractEditHandler
         // store current uri for repeated creations
         $this->repeatReturnUrl = $this->request->getUri();
     
-        $this->permissionComponent = 'MUBoardModule:' . $this->objectTypeCapital . ':';
         $this->idField = $this->entityFactory->getIdField($this->objectType);
     
         // retrieve identifier of the object we wish to edit
@@ -354,10 +346,6 @@ abstract class AbstractEditHandler
         $this->templateParameters['mode'] = !empty($this->idValue) ? 'edit' : 'create';
     
         if ($this->templateParameters['mode'] == 'edit') {
-            if (!$this->permissionApi->hasPermission($this->permissionComponent, $this->idValue . '::', ACCESS_EDIT)) {
-                throw new AccessDeniedException();
-            }
-    
             $entity = $this->initEntityForEditing();
             if (null !== $entity) {
                 if (true === $this->hasPageLockSupport && $this->kernel->isBundle('ZikulaPageLockModule') && null !== $this->lockingApi) {
@@ -368,9 +356,13 @@ abstract class AbstractEditHandler
                     $this->entityFactory->getObjectManager()->refresh($entity);
                 }
             }
+    
+            if (!$this->permissionHelper->mayEdit($entity)) {
+                throw new AccessDeniedException();
+            }
         } else {
             $permissionLevel = in_array($this->objectType, ['posting']) ? ACCESS_COMMENT : ACCESS_EDIT;
-            if (!$this->permissionApi->hasPermission($this->permissionComponent, '::', $permissionLevel)) {
+            if (!$this->permissionHelper->hasComponentPermission($this->objectType, $permissionLevel)) {
                 throw new AccessDeniedException();
             }
     
