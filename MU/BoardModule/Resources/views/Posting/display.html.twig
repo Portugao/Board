@@ -48,6 +48,9 @@
             </div>
             <div class="col-sm-12">
                 <div class="posting-display-content">
+                <div class="muboard-user-posting-content-text">
+                {{ posting.text|safeHtml }}
+                </div>
                 {% if posting.children|default %}
                     {{ include(
                         '@MUBoardModule/Posting/includeDisplayItemListManyOwnChildren.html.twig',
