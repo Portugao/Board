@@ -19,11 +19,16 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use MU\BoardModule\Form\Type\Field\MultiListType;
+use MU\BoardModule\Form\Type\Field\UploadType;
 use MU\BoardModule\AppSettings;
 use MU\BoardModule\Helper\ListEntriesHelper;
 
@@ -68,12 +73,335 @@ abstract class AbstractConfigType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->addGeneralFields($builder, $options);
+        $this->addLayoutFields($builder, $options);
         $this->addModerationFields($builder, $options);
         $this->addListViewsFields($builder, $options);
         $this->addImagesFields($builder, $options);
         $this->addIntegrationFields($builder, $options);
 
         $this->addSubmitButtons($builder, $options);
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $data = $event->getData();
+            foreach (['standardIcon', 'specialIcon'] as $uploadFieldName) {
+                $data[$uploadFieldName] = [
+                    $uploadFieldName => $data[$uploadFieldName] instanceof File ? $data[$uploadFieldName]->getPathname() : null
+                ];
+            }
+        });
+        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
+            $data = $event->getData();
+            foreach (['standardIcon', 'specialIcon'] as $uploadFieldName) {
+                if (is_array($data[$uploadFieldName])) {
+                    $data[$uploadFieldName] = $data[$uploadFieldName][$uploadFieldName];
+                }
+            }
+        });
+    }
+
+    /**
+     * Adds fields for general fields.
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
+     */
+    public function addGeneralFields(FormBuilderInterface $builder, array $options = [])
+    {
+        
+        $builder->add('uploadImages', CheckboxType::class, [
+            'label' => $this->__('Upload images') . ':',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('The upload images option')
+            ],
+            'required' => true,
+        ]);
+        
+        $builder->add('allowedSizeOfImages', TextareaType::class, [
+            'label' => $this->__('Allowed size of images') . ':',
+            'help' => $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 2000]),
+            'empty_data' => '200k',
+            'attr' => [
+                'maxlength' => 2000,
+                'class' => '',
+                'title' => $this->__('Enter the allowed size of images.')
+            ],
+            'required' => true,
+        ]);
+        
+        $listEntries = $this->listHelper->getEntries('appSettings', 'numberImages');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('numberImages', ChoiceType::class, [
+            'label' => $this->__('Number images') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the number images.')
+            ],
+            'required' => true,
+            'choices' => $choices,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
+        ]);
+        
+        $builder->add('uploadFiles', CheckboxType::class, [
+            'label' => $this->__('Upload files') . ':',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('The upload files option')
+            ],
+            'required' => true,
+        ]);
+        
+        $builder->add('allowedSizeOfFiles', TextareaType::class, [
+            'label' => $this->__('Allowed size of files') . ':',
+            'help' => $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 2000]),
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 2000,
+                'class' => '',
+                'title' => $this->__('Enter the allowed size of files.')
+            ],
+            'required' => true,
+        ]);
+        
+        $listEntries = $this->listHelper->getEntries('appSettings', 'numberFiles');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('numberFiles', ChoiceType::class, [
+            'label' => $this->__('Number files') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the number files.')
+            ],
+            'required' => true,
+            'choices' => $choices,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
+        ]);
+        
+        $builder->add('editPostings', CheckboxType::class, [
+            'label' => $this->__('Edit postings') . ':',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('The edit postings option')
+            ],
+            'required' => true,
+        ]);
+        
+        $builder->add('editTime', IntegerType::class, [
+            'label' => $this->__('Edit time') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Time of editing allowed in hours.')
+            ],
+            'help' => $this->__('Time of editing allowed in hours.'),
+            'empty_data' => '6',
+            'attr' => [
+                'maxlength' => 11,
+                'class' => '',
+                'title' => $this->__('Enter the edit time.') . ' ' . $this->__('Only digits are allowed.')
+            ],
+            'required' => true,
+            'scale' => 0
+        ]);
+        
+        $builder->add('latestPostings', IntegerType::class, [
+            'label' => $this->__('Latest postings') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('In Hours.')
+            ],
+            'help' => $this->__('In Hours.'),
+            'empty_data' => '24',
+            'attr' => [
+                'maxlength' => 11,
+                'class' => '',
+                'title' => $this->__('Enter the latest postings.') . ' ' . $this->__('Only digits are allowed.')
+            ],
+            'required' => true,
+            'scale' => 0
+        ]);
+        
+        $listEntries = $this->listHelper->getEntries('appSettings', 'sortingCategories');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('sortingCategories', ChoiceType::class, [
+            'label' => $this->__('Sorting categories') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the sorting categories.')
+            ],
+            'required' => true,
+            'choices' => $choices,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
+        ]);
+        
+        $listEntries = $this->listHelper->getEntries('appSettings', 'sortingForums');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('sortingForums', ChoiceType::class, [
+            'label' => $this->__('Sorting forums') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the sorting forums.')
+            ],
+            'required' => true,
+            'choices' => $choices,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
+        ]);
+        
+        $listEntries = $this->listHelper->getEntries('appSettings', 'sortingPostings');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('sortingPostings', ChoiceType::class, [
+            'label' => $this->__('Sorting postings') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the sorting postings.')
+            ],
+            'required' => true,
+            'choices' => $choices,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
+        ]);
+        
+        $builder->add('standardIcon', UploadType::class, [
+            'label' => $this->__('Standard icon') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('This icon will be used for ranks to show; for example a star.')
+            ],
+            'help' => $this->__('This icon will be used for ranks to show; for example a star.'),
+            'attr' => [
+                'class' => ' validate-upload',
+                'title' => $this->__('Enter the standard icon.')
+            ],
+            'required' => true && $options['mode'] == 'create',
+            'entity' => $options['entity'],
+            'allowed_extensions' => 'gif, jpeg, jpg, png',
+            'allowed_size' => ''
+        ]);
+        
+        $builder->add('specialIcon', UploadType::class, [
+            'label' => $this->__('Special icon') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('This icon will be used for special ranks to show; for example a heart.')
+            ],
+            'help' => $this->__('This icon will be used for special ranks to show; for example a heart.'),
+            'attr' => [
+                'class' => ' validate-upload',
+                'title' => $this->__('Enter the special icon.')
+            ],
+            'required' => true && $options['mode'] == 'create',
+            'entity' => $options['entity'],
+            'allowed_extensions' => 'gif, jpeg, jpg, png',
+            'allowed_size' => ''
+        ]);
+    }
+
+    /**
+     * Adds fields for layout fields.
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
+     */
+    public function addLayoutFields(FormBuilderInterface $builder, array $options = [])
+    {
+        
+        $listEntries = $this->listHelper->getEntries('appSettings', 'iconSet');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('iconSet', ChoiceType::class, [
+            'label' => $this->__('Icon set') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the icon set.')
+            ],
+            'required' => true,
+            'choices' => $choices,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
+        ]);
+        
+        $listEntries = $this->listHelper->getEntries('appSettings', 'template');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('template', ChoiceType::class, [
+            'label' => $this->__('Template') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the template.')
+            ],
+            'required' => true,
+            'choices' => $choices,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
+        ]);
+        
+        $builder->add('showStatisticInDetails', CheckboxType::class, [
+            'label' => $this->__('Show statistic in details') . ':',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('The show statistic in details option')
+            ],
+            'required' => true,
+        ]);
+        
+        $builder->add('showStatisticOnBottom', CheckboxType::class, [
+            'label' => $this->__('Show statistic on bottom') . ':',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('The show statistic on bottom option')
+            ],
+            'required' => true,
+        ]);
     }
 
     /**

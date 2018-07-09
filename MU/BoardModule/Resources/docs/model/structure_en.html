@@ -2630,9 +2630,394 @@
     </table>
 </div>
 <h2><i class="fa fa-wrench"></i> Configuration variables</h2>
+<h3><i class="fa fa-server"></i> General</h3>
+<p>Sort value: 1</p>
+<p>Composite: <i class="fa fa-times"></i>
+</p>
+<h4><i class="fa fa-bars"></i> Fields</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cVariablesGeneralFieldName" />
+            <col id="cVariablesGeneralFieldType" />
+            <col id="cVariablesGeneralFieldMandatory" />
+            <col id="cVariablesGeneralFieldDefault" />
+            <col id="cVariablesGeneralFieldDisplayType" />
+            <col id="cVariablesGeneralFieldConstraints" />
+            <col id="cVariablesGeneralFieldRemarks" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hVariablesGeneralFieldName" scope="col">Name</th>
+                <th id="hVariablesGeneralFieldType" scope="col">Type</th>
+                <th id="hVariablesGeneralFieldMandatory" scope="col">Mandatory</th>
+                <th id="hVariablesGeneralFieldDefault" scope="col">Default value</th>
+                <th id="hVariablesGeneralFieldDisplayType" scope="col">Display</th>
+                <th id="hVariablesGeneralFieldConstraints" scope="col">Constraints</th>
+                <th id="hVariablesGeneralFieldRemarks" scope="col">Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hVariablesGeneralFieldUploadImages" scope="row" headers="hVariablesGeneralFieldName">Upload images</th>
+                <td headers="hVariablesGeneralFieldUploadImages hVariablesGeneralFieldType">Boolean</td>
+                <td headers="hVariablesGeneralFieldUploadImages hVariablesGeneralFieldMandatory">true</td>
+                <td headers="hVariablesGeneralFieldUploadImages hVariablesGeneralFieldDefault">1</td>
+                <td headers="hVariablesGeneralFieldUploadImages hVariablesGeneralFieldDisplayType">ALL</td>
+                <td headers="hVariablesGeneralFieldUploadImages hVariablesGeneralFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hVariablesGeneralFieldUploadImages hVariablesGeneralFieldRemarks">
+                    <ul>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesGeneralFieldAllowedSizeOfImages" scope="row" headers="hVariablesGeneralFieldName">Allowed size of images</th>
+                <td headers="hVariablesGeneralFieldAllowedSizeOfImages hVariablesGeneralFieldType">Text</td>
+                <td headers="hVariablesGeneralFieldAllowedSizeOfImages hVariablesGeneralFieldMandatory">true</td>
+                <td headers="hVariablesGeneralFieldAllowedSizeOfImages hVariablesGeneralFieldDefault">200k</td>
+                <td headers="hVariablesGeneralFieldAllowedSizeOfImages hVariablesGeneralFieldDisplayType">ALL</td>
+                <td headers="hVariablesGeneralFieldAllowedSizeOfImages hVariablesGeneralFieldConstraints">
+                    <ul>
+                        <li>Has a length of 2000 chars.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesGeneralFieldAllowedSizeOfImages hVariablesGeneralFieldRemarks">
+                    <ul>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesGeneralFieldNumberImages" scope="row" headers="hVariablesGeneralFieldName">Number images</th>
+                <td headers="hVariablesGeneralFieldNumberImages hVariablesGeneralFieldType">List</td>
+                <td headers="hVariablesGeneralFieldNumberImages hVariablesGeneralFieldMandatory">true</td>
+                <td headers="hVariablesGeneralFieldNumberImages hVariablesGeneralFieldDefault"></td>
+                <td headers="hVariablesGeneralFieldNumberImages hVariablesGeneralFieldDisplayType">ALL</td>
+                <td headers="hVariablesGeneralFieldNumberImages hVariablesGeneralFieldConstraints">
+                    <ul>
+                        <li>Has a length of 255 chars.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesGeneralFieldNumberImages hVariablesGeneralFieldRemarks">
+                    <ul>
+                        <li>This field is not unique and allows no null values.</li>
+                        <li>The list is represented by a single-valued dropdown list.</li>
+                        <li>Available entries: <ul><li>1 (null)</li><li>2 (null)</li><li>3 (null)</li></ul></li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesGeneralFieldUploadFiles" scope="row" headers="hVariablesGeneralFieldName">Upload files</th>
+                <td headers="hVariablesGeneralFieldUploadFiles hVariablesGeneralFieldType">Boolean</td>
+                <td headers="hVariablesGeneralFieldUploadFiles hVariablesGeneralFieldMandatory">true</td>
+                <td headers="hVariablesGeneralFieldUploadFiles hVariablesGeneralFieldDefault">1</td>
+                <td headers="hVariablesGeneralFieldUploadFiles hVariablesGeneralFieldDisplayType">ALL</td>
+                <td headers="hVariablesGeneralFieldUploadFiles hVariablesGeneralFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hVariablesGeneralFieldUploadFiles hVariablesGeneralFieldRemarks">
+                    <ul>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesGeneralFieldAllowedSizeOfFiles" scope="row" headers="hVariablesGeneralFieldName">Allowed size of files</th>
+                <td headers="hVariablesGeneralFieldAllowedSizeOfFiles hVariablesGeneralFieldType">Text</td>
+                <td headers="hVariablesGeneralFieldAllowedSizeOfFiles hVariablesGeneralFieldMandatory">true</td>
+                <td headers="hVariablesGeneralFieldAllowedSizeOfFiles hVariablesGeneralFieldDefault"></td>
+                <td headers="hVariablesGeneralFieldAllowedSizeOfFiles hVariablesGeneralFieldDisplayType">ALL</td>
+                <td headers="hVariablesGeneralFieldAllowedSizeOfFiles hVariablesGeneralFieldConstraints">
+                    <ul>
+                        <li>Has a length of 2000 chars.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesGeneralFieldAllowedSizeOfFiles hVariablesGeneralFieldRemarks">
+                    <ul>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesGeneralFieldNumberFiles" scope="row" headers="hVariablesGeneralFieldName">Number files</th>
+                <td headers="hVariablesGeneralFieldNumberFiles hVariablesGeneralFieldType">List</td>
+                <td headers="hVariablesGeneralFieldNumberFiles hVariablesGeneralFieldMandatory">true</td>
+                <td headers="hVariablesGeneralFieldNumberFiles hVariablesGeneralFieldDefault"></td>
+                <td headers="hVariablesGeneralFieldNumberFiles hVariablesGeneralFieldDisplayType">ALL</td>
+                <td headers="hVariablesGeneralFieldNumberFiles hVariablesGeneralFieldConstraints">
+                    <ul>
+                        <li>Has a length of 255 chars.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesGeneralFieldNumberFiles hVariablesGeneralFieldRemarks">
+                    <ul>
+                        <li>This field is not unique and allows no null values.</li>
+                        <li>The list is represented by a single-valued dropdown list.</li>
+                        <li>Available entries: <ul><li>1 (null)</li><li>2 (null)</li><li>3 (null)</li></ul></li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesGeneralFieldEditPostings" scope="row" headers="hVariablesGeneralFieldName">Edit postings</th>
+                <td headers="hVariablesGeneralFieldEditPostings hVariablesGeneralFieldType">Boolean</td>
+                <td headers="hVariablesGeneralFieldEditPostings hVariablesGeneralFieldMandatory">true</td>
+                <td headers="hVariablesGeneralFieldEditPostings hVariablesGeneralFieldDefault">1</td>
+                <td headers="hVariablesGeneralFieldEditPostings hVariablesGeneralFieldDisplayType">ALL</td>
+                <td headers="hVariablesGeneralFieldEditPostings hVariablesGeneralFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hVariablesGeneralFieldEditPostings hVariablesGeneralFieldRemarks">
+                    <ul>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesGeneralFieldEditTime" scope="row" headers="hVariablesGeneralFieldName">Edit time</th>
+                <td headers="hVariablesGeneralFieldEditTime hVariablesGeneralFieldType">Integer</td>
+                <td headers="hVariablesGeneralFieldEditTime hVariablesGeneralFieldMandatory">true</td>
+                <td headers="hVariablesGeneralFieldEditTime hVariablesGeneralFieldDefault">6</td>
+                <td headers="hVariablesGeneralFieldEditTime hVariablesGeneralFieldDisplayType">ALL</td>
+                <td headers="hVariablesGeneralFieldEditTime hVariablesGeneralFieldConstraints">
+                    <ul>
+                        <li>Has a length of 11.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesGeneralFieldEditTime hVariablesGeneralFieldRemarks">
+                    <ul>
+                        <li>Time of editing allowed in hours. </li>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesGeneralFieldLatestPostings" scope="row" headers="hVariablesGeneralFieldName">Latest postings</th>
+                <td headers="hVariablesGeneralFieldLatestPostings hVariablesGeneralFieldType">Integer</td>
+                <td headers="hVariablesGeneralFieldLatestPostings hVariablesGeneralFieldMandatory">true</td>
+                <td headers="hVariablesGeneralFieldLatestPostings hVariablesGeneralFieldDefault">24</td>
+                <td headers="hVariablesGeneralFieldLatestPostings hVariablesGeneralFieldDisplayType">ALL</td>
+                <td headers="hVariablesGeneralFieldLatestPostings hVariablesGeneralFieldConstraints">
+                    <ul>
+                        <li>Has a length of 11.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesGeneralFieldLatestPostings hVariablesGeneralFieldRemarks">
+                    <ul>
+                        <li>In Hours. </li>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesGeneralFieldSortingCategories" scope="row" headers="hVariablesGeneralFieldName">Sorting categories</th>
+                <td headers="hVariablesGeneralFieldSortingCategories hVariablesGeneralFieldType">List</td>
+                <td headers="hVariablesGeneralFieldSortingCategories hVariablesGeneralFieldMandatory">true</td>
+                <td headers="hVariablesGeneralFieldSortingCategories hVariablesGeneralFieldDefault"></td>
+                <td headers="hVariablesGeneralFieldSortingCategories hVariablesGeneralFieldDisplayType">ALL</td>
+                <td headers="hVariablesGeneralFieldSortingCategories hVariablesGeneralFieldConstraints">
+                    <ul>
+                        <li>Has a length of 255 chars.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesGeneralFieldSortingCategories hVariablesGeneralFieldRemarks">
+                    <ul>
+                        <li>This field is not unique and allows no null values.</li>
+                        <li>The list is represented by a single-valued dropdown list.</li>
+                        <li>Available entries: <ul><li>Descending (null)</li><li>Ascending (null)</li></ul></li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesGeneralFieldSortingForums" scope="row" headers="hVariablesGeneralFieldName">Sorting forums</th>
+                <td headers="hVariablesGeneralFieldSortingForums hVariablesGeneralFieldType">List</td>
+                <td headers="hVariablesGeneralFieldSortingForums hVariablesGeneralFieldMandatory">true</td>
+                <td headers="hVariablesGeneralFieldSortingForums hVariablesGeneralFieldDefault"></td>
+                <td headers="hVariablesGeneralFieldSortingForums hVariablesGeneralFieldDisplayType">ALL</td>
+                <td headers="hVariablesGeneralFieldSortingForums hVariablesGeneralFieldConstraints">
+                    <ul>
+                        <li>Has a length of 255 chars.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesGeneralFieldSortingForums hVariablesGeneralFieldRemarks">
+                    <ul>
+                        <li>This field is not unique and allows no null values.</li>
+                        <li>The list is represented by a single-valued dropdown list.</li>
+                        <li>Available entries: <ul><li>Descending (null)</li><li>Ascending (null)</li></ul></li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesGeneralFieldSortingPostings" scope="row" headers="hVariablesGeneralFieldName">Sorting postings</th>
+                <td headers="hVariablesGeneralFieldSortingPostings hVariablesGeneralFieldType">List</td>
+                <td headers="hVariablesGeneralFieldSortingPostings hVariablesGeneralFieldMandatory">true</td>
+                <td headers="hVariablesGeneralFieldSortingPostings hVariablesGeneralFieldDefault"></td>
+                <td headers="hVariablesGeneralFieldSortingPostings hVariablesGeneralFieldDisplayType">ALL</td>
+                <td headers="hVariablesGeneralFieldSortingPostings hVariablesGeneralFieldConstraints">
+                    <ul>
+                        <li>Has a length of 255 chars.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesGeneralFieldSortingPostings hVariablesGeneralFieldRemarks">
+                    <ul>
+                        <li>This field is not unique and allows no null values.</li>
+                        <li>The list is represented by a single-valued dropdown list.</li>
+                        <li>Available entries: <ul><li>Descending (null)</li><li>Ascending (null)</li></ul></li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesGeneralFieldStandardIcon" scope="row" headers="hVariablesGeneralFieldName">Standard icon</th>
+                <td headers="hVariablesGeneralFieldStandardIcon hVariablesGeneralFieldType">Upload</td>
+                <td headers="hVariablesGeneralFieldStandardIcon hVariablesGeneralFieldMandatory">true</td>
+                <td headers="hVariablesGeneralFieldStandardIcon hVariablesGeneralFieldDefault">images/icons/extrasmall/favorites.png</td>
+                <td headers="hVariablesGeneralFieldStandardIcon hVariablesGeneralFieldDisplayType">ALL</td>
+                <td headers="hVariablesGeneralFieldStandardIcon hVariablesGeneralFieldConstraints">
+                    <ul>
+                        <li>Has a length of 255 chars.</li>
+                        <li>Allowed file extensions are "gif, jpeg, jpg, png".</li>
+                        <li>Allowed mime types are "image/*".</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesGeneralFieldStandardIcon hVariablesGeneralFieldRemarks">
+                    <ul>
+                        <li>This icon will be used for ranks to show; for example a star. </li>
+                        <li>This field is not unique and allows no null values.</li>
+                        <li>Uploaded files are stored in the "standardicon" subfolder and keep their original file name which is extended by a counter if needed..</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesGeneralFieldSpecialIcon" scope="row" headers="hVariablesGeneralFieldName">Special icon</th>
+                <td headers="hVariablesGeneralFieldSpecialIcon hVariablesGeneralFieldType">Upload</td>
+                <td headers="hVariablesGeneralFieldSpecialIcon hVariablesGeneralFieldMandatory">true</td>
+                <td headers="hVariablesGeneralFieldSpecialIcon hVariablesGeneralFieldDefault">images/icons/extrasmall/package_favorite.png</td>
+                <td headers="hVariablesGeneralFieldSpecialIcon hVariablesGeneralFieldDisplayType">ALL</td>
+                <td headers="hVariablesGeneralFieldSpecialIcon hVariablesGeneralFieldConstraints">
+                    <ul>
+                        <li>Has a length of 255 chars.</li>
+                        <li>Allowed file extensions are "gif, jpeg, jpg, png".</li>
+                        <li>Allowed mime types are "image/*".</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesGeneralFieldSpecialIcon hVariablesGeneralFieldRemarks">
+                    <ul>
+                        <li>This icon will be used for special ranks to show; for example a heart. </li>
+                        <li>This field is not unique and allows no null values.</li>
+                        <li>Uploaded files are stored in the "specialicon" subfolder and keep their original file name which is extended by a counter if needed..</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h3><i class="fa fa-server"></i> Layout</h3>
+<p>Sort value: 2</p>
+<p>Composite: <i class="fa fa-times"></i>
+</p>
+<h4><i class="fa fa-bars"></i> Fields</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cVariablesLayoutFieldName" />
+            <col id="cVariablesLayoutFieldType" />
+            <col id="cVariablesLayoutFieldMandatory" />
+            <col id="cVariablesLayoutFieldDefault" />
+            <col id="cVariablesLayoutFieldDisplayType" />
+            <col id="cVariablesLayoutFieldConstraints" />
+            <col id="cVariablesLayoutFieldRemarks" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hVariablesLayoutFieldName" scope="col">Name</th>
+                <th id="hVariablesLayoutFieldType" scope="col">Type</th>
+                <th id="hVariablesLayoutFieldMandatory" scope="col">Mandatory</th>
+                <th id="hVariablesLayoutFieldDefault" scope="col">Default value</th>
+                <th id="hVariablesLayoutFieldDisplayType" scope="col">Display</th>
+                <th id="hVariablesLayoutFieldConstraints" scope="col">Constraints</th>
+                <th id="hVariablesLayoutFieldRemarks" scope="col">Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hVariablesLayoutFieldIconSet" scope="row" headers="hVariablesLayoutFieldName">Icon set</th>
+                <td headers="hVariablesLayoutFieldIconSet hVariablesLayoutFieldType">List</td>
+                <td headers="hVariablesLayoutFieldIconSet hVariablesLayoutFieldMandatory">true</td>
+                <td headers="hVariablesLayoutFieldIconSet hVariablesLayoutFieldDefault"></td>
+                <td headers="hVariablesLayoutFieldIconSet hVariablesLayoutFieldDisplayType">ALL</td>
+                <td headers="hVariablesLayoutFieldIconSet hVariablesLayoutFieldConstraints">
+                    <ul>
+                        <li>Has a length of 255 chars.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesLayoutFieldIconSet hVariablesLayoutFieldRemarks">
+                    <ul>
+                        <li>This field is not unique and allows no null values.</li>
+                        <li>The list is represented by a single-valued dropdown list.</li>
+                        <li>Available entries: <ul><li>1 (null)</li><li>2 (null)</li><li>3 (null)</li></ul></li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesLayoutFieldTemplate" scope="row" headers="hVariablesLayoutFieldName">Template</th>
+                <td headers="hVariablesLayoutFieldTemplate hVariablesLayoutFieldType">List</td>
+                <td headers="hVariablesLayoutFieldTemplate hVariablesLayoutFieldMandatory">true</td>
+                <td headers="hVariablesLayoutFieldTemplate hVariablesLayoutFieldDefault"></td>
+                <td headers="hVariablesLayoutFieldTemplate hVariablesLayoutFieldDisplayType">ALL</td>
+                <td headers="hVariablesLayoutFieldTemplate hVariablesLayoutFieldConstraints">
+                    <ul>
+                        <li>Has a length of 255 chars.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesLayoutFieldTemplate hVariablesLayoutFieldRemarks">
+                    <ul>
+                        <li>This field is not unique and allows no null values.</li>
+                        <li>The list is represented by a single-valued dropdown list.</li>
+                        <li>Available entries: <ul><li>Normal (null)</li><li>Jquery (null)</li></ul></li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesLayoutFieldShowStatisticInDetails" scope="row" headers="hVariablesLayoutFieldName">Show statistic in details</th>
+                <td headers="hVariablesLayoutFieldShowStatisticInDetails hVariablesLayoutFieldType">Boolean</td>
+                <td headers="hVariablesLayoutFieldShowStatisticInDetails hVariablesLayoutFieldMandatory">true</td>
+                <td headers="hVariablesLayoutFieldShowStatisticInDetails hVariablesLayoutFieldDefault">1</td>
+                <td headers="hVariablesLayoutFieldShowStatisticInDetails hVariablesLayoutFieldDisplayType">ALL</td>
+                <td headers="hVariablesLayoutFieldShowStatisticInDetails hVariablesLayoutFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hVariablesLayoutFieldShowStatisticInDetails hVariablesLayoutFieldRemarks">
+                    <ul>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesLayoutFieldShowStatisticOnBottom" scope="row" headers="hVariablesLayoutFieldName">Show statistic on bottom</th>
+                <td headers="hVariablesLayoutFieldShowStatisticOnBottom hVariablesLayoutFieldType">Boolean</td>
+                <td headers="hVariablesLayoutFieldShowStatisticOnBottom hVariablesLayoutFieldMandatory">true</td>
+                <td headers="hVariablesLayoutFieldShowStatisticOnBottom hVariablesLayoutFieldDefault"></td>
+                <td headers="hVariablesLayoutFieldShowStatisticOnBottom hVariablesLayoutFieldDisplayType">ALL</td>
+                <td headers="hVariablesLayoutFieldShowStatisticOnBottom hVariablesLayoutFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hVariablesLayoutFieldShowStatisticOnBottom hVariablesLayoutFieldRemarks">
+                    <ul>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 <h3><i class="fa fa-server"></i> Moderation</h3>
 <p>Here you can assign moderation groups for enhanced workflow actions.</p>
-<p>Sort value: 1</p>
+<p>Sort value: 3</p>
 <p>Composite: <i class="fa fa-times"></i>
 </p>
 <h4><i class="fa fa-bars"></i> Fields</h4>
@@ -2682,7 +3067,7 @@
 </div>
 <h3><i class="fa fa-server"></i> List views</h3>
 <p>Here you can configure parameters for list views.</p>
-<p>Sort value: 2</p>
+<p>Sort value: 4</p>
 <p>Composite: <i class="fa fa-times"></i>
 </p>
 <h4><i class="fa fa-bars"></i> Fields</h4>
@@ -2907,7 +3292,7 @@
 </div>
 <h3><i class="fa fa-server"></i> Images</h3>
 <p>Here you can define several options for image handling.</p>
-<p>Sort value: 3</p>
+<p>Sort value: 5</p>
 <p>Composite: <i class="fa fa-times"></i>
 </p>
 <h4><i class="fa fa-bars"></i> Fields</h4>
@@ -3663,7 +4048,7 @@
 </div>
 <h3><i class="fa fa-server"></i> Integration</h3>
 <p>These options allow you to configure integration aspects.</p>
-<p>Sort value: 4</p>
+<p>Sort value: 6</p>
 <p>Composite: <i class="fa fa-times"></i>
 </p>
 <h4><i class="fa fa-bars"></i> Fields</h4>

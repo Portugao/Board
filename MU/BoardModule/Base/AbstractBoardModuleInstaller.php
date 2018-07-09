@@ -63,6 +63,24 @@ abstract class AbstractBoardModuleInstaller extends AbstractExtensionInstaller
         }
     
         // set up all our vars with initial values
+        $this->setVar('uploadImages', false);
+        $this->setVar('allowedSizeOfImages', '200k');
+        $this->setVar('numberImages', '1');
+        $this->setVar('uploadFiles', false);
+        $this->setVar('allowedSizeOfFiles', '');
+        $this->setVar('numberFiles', '1');
+        $this->setVar('editPostings', false);
+        $this->setVar('editTime', 6);
+        $this->setVar('latestPostings', 24);
+        $this->setVar('sortingCategories', 'descending');
+        $this->setVar('sortingForums', 'descending');
+        $this->setVar('sortingPostings', 'descending');
+        $this->setVar('standardIcon', null);
+        $this->setVar('specialIcon', null);
+        $this->setVar('iconSet', '1');
+        $this->setVar('template', 'normal');
+        $this->setVar('showStatisticInDetails', false);
+        $this->setVar('showStatisticOnBottom', false);
         $this->setVar('moderationGroupForPostings', 2);
         $this->setVar('categoryEntriesPerPage', 10);
         $this->setVar('linkOwnCategoriesOnAccountPage', true);

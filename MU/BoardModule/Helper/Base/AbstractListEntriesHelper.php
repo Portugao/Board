@@ -174,6 +174,27 @@ abstract class AbstractListEntriesHelper
                 break;
             case 'appSettings':
                 switch ($fieldName) {
+                    case 'numberImages':
+                        $result = false;
+                        break;
+                    case 'numberFiles':
+                        $result = false;
+                        break;
+                    case 'sortingCategories':
+                        $result = false;
+                        break;
+                    case 'sortingForums':
+                        $result = false;
+                        break;
+                    case 'sortingPostings':
+                        $result = false;
+                        break;
+                    case 'iconSet':
+                        $result = false;
+                        break;
+                    case 'template':
+                        $result = false;
+                        break;
                     case 'thumbnailModePostingFirstImage':
                         $result = false;
                         break;
@@ -257,6 +278,27 @@ abstract class AbstractListEntriesHelper
                 break;
             case 'appSettings':
                 switch ($fieldName) {
+                    case 'numberImages':
+                        $entries = $this->getNumberImagesEntriesForAppSettings();
+                        break;
+                    case 'numberFiles':
+                        $entries = $this->getNumberFilesEntriesForAppSettings();
+                        break;
+                    case 'sortingCategories':
+                        $entries = $this->getSortingCategoriesEntriesForAppSettings();
+                        break;
+                    case 'sortingForums':
+                        $entries = $this->getSortingForumsEntriesForAppSettings();
+                        break;
+                    case 'sortingPostings':
+                        $entries = $this->getSortingPostingsEntriesForAppSettings();
+                        break;
+                    case 'iconSet':
+                        $entries = $this->getIconSetEntriesForAppSettings();
+                        break;
+                    case 'template':
+                        $entries = $this->getTemplateEntriesForAppSettings();
+                        break;
                     case 'thumbnailModePostingFirstImage':
                         $entries = $this->getThumbnailModePostingFirstImageEntriesForAppSettings();
                         break;
@@ -527,6 +569,209 @@ abstract class AbstractListEntriesHelper
             'value'   => '!trashed',
             'text'    => $this->__('All except trashed'),
             'title'   => $this->__('Shows all items except these which are trashed'),
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'number images' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getNumberImagesEntriesForAppSettings()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => '1',
+            'text'    => $this->__('1'),
+            'title'   => '',
+            'image'   => '',
+            'default' => true
+        ];
+        $states[] = [
+            'value'   => '2',
+            'text'    => $this->__('2'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '3',
+            'text'    => $this->__('3'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'number files' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getNumberFilesEntriesForAppSettings()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => '1',
+            'text'    => $this->__('1'),
+            'title'   => '',
+            'image'   => '',
+            'default' => true
+        ];
+        $states[] = [
+            'value'   => '2',
+            'text'    => $this->__('2'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '3',
+            'text'    => $this->__('3'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'sorting categories' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getSortingCategoriesEntriesForAppSettings()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'descending',
+            'text'    => $this->__('Descending'),
+            'title'   => '',
+            'image'   => '',
+            'default' => true
+        ];
+        $states[] = [
+            'value'   => 'ascending',
+            'text'    => $this->__('Ascending'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'sorting forums' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getSortingForumsEntriesForAppSettings()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'descending',
+            'text'    => $this->__('Descending'),
+            'title'   => '',
+            'image'   => '',
+            'default' => true
+        ];
+        $states[] = [
+            'value'   => 'ascending',
+            'text'    => $this->__('Ascending'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'sorting postings' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getSortingPostingsEntriesForAppSettings()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'descending',
+            'text'    => $this->__('Descending'),
+            'title'   => '',
+            'image'   => '',
+            'default' => true
+        ];
+        $states[] = [
+            'value'   => 'ascending',
+            'text'    => $this->__('Ascending'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'icon set' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getIconSetEntriesForAppSettings()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => '1',
+            'text'    => $this->__('1'),
+            'title'   => '',
+            'image'   => '',
+            'default' => true
+        ];
+        $states[] = [
+            'value'   => '2',
+            'text'    => $this->__('2'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '3',
+            'text'    => $this->__('3'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'template' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getTemplateEntriesForAppSettings()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'normal',
+            'text'    => $this->__('Normal'),
+            'title'   => '',
+            'image'   => '',
+            'default' => true
+        ];
+        $states[] = [
+            'value'   => 'jquery',
+            'text'    => $this->__('Jquery'),
+            'title'   => '',
             'image'   => '',
             'default' => false
         ];

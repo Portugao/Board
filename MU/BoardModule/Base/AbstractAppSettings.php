@@ -12,6 +12,7 @@
 
 namespace MU\BoardModule\Base;
 
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\GroupsModule\Constant as GroupsConstant;
@@ -32,6 +33,186 @@ abstract class AbstractAppSettings
      * @var GroupRepositoryInterface
      */
     protected $groupRepository;
+    
+    /**
+     * @Assert\IsTrue(message="This option is mandatory.")
+     * @Assert\Type(type="bool")
+     * @var boolean $uploadImages
+     */
+    protected $uploadImages = false;
+    
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(min="0", max="2000")
+     * @var text $allowedSizeOfImages
+     */
+    protected $allowedSizeOfImages = '200k';
+    
+    /**
+     * @Assert\NotBlank()
+     * @BoardAssert\ListEntry(entityName="appSettings", propertyName="numberImages", multiple=false)
+     * @var string $numberImages
+     */
+    protected $numberImages = '1';
+    
+    /**
+     * @Assert\IsTrue(message="This option is mandatory.")
+     * @Assert\Type(type="bool")
+     * @var boolean $uploadFiles
+     */
+    protected $uploadFiles = false;
+    
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(min="0", max="2000")
+     * @var text $allowedSizeOfFiles
+     */
+    protected $allowedSizeOfFiles = '';
+    
+    /**
+     * @Assert\NotBlank()
+     * @BoardAssert\ListEntry(entityName="appSettings", propertyName="numberFiles", multiple=false)
+     * @var string $numberFiles
+     */
+    protected $numberFiles = '1';
+    
+    /**
+     * @Assert\IsTrue(message="This option is mandatory.")
+     * @Assert\Type(type="bool")
+     * @var boolean $editPostings
+     */
+    protected $editPostings = false;
+    
+    /**
+     * Time of editing allowed in hours.
+     *
+     * @Assert\Type(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\NotEqualTo(value=0)
+     * @Assert\LessThan(value=100000000000)
+     * @var integer $editTime
+     */
+    protected $editTime = 6;
+    
+    /**
+     * In Hours.
+     *
+     * @Assert\Type(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\NotEqualTo(value=0)
+     * @Assert\LessThan(value=100000000000)
+     * @var integer $latestPostings
+     */
+    protected $latestPostings = 24;
+    
+    /**
+     * @Assert\NotBlank()
+     * @BoardAssert\ListEntry(entityName="appSettings", propertyName="sortingCategories", multiple=false)
+     * @var string $sortingCategories
+     */
+    protected $sortingCategories = 'descending';
+    
+    /**
+     * @Assert\NotBlank()
+     * @BoardAssert\ListEntry(entityName="appSettings", propertyName="sortingForums", multiple=false)
+     * @var string $sortingForums
+     */
+    protected $sortingForums = 'descending';
+    
+    /**
+     * @Assert\NotBlank()
+     * @BoardAssert\ListEntry(entityName="appSettings", propertyName="sortingPostings", multiple=false)
+     * @var string $sortingPostings
+     */
+    protected $sortingPostings = 'descending';
+    
+    /**
+     * Standard icon meta data array.
+     *
+     * @Assert\Type(type="array")
+     * @var array $standardIconMeta
+     */
+    protected $standardIconMeta = [];
+    
+    /**
+     * This icon will be used for ranks to show; for example a star.
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(min="0", max="255")
+     * @Assert\File(
+     *    mimeTypes = {"image/*"}
+     * )
+     * @Assert\Image(
+     * )
+     * @var string $standardIcon
+     */
+    protected $standardIcon = null;
+    
+    /**
+     * Full standard icon path as url.
+     *
+     * @Assert\Type(type="string")
+     * @var string $standardIconUrl
+     */
+    protected $standardIconUrl = '';
+    
+    /**
+     * Special icon meta data array.
+     *
+     * @Assert\Type(type="array")
+     * @var array $specialIconMeta
+     */
+    protected $specialIconMeta = [];
+    
+    /**
+     * This icon will be used for special ranks to show; for example a heart.
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(min="0", max="255")
+     * @Assert\File(
+     *    mimeTypes = {"image/*"}
+     * )
+     * @Assert\Image(
+     * )
+     * @var string $specialIcon
+     */
+    protected $specialIcon = null;
+    
+    /**
+     * Full special icon path as url.
+     *
+     * @Assert\Type(type="string")
+     * @var string $specialIconUrl
+     */
+    protected $specialIconUrl = '';
+    
+    /**
+     * @Assert\NotBlank()
+     * @BoardAssert\ListEntry(entityName="appSettings", propertyName="iconSet", multiple=false)
+     * @var string $iconSet
+     */
+    protected $iconSet = '1';
+    
+    /**
+     * @Assert\NotBlank()
+     * @BoardAssert\ListEntry(entityName="appSettings", propertyName="template", multiple=false)
+     * @var string $template
+     */
+    protected $template = 'normal';
+    
+    /**
+     * @Assert\IsTrue(message="This option is mandatory.")
+     * @Assert\Type(type="bool")
+     * @var boolean $showStatisticInDetails
+     */
+    protected $showStatisticInDetails = false;
+    
+    /**
+     * @Assert\IsTrue(message="This option is mandatory.")
+     * @Assert\Type(type="bool")
+     * @var boolean $showStatisticOnBottom
+     */
+    protected $showStatisticOnBottom = false;
     
     /**
      * Used to determine moderator user accounts for sending email notifications.
@@ -600,6 +781,534 @@ abstract class AbstractAppSettings
         $this->groupRepository = $groupRepository;
     
         $this->load();
+    }
+    
+    /**
+     * Returns the upload images.
+     *
+     * @return boolean
+     */
+    public function getUploadImages()
+    {
+        return $this->uploadImages;
+    }
+    
+    /**
+     * Sets the upload images.
+     *
+     * @param boolean $uploadImages
+     *
+     * @return void
+     */
+    public function setUploadImages($uploadImages)
+    {
+        if (boolval($this->uploadImages) !== boolval($uploadImages)) {
+            $this->uploadImages = boolval($uploadImages);
+        }
+    }
+    
+    /**
+     * Returns the allowed size of images.
+     *
+     * @return text
+     */
+    public function getAllowedSizeOfImages()
+    {
+        return $this->allowedSizeOfImages;
+    }
+    
+    /**
+     * Sets the allowed size of images.
+     *
+     * @param text $allowedSizeOfImages
+     *
+     * @return void
+     */
+    public function setAllowedSizeOfImages($allowedSizeOfImages)
+    {
+        if ($this->allowedSizeOfImages !== $allowedSizeOfImages) {
+            $this->allowedSizeOfImages = isset($allowedSizeOfImages) ? $allowedSizeOfImages : '';
+        }
+    }
+    
+    /**
+     * Returns the number images.
+     *
+     * @return string
+     */
+    public function getNumberImages()
+    {
+        return $this->numberImages;
+    }
+    
+    /**
+     * Sets the number images.
+     *
+     * @param string $numberImages
+     *
+     * @return void
+     */
+    public function setNumberImages($numberImages)
+    {
+        if ($this->numberImages !== $numberImages) {
+            $this->numberImages = isset($numberImages) ? $numberImages : '';
+        }
+    }
+    
+    /**
+     * Returns the upload files.
+     *
+     * @return boolean
+     */
+    public function getUploadFiles()
+    {
+        return $this->uploadFiles;
+    }
+    
+    /**
+     * Sets the upload files.
+     *
+     * @param boolean $uploadFiles
+     *
+     * @return void
+     */
+    public function setUploadFiles($uploadFiles)
+    {
+        if (boolval($this->uploadFiles) !== boolval($uploadFiles)) {
+            $this->uploadFiles = boolval($uploadFiles);
+        }
+    }
+    
+    /**
+     * Returns the allowed size of files.
+     *
+     * @return text
+     */
+    public function getAllowedSizeOfFiles()
+    {
+        return $this->allowedSizeOfFiles;
+    }
+    
+    /**
+     * Sets the allowed size of files.
+     *
+     * @param text $allowedSizeOfFiles
+     *
+     * @return void
+     */
+    public function setAllowedSizeOfFiles($allowedSizeOfFiles)
+    {
+        if ($this->allowedSizeOfFiles !== $allowedSizeOfFiles) {
+            $this->allowedSizeOfFiles = isset($allowedSizeOfFiles) ? $allowedSizeOfFiles : '';
+        }
+    }
+    
+    /**
+     * Returns the number files.
+     *
+     * @return string
+     */
+    public function getNumberFiles()
+    {
+        return $this->numberFiles;
+    }
+    
+    /**
+     * Sets the number files.
+     *
+     * @param string $numberFiles
+     *
+     * @return void
+     */
+    public function setNumberFiles($numberFiles)
+    {
+        if ($this->numberFiles !== $numberFiles) {
+            $this->numberFiles = isset($numberFiles) ? $numberFiles : '';
+        }
+    }
+    
+    /**
+     * Returns the edit postings.
+     *
+     * @return boolean
+     */
+    public function getEditPostings()
+    {
+        return $this->editPostings;
+    }
+    
+    /**
+     * Sets the edit postings.
+     *
+     * @param boolean $editPostings
+     *
+     * @return void
+     */
+    public function setEditPostings($editPostings)
+    {
+        if (boolval($this->editPostings) !== boolval($editPostings)) {
+            $this->editPostings = boolval($editPostings);
+        }
+    }
+    
+    /**
+     * Returns the edit time.
+     *
+     * @return integer
+     */
+    public function getEditTime()
+    {
+        return $this->editTime;
+    }
+    
+    /**
+     * Sets the edit time.
+     *
+     * @param integer $editTime
+     *
+     * @return void
+     */
+    public function setEditTime($editTime)
+    {
+        if (intval($this->editTime) !== intval($editTime)) {
+            $this->editTime = intval($editTime);
+        }
+    }
+    
+    /**
+     * Returns the latest postings.
+     *
+     * @return integer
+     */
+    public function getLatestPostings()
+    {
+        return $this->latestPostings;
+    }
+    
+    /**
+     * Sets the latest postings.
+     *
+     * @param integer $latestPostings
+     *
+     * @return void
+     */
+    public function setLatestPostings($latestPostings)
+    {
+        if (intval($this->latestPostings) !== intval($latestPostings)) {
+            $this->latestPostings = intval($latestPostings);
+        }
+    }
+    
+    /**
+     * Returns the sorting categories.
+     *
+     * @return string
+     */
+    public function getSortingCategories()
+    {
+        return $this->sortingCategories;
+    }
+    
+    /**
+     * Sets the sorting categories.
+     *
+     * @param string $sortingCategories
+     *
+     * @return void
+     */
+    public function setSortingCategories($sortingCategories)
+    {
+        if ($this->sortingCategories !== $sortingCategories) {
+            $this->sortingCategories = isset($sortingCategories) ? $sortingCategories : '';
+        }
+    }
+    
+    /**
+     * Returns the sorting forums.
+     *
+     * @return string
+     */
+    public function getSortingForums()
+    {
+        return $this->sortingForums;
+    }
+    
+    /**
+     * Sets the sorting forums.
+     *
+     * @param string $sortingForums
+     *
+     * @return void
+     */
+    public function setSortingForums($sortingForums)
+    {
+        if ($this->sortingForums !== $sortingForums) {
+            $this->sortingForums = isset($sortingForums) ? $sortingForums : '';
+        }
+    }
+    
+    /**
+     * Returns the sorting postings.
+     *
+     * @return string
+     */
+    public function getSortingPostings()
+    {
+        return $this->sortingPostings;
+    }
+    
+    /**
+     * Sets the sorting postings.
+     *
+     * @param string $sortingPostings
+     *
+     * @return void
+     */
+    public function setSortingPostings($sortingPostings)
+    {
+        if ($this->sortingPostings !== $sortingPostings) {
+            $this->sortingPostings = isset($sortingPostings) ? $sortingPostings : '';
+        }
+    }
+    
+    /**
+     * Returns the standard icon.
+     *
+     * @return string
+     */
+    public function getStandardIcon()
+    {
+        return $this->standardIcon;
+    }
+    
+    /**
+     * Sets the standard icon.
+     *
+     * @param string $standardIcon
+     *
+     * @return void
+     */
+    public function setStandardIcon($standardIcon)
+    {
+        if ($this->standardIcon !== $standardIcon) {
+            $this->standardIcon = isset($standardIcon) ? $standardIcon : '';
+        }
+    }
+    
+    /**
+     * Returns the standard icon url.
+     *
+     * @return string
+     */
+    public function getStandardIconUrl()
+    {
+        return $this->standardIconUrl;
+    }
+    
+    /**
+     * Sets the standard icon url.
+     *
+     * @param string $standardIconUrl
+     *
+     * @return void
+     */
+    public function setStandardIconUrl($standardIconUrl)
+    {
+        if ($this->standardIconUrl !== $standardIconUrl) {
+            $this->standardIconUrl = isset($standardIconUrl) ? $standardIconUrl : '';
+        }
+    }
+    
+    /**
+     * Returns the standard icon meta.
+     *
+     * @return array
+     */
+    public function getStandardIconMeta()
+    {
+        return $this->standardIconMeta;
+    }
+    
+    /**
+     * Sets the standard icon meta.
+     *
+     * @param array $standardIconMeta
+     *
+     * @return void
+     */
+    public function setStandardIconMeta($standardIconMeta = [])
+    {
+        if ($this->standardIconMeta !== $standardIconMeta) {
+            $this->standardIconMeta = isset($standardIconMeta) ? $standardIconMeta : '';
+        }
+    }
+    
+    /**
+     * Returns the special icon.
+     *
+     * @return string
+     */
+    public function getSpecialIcon()
+    {
+        return $this->specialIcon;
+    }
+    
+    /**
+     * Sets the special icon.
+     *
+     * @param string $specialIcon
+     *
+     * @return void
+     */
+    public function setSpecialIcon($specialIcon)
+    {
+        if ($this->specialIcon !== $specialIcon) {
+            $this->specialIcon = isset($specialIcon) ? $specialIcon : '';
+        }
+    }
+    
+    /**
+     * Returns the special icon url.
+     *
+     * @return string
+     */
+    public function getSpecialIconUrl()
+    {
+        return $this->specialIconUrl;
+    }
+    
+    /**
+     * Sets the special icon url.
+     *
+     * @param string $specialIconUrl
+     *
+     * @return void
+     */
+    public function setSpecialIconUrl($specialIconUrl)
+    {
+        if ($this->specialIconUrl !== $specialIconUrl) {
+            $this->specialIconUrl = isset($specialIconUrl) ? $specialIconUrl : '';
+        }
+    }
+    
+    /**
+     * Returns the special icon meta.
+     *
+     * @return array
+     */
+    public function getSpecialIconMeta()
+    {
+        return $this->specialIconMeta;
+    }
+    
+    /**
+     * Sets the special icon meta.
+     *
+     * @param array $specialIconMeta
+     *
+     * @return void
+     */
+    public function setSpecialIconMeta($specialIconMeta = [])
+    {
+        if ($this->specialIconMeta !== $specialIconMeta) {
+            $this->specialIconMeta = isset($specialIconMeta) ? $specialIconMeta : '';
+        }
+    }
+    
+    /**
+     * Returns the icon set.
+     *
+     * @return string
+     */
+    public function getIconSet()
+    {
+        return $this->iconSet;
+    }
+    
+    /**
+     * Sets the icon set.
+     *
+     * @param string $iconSet
+     *
+     * @return void
+     */
+    public function setIconSet($iconSet)
+    {
+        if ($this->iconSet !== $iconSet) {
+            $this->iconSet = isset($iconSet) ? $iconSet : '';
+        }
+    }
+    
+    /**
+     * Returns the template.
+     *
+     * @return string
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+    
+    /**
+     * Sets the template.
+     *
+     * @param string $template
+     *
+     * @return void
+     */
+    public function setTemplate($template)
+    {
+        if ($this->template !== $template) {
+            $this->template = isset($template) ? $template : '';
+        }
+    }
+    
+    /**
+     * Returns the show statistic in details.
+     *
+     * @return boolean
+     */
+    public function getShowStatisticInDetails()
+    {
+        return $this->showStatisticInDetails;
+    }
+    
+    /**
+     * Sets the show statistic in details.
+     *
+     * @param boolean $showStatisticInDetails
+     *
+     * @return void
+     */
+    public function setShowStatisticInDetails($showStatisticInDetails)
+    {
+        if (boolval($this->showStatisticInDetails) !== boolval($showStatisticInDetails)) {
+            $this->showStatisticInDetails = boolval($showStatisticInDetails);
+        }
+    }
+    
+    /**
+     * Returns the show statistic on bottom.
+     *
+     * @return boolean
+     */
+    public function getShowStatisticOnBottom()
+    {
+        return $this->showStatisticOnBottom;
+    }
+    
+    /**
+     * Sets the show statistic on bottom.
+     *
+     * @param boolean $showStatisticOnBottom
+     *
+     * @return void
+     */
+    public function setShowStatisticOnBottom($showStatisticOnBottom)
+    {
+        if (boolval($this->showStatisticOnBottom) !== boolval($showStatisticOnBottom)) {
+            $this->showStatisticOnBottom = boolval($showStatisticOnBottom);
+        }
     }
     
     /**
@@ -1882,6 +2591,60 @@ abstract class AbstractAppSettings
     {
         $moduleVars = $this->variableApi->getAll('MUBoardModule');
     
+        if (isset($moduleVars['uploadImages'])) {
+            $this->setUploadImages($moduleVars['uploadImages']);
+        }
+        if (isset($moduleVars['allowedSizeOfImages'])) {
+            $this->setAllowedSizeOfImages($moduleVars['allowedSizeOfImages']);
+        }
+        if (isset($moduleVars['numberImages'])) {
+            $this->setNumberImages($moduleVars['numberImages']);
+        }
+        if (isset($moduleVars['uploadFiles'])) {
+            $this->setUploadFiles($moduleVars['uploadFiles']);
+        }
+        if (isset($moduleVars['allowedSizeOfFiles'])) {
+            $this->setAllowedSizeOfFiles($moduleVars['allowedSizeOfFiles']);
+        }
+        if (isset($moduleVars['numberFiles'])) {
+            $this->setNumberFiles($moduleVars['numberFiles']);
+        }
+        if (isset($moduleVars['editPostings'])) {
+            $this->setEditPostings($moduleVars['editPostings']);
+        }
+        if (isset($moduleVars['editTime'])) {
+            $this->setEditTime($moduleVars['editTime']);
+        }
+        if (isset($moduleVars['latestPostings'])) {
+            $this->setLatestPostings($moduleVars['latestPostings']);
+        }
+        if (isset($moduleVars['sortingCategories'])) {
+            $this->setSortingCategories($moduleVars['sortingCategories']);
+        }
+        if (isset($moduleVars['sortingForums'])) {
+            $this->setSortingForums($moduleVars['sortingForums']);
+        }
+        if (isset($moduleVars['sortingPostings'])) {
+            $this->setSortingPostings($moduleVars['sortingPostings']);
+        }
+        if (isset($moduleVars['standardIcon'])) {
+            $this->setStandardIcon($moduleVars['standardIcon']);
+        }
+        if (isset($moduleVars['specialIcon'])) {
+            $this->setSpecialIcon($moduleVars['specialIcon']);
+        }
+        if (isset($moduleVars['iconSet'])) {
+            $this->setIconSet($moduleVars['iconSet']);
+        }
+        if (isset($moduleVars['template'])) {
+            $this->setTemplate($moduleVars['template']);
+        }
+        if (isset($moduleVars['showStatisticInDetails'])) {
+            $this->setShowStatisticInDetails($moduleVars['showStatisticInDetails']);
+        }
+        if (isset($moduleVars['showStatisticOnBottom'])) {
+            $this->setShowStatisticOnBottom($moduleVars['showStatisticOnBottom']);
+        }
         if (isset($moduleVars['moderationGroupForPostings'])) {
             $this->setModerationGroupForPostings($moduleVars['moderationGroupForPostings']);
         }
@@ -2062,6 +2825,24 @@ abstract class AbstractAppSettings
         $group = is_object($group) ? $group->getGid() : intval($group);
         $this->setModerationGroupForPostings($group);
     
+        $this->variableApi->set('MUBoardModule', 'uploadImages', $this->getUploadImages());
+        $this->variableApi->set('MUBoardModule', 'allowedSizeOfImages', $this->getAllowedSizeOfImages());
+        $this->variableApi->set('MUBoardModule', 'numberImages', $this->getNumberImages());
+        $this->variableApi->set('MUBoardModule', 'uploadFiles', $this->getUploadFiles());
+        $this->variableApi->set('MUBoardModule', 'allowedSizeOfFiles', $this->getAllowedSizeOfFiles());
+        $this->variableApi->set('MUBoardModule', 'numberFiles', $this->getNumberFiles());
+        $this->variableApi->set('MUBoardModule', 'editPostings', $this->getEditPostings());
+        $this->variableApi->set('MUBoardModule', 'editTime', $this->getEditTime());
+        $this->variableApi->set('MUBoardModule', 'latestPostings', $this->getLatestPostings());
+        $this->variableApi->set('MUBoardModule', 'sortingCategories', $this->getSortingCategories());
+        $this->variableApi->set('MUBoardModule', 'sortingForums', $this->getSortingForums());
+        $this->variableApi->set('MUBoardModule', 'sortingPostings', $this->getSortingPostings());
+        $this->variableApi->set('MUBoardModule', 'standardIcon', $this->getStandardIcon());
+        $this->variableApi->set('MUBoardModule', 'specialIcon', $this->getSpecialIcon());
+        $this->variableApi->set('MUBoardModule', 'iconSet', $this->getIconSet());
+        $this->variableApi->set('MUBoardModule', 'template', $this->getTemplate());
+        $this->variableApi->set('MUBoardModule', 'showStatisticInDetails', $this->getShowStatisticInDetails());
+        $this->variableApi->set('MUBoardModule', 'showStatisticOnBottom', $this->getShowStatisticOnBottom());
         $this->variableApi->set('MUBoardModule', 'moderationGroupForPostings', $this->getModerationGroupForPostings());
         $this->variableApi->set('MUBoardModule', 'categoryEntriesPerPage', $this->getCategoryEntriesPerPage());
         $this->variableApi->set('MUBoardModule', 'linkOwnCategoriesOnAccountPage', $this->getLinkOwnCategoriesOnAccountPage());

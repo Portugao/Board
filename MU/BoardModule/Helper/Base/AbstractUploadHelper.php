@@ -400,6 +400,16 @@ abstract class AbstractUploadHelper
             case 'rank':
                 $allowedExtensions = ['gif', 'jpeg', 'jpg', 'png'];
                     break;
+            case 'appSettings':
+                switch ($fieldName) {
+                    case 'standardIcon':
+                        $allowedExtensions = ['gif', 'jpeg', 'jpg', 'png'];
+                        break;
+                    case 'specialIcon':
+                        $allowedExtensions = ['gif', 'jpeg', 'jpg', 'png'];
+                        break;
+                }
+                    break;
         }
     
         if (count($allowedExtensions) > 0) {
@@ -456,6 +466,16 @@ abstract class AbstractUploadHelper
                     break;
             case 'rank':
                 $namingScheme = 0;
+                    break;
+            case 'appSettings':
+                switch ($fieldName) {
+                    case 'standardIcon':
+                        $namingScheme = 0;
+                        break;
+                    case 'specialIcon':
+                        $namingScheme = 0;
+                        break;
+                }
                     break;
         }
     
@@ -581,6 +601,17 @@ abstract class AbstractUploadHelper
             case 'rank':
                 $basePath .= 'ranks/uploadimage/';
                 break;
+            case 'appSettings':
+                $basePath .= 'appSettings/';
+                switch ($fieldName) {
+                    case 'standardIcon':
+                        $basePath .= 'standardicon/';
+                        break;
+                    case 'specialIcon':
+                        $basePath .= 'specialicon/';
+                        break;
+                }
+                break;
             default:
                 throw new Exception($this->__('Error! Invalid object type received.'));
         }
@@ -644,6 +675,8 @@ abstract class AbstractUploadHelper
         $result &= $this->checkAndCreateUploadFolder('posting', 'thirdFile', 'pdf');
     
         $result &= $this->checkAndCreateUploadFolder('rank', 'uploadImage', 'gif, jpeg, jpg, png');
+        $result &= $this->checkAndCreateUploadFolder('appSettings', 'standardIcon', 'gif, jpeg, jpg, png');
+        $result &= $this->checkAndCreateUploadFolder('appSettings', 'specialIcon', 'gif, jpeg, jpg, png');
     
         return $result;
     }

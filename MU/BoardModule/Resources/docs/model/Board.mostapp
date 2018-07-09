@@ -240,4 +240,96 @@ application "Board" targets ZK20 {
             targetAlias "user"
         }
     }
-}
+    variables {
+        varContainer "General" {
+            sortOrder 1
+            fields {
+                boolean "uploadImages" {
+                    defaultValue "1"
+                },
+                text "allowedSizeOfImages" {
+                    defaultValue "200k"
+                },
+                list "numberImages" {
+                    items {
+                        default listItem "1",
+                        listItem "2",
+                        listItem "3"
+                    }
+                },
+                boolean "uploadFiles" {
+                    defaultValue "1"
+                },
+                text "allowedSizeOfFiles",
+                list "numberFiles" {
+                    items {
+                       default  listItem "1",
+                        listItem "2",
+                        listItem "3"
+                    }
+                },
+                boolean "editPostings" {
+                    defaultValue "1"
+                },
+                integer "editTime" {
+                    documentation "Time of editing allowed in hours."
+                    defaultValue "6"
+                },
+                integer "latestPostings" {
+                    documentation "In Hours."
+                    defaultValue "24"
+                },
+                list "sortingCategories" {
+                    items {
+                        default listItem  "descending",
+                        listItem "ascending"
+                    }
+                },
+                list "sortingForums" {
+                    items {
+                       default  listItem "descending",
+                        listItem "ascending"
+                    }
+                },
+                list "sortingPostings" {
+                    items {
+                        default listItem "descending",
+                        listItem "ascending"
+                    }
+                },
+                upload "standardIcon" {
+                    documentation "This icon will be used for ranks to show; for example a star."
+                    defaultValue "images/icons/extrasmall/favorites.png"
+                },
+                upload "specialIcon" {
+                    documentation "This icon will be used for special ranks to show; for example a heart."
+                    defaultValue "images/icons/extrasmall/package_favorite.png"
+                }
+                }
+                },
+                
+varContainer  "Layout" {
+    sortOrder 2
+            fields {
+                list "iconSet" {
+                    items {
+                       default  listItem "1",
+                        listItem "2",
+                        listItem "3"
+                    }
+                },
+                list "template" {
+                    items {
+                       default listItem  "normal",
+                        listItem "jquery"
+                    }
+                },
+                boolean "showStatisticInDetails" {
+                    defaultValue "1"
+                },
+                boolean "showStatisticOnBottom"
+            }
+        }
+    }
+ }
+            
