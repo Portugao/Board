@@ -1,1 +1,106 @@
 /* this file is intended for custom styles */
+
+/*********************OWN*************************/
+
+.category-view-header,
+.category-display-header,
+.forum-display-header,
+.posting-display-header {
+	background: #eee;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-color: #676767;
+	padding-top: 10px;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-bottom: 6px;
+	float: left;
+    width: 100%;
+}
+
+.posting-display-header {
+    float: left;
+    width: 100%;
+    border-bottom: 5px solid #fedefe;
+}
+
+.category-view-content,
+.category-display-content,
+.forum-display-content,
+.posting-display-content {
+	background: #ddd;
+	border-radius: 5px;
+	float: left;
+	width: 100%;
+}
+
+#forum-load-indicator {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.children-include-header {
+	padding: 5px;
+    border-bottom: 1px solid #bbb;
+    font-size: 0.9em;
+}
+
+.children-include-user,
+.children-include-content {
+	padding: 5px;
+	float: left;
+	height: 100%;
+}
+
+.children-include-user {
+	text-align: center;
+	border-right: 1px solid #bbb;
+	width: 100%;
+	font-size: 0.9em;
+}
+
+#posting-title {
+	
+}
+
+.state-green,
+.state-red {
+	cursor: pointer;
+}
+
+.state-green {
+	color: #22dd33;
+}
+.state-red {
+	color: #ff2233;
+}
+
+.newstate {
+	font-size: 0.8em;
+}
+
+.last-posting {
+	font-size: 0.85em;
+	display: block;
+	width: 100%;
+	float: left;
+}
+
+.posting-avatar {
+	float: left;
+	width: 25px;
+}
+
+.posting-avatar img {
+	padding: 1px;
+	margin: 2px 5px 0 0;
+}
+
+.children {
+	border-bottom: 3px solid #c0c0c0;
+}
+
+.move-forum .fa-bars {
+	cursor: move;
+}
