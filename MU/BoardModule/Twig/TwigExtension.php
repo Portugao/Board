@@ -20,6 +20,9 @@ use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use MU\BoardModule\Helper\ListEntriesHelper;
 use MU\BoardModule\Helper\EntityDisplayHelper;
 use MU\BoardModule\Helper\WorkflowHelper;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 
 /**
  * Twig extension implementation class.
@@ -82,7 +85,7 @@ class TwigExtension extends AbstractTwigExtension
     {
     	$this->request->attributes->set('_zkModule', 'MUBoardModule');
     
-    	$ref = new ControllerReference('MUBoardModule:Comment:edit');
+    	$ref = new ControllerReference('MUBoardModule:Posting:edit');
     
     	return $this->fragmentHandler->render($ref, 'inline', []);
     }
