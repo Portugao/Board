@@ -8,5 +8,7 @@ services:
             - "@mu_board_module.entity_display_helper"
             - "@mu_board_module.workflow_helper"
             - "@mu_board_module.listentries_helper"
+            - "@request_stack"
+            - "@fragment.handler"
         public: false
         tags: ['twig.extension']
