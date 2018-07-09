@@ -86,14 +86,19 @@
         {% endfor %}
     {% endif % #}
     {% if hasAdminPermission %}
-<script>
-var MU = jQuery.noConflict();
-		MU('.forum').each(function() {
-		MU(this).sortable({
+    
+    {% set sortInitScript %}
+        <script>
+        /* <![CDATA[ */
+        
+        ( function($) {
+        $(document).ready(function() {
+        $('.forum').each(function() {
+		$(this).sortable({
 			update: function(event, ui) {
-				var sortedIDs = MU(this).sortable('toArray').toString();
-				//var sorted = MU(this).sortable( "serialize", { key: "id" } );
-				MU.get('{{ path('muboardmodule_ajax_saveforumposition') }}',{forums:sortedIDs} , function(data) {
+				var sortedIDs = $(this).sortable('toArray').toString();
+				//var sorted = $(this).sortable( "serialize", { key: "id" } );
+				$.get('{{ path('muboardmodule_ajax_saveforumposition') }}',{forums:sortedIDs} , function(data) {
                 if(data) {
                     alert(data.message);
                 }
@@ -101,7 +106,14 @@ var MU = jQuery.noConflict();
 			}
 		});
 		});
+		});
+        })(jQuery);            
+        /* ]]> */
+        </script>
+    {% endset %}
+    {{ pageAddAsset('footer', sortInitScript) }}
     
+<script>    
     /*MU('.forum').on('sortchange', function( event, ui ) {
     var sortedIDs = MU('.forum').sortable( "toArray" ).toString();
     var sorted = MU('forum').sortable( "serialize", { key: "id" } );
