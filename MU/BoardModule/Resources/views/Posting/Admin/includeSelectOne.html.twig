@@ -26,9 +26,9 @@
             {{ form_row(attribute(subFields, 'thirdFile')) }}
         </fieldset>
     {% elseif displayMode == 'choices' %}
-        {{ form_row(attribute(form, alias)) }}
+        {{ form_row(attribute(form, alias), {required: mandatory}) }}
     {% elseif displayMode == 'autocomplete' %}
-        {{ form_row(attribute(form, alias)) }}
+        {{ form_row(attribute(form, alias), {required: mandatory}) }}
         <div class="muboardmodule-relation-leftside">
             {{ include(
                 '@MUBoardModule/Posting/Admin/includeSelectItemListOne.html.twig',

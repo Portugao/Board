@@ -7,7 +7,6 @@
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base2') %}
 {% endif %}
 {% extends 'MUBoardModule::' ~ baseTemplate ~ '.html.twig' %}
-
 {% block header %}
     {{ parent() }}
     {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.Validation.js'), 98) }}
@@ -66,26 +65,26 @@
             {% if files == 0 %}
                 <div class="hidden">
             {% endif %}             
-            {% if numberFiles == 1 or numberFiles == 2 or numberFiles == 3 %}          
+            {% if numberFiles == 1 or numberFiles == 2 or numberFiles == 3 %}
             {{ form_row(form.firstFile) }}
             {% endif %}            
             {% if numberFiles <= 1 %}
             <div class="hidden">
-            {% endif %}   
+            {% endif %}  
             {{ form_row(form.secondFile) }}
             {% if numberFiles <= 1 %}
             </div>
             {% endif %}            
             {% if numberFiles <= 2 %}  
             <div class="hidden">
-            {% endif %}   
+            {% endif %}  
             {{ form_row(form.thirdFile) }}
             {% if numberFiles <= 2 %} 
             </div>
             {% endif %}            
             {% if files == 0 %}
                 </div>
-            {% endif %}            
+            {% endif %}  
         </fieldset>
         <div class="hidden">
         {{ include(
@@ -93,7 +92,7 @@
             {group: 'posting', heading: __('Parent'), alias: 'parent', mandatory: false, idPrefix: 'boardPosting_Parent', linkingItem: posting, displayMode: 'choices'}
         ) }}
         {{ include(
-            '@MUBoardModule/Forum/includeSelectEditOne.html.twig',
+            '@MUBoardModule/Forum/includeSelectOne.html.twig',
             {group: 'posting', heading: __('Forum'), alias: 'forum', mandatory: false, idPrefix: 'boardPosting_Forum', linkingItem: posting, displayMode: 'choices'}
         ) }}
         </div>
@@ -151,28 +150,16 @@
 {% endblock %}
 {% block footer %}
     {{ parent() }}
+    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.Validation.js'), 98) }}
+    {{ pageAddAsset('javascript', zasset('@MUBoardModule:js/MUBoardModule.EditFunctions.js'), 99) }}
     {% set formInitScript %}
-        <script type="text/javascript">
+        <script>
         /* <![CDATA[ */
             var mUBoardInlineEditHandlers = [];
             var mUBoardEditHandler = null;
-            mUBoardEditHandler = {
-                alias: 'forum',
-                prefix: 'boardPosting_ForumSelectorDoNew',
-                moduleName: 'MUBoardModule',
-                objectType: 'forum',
-                inputType: 'select-single',
-                windowInstanceId: null
-            };
-            mUBoardInlineEditHandlers.push(mUBoardEditHandler);
             
             ( function($) {
                 $(document).ready(function() {
-                    // initialise auto completion for user fields
-                    {% if form.moderationSpecificCreator is defined %}
-                        initUserLiveSearch('muboardmodule_posting_moderationSpecificCreator');
-                    {% endif %}
-                    mUBoardInitRelationHandling('forum', 'forum', 'boardPosting_Forum', true, 'select-single', '{{ path('muboardmodule_forum_' ~ routeArea ~ 'edit') }}');
                     mUBoardInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ posting.id }}{% endif %}');
                     mUBoardInitUploadField('muboardmodule_posting_firstImage_firstImage');
                     mUBoardInitUploadField('muboardmodule_posting_secondImage_secondImage');
@@ -180,6 +167,9 @@
                     mUBoardInitUploadField('muboardmodule_posting_firstFile_firstFile');
                     mUBoardInitUploadField('muboardmodule_posting_secondFile_secondFile');
                     mUBoardInitUploadField('muboardmodule_posting_thirdFile_thirdFile');
+                    {% if form.moderationSpecificCreator is defined %}
+                        initUserLiveSearch('muboardmodule_posting_moderationSpecificCreator');
+                    {% endif %}
                 });
             })(jQuery);
         /* ]]> */
