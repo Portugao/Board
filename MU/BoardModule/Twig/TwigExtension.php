@@ -14,13 +14,57 @@ namespace MU\BoardModule\Twig;
 
 use MU\BoardModule\Twig\Base\AbstractTwigExtension;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
-use ServiceUtil;
+
+use Zikula\Common\Translator\TranslatorInterface;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
+use MU\BoardModule\Helper\ListEntriesHelper;
+use MU\BoardModule\Helper\EntityDisplayHelper;
+use MU\BoardModule\Helper\WorkflowHelper;
 
 /**
  * Twig extension implementation class.
  */
 class TwigExtension extends AbstractTwigExtension
 {
+	/**
+	 * @var Request
+	 */
+	protected $request;
+	
+	/**
+	 * @var FragmentHandler
+	 */
+	protected $fragmentHandler;
+	
+	/**
+	 * TwigExtension constructor.
+	 *
+	 * @param TranslatorInterface $translator     Translator service instance
+	 * @param VariableApiInterface   $variableApi    VariableApi service instance
+	 * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
+	 * @param WorkflowHelper      $workflowHelper WorkflowHelper service instance
+	 * @param ListEntriesHelper   $listHelper     ListEntriesHelper service instance
+	 * @param RequestStack           $requestStack     RequestStack service instance
+	 * @param FragmentHandler    $fragmentHandler FragmentHandler service instance
+	 */
+	public function __construct(
+			TranslatorInterface $translator,
+			VariableApiInterface $variableApi,
+			EntityDisplayHelper $entityDisplayHelper,
+			WorkflowHelper $workflowHelper,
+			ListEntriesHelper $listHelper,
+			RequestStack $requestStack,
+			FragmentHandler $fragmentHandler)
+	{
+		$this->setTranslator($translator);
+		$this->variableApi = $variableApi;
+		$this->entityDisplayHelper = $entityDisplayHelper;
+		$this->workflowHelper = $workflowHelper;
+		$this->listHelper = $listHelper;
+		$this->request = $requestStack->getCurrentRequest();
+		$this->fragmentHandler = $fragmentHandler;
+	}
+	
 	/**
 	 * Returns a list of custom Twig functions.
 	 *
@@ -36,13 +80,10 @@ class TwigExtension extends AbstractTwigExtension
 	
     public function showEditForm()
     {
-    	$request = \ServiceUtil::get('request_stack')->getMasterRequest();
-    	$request->attributes->set('_zkModule', 'MUBoardModule');
+    	$this->request->attributes->set('_zkModule', 'MUBoardModule');
     
-    	$fragmentHandler = \ServiceUtil::get('fragment.handler');
+    	$ref = new ControllerReference('MUBoardModule:Comment:edit');
     
-    	$ref = new ControllerReference('MUBoardModule:Posting:edit');
-    
-    	return $fragmentHandler->render($ref, 'inline', []);
+    	return $this->fragmentHandler->render($ref, 'inline', []);
     }
 }
