@@ -54,9 +54,9 @@ services:
             - "@mu_board_module.listentries_helper"
         tags:
             - { name: form.type }
-    
-    mu_board_module.form.handler.category:
-        class: MU\BoardModule\Form\Handler\Category\EditHandler
+            
+    mu_board_module.form.handler.common:
+        abstract: true
         arguments:
             - "@kernel"
             - "@translator.default"
@@ -64,19 +64,21 @@ services:
             - "@request_stack"
             - "@router"
             - "@logger"
-            - "@zikula_permissions_module.api.permission"
             - "@zikula_extensions_module.api.variable"
             - "@zikula_users_module.current_user"
             - "@zikula_groups_module.group_application_repository"
             - "@mu_board_module.entity_factory"
             - "@mu_board_module.controller_helper"
             - "@mu_board_module.model_helper"
+            - "@mu_board_module.permission_helper"
             - "@mu_board_module.workflow_helper"
             - "@mu_board_module.hook_helper"
         calls:
             - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
-        tags:
-            - { name: form.type }
+    
+    mu_board_module.form.handler.category:
+        class: MU\BoardModule\Form\Handler\Category\EditHandler
+        parent: mu_board_module.form.handler.common
     
     mu_board_module.form.type.category:
         class: MU\BoardModule\Form\Type\CategoryType
@@ -91,26 +93,7 @@ services:
     
     mu_board_module.form.handler.forum:
         class: MU\BoardModule\Form\Handler\Forum\EditHandler
-        arguments:
-            - "@kernel"
-            - "@translator.default"
-            - "@form.factory"
-            - "@request_stack"
-            - "@router"
-            - "@logger"
-            - "@zikula_permissions_module.api.permission"
-            - "@zikula_extensions_module.api.variable"
-            - "@zikula_users_module.current_user"
-            - "@zikula_groups_module.group_application_repository"
-            - "@mu_board_module.entity_factory"
-            - "@mu_board_module.controller_helper"
-            - "@mu_board_module.model_helper"
-            - "@mu_board_module.workflow_helper"
-            - "@mu_board_module.hook_helper"
-        calls:
-            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
-        tags:
-            - { name: form.type }
+        parent: mu_board_module.form.handler.common
     
     mu_board_module.form.type.forum:
         class: MU\BoardModule\Form\Type\ForumType
@@ -125,26 +108,7 @@ services:
     
     mu_board_module.form.handler.posting:
         class: MU\BoardModule\Form\Handler\Posting\EditHandler
-        arguments:
-            - "@kernel"
-            - "@translator.default"
-            - "@form.factory"
-            - "@request_stack"
-            - "@router"
-            - "@logger"
-            - "@zikula_permissions_module.api.permission"
-            - "@zikula_extensions_module.api.variable"
-            - "@zikula_users_module.current_user"
-            - "@zikula_groups_module.group_application_repository"
-            - "@mu_board_module.entity_factory"
-            - "@mu_board_module.controller_helper"
-            - "@mu_board_module.model_helper"
-            - "@mu_board_module.workflow_helper"
-            - "@mu_board_module.hook_helper"
-        calls:
-            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
-        tags:
-            - { name: form.type }
+        parent: mu_board_module.form.handler.common
     
     mu_board_module.form.type.posting:
         class: MU\BoardModule\Form\Type\PostingType
@@ -160,26 +124,7 @@ services:
     
     mu_board_module.form.handler.abo:
         class: MU\BoardModule\Form\Handler\Abo\EditHandler
-        arguments:
-            - "@kernel"
-            - "@translator.default"
-            - "@form.factory"
-            - "@request_stack"
-            - "@router"
-            - "@logger"
-            - "@zikula_permissions_module.api.permission"
-            - "@zikula_extensions_module.api.variable"
-            - "@zikula_users_module.current_user"
-            - "@zikula_groups_module.group_application_repository"
-            - "@mu_board_module.entity_factory"
-            - "@mu_board_module.controller_helper"
-            - "@mu_board_module.model_helper"
-            - "@mu_board_module.workflow_helper"
-            - "@mu_board_module.hook_helper"
-        calls:
-            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
-        tags:
-            - { name: form.type }
+        parent: mu_board_module.form.handler.common
     
     mu_board_module.form.type.abo:
         class: MU\BoardModule\Form\Type\AboType
@@ -192,26 +137,7 @@ services:
     
     mu_board_module.form.handler.user:
         class: MU\BoardModule\Form\Handler\User\EditHandler
-        arguments:
-            - "@kernel"
-            - "@translator.default"
-            - "@form.factory"
-            - "@request_stack"
-            - "@router"
-            - "@logger"
-            - "@zikula_permissions_module.api.permission"
-            - "@zikula_extensions_module.api.variable"
-            - "@zikula_users_module.current_user"
-            - "@zikula_groups_module.group_application_repository"
-            - "@mu_board_module.entity_factory"
-            - "@mu_board_module.controller_helper"
-            - "@mu_board_module.model_helper"
-            - "@mu_board_module.workflow_helper"
-            - "@mu_board_module.hook_helper"
-        calls:
-            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
-        tags:
-            - { name: form.type }
+        parent: mu_board_module.form.handler.common
     
     mu_board_module.form.type.user:
         class: MU\BoardModule\Form\Type\UserType
@@ -226,26 +152,7 @@ services:
     
     mu_board_module.form.handler.rank:
         class: MU\BoardModule\Form\Handler\Rank\EditHandler
-        arguments:
-            - "@kernel"
-            - "@translator.default"
-            - "@form.factory"
-            - "@request_stack"
-            - "@router"
-            - "@logger"
-            - "@zikula_permissions_module.api.permission"
-            - "@zikula_extensions_module.api.variable"
-            - "@zikula_users_module.current_user"
-            - "@zikula_groups_module.group_application_repository"
-            - "@mu_board_module.entity_factory"
-            - "@mu_board_module.controller_helper"
-            - "@mu_board_module.model_helper"
-            - "@mu_board_module.workflow_helper"
-            - "@mu_board_module.hook_helper"
-        calls:
-            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
-        tags:
-            - { name: form.type }
+        parent: mu_board_module.form.handler.common
     
     mu_board_module.form.type.rank:
         class: MU\BoardModule\Form\Type\RankType
