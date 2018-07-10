@@ -19,16 +19,12 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use MU\BoardModule\Form\Type\Field\MultiListType;
-use MU\BoardModule\Form\Type\Field\UploadType;
 use MU\BoardModule\AppSettings;
 use MU\BoardModule\Helper\ListEntriesHelper;
 
@@ -81,23 +77,6 @@ abstract class AbstractConfigType extends AbstractType
         $this->addIntegrationFields($builder, $options);
 
         $this->addSubmitButtons($builder, $options);
-
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $data = $event->getData();
-            foreach (['standardIcon', 'specialIcon'] as $uploadFieldName) {
-                $data[$uploadFieldName] = [
-                    $uploadFieldName => $data[$uploadFieldName] instanceof File ? $data[$uploadFieldName]->getPathname() : null
-                ];
-            }
-        });
-        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
-            $data = $event->getData();
-            foreach (['standardIcon', 'specialIcon'] as $uploadFieldName) {
-                if (is_array($data[$uploadFieldName])) {
-                    $data[$uploadFieldName] = $data[$uploadFieldName][$uploadFieldName];
-                }
-            }
-        });
     }
 
     /**
@@ -115,19 +94,18 @@ abstract class AbstractConfigType extends AbstractType
                 'class' => '',
                 'title' => $this->__('The upload images option')
             ],
-            'required' => true,
+            'required' => false,
         ]);
         
-        $builder->add('allowedSizeOfImages', TextareaType::class, [
+        $builder->add('allowedSizeOfImages', TextType::class, [
             'label' => $this->__('Allowed size of images') . ':',
-            'help' => $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 2000]),
             'empty_data' => '200k',
             'attr' => [
-                'maxlength' => 2000,
+                'maxlength' => 255,
                 'class' => '',
                 'title' => $this->__('Enter the allowed size of images.')
             ],
-            'required' => true,
+            'required' => false,
         ]);
         
         $listEntries = $this->listHelper->getEntries('appSettings', 'numberImages');
@@ -157,19 +135,18 @@ abstract class AbstractConfigType extends AbstractType
                 'class' => '',
                 'title' => $this->__('The upload files option')
             ],
-            'required' => true,
+            'required' => false,
         ]);
         
-        $builder->add('allowedSizeOfFiles', TextareaType::class, [
+        $builder->add('allowedSizeOfFiles', TextType::class, [
             'label' => $this->__('Allowed size of files') . ':',
-            'help' => $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 2000]),
-            'empty_data' => '',
+            'empty_data' => '200k',
             'attr' => [
-                'maxlength' => 2000,
+                'maxlength' => 255,
                 'class' => '',
                 'title' => $this->__('Enter the allowed size of files.')
             ],
-            'required' => true,
+            'required' => false,
         ]);
         
         $listEntries = $this->listHelper->getEntries('appSettings', 'numberFiles');
@@ -199,7 +176,7 @@ abstract class AbstractConfigType extends AbstractType
                 'class' => '',
                 'title' => $this->__('The edit postings option')
             ],
-            'required' => true,
+            'required' => false,
         ]);
         
         $builder->add('editTime', IntegerType::class, [
@@ -215,7 +192,7 @@ abstract class AbstractConfigType extends AbstractType
                 'class' => '',
                 'title' => $this->__('Enter the edit time.') . ' ' . $this->__('Only digits are allowed.')
             ],
-            'required' => true,
+            'required' => false,
             'scale' => 0
         ]);
         
@@ -232,7 +209,7 @@ abstract class AbstractConfigType extends AbstractType
                 'class' => '',
                 'title' => $this->__('Enter the latest postings.') . ' ' . $this->__('Only digits are allowed.')
             ],
-            'required' => true,
+            'required' => false,
             'scale' => 0
         ]);
         
@@ -299,38 +276,26 @@ abstract class AbstractConfigType extends AbstractType
             'expanded' => false
         ]);
         
-        $builder->add('standardIcon', UploadType::class, [
+        $builder->add('standardIcon', TextType::class, [
             'label' => $this->__('Standard icon') . ':',
-            'label_attr' => [
-                'class' => 'tooltips',
-                'title' => $this->__('This icon will be used for ranks to show; for example a star.')
-            ],
-            'help' => $this->__('This icon will be used for ranks to show; for example a star.'),
+            'empty_data' => '',
             'attr' => [
-                'class' => ' validate-upload',
+                'maxlength' => 255,
+                'class' => '',
                 'title' => $this->__('Enter the standard icon.')
             ],
-            'required' => true && $options['mode'] == 'create',
-            'entity' => $options['entity'],
-            'allowed_extensions' => 'gif, jpeg, jpg, png',
-            'allowed_size' => ''
+            'required' => false,
         ]);
         
-        $builder->add('specialIcon', UploadType::class, [
+        $builder->add('specialIcon', TextType::class, [
             'label' => $this->__('Special icon') . ':',
-            'label_attr' => [
-                'class' => 'tooltips',
-                'title' => $this->__('This icon will be used for special ranks to show; for example a heart.')
-            ],
-            'help' => $this->__('This icon will be used for special ranks to show; for example a heart.'),
+            'empty_data' => '',
             'attr' => [
-                'class' => ' validate-upload',
+                'maxlength' => 255,
+                'class' => '',
                 'title' => $this->__('Enter the special icon.')
             ],
-            'required' => true && $options['mode'] == 'create',
-            'entity' => $options['entity'],
-            'allowed_extensions' => 'gif, jpeg, jpg, png',
-            'allowed_size' => ''
+            'required' => false,
         ]);
     }
 
@@ -391,7 +356,7 @@ abstract class AbstractConfigType extends AbstractType
                 'class' => '',
                 'title' => $this->__('The show statistic in details option')
             ],
-            'required' => true,
+            'required' => false,
         ]);
         
         $builder->add('showStatisticOnBottom', CheckboxType::class, [
@@ -400,7 +365,7 @@ abstract class AbstractConfigType extends AbstractType
                 'class' => '',
                 'title' => $this->__('The show statistic on bottom option')
             ],
-            'required' => true,
+            'required' => false,
         ]);
     }
 
