@@ -136,7 +136,9 @@ class ControllerHelper extends AbstractControllerHelper
     		    	$countPostings = $countPostings + count($forum['posting']);
     		    	// get last for forum
     		    	$last = $postingsRepository->getLastPost($forum['id']);
-    		    	$forum['last'] = $postingsRepository->find($last[0]['id']);
+    		    	if ($last) {
+    		    	    $forum['last'] = $postingsRepository->find($last[0]['id']);
+    		    	}
     		    	$newForums[] = $forum;
     		    	
     		    	
