@@ -37,6 +37,7 @@ class LinkContainer extends AbstractLinkContainer {
 		$allowedObjectTypes = $this->controllerHelper->getObjectTypes ( 'api', $contextArgs );
 		
 		$permLevel = LinkContainerInterface::TYPE_ADMIN == $type ? ACCESS_ADMIN : ACCESS_READ;
+		$commentLevel = ACCESS_COMMENT;
 		
 		// Create an array of links to return
 		$links = [ ];
@@ -150,28 +151,51 @@ class LinkContainer extends AbstractLinkContainer {
 					'title' => $this->__ ( 'Categories list', 'muboardmodule' ) 
 			];
 		}
+		if ($routeArea != 'admin') {
+			if ($this->permissionHelper->hasComponentPermission ( 'posting', $commentLevel )) {
+				$links [] = [
+						'url' => $this->router->generate ( 'muboardmodule_posting_' . $routeArea . 'edit' ),
+						'text' => $this->__ ( 'Create issue', 'muboardmodule' ),
+						'title' => $this->__ ( 'New issue', 'muboardmodule' )
+				];
+			}			
+		}
 		if ($routeArea == 'admin') {
-		if (in_array ( 'abo', $allowedObjectTypes ) && $this->permissionHelper->hasComponentPermission ( 'abo', $permLevel )) {
-			$links [] = [ 
-					'url' => $this->router->generate ( 'muboardmodule_abo_' . $routeArea . 'view' ),
-					'text' => $this->__ ( 'Abos', 'muboardmodule' ),
-					'title' => $this->__ ( 'Abos list', 'muboardmodule' ) 
-			];
-		}
-		if (in_array ( 'user', $allowedObjectTypes ) && $this->permissionHelper->hasComponentPermission ( 'user', $permLevel )) {
-			$links [] = [ 
-					'url' => $this->router->generate ( 'muboardmodule_user_' . $routeArea . 'view' ),
-					'text' => $this->__ ( 'Users', 'muboardmodule' ),
-					'title' => $this->__ ( 'Users list', 'muboardmodule' ) 
-			];
-		}
-		if (in_array ( 'rank', $allowedObjectTypes ) && $this->permissionHelper->hasComponentPermission ( 'rank', $permLevel )) {
-			$links [] = [ 
-					'url' => $this->router->generate ( 'muboardmodule_rank_' . $routeArea . 'view' ),
-					'text' => $this->__ ( 'Ranks', 'muboardmodule' ),
-					'title' => $this->__ ( 'Ranks list', 'muboardmodule' ) 
-			];
-		}
+			if (in_array ( 'forum', $allowedObjectTypes ) && $this->permissionHelper->hasComponentPermission ( 'forum', $permLevel )) {
+				$links [] = [ 
+						'url' => $this->router->generate ( 'muboardmodule_forum_' . $routeArea . 'view' ),
+						'text' => $this->__ ( 'Forums', 'muboardmodule' ),
+						'title' => $this->__ ( 'Forums list', 'muboardmodule' ) 
+				];
+			}
+			if (in_array ( 'posting', $allowedObjectTypes ) && $this->permissionHelper->hasComponentPermission ( 'posting', $permLevel )) {
+				$links [] = [ 
+						'url' => $this->router->generate ( 'muboardmodule_posting_' . $routeArea . 'view' ),
+						'text' => $this->__ ( 'Postings', 'muboardmodule' ),
+						'title' => $this->__ ( 'Postings list', 'muboardmodule' ) 
+				];
+			}
+			if (in_array ( 'abo', $allowedObjectTypes ) && $this->permissionHelper->hasComponentPermission ( 'abo', $permLevel )) {
+				$links [] = [ 
+						'url' => $this->router->generate ( 'muboardmodule_abo_' . $routeArea . 'view' ),
+						'text' => $this->__ ( 'Abos', 'muboardmodule' ),
+						'title' => $this->__ ( 'Abos list', 'muboardmodule' ) 
+				];
+			}
+			if (in_array ( 'user', $allowedObjectTypes ) && $this->permissionHelper->hasComponentPermission ( 'user', $permLevel )) {
+				$links [] = [ 
+						'url' => $this->router->generate ( 'muboardmodule_user_' . $routeArea . 'view' ),
+						'text' => $this->__ ( 'Users', 'muboardmodule' ),
+						'title' => $this->__ ( 'Users list', 'muboardmodule' ) 
+				];
+			}
+			if (in_array ( 'rank', $allowedObjectTypes ) && $this->permissionHelper->hasComponentPermission ( 'rank', $permLevel )) {
+				$links [] = [ 
+						'url' => $this->router->generate ( 'muboardmodule_rank_' . $routeArea . 'view' ),
+						'text' => $this->__ ( 'Ranks', 'muboardmodule' ),
+						'title' => $this->__ ( 'Ranks list', 'muboardmodule' ) 
+				];
+			}
 		}
 		
 		if ($routeArea == 'admin' && $this->permissionHelper->hasPermission ( ACCESS_ADMIN )) {
