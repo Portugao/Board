@@ -12,7 +12,6 @@
 
 namespace MU\BoardModule\Base;
 
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\GroupsModule\Constant as GroupsConstant;
@@ -35,16 +34,16 @@ abstract class AbstractAppSettings
     protected $groupRepository;
     
     /**
-     * @Assert\IsTrue(message="This option is mandatory.")
+     * @Assert\NotNull()
      * @Assert\Type(type="bool")
      * @var boolean $uploadImages
      */
     protected $uploadImages = false;
     
     /**
-     * @Assert\NotBlank()
-     * @Assert\Length(min="0", max="2000")
-     * @var text $allowedSizeOfImages
+     * @Assert\NotNull()
+     * @Assert\Length(min="0", max="255")
+     * @var string $allowedSizeOfImages
      */
     protected $allowedSizeOfImages = '200k';
     
@@ -56,18 +55,18 @@ abstract class AbstractAppSettings
     protected $numberImages = '1';
     
     /**
-     * @Assert\IsTrue(message="This option is mandatory.")
+     * @Assert\NotNull()
      * @Assert\Type(type="bool")
      * @var boolean $uploadFiles
      */
     protected $uploadFiles = false;
     
     /**
-     * @Assert\NotBlank()
-     * @Assert\Length(min="0", max="2000")
-     * @var text $allowedSizeOfFiles
+     * @Assert\NotNull()
+     * @Assert\Length(min="0", max="255")
+     * @var string $allowedSizeOfFiles
      */
-    protected $allowedSizeOfFiles = '';
+    protected $allowedSizeOfFiles = '200k';
     
     /**
      * @Assert\NotBlank()
@@ -77,7 +76,7 @@ abstract class AbstractAppSettings
     protected $numberFiles = '1';
     
     /**
-     * @Assert\IsTrue(message="This option is mandatory.")
+     * @Assert\NotNull()
      * @Assert\Type(type="bool")
      * @var boolean $editPostings
      */
@@ -87,8 +86,7 @@ abstract class AbstractAppSettings
      * Time of editing allowed in hours.
      *
      * @Assert\Type(type="integer")
-     * @Assert\NotBlank()
-     * @Assert\NotEqualTo(value=0)
+     * @Assert\NotNull()
      * @Assert\LessThan(value=100000000000)
      * @var integer $editTime
      */
@@ -98,8 +96,7 @@ abstract class AbstractAppSettings
      * In Hours.
      *
      * @Assert\Type(type="integer")
-     * @Assert\NotBlank()
-     * @Assert\NotEqualTo(value=0)
+     * @Assert\NotNull()
      * @Assert\LessThan(value=100000000000)
      * @var integer $latestPostings
      */
@@ -127,64 +124,18 @@ abstract class AbstractAppSettings
     protected $sortingPostings = 'descending';
     
     /**
-     * Standard icon meta data array.
-     *
-     * @Assert\Type(type="array")
-     * @var array $standardIconMeta
-     */
-    protected $standardIconMeta = [];
-    
-    /**
-     * This icon will be used for ranks to show; for example a star.
-     *
-     * @Assert\NotBlank()
+     * @Assert\NotNull()
      * @Assert\Length(min="0", max="255")
-     * @Assert\File(
-     *    mimeTypes = {"image/*"}
-     * )
-     * @Assert\Image(
-     * )
      * @var string $standardIcon
      */
-    protected $standardIcon = null;
+    protected $standardIcon = '';
     
     /**
-     * Full standard icon path as url.
-     *
-     * @Assert\Type(type="string")
-     * @var string $standardIconUrl
-     */
-    protected $standardIconUrl = '';
-    
-    /**
-     * Special icon meta data array.
-     *
-     * @Assert\Type(type="array")
-     * @var array $specialIconMeta
-     */
-    protected $specialIconMeta = [];
-    
-    /**
-     * This icon will be used for special ranks to show; for example a heart.
-     *
-     * @Assert\NotBlank()
+     * @Assert\NotNull()
      * @Assert\Length(min="0", max="255")
-     * @Assert\File(
-     *    mimeTypes = {"image/*"}
-     * )
-     * @Assert\Image(
-     * )
      * @var string $specialIcon
      */
-    protected $specialIcon = null;
-    
-    /**
-     * Full special icon path as url.
-     *
-     * @Assert\Type(type="string")
-     * @var string $specialIconUrl
-     */
-    protected $specialIconUrl = '';
+    protected $specialIcon = '';
     
     /**
      * @Assert\NotBlank()
@@ -201,14 +152,14 @@ abstract class AbstractAppSettings
     protected $template = 'normal';
     
     /**
-     * @Assert\IsTrue(message="This option is mandatory.")
+     * @Assert\NotNull()
      * @Assert\Type(type="bool")
      * @var boolean $showStatisticInDetails
      */
     protected $showStatisticInDetails = false;
     
     /**
-     * @Assert\IsTrue(message="This option is mandatory.")
+     * @Assert\NotNull()
      * @Assert\Type(type="bool")
      * @var boolean $showStatisticOnBottom
      */
@@ -810,7 +761,7 @@ abstract class AbstractAppSettings
     /**
      * Returns the allowed size of images.
      *
-     * @return text
+     * @return string
      */
     public function getAllowedSizeOfImages()
     {
@@ -820,7 +771,7 @@ abstract class AbstractAppSettings
     /**
      * Sets the allowed size of images.
      *
-     * @param text $allowedSizeOfImages
+     * @param string $allowedSizeOfImages
      *
      * @return void
      */
@@ -882,7 +833,7 @@ abstract class AbstractAppSettings
     /**
      * Returns the allowed size of files.
      *
-     * @return text
+     * @return string
      */
     public function getAllowedSizeOfFiles()
     {
@@ -892,7 +843,7 @@ abstract class AbstractAppSettings
     /**
      * Sets the allowed size of files.
      *
-     * @param text $allowedSizeOfFiles
+     * @param string $allowedSizeOfFiles
      *
      * @return void
      */
@@ -1096,54 +1047,6 @@ abstract class AbstractAppSettings
     }
     
     /**
-     * Returns the standard icon url.
-     *
-     * @return string
-     */
-    public function getStandardIconUrl()
-    {
-        return $this->standardIconUrl;
-    }
-    
-    /**
-     * Sets the standard icon url.
-     *
-     * @param string $standardIconUrl
-     *
-     * @return void
-     */
-    public function setStandardIconUrl($standardIconUrl)
-    {
-        if ($this->standardIconUrl !== $standardIconUrl) {
-            $this->standardIconUrl = isset($standardIconUrl) ? $standardIconUrl : '';
-        }
-    }
-    
-    /**
-     * Returns the standard icon meta.
-     *
-     * @return array
-     */
-    public function getStandardIconMeta()
-    {
-        return $this->standardIconMeta;
-    }
-    
-    /**
-     * Sets the standard icon meta.
-     *
-     * @param array $standardIconMeta
-     *
-     * @return void
-     */
-    public function setStandardIconMeta($standardIconMeta = [])
-    {
-        if ($this->standardIconMeta !== $standardIconMeta) {
-            $this->standardIconMeta = isset($standardIconMeta) ? $standardIconMeta : '';
-        }
-    }
-    
-    /**
      * Returns the special icon.
      *
      * @return string
@@ -1164,54 +1067,6 @@ abstract class AbstractAppSettings
     {
         if ($this->specialIcon !== $specialIcon) {
             $this->specialIcon = isset($specialIcon) ? $specialIcon : '';
-        }
-    }
-    
-    /**
-     * Returns the special icon url.
-     *
-     * @return string
-     */
-    public function getSpecialIconUrl()
-    {
-        return $this->specialIconUrl;
-    }
-    
-    /**
-     * Sets the special icon url.
-     *
-     * @param string $specialIconUrl
-     *
-     * @return void
-     */
-    public function setSpecialIconUrl($specialIconUrl)
-    {
-        if ($this->specialIconUrl !== $specialIconUrl) {
-            $this->specialIconUrl = isset($specialIconUrl) ? $specialIconUrl : '';
-        }
-    }
-    
-    /**
-     * Returns the special icon meta.
-     *
-     * @return array
-     */
-    public function getSpecialIconMeta()
-    {
-        return $this->specialIconMeta;
-    }
-    
-    /**
-     * Sets the special icon meta.
-     *
-     * @param array $specialIconMeta
-     *
-     * @return void
-     */
-    public function setSpecialIconMeta($specialIconMeta = [])
-    {
-        if ($this->specialIconMeta !== $specialIconMeta) {
-            $this->specialIconMeta = isset($specialIconMeta) ? $specialIconMeta : '';
         }
     }
     

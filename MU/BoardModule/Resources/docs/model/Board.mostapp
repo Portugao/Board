@@ -20,8 +20,8 @@ application "Board" targets ZK20 {
         separateAdminTemplates true
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
-        skipFiles "Container/LinkContainer.php,\r\nController/AjaxController.php,\r\nController/CategoryController.php,\r\nEntity/CategoryEntity.php,\r\nEntity/ForumEntity.php,\r\nEntity/PostingEntity.php,\r\nEntity/Repository/PostingRepository.php,\r\nHelper/ControllerHelper.php,\r\nHelper/NotificationHelper.php,\r\nHelper/WorkflowHelper.php"
-        markFiles "Resources/config/forms.yml,\r\nResources/public/css/style.css,\r\nResources/views/Category/display.html.twig,\r\nResources/views/Category/view.html.twig,\r\nResources/views/Forum/display.html.twig,\r\nResources/views/Posting/display.html.twig,\r\nResources/views/Posting/edit.html.twig,\r\nResources/views/Forum/includeDisplayItemListMany.html.twig"
+        skipFiles "Container/LinkContainer.php,\r\nController/AjaxController.php,\r\nController/CategoryController.php,\r\nEntity/CategoryEntity.php,\r\nEntity/ForumEntity.php,\r\nEntity/PostingEntity.php,\r\nEntity/Repository/PostingRepository.php,\r\nHelper/ControllerHelper.php,\r\nHelper/NotificationHelper.php,\r\nHelper/WorkflowHelper.php,\r\nTwig/TwigExtension.php"
+        markFiles "Resources/config/forms.yml,\r\nResources/config/twig.yml,\r\nResources/public/css/custom.css,\r\nResources/public/css/style.css,\r\nResources/views/Category/display.html.twig,\r\nResources/views/Category/view.html.twig,\r\nResources/views/Forum/display.html.twig,\r\nResources/views/Posting/display.html.twig,\r\nResources/views/Posting/edit.html.twig,\r\nResources/views/Forum/includeDisplayItemListMany.html.twig"
 
     entities {
         entity "category" leading {
@@ -101,11 +101,13 @@ application "Board" targets ZK20 {
                 },
                 upload "secondImage" {
                     mandatory false
-                maxSize "200k"
+                displayType DISPLAY
+                    maxSize "200k"
                 },
                 upload "thirdImage" {
                     mandatory false
-                maxSize "200k"
+                displayType DISPLAY
+                    maxSize "200k"
                 },
                 upload "firstFile" {
                     mandatory false
@@ -115,12 +117,14 @@ application "Board" targets ZK20 {
                 },
                 upload "secondFile" {
                     mandatory false
+                    displayType DISPLAY
                     allowedExtensions "pdf"
                 maxSize "2M"
                     mimeTypes "application/*"
                 },
                 upload "thirdFile" {
                     mandatory false
+                    displayType DISPLAY
                     allowedExtensions "pdf"
                 maxSize "2M"
                     mimeTypes "application/*"
@@ -245,10 +249,12 @@ application "Board" targets ZK20 {
             sortOrder 1
             fields {
                 boolean "uploadImages" {
-                    defaultValue "1"
+                    defaultValue ""
+                mandatory false
                 },
-                text "allowedSizeOfImages" {
+                string "allowedSizeOfImages" {
                     defaultValue "200k"
+                    mandatory false
                 },
                 list "numberImages" {
                     items {
@@ -258,9 +264,13 @@ application "Board" targets ZK20 {
                     }
                 },
                 boolean "uploadFiles" {
-                    defaultValue "1"
+                    defaultValue ""
+                mandatory false
                 },
-                text "allowedSizeOfFiles",
+                string "allowedSizeOfFiles" {
+                    defaultValue "200k"
+                    mandatory false
+                },
                 list "numberFiles" {
                     items {
                        default  listItem "1",
@@ -269,15 +279,18 @@ application "Board" targets ZK20 {
                     }
                 },
                 boolean "editPostings" {
-                    defaultValue "1"
+                    defaultValue ""
+                mandatory false
                 },
                 integer "editTime" {
                     documentation "Time of editing allowed in hours."
                     defaultValue "6"
+                mandatory false
                 },
                 integer "latestPostings" {
                     documentation "In Hours."
                     defaultValue "24"
+                mandatory false
                 },
                 list "sortingCategories" {
                     items {
@@ -297,13 +310,11 @@ application "Board" targets ZK20 {
                         listItem "ascending"
                     }
                 },
-                upload "standardIcon" {
-                    documentation "This icon will be used for ranks to show; for example a star."
-                    defaultValue "images/icons/extrasmall/favorites.png"
+                string "standardIcon" {
+                    mandatory false
                 },
-                upload "specialIcon" {
-                    documentation "This icon will be used for special ranks to show; for example a heart."
-                    defaultValue "images/icons/extrasmall/package_favorite.png"
+                string "specialIcon" {
+                    mandatory false
                 }
                 }
                 },
@@ -325,9 +336,13 @@ varContainer  "Layout" {
                     }
                 },
                 boolean "showStatisticInDetails" {
-                    defaultValue "1"
+                    defaultValue ""
+                mandatory false
                 },
                 boolean "showStatisticOnBottom"
+            {
+                    mandatory false
+                }
             }
         }
     }

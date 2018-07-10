@@ -25,11 +25,7 @@
                     <option value="text"{if $sort eq 'text'} selected="selected"{/if}>{gt text='Text'}</option>
                     <option value="invocations"{if $sort eq 'invocations'} selected="selected"{/if}>{gt text='Invocations'}</option>
                     <option value="firstImage"{if $sort eq 'firstImage'} selected="selected"{/if}>{gt text='First image'}</option>
-                    <option value="secondImage"{if $sort eq 'secondImage'} selected="selected"{/if}>{gt text='Second image'}</option>
-                    <option value="thirdImage"{if $sort eq 'thirdImage'} selected="selected"{/if}>{gt text='Third image'}</option>
                     <option value="firstFile"{if $sort eq 'firstFile'} selected="selected"{/if}>{gt text='First file'}</option>
-                    <option value="secondFile"{if $sort eq 'secondFile'} selected="selected"{/if}>{gt text='Second file'}</option>
-                    <option value="thirdFile"{if $sort eq 'thirdFile'} selected="selected"{/if}>{gt text='Third file'}</option>
                     <option value="createdDate"{if $sort eq 'createdDate'} selected="selected"{/if}>{gt text='Creation date'}</option>
                     <option value="createdBy"{if $sort eq 'createdBy'} selected="selected"{/if}>{gt text='Creator'}</option>
                     <option value="updatedDate"{if $sort eq 'updatedDate'} selected="selected"{/if}>{gt text='Update date'}</option>

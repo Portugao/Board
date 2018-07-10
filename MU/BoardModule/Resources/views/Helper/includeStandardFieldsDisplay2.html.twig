@@ -22,7 +22,7 @@
         {% set counter = 0 %}
         {% set icon = getModVar('MUBoardModule', 'standardIcon' ) %}
         {% for i in 1..rankAmount %}
-            <img src="../../{{ icon }}" />
+            {{ icon|raw }}
         {% endfor %}<br />
         Last visit: {{ obj.user.lastVisit|localizeddate('medium', 'short') }}
     </div>

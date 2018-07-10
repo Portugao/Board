@@ -236,6 +236,7 @@
                 </td>
                 <td headers="hEntityCategoryFieldDescription hEntityCategoryFieldRemarks">
                     <ul>
+                        <li>Dieses Feld ist nicht eindeutig und erlaubt keine Null-Werte.</li>
                     </ul>
                 </td>
             </tr>
@@ -616,6 +617,7 @@
                 </td>
                 <td headers="hEntityForumFieldDescription hEntityForumFieldRemarks">
                     <ul>
+                        <li>Dieses Feld ist nicht eindeutig und erlaubt keine Null-Werte.</li>
                     </ul>
                 </td>
             </tr>
@@ -1032,6 +1034,7 @@
                 </td>
                 <td headers="hEntityPostingFieldText hEntityPostingFieldRemarks">
                     <ul>
+                        <li>Dieses Feld ist nicht eindeutig und erlaubt keine Null-Werte.</li>
                     </ul>
                 </td>
             </tr>
@@ -1111,7 +1114,7 @@
                 <td headers="hEntityPostingFieldSecondImage hEntityPostingFieldType">Upload</td>
                 <td headers="hEntityPostingFieldSecondImage hEntityPostingFieldMandatory">false</td>
                 <td headers="hEntityPostingFieldSecondImage hEntityPostingFieldDefault"></td>
-                <td headers="hEntityPostingFieldSecondImage hEntityPostingFieldDisplayType">ALL</td>
+                <td headers="hEntityPostingFieldSecondImage hEntityPostingFieldDisplayType">DISPLAY</td>
                 <td headers="hEntityPostingFieldSecondImage hEntityPostingFieldConstraints">
                     <ul>
                         <li>Hat eine Länge von 255 Zeichen.</li>
@@ -1132,7 +1135,7 @@
                 <td headers="hEntityPostingFieldThirdImage hEntityPostingFieldType">Upload</td>
                 <td headers="hEntityPostingFieldThirdImage hEntityPostingFieldMandatory">false</td>
                 <td headers="hEntityPostingFieldThirdImage hEntityPostingFieldDefault"></td>
-                <td headers="hEntityPostingFieldThirdImage hEntityPostingFieldDisplayType">ALL</td>
+                <td headers="hEntityPostingFieldThirdImage hEntityPostingFieldDisplayType">DISPLAY</td>
                 <td headers="hEntityPostingFieldThirdImage hEntityPostingFieldConstraints">
                     <ul>
                         <li>Hat eine Länge von 255 Zeichen.</li>
@@ -1174,7 +1177,7 @@
                 <td headers="hEntityPostingFieldSecondFile hEntityPostingFieldType">Upload</td>
                 <td headers="hEntityPostingFieldSecondFile hEntityPostingFieldMandatory">false</td>
                 <td headers="hEntityPostingFieldSecondFile hEntityPostingFieldDefault"></td>
-                <td headers="hEntityPostingFieldSecondFile hEntityPostingFieldDisplayType">ALL</td>
+                <td headers="hEntityPostingFieldSecondFile hEntityPostingFieldDisplayType">DISPLAY</td>
                 <td headers="hEntityPostingFieldSecondFile hEntityPostingFieldConstraints">
                     <ul>
                         <li>Hat eine Länge von 255 Zeichen.</li>
@@ -1195,7 +1198,7 @@
                 <td headers="hEntityPostingFieldThirdFile hEntityPostingFieldType">Upload</td>
                 <td headers="hEntityPostingFieldThirdFile hEntityPostingFieldMandatory">false</td>
                 <td headers="hEntityPostingFieldThirdFile hEntityPostingFieldDefault"></td>
-                <td headers="hEntityPostingFieldThirdFile hEntityPostingFieldDisplayType">ALL</td>
+                <td headers="hEntityPostingFieldThirdFile hEntityPostingFieldDisplayType">DISPLAY</td>
                 <td headers="hEntityPostingFieldThirdFile hEntityPostingFieldConstraints">
                     <ul>
                         <li>Hat eine Länge von 255 Zeichen.</li>
@@ -2661,8 +2664,8 @@
             <tr>
                 <th id="hVariablesGeneralFieldUploadImages" scope="row" headers="hVariablesGeneralFieldName">Upload images</th>
                 <td headers="hVariablesGeneralFieldUploadImages hVariablesGeneralFieldType">Boolesches</td>
-                <td headers="hVariablesGeneralFieldUploadImages hVariablesGeneralFieldMandatory">true</td>
-                <td headers="hVariablesGeneralFieldUploadImages hVariablesGeneralFieldDefault">1</td>
+                <td headers="hVariablesGeneralFieldUploadImages hVariablesGeneralFieldMandatory">false</td>
+                <td headers="hVariablesGeneralFieldUploadImages hVariablesGeneralFieldDefault"></td>
                 <td headers="hVariablesGeneralFieldUploadImages hVariablesGeneralFieldDisplayType">ALL</td>
                 <td headers="hVariablesGeneralFieldUploadImages hVariablesGeneralFieldConstraints">
                     <ul>
@@ -2676,17 +2679,18 @@
             </tr>
             <tr>
                 <th id="hVariablesGeneralFieldAllowedSizeOfImages" scope="row" headers="hVariablesGeneralFieldName">Allowed size of images</th>
-                <td headers="hVariablesGeneralFieldAllowedSizeOfImages hVariablesGeneralFieldType">Text</td>
-                <td headers="hVariablesGeneralFieldAllowedSizeOfImages hVariablesGeneralFieldMandatory">true</td>
+                <td headers="hVariablesGeneralFieldAllowedSizeOfImages hVariablesGeneralFieldType">Zeichenkette</td>
+                <td headers="hVariablesGeneralFieldAllowedSizeOfImages hVariablesGeneralFieldMandatory">false</td>
                 <td headers="hVariablesGeneralFieldAllowedSizeOfImages hVariablesGeneralFieldDefault">200k</td>
                 <td headers="hVariablesGeneralFieldAllowedSizeOfImages hVariablesGeneralFieldDisplayType">ALL</td>
                 <td headers="hVariablesGeneralFieldAllowedSizeOfImages hVariablesGeneralFieldConstraints">
                     <ul>
-                        <li>Hat eine Länge von 2000 Zeichen.</li>
+                        <li>Hat eine Länge von 255 Zeichen.</li>
                     </ul>
                 </td>
                 <td headers="hVariablesGeneralFieldAllowedSizeOfImages hVariablesGeneralFieldRemarks">
                     <ul>
+                        <li>Dieses Feld ist nicht eindeutig und erlaubt keine Null-Werte.</li>
                     </ul>
                 </td>
             </tr>
@@ -2712,8 +2716,8 @@
             <tr>
                 <th id="hVariablesGeneralFieldUploadFiles" scope="row" headers="hVariablesGeneralFieldName">Upload files</th>
                 <td headers="hVariablesGeneralFieldUploadFiles hVariablesGeneralFieldType">Boolesches</td>
-                <td headers="hVariablesGeneralFieldUploadFiles hVariablesGeneralFieldMandatory">true</td>
-                <td headers="hVariablesGeneralFieldUploadFiles hVariablesGeneralFieldDefault">1</td>
+                <td headers="hVariablesGeneralFieldUploadFiles hVariablesGeneralFieldMandatory">false</td>
+                <td headers="hVariablesGeneralFieldUploadFiles hVariablesGeneralFieldDefault"></td>
                 <td headers="hVariablesGeneralFieldUploadFiles hVariablesGeneralFieldDisplayType">ALL</td>
                 <td headers="hVariablesGeneralFieldUploadFiles hVariablesGeneralFieldConstraints">
                     <ul>
@@ -2727,17 +2731,18 @@
             </tr>
             <tr>
                 <th id="hVariablesGeneralFieldAllowedSizeOfFiles" scope="row" headers="hVariablesGeneralFieldName">Allowed size of files</th>
-                <td headers="hVariablesGeneralFieldAllowedSizeOfFiles hVariablesGeneralFieldType">Text</td>
-                <td headers="hVariablesGeneralFieldAllowedSizeOfFiles hVariablesGeneralFieldMandatory">true</td>
-                <td headers="hVariablesGeneralFieldAllowedSizeOfFiles hVariablesGeneralFieldDefault"></td>
+                <td headers="hVariablesGeneralFieldAllowedSizeOfFiles hVariablesGeneralFieldType">Zeichenkette</td>
+                <td headers="hVariablesGeneralFieldAllowedSizeOfFiles hVariablesGeneralFieldMandatory">false</td>
+                <td headers="hVariablesGeneralFieldAllowedSizeOfFiles hVariablesGeneralFieldDefault">200k</td>
                 <td headers="hVariablesGeneralFieldAllowedSizeOfFiles hVariablesGeneralFieldDisplayType">ALL</td>
                 <td headers="hVariablesGeneralFieldAllowedSizeOfFiles hVariablesGeneralFieldConstraints">
                     <ul>
-                        <li>Hat eine Länge von 2000 Zeichen.</li>
+                        <li>Hat eine Länge von 255 Zeichen.</li>
                     </ul>
                 </td>
                 <td headers="hVariablesGeneralFieldAllowedSizeOfFiles hVariablesGeneralFieldRemarks">
                     <ul>
+                        <li>Dieses Feld ist nicht eindeutig und erlaubt keine Null-Werte.</li>
                     </ul>
                 </td>
             </tr>
@@ -2763,8 +2768,8 @@
             <tr>
                 <th id="hVariablesGeneralFieldEditPostings" scope="row" headers="hVariablesGeneralFieldName">Edit postings</th>
                 <td headers="hVariablesGeneralFieldEditPostings hVariablesGeneralFieldType">Boolesches</td>
-                <td headers="hVariablesGeneralFieldEditPostings hVariablesGeneralFieldMandatory">true</td>
-                <td headers="hVariablesGeneralFieldEditPostings hVariablesGeneralFieldDefault">1</td>
+                <td headers="hVariablesGeneralFieldEditPostings hVariablesGeneralFieldMandatory">false</td>
+                <td headers="hVariablesGeneralFieldEditPostings hVariablesGeneralFieldDefault"></td>
                 <td headers="hVariablesGeneralFieldEditPostings hVariablesGeneralFieldDisplayType">ALL</td>
                 <td headers="hVariablesGeneralFieldEditPostings hVariablesGeneralFieldConstraints">
                     <ul>
@@ -2779,7 +2784,7 @@
             <tr>
                 <th id="hVariablesGeneralFieldEditTime" scope="row" headers="hVariablesGeneralFieldName">Edit time</th>
                 <td headers="hVariablesGeneralFieldEditTime hVariablesGeneralFieldType">Ganzzahl</td>
-                <td headers="hVariablesGeneralFieldEditTime hVariablesGeneralFieldMandatory">true</td>
+                <td headers="hVariablesGeneralFieldEditTime hVariablesGeneralFieldMandatory">false</td>
                 <td headers="hVariablesGeneralFieldEditTime hVariablesGeneralFieldDefault">6</td>
                 <td headers="hVariablesGeneralFieldEditTime hVariablesGeneralFieldDisplayType">ALL</td>
                 <td headers="hVariablesGeneralFieldEditTime hVariablesGeneralFieldConstraints">
@@ -2797,7 +2802,7 @@
             <tr>
                 <th id="hVariablesGeneralFieldLatestPostings" scope="row" headers="hVariablesGeneralFieldName">Latest postings</th>
                 <td headers="hVariablesGeneralFieldLatestPostings hVariablesGeneralFieldType">Ganzzahl</td>
-                <td headers="hVariablesGeneralFieldLatestPostings hVariablesGeneralFieldMandatory">true</td>
+                <td headers="hVariablesGeneralFieldLatestPostings hVariablesGeneralFieldMandatory">false</td>
                 <td headers="hVariablesGeneralFieldLatestPostings hVariablesGeneralFieldDefault">24</td>
                 <td headers="hVariablesGeneralFieldLatestPostings hVariablesGeneralFieldDisplayType">ALL</td>
                 <td headers="hVariablesGeneralFieldLatestPostings hVariablesGeneralFieldConstraints">
@@ -2871,43 +2876,35 @@
             </tr>
             <tr>
                 <th id="hVariablesGeneralFieldStandardIcon" scope="row" headers="hVariablesGeneralFieldName">Standard icon</th>
-                <td headers="hVariablesGeneralFieldStandardIcon hVariablesGeneralFieldType">Upload</td>
-                <td headers="hVariablesGeneralFieldStandardIcon hVariablesGeneralFieldMandatory">true</td>
-                <td headers="hVariablesGeneralFieldStandardIcon hVariablesGeneralFieldDefault">images/icons/extrasmall/favorites.png</td>
+                <td headers="hVariablesGeneralFieldStandardIcon hVariablesGeneralFieldType">Zeichenkette</td>
+                <td headers="hVariablesGeneralFieldStandardIcon hVariablesGeneralFieldMandatory">false</td>
+                <td headers="hVariablesGeneralFieldStandardIcon hVariablesGeneralFieldDefault"></td>
                 <td headers="hVariablesGeneralFieldStandardIcon hVariablesGeneralFieldDisplayType">ALL</td>
                 <td headers="hVariablesGeneralFieldStandardIcon hVariablesGeneralFieldConstraints">
                     <ul>
                         <li>Hat eine Länge von 255 Zeichen.</li>
-                        <li>Die erlaubten Dateierweiterungen sind "gif, jpeg, jpg, png".</li>
-                        <li>Die erlaubten MIME-Typen sind "image/*".</li>
                     </ul>
                 </td>
                 <td headers="hVariablesGeneralFieldStandardIcon hVariablesGeneralFieldRemarks">
                     <ul>
-                        <li>This icon will be used for ranks to show; for example a star. </li>
                         <li>Dieses Feld ist nicht eindeutig und erlaubt keine Null-Werte.</li>
-                        <li>Die hochgeladenen Dateien werden im Unterordner "standardicon" gespeichert und behalten ihren originalen Dateinamen, der bei Bedarf um einen Zähler erweitert wird..</li>
                     </ul>
                 </td>
             </tr>
             <tr>
                 <th id="hVariablesGeneralFieldSpecialIcon" scope="row" headers="hVariablesGeneralFieldName">Special icon</th>
-                <td headers="hVariablesGeneralFieldSpecialIcon hVariablesGeneralFieldType">Upload</td>
-                <td headers="hVariablesGeneralFieldSpecialIcon hVariablesGeneralFieldMandatory">true</td>
-                <td headers="hVariablesGeneralFieldSpecialIcon hVariablesGeneralFieldDefault">images/icons/extrasmall/package_favorite.png</td>
+                <td headers="hVariablesGeneralFieldSpecialIcon hVariablesGeneralFieldType">Zeichenkette</td>
+                <td headers="hVariablesGeneralFieldSpecialIcon hVariablesGeneralFieldMandatory">false</td>
+                <td headers="hVariablesGeneralFieldSpecialIcon hVariablesGeneralFieldDefault"></td>
                 <td headers="hVariablesGeneralFieldSpecialIcon hVariablesGeneralFieldDisplayType">ALL</td>
                 <td headers="hVariablesGeneralFieldSpecialIcon hVariablesGeneralFieldConstraints">
                     <ul>
                         <li>Hat eine Länge von 255 Zeichen.</li>
-                        <li>Die erlaubten Dateierweiterungen sind "gif, jpeg, jpg, png".</li>
-                        <li>Die erlaubten MIME-Typen sind "image/*".</li>
                     </ul>
                 </td>
                 <td headers="hVariablesGeneralFieldSpecialIcon hVariablesGeneralFieldRemarks">
                     <ul>
-                        <li>This icon will be used for special ranks to show; for example a heart. </li>
                         <li>Dieses Feld ist nicht eindeutig und erlaubt keine Null-Werte.</li>
-                        <li>Die hochgeladenen Dateien werden im Unterordner "specialicon" gespeichert und behalten ihren originalen Dateinamen, der bei Bedarf um einen Zähler erweitert wird..</li>
                     </ul>
                 </td>
             </tr>
@@ -2983,8 +2980,8 @@
             <tr>
                 <th id="hVariablesLayoutFieldShowStatisticInDetails" scope="row" headers="hVariablesLayoutFieldName">Show statistic in details</th>
                 <td headers="hVariablesLayoutFieldShowStatisticInDetails hVariablesLayoutFieldType">Boolesches</td>
-                <td headers="hVariablesLayoutFieldShowStatisticInDetails hVariablesLayoutFieldMandatory">true</td>
-                <td headers="hVariablesLayoutFieldShowStatisticInDetails hVariablesLayoutFieldDefault">1</td>
+                <td headers="hVariablesLayoutFieldShowStatisticInDetails hVariablesLayoutFieldMandatory">false</td>
+                <td headers="hVariablesLayoutFieldShowStatisticInDetails hVariablesLayoutFieldDefault"></td>
                 <td headers="hVariablesLayoutFieldShowStatisticInDetails hVariablesLayoutFieldDisplayType">ALL</td>
                 <td headers="hVariablesLayoutFieldShowStatisticInDetails hVariablesLayoutFieldConstraints">
                     <ul>
@@ -2999,7 +2996,7 @@
             <tr>
                 <th id="hVariablesLayoutFieldShowStatisticOnBottom" scope="row" headers="hVariablesLayoutFieldName">Show statistic on bottom</th>
                 <td headers="hVariablesLayoutFieldShowStatisticOnBottom hVariablesLayoutFieldType">Boolesches</td>
-                <td headers="hVariablesLayoutFieldShowStatisticOnBottom hVariablesLayoutFieldMandatory">true</td>
+                <td headers="hVariablesLayoutFieldShowStatisticOnBottom hVariablesLayoutFieldMandatory">false</td>
                 <td headers="hVariablesLayoutFieldShowStatisticOnBottom hVariablesLayoutFieldDefault"></td>
                 <td headers="hVariablesLayoutFieldShowStatisticOnBottom hVariablesLayoutFieldDisplayType">ALL</td>
                 <td headers="hVariablesLayoutFieldShowStatisticOnBottom hVariablesLayoutFieldConstraints">

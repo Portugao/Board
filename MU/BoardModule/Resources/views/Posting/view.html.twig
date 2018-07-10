@@ -28,11 +28,7 @@
                 <col id="cInvocations" />
                 <col id="cSolved" />
                 <col id="cFirstImage" />
-                <col id="cSecondImage" />
-                <col id="cThirdImage" />
                 <col id="cFirstFile" />
-                <col id="cSecondFile" />
-                <col id="cThirdFile" />
                 <col id="cParent" />
                 <col id="cForum" />
             </colgroup>
@@ -67,20 +63,8 @@
                 <th id="hFirstImage" scope="col" class="text-left">
                     <a href="{{ sort.firstImage.url }}" title="{{ __f('Sort by %s', {'%s': 'first image'}) }}" class="{{ sort.firstImage.class }}">{{ __('First image') }}</a>
                 </th>
-                <th id="hSecondImage" scope="col" class="text-left">
-                    <a href="{{ sort.secondImage.url }}" title="{{ __f('Sort by %s', {'%s': 'second image'}) }}" class="{{ sort.secondImage.class }}">{{ __('Second image') }}</a>
-                </th>
-                <th id="hThirdImage" scope="col" class="text-left">
-                    <a href="{{ sort.thirdImage.url }}" title="{{ __f('Sort by %s', {'%s': 'third image'}) }}" class="{{ sort.thirdImage.class }}">{{ __('Third image') }}</a>
-                </th>
                 <th id="hFirstFile" scope="col" class="text-left">
                     <a href="{{ sort.firstFile.url }}" title="{{ __f('Sort by %s', {'%s': 'first file'}) }}" class="{{ sort.firstFile.class }}">{{ __('First file') }}</a>
-                </th>
-                <th id="hSecondFile" scope="col" class="text-left">
-                    <a href="{{ sort.secondFile.url }}" title="{{ __f('Sort by %s', {'%s': 'second file'}) }}" class="{{ sort.secondFile.class }}">{{ __('Second file') }}</a>
-                </th>
-                <th id="hThirdFile" scope="col" class="text-left">
-                    <a href="{{ sort.thirdFile.url }}" title="{{ __f('Sort by %s', {'%s': 'third file'}) }}" class="{{ sort.thirdFile.class }}">{{ __('Third file') }}</a>
                 </th>
                 <th id="hParent" scope="col" class="text-left">
                     <a href="{{ sort.parent.url }}" title="{{ __f('Sort by %s', {'%s': 'parent'}) }}" class="{{ sort.parent.class }}">{{ __('Parent') }}</a>
@@ -140,30 +124,6 @@
                     </a>
                     {% else %}&nbsp;{% endif %}
                 </td>
-                <td headers="hSecondImage" class="text-left">
-                    {% if posting.secondImage is not empty and posting.secondImageMeta|default %}
-                                <a href="{{ posting.secondImageUrl }}" title="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}"{% if posting.secondImageMeta.isImage %} class="image-link"{% endif %}>
-                    {% if posting.secondImageMeta.isImage %}
-                        {% set thumbOptions = attribute(thumbRuntimeOptions, 'postingSecondImage') %}
-                        <img src="{{ posting.secondImage.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
-                    {% else %}
-                        {{ __('Download') }} ({{ posting.secondImageMeta.size|muboardmodule_fileSize(posting.secondImage.getPathname(), false, false) }})
-                    {% endif %}
-                    </a>
-                    {% else %}&nbsp;{% endif %}
-                </td>
-                <td headers="hThirdImage" class="text-left">
-                    {% if posting.thirdImage is not empty and posting.thirdImageMeta|default %}
-                                <a href="{{ posting.thirdImageUrl }}" title="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}"{% if posting.thirdImageMeta.isImage %} class="image-link"{% endif %}>
-                    {% if posting.thirdImageMeta.isImage %}
-                        {% set thumbOptions = attribute(thumbRuntimeOptions, 'postingThirdImage') %}
-                        <img src="{{ posting.thirdImage.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
-                    {% else %}
-                        {{ __('Download') }} ({{ posting.thirdImageMeta.size|muboardmodule_fileSize(posting.thirdImage.getPathname(), false, false) }})
-                    {% endif %}
-                    </a>
-                    {% else %}&nbsp;{% endif %}
-                </td>
                 <td headers="hFirstFile" class="text-left">
                     {% if posting.firstFile is not empty and posting.firstFileMeta|default %}
                                 <a href="{{ posting.firstFileUrl }}" title="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}"{% if posting.firstFileMeta.isImage %} class="image-link"{% endif %}>
@@ -172,30 +132,6 @@
                         <img src="{{ posting.firstFile.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
                     {% else %}
                         {{ __('Download') }} ({{ posting.firstFileMeta.size|muboardmodule_fileSize(posting.firstFile.getPathname(), false, false) }})
-                    {% endif %}
-                    </a>
-                    {% else %}&nbsp;{% endif %}
-                </td>
-                <td headers="hSecondFile" class="text-left">
-                    {% if posting.secondFile is not empty and posting.secondFileMeta|default %}
-                                <a href="{{ posting.secondFileUrl }}" title="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}"{% if posting.secondFileMeta.isImage %} class="image-link"{% endif %}>
-                    {% if posting.secondFileMeta.isImage %}
-                        {% set thumbOptions = attribute(thumbRuntimeOptions, 'postingSecondFile') %}
-                        <img src="{{ posting.secondFile.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
-                    {% else %}
-                        {{ __('Download') }} ({{ posting.secondFileMeta.size|muboardmodule_fileSize(posting.secondFile.getPathname(), false, false) }})
-                    {% endif %}
-                    </a>
-                    {% else %}&nbsp;{% endif %}
-                </td>
-                <td headers="hThirdFile" class="text-left">
-                    {% if posting.thirdFile is not empty and posting.thirdFileMeta|default %}
-                                <a href="{{ posting.thirdFileUrl }}" title="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}"{% if posting.thirdFileMeta.isImage %} class="image-link"{% endif %}>
-                    {% if posting.thirdFileMeta.isImage %}
-                        {% set thumbOptions = attribute(thumbRuntimeOptions, 'postingThirdFile') %}
-                        <img src="{{ posting.thirdFile.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ posting|muboardmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
-                    {% else %}
-                        {{ __('Download') }} ({{ posting.thirdFileMeta.size|muboardmodule_fileSize(posting.thirdFile.getPathname(), false, false) }})
                     {% endif %}
                     </a>
                     {% else %}&nbsp;{% endif %}
@@ -223,7 +159,7 @@
             </tr>
         {% else %}
             <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
-                <td class="text-left" colspan="{% if routeArea == 'admin' %}16{% else %}15{% endif %}">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}12{% else %}11{% endif %}">
             {{ __('No postings found.') }}
               </td>
             </tr>

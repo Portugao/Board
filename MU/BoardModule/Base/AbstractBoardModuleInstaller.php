@@ -67,7 +67,7 @@ abstract class AbstractBoardModuleInstaller extends AbstractExtensionInstaller
         $this->setVar('allowedSizeOfImages', '200k');
         $this->setVar('numberImages', '1');
         $this->setVar('uploadFiles', false);
-        $this->setVar('allowedSizeOfFiles', '');
+        $this->setVar('allowedSizeOfFiles', '200k');
         $this->setVar('numberFiles', '1');
         $this->setVar('editPostings', false);
         $this->setVar('editTime', 6);
@@ -75,8 +75,8 @@ abstract class AbstractBoardModuleInstaller extends AbstractExtensionInstaller
         $this->setVar('sortingCategories', 'descending');
         $this->setVar('sortingForums', 'descending');
         $this->setVar('sortingPostings', 'descending');
-        $this->setVar('standardIcon', null);
-        $this->setVar('specialIcon', null);
+        $this->setVar('standardIcon', '');
+        $this->setVar('specialIcon', '');
         $this->setVar('iconSet', '1');
         $this->setVar('template', 'normal');
         $this->setVar('showStatisticInDetails', false);
