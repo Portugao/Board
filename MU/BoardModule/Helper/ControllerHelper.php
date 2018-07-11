@@ -43,6 +43,7 @@ class ControllerHelper extends AbstractControllerHelper
     	$postingsRepository = $this->entityFactory->getRepository('posting');
     	$countIssues = 0;
     	$countPostings = 0;
+    	$workflowState = 'approved';
     	foreach ($entries as $entry) {
     		if ($objectType == 'category') {
     			$forums = $entry['forum'];

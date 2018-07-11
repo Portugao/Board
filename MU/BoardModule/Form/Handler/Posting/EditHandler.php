@@ -20,5 +20,50 @@ use MU\BoardModule\Form\Handler\Posting\Base\AbstractEditHandler;
  */
 class EditHandler extends AbstractEditHandler
 {
-    // feel free to extend the base handler class here
+    /**
+     * This method executes a certain workflow action.
+     *
+     * @param array $args List of arguments from handleCommand method
+     *
+     * @return boolean Whether everything worked well or not
+     *
+     * @throws RuntimeException Thrown if concurrent editing is recognised or another error occurs
+     */
+    public function applyAction(array $args = [])
+    {
+        // get treated entity reference from persisted member var
+        $entity = $this->entityRef;
+        
+        $forumId = $this->request->request->get('forumid');
+        $forumRepository = $this->entityFactory->getRepository('forum');
+        $forum = $forumRepository->find($forumId);
+        $entity['forum'] = $forum;
+        
+        $postingId = $this->request->request->get('postingid');
+        $postingRepository = $this->entityFactory->getRepository('posting');
+        $posting = $postingRepository->find($postingId);
+        $entity['parent'] = $posting;
+    
+        $action = $args['commandName'];
+    
+        $success = false;
+        $flashBag = $this->request->getSession()->getFlashBag();
+        try {
+            // execute the workflow action
+            $success = $this->workflowHelper->executeAction($entity, $action);
+        } catch (\Exception $exception) {
+            $flashBag->add('error', $this->__f('Sorry, but an error occured during the %action% action. Please apply the changes again!', ['%action%' => $action]) . ' ' . $exception->getMessage());
+            $logArgs = ['app' => 'MUBoardModule', 'user' => $this->currentUserApi->get('uname'), 'entity' => 'posting', 'id' => $entity->getKey(), 'errorMessage' => $exception->getMessage()];
+            $this->logger->error('{app}: User {user} tried to edit the {entity} with id {id}, but failed. Error details: {errorMessage}.', $logArgs);
+        }
+    
+        $this->addDefaultMessage($args, $success);
+    
+        if ($success && $this->templateParameters['mode'] == 'create') {
+            // store new identifier
+            $this->idValue = $entity->getKey();
+        }
+    
+        return $success;
+    }
 }

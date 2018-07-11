@@ -10,5 +10,6 @@ services:
             - "@mu_board_module.listentries_helper"
             - "@request_stack"
             - "@fragment.handler"
+            - "@mu_board_module.entity_factory"
         public: false
         tags: ['twig.extension']

@@ -23,6 +23,7 @@ use MU\BoardModule\Helper\WorkflowHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
+use MU\BoardModule\Entity\Factory\EntityFactory;
 
 /**
  * Twig extension implementation class.
@@ -33,6 +34,11 @@ class TwigExtension extends AbstractTwigExtension
 	 * @var Request
 	 */
 	protected $request;
+	
+	/**
+	 * @var EntityFactory
+	 */
+	protected $entityFactory;
 	
 	/**
 	 * @var FragmentHandler
@@ -49,6 +55,7 @@ class TwigExtension extends AbstractTwigExtension
 	 * @param ListEntriesHelper   $listHelper     ListEntriesHelper service instance
 	 * @param RequestStack           $requestStack     RequestStack service instance
 	 * @param FragmentHandler    $fragmentHandler FragmentHandler service instance
+	 * @param EntityFactory      $entityFactory   EntityFactory service instance
 	 */
 	public function __construct(
 			TranslatorInterface $translator,
@@ -57,7 +64,8 @@ class TwigExtension extends AbstractTwigExtension
 			WorkflowHelper $workflowHelper,
 			ListEntriesHelper $listHelper,
 			RequestStack $requestStack,
-			FragmentHandler $fragmentHandler)
+			FragmentHandler $fragmentHandler,
+			EntityFactory $entityFactory)
 	{
 		$this->setTranslator($translator);
 		$this->variableApi = $variableApi;
@@ -66,6 +74,7 @@ class TwigExtension extends AbstractTwigExtension
 		$this->listHelper = $listHelper;
 		$this->request = $requestStack->getCurrentRequest();
 		$this->fragmentHandler = $fragmentHandler;
+		$this->entityFactory = $entityFactory;
 	}
 	
 	/**
@@ -77,7 +86,9 @@ class TwigExtension extends AbstractTwigExtension
 	{
         $functions = parent::getFunctions();
         $functions[] = new \Twig_SimpleFunction('muboardmodule_showEditForm', [$this, 'showEditForm'], ['is_safe' => ['html']]);
-        
+        $functions[] = new \Twig_SimpleFunction('muboardmodule_getForumId', [$this, 'getForumId'], ['is_safe' => ['html']]);
+        $functions[] = new \Twig_SimpleFunction('muboardmodule_getPostingId', [$this, 'getPostingId'], ['is_safe' => ['html']]);
+                
         return $functions;
 	}
 	
@@ -85,8 +96,30 @@ class TwigExtension extends AbstractTwigExtension
     {
     	$this->request->attributes->set('_zkModule', 'MUBoardModule');
     
-    	$ref = new ControllerReference('MUBoardModule:Posting:edit');
+    	$ref = new ControllerReference('MUBoardModule:Posting:edit',array() , array('forumid' => 1));
     
     	return $this->fragmentHandler->render($ref, 'inline', []);
+    }
+    
+    public function getForumId()
+    {
+    	$postingId = $this->request->get('id', 0);
+    	if ($postingId > 0) {
+    	$postingRepository = $this->entityFactory->getRepository('posting');
+    	$entity = $postingRepository->selectById($postingId);
+    	return $entity['forum']['id'];   	
+    	} else {
+    		return '';
+    	}
+    }
+    
+    public function getPostingId()
+    {
+    	$postingId = $this->request->get('id');
+    	if ($postingId > 0) {
+    	return $postingId;
+    	} else {
+    		return '';
+    	}
     }
 }

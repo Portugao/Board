@@ -108,7 +108,8 @@
             </fieldset>
         {% endif %}
         
-        <fieldset>
+        <div class="hidden">
+        {<fieldset>
             <legend>{{ __('Communication') }}</legend>
             {{ form_row(form.additionalNotificationRemarks) }}
         </fieldset>
@@ -122,8 +123,15 @@
                 </div>
             </fieldset>
         {% endif %}
-        
-        
+        </div>
+        {% set forumId = muboardmodule_getForumId() %}
+        {% if forumId != '' %}
+        <input type="hidden" id="forumid" name="forumid" value="{{ forumId }}" /> 
+        {% endif %}  
+        {% set postingId = muboardmodule_getPostingId() %}
+        {% if postingId != '' %}
+        <input type="hidden" id="postingid" name="postingid" value="{{ postingId }}" />      
+        {% endif %}
         {# include possible submit actions #}
         <div class="form-group form-buttons">
             <div class="col-sm-offset-3 col-sm-9">
