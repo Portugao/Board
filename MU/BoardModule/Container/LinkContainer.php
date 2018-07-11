@@ -16,11 +16,50 @@ use MU\BoardModule\Container\Base\AbstractLinkContainer;
 use Zikula\Core\LinkContainer\LinkContainerInterface;
 use MU\BoardModule\Helper\ControllerHelper;
 use MU\BoardModule\Helper\PermissionHelper;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+
+use Symfony\Component\Routing\RouterInterface;
+use Zikula\Common\Translator\TranslatorInterface;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
+
 
 /**
  * This is the link container service implementation class.
  */
 class LinkContainer extends AbstractLinkContainer {
+	
+	/**
+	 * @var Request
+	 */
+	protected $request;
+	
+	/**
+	 * LinkContainer constructor.
+	 *
+	 * @param TranslatorInterface  $translator       Translator service instance
+	 * @param Routerinterface      $router           Router service instance
+	 * @param VariableApiInterface $variableApi      VariableApi service instance
+	 * @param ControllerHelper     $controllerHelper ControllerHelper service instance
+	 * @param PermissionHelper     $permissionHelper PermissionHelper service instance
+	 * @param RequestStack           $requestStack     RequestStack service instance
+	 */
+	public function __construct(
+			TranslatorInterface $translator,
+			RouterInterface $router,
+			VariableApiInterface $variableApi,
+			ControllerHelper $controllerHelper,
+			PermissionHelper $permissionHelper,
+			RequestStack $requestStack
+			) {
+				$this->setTranslator($translator);
+				$this->router = $router;
+				$this->variableApi = $variableApi;
+				$this->controllerHelper = $controllerHelper;
+				$this->permissionHelper = $permissionHelper;
+				$this->request = $requestStack->getCurrentRequest();
+	}
+	
 	/**
 	 * Returns available header links.
 	 *
@@ -152,9 +191,16 @@ class LinkContainer extends AbstractLinkContainer {
 			];
 		}
 		if ($routeArea != 'admin') {
+			$forumId = $this->request->query->get('id', 0);
+
+			if ($forumId == 0) {
+				$url = $this->router->generate ( 'muboardmodule_posting_' . $routeArea . 'edit' );
+			} else {
+				$url = $this->router->generate ( 'muboardmodule_posting_' . $routeArea . 'edit', array('forumId' => $forumId) );
+			}
 			if ($this->permissionHelper->hasComponentPermission ( 'posting', $commentLevel )) {
 				$links [] = [
-						'url' => $this->router->generate ( 'muboardmodule_posting_' . $routeArea . 'edit' ),
+						'url' => $url,
 						'text' => $this->__ ( 'Create issue', 'muboardmodule' ),
 						'title' => $this->__ ( 'New issue', 'muboardmodule' )
 				];
