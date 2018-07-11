@@ -34,15 +34,19 @@ class EditHandler extends AbstractEditHandler
         // get treated entity reference from persisted member var
         $entity = $this->entityRef;
         
-        $forumId = $this->request->request->get('forumid');
+        $forumId = $this->request->request->get('forumid',0);
         $forumRepository = $this->entityFactory->getRepository('forum');
+        if ($forumId > 0) {
         $forum = $forumRepository->find($forumId);
         $entity['forum'] = $forum;
+        }
         
-        $postingId = $this->request->request->get('postingid');
+        $postingId = $this->request->request->get('postingid',0);
         $postingRepository = $this->entityFactory->getRepository('posting');
+        if ($postingId > 0) {
         $posting = $postingRepository->find($postingId);
         $entity['parent'] = $posting;
+        }
     
         $action = $args['commandName'];
     
