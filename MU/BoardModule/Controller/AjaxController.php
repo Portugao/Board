@@ -13,12 +13,10 @@
 namespace MU\BoardModule\Controller;
 
 use MU\BoardModule\Controller\Base\AbstractAjaxController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Ajax controller implementation class.
@@ -31,8 +29,7 @@ class AjaxController extends AbstractAjaxController
     /**
      * Retrieve item list for finder selections in Forms, Content type plugin and Scribite.
      *
-     * @Route("/getItemListFinder", options={"expose"=true})
-     * @Method("GET")
+     * @Route("/getItemListFinder", methods = {"GET"}, options={"expose"=true})
      *
      * @param string $ot      Name of currently used object type
      * @param string $sort    Sorting field
@@ -48,8 +45,7 @@ class AjaxController extends AbstractAjaxController
     /**
      * Changes a given flag (boolean field) by switching between true and false.
      *
-     * @Route("/toggleFlag", options={"expose"=true})
-     * @Method("POST")
+     * @Route("/toggleFlag", methods = {"POST"}, options={"expose"=true})
      *
      * @param Request $request Current request instance
      *
@@ -62,11 +58,11 @@ class AjaxController extends AbstractAjaxController
         return parent::toggleFlagAction($request);
     }
     
+
     /**
      * Changes a given state (boolean field) by switching between true and false.
      *
-     * @Route("/toggleState", options={"expose"=true})
-     * @Method("GET")
+     * @Route("/toggleFlag", methods = {"GET"}, options={"expose"=true})
      *
      * @param Request $request Current request instance
      *
@@ -99,48 +95,47 @@ class AjaxController extends AbstractAjaxController
     	$id = $request->query->getInt('id', 0);
     
     	if ($id == 0) {
-    	    $result = $this->__('Error: invalid input.');
-        }
+    		$result = $this->__('Error: invalid input.');
+    	}
     
-    			// select data from data source
-    			$entityFactory = $this->get('mu_board_module.entity_factory');
-    			$repository = $entityFactory->getRepository($objectType);
-    			$entity = $repository->selectById($id, false);
-    			if (null === $entity) {
-    				$result = $this->__('No such item.');
-    			}
-    			
-    			// set new state
-    			if ($entity['state'] == 0) {
-    				$entity['state'] = 1;
-    			} else {
-    				$entity['state'] = 0;
-    			}
+    	// select data from data source
+    	$entityFactory = $this->get('mu_board_module.entity_factory');
+    	$repository = $entityFactory->getRepository($objectType);
+    	$entity = $repository->selectById($id, false);
+    	if (null === $entity) {
+    		$result = $this->__('No such item.');
+    	}
+    	 
+    	// set new state
+    	if ($entity['state'] == 0) {
+    		$entity['state'] = 1;
+    	} else {
+    		$entity['state'] = 0;
+    	}
     
-    			// save entity back to database
-    			$entityFactory->getObjectManager()->flush();
+    	// save entity back to database
+    	$entityFactory->getObjectManager()->flush();
     
-    			$logger = $this->get('logger');
-    			$logArgs = ['app' => 'MUBoardModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => $objectType, 'id' => $id];
-    			$logger->notice('{app}: User {user} toggled the state of posting  {entity} with id {id}.', $logArgs);
+    	$logger = $this->get('logger');
+    	$logArgs = ['app' => 'MUBoardModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => $objectType, 'id' => $id];
+    	$logger->notice('{app}: User {user} toggled the state of posting  {entity} with id {id}.', $logArgs);
     
-                /*$response = new Response(
-                'Content',
-                Response::HTTP_OK,
-                array('content-type' => 'text/html')
-                );*/
-                
-                $state = $this->__('The state of this issue was changed');
-    			
-                // return response
-                return new JsonResponse($state);
+    	/*$response = new Response(
+    	 'Content',
+    	 Response::HTTP_OK,
+    	 array('content-type' => 'text/html')
+    	 );*/
+    
+    	$state = $this->__('The state of this issue was changed');
+    	 
+    	// return response
+    	return new JsonResponse($state);
     }
     
     /**
      * Changes a given state (boolean field) by switching between true and false.
      *
-     * @Route("/saveForumPosition", options={"expose"=true})
-     * @Method("GET")
+     * @Route("/saveForumPosition", methods = {"GET"}, options={"expose"=true})
      *
      * @param Request $request Current request instance
      *
@@ -158,41 +153,41 @@ class AjaxController extends AbstractAjaxController
     	if (!$this->hasPermission('MUBoardModule::Ajax', '::', ACCESS_EDIT)) {
     		throw new AccessDeniedException();
     	}
-    	
+    	 
     	//$objectType = 'posting';
     	$forums = $request->query->get('forums');
     	$forums = explode(',', $forums);
-    	
+    	 
     	if ($forums == '') {
     		$result = $this->__('Error: invalid input.');
     	}
-    	
+    	 
     	// select data from data source
     	$entityFactory = $this->get('mu_board_module.entity_factory');
     	$repository = $entityFactory->getRepository('forum');
-    	
+    	 
     	$index = 0;
     	foreach ($forums as $forum) {
-    	
-    	$index = $index + 1;
-    	$thisForum = $repository->selectById($forum);
-    	$thisForum->setPos($index);
-    	//$entityManager->flush();
-    	/*$thisalbum = $thispicture->getAlbum();
-    	$thisAlbumId = $thisalbum['id'];*/
-    	
-    	// save entity back to database
-    	$entityFactory->getObjectManager()->flush();
+    		 
+    		$index = $index + 1;
+    		$thisForum = $repository->selectById($forum);
+    		$thisForum->setPos($index);
+    		//$entityManager->flush();
+    		/*$thisalbum = $thispicture->getAlbum();
+    		 $thisAlbumId = $thisalbum['id'];*/
+    		 
+    		// save entity back to database
+    		$entityFactory->getObjectManager()->flush();
     	}
-    	
-    	/*$logger = $this->get('logger');
-    	$logArgs = ['app' => 'MUBoardModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => $objectType, 'id' => $id];
-    	$logger->notice('{app}: User {user} toggled the state of posting  {entity} with id {id}.', $logArgs);*/
     	 
-        // return response
-        return new JsonResponse([
-            'message' => $this->__('The setting has been successfully changed.')
-        ]); 	
+    	/*$logger = $this->get('logger');
+    	 $logArgs = ['app' => 'MUBoardModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => $objectType, 'id' => $id];
+    	 $logger->notice('{app}: User {user} toggled the state of posting  {entity} with id {id}.', $logArgs);*/
+    
+    	// return response
+    	return new JsonResponse([
+    			'message' => $this->__('The setting has been successfully changed.')
+    	]);
     }
 
     // feel free to add your own ajax controller methods here
