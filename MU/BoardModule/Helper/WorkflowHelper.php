@@ -13,14 +13,11 @@
 namespace MU\BoardModule\Helper;
 
 use MU\BoardModule\Helper\Base\AbstractWorkflowHelper;
-use MU\BoardModule\Entity\PostingEntity;
-
-use Zikula\Core\Doctrine\EntityAccess;
 
 /**
  * Helper implementation class for workflow methods.
  */
 class WorkflowHelper extends AbstractWorkflowHelper
 {
-
+    // feel free to add your own convenience methods here
 }

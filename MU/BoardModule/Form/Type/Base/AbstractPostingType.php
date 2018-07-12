@@ -92,7 +92,7 @@ abstract class AbstractPostingType extends AbstractType
      *
      * @param TranslatorInterface $translator Translator service instance
      */
-    public function setTranslator(/*TranslatorInterface */$translator)
+    public function setTranslator(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
@@ -336,7 +336,7 @@ abstract class AbstractPostingType extends AbstractType
                 'title' => $helpText
             ],
             'attr' => [
-                'title' => $options['mode'] == 'create' ? $this->__('Enter any additions about your content') : $this->__('Enter any additions about your changes')
+                'title' => 'create' == $options['mode'] ? $this->__('Enter any additions about your content') : $this->__('Enter any additions about your changes')
             ],
             'required' => false,
             'help' => $helpText

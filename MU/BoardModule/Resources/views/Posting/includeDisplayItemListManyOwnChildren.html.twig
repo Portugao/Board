@@ -10,6 +10,7 @@
 {% if items|default and items|length > 0 %}
 <div class="list-group muboardmodule-related-item-list forum">
 {% for item in items %}
+    <div class="row">
     <div class="col-md-12 children">
     <div class="col-md-4">
         <div class="children-include-user">
@@ -21,8 +22,19 @@
             {{ include('@MUBoardModule/Helper/includeStandardFieldsDisplay3.html.twig', {obj: item}) }}
         </div>
         <div class="children-include-content">
-            {{ item.text|safeHtml }}
+            {{ item.text|safeHtml }}<br />
+            {% if item.firstImage is not empty and item.firstImageMeta|default %}
+                        <a href="{{ item.firstImageUrl }}" title="{{ item|muboardmodule_formattedTitle|e('html_attr') }}"{% if item.firstImageMeta.isImage %} class="image-link"{% endif %}>
+            {% if item.firstImageMeta.isImage %}
+                {% set thumbOptions = attribute(thumbRuntimeOptions, 'postingFirstImage') %}
+                <img src="{{ item.firstImage.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ item|muboardmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-responsive" />
+            {% else %}
+                {{ __('Download') }} ({{ item.firstImageMeta.size|muboardmodule_fileSize(item.firstImage.getPathname(), false, false) }})
+            {% endif %}
+            </a>
+            {% else %}&nbsp;{% endif %}
         </div>
+    </div>
     </div>
     </div>
 {% endfor %}

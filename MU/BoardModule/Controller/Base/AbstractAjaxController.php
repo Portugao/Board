@@ -14,6 +14,7 @@ namespace MU\BoardModule\Controller\Base;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\Core\Controller\AbstractController;
 
@@ -34,6 +35,10 @@ abstract class AbstractAjaxController extends AbstractController
      */
     public function getItemListFinderAction(Request $request)
     {
+        if (!$request->isXmlHttpRequest()) {
+            return $this->json($this->__('Only ajax access is allowed!'), Response::HTTP_BAD_REQUEST);
+        }
+        
         if (!$this->hasPermission('MUBoardModule::Ajax', '::', ACCESS_EDIT)) {
             return true;
         }
@@ -127,6 +132,10 @@ abstract class AbstractAjaxController extends AbstractController
      */
     public function toggleFlagAction(Request $request)
     {
+        if (!$request->isXmlHttpRequest()) {
+            return $this->json($this->__('Only ajax access is allowed!'), Response::HTTP_BAD_REQUEST);
+        }
+        
         if (!$this->hasPermission('MUBoardModule::Ajax', '::', ACCESS_EDIT)) {
             throw new AccessDeniedException();
         }
@@ -137,7 +146,7 @@ abstract class AbstractAjaxController extends AbstractController
         
         if ($id == 0
             || ($objectType != 'posting' && $objectType != 'rank')
-        || ($objectType == 'posting' && !in_array($field, ['state']))
+        || ($objectType == 'posting' && !in_array($field, ['state', 'solved']))
         || ($objectType == 'rank' && !in_array($field, ['special']))
         ) {
             return $this->json($this->__('Error: invalid input.'), JsonResponse::HTTP_BAD_REQUEST);

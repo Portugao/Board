@@ -201,8 +201,8 @@ class LinkContainer extends AbstractLinkContainer {
 			if ($this->permissionHelper->hasComponentPermission ( 'posting', $commentLevel )) {
 				$links [] = [
 						'url' => $url,
-						'text' => $this->__ ( 'Create issue', 'muboardmodule' ),
-						'title' => $this->__ ( 'New issue', 'muboardmodule' )
+						'text' => $this->__ ( 'New issue', 'muboardmodule' ),
+						'title' => $this->__ ( 'Create issue', 'muboardmodule' )
 				];
 			}			
 		}

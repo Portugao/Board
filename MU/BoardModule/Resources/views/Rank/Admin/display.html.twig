@@ -49,22 +49,20 @@
             {% else %}&nbsp;{% endif %}
             </dd>
         {% endif %}
-        {% if rank.special is not empty %}
-            <dt>{{ __('Special') }}</dt>
-            <dd>{% set itemId = rank.getKey() %}
-            <a id="toggleSpecial{{ itemId }}" href="javascript:void(0);" class="muboard-ajax-toggle hidden" data-object-type="rank" data-field-name="special" data-item-id="{{ itemId }}">
-                <i class="fa fa-check{% if not rank.special %} hidden{% endif %}" id="yesSpecial{{ itemId }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
-                <i class="fa fa-times{% if rank.special %} hidden{% endif %}" id="noSpecial{{ itemId }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
-            </a>
-            <noscript><div id="noscriptSpecial{{ itemId }}">
-                {% if rank.special %}
-                    <i class="fa fa-check" title="{{ __('Yes') }}"></i>
-                {% else %}
-                    <i class="fa fa-times" title="{{ __('No') }}"></i>
-                {% endif %}
-            </div></noscript>
-            </dd>
-        {% endif %}
+        <dt>{{ __('Special') }}</dt>
+        <dd>{% set itemId = rank.getKey() %}
+        <a id="toggleSpecial{{ itemId }}" href="javascript:void(0);" class="muboard-ajax-toggle hidden" data-object-type="rank" data-field-name="special" data-item-id="{{ itemId }}">
+            <i class="fa fa-check text-success{% if not rank.special %} hidden{% endif %}" id="yesSpecial{{ itemId }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
+            <i class="fa fa-times text-danger{% if rank.special %} hidden{% endif %}" id="noSpecial{{ itemId }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
+        </a>
+        <noscript><div id="noscriptSpecial{{ itemId }}">
+            {% if rank.special %}
+                <i class="fa fa-check text-success" title="{{ __('Yes') }}"></i>
+            {% else %}
+                <i class="fa fa-times text-danger" title="{{ __('No') }}"></i>
+            {% endif %}
+        </div></noscript>
+        </dd>
         
     </dl>
 
