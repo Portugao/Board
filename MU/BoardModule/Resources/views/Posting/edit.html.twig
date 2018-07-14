@@ -20,6 +20,9 @@
             'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
         ] %}
         {% set returnUrl = path('muboardmodule_category_view') %}
+        {% set forumId = muboardmodule_getForumId() %}          
+        {% set postingId = muboardmodule_getPostingId() %}
+        
         {% if mode == 'create' %}
         {{ form_start(form, {attr: {id: 'entryEditForm'}, action: path('muboardmodule_posting_edit', { returnTo: returnUrl }) }) }}
         {% else %}
@@ -28,7 +31,13 @@
         {{ form_errors(form) }}
         <fieldset>
             <legend>{{ __('Content') }}</legend>
+            {% if postingId > 0 %}
+                <div class="hidden">
+            {% endif %}
             {{ form_row(form.title) }}
+            {% if postingId > 0 %}
+                </div>
+            {% endif %}
             {{ form_row(form.text) }}
             <div class="hidden">
             {{ form_row(form.invocations) }}
@@ -124,11 +133,10 @@
             </fieldset>
         {% endif %}
         </div>
-        {% set forumId = muboardmodule_getForumId() %}
+
         {% if forumId != '' %}
         <input type="hidden" id="forumid" name="forumid" value="{{ forumId }}" /> 
         {% endif %}  
-        {% set postingId = muboardmodule_getPostingId() %}
         {% if postingId != '' %}
         <input type="hidden" id="postingid" name="postingid" value="{{ postingId }}" />      
         {% endif %}
