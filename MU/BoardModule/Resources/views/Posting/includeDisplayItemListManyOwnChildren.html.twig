@@ -10,7 +10,6 @@
 {% if items|default and items|length > 0 %}
 <div class="list-group muboardmodule-related-item-list forum">
 {% for item in items %}
-    <div class="row">
     <div class="col-md-12 children">
     <div class="col-md-4">
         <div class="children-include-user">
@@ -34,7 +33,6 @@
             </a>
             {% else %}&nbsp;{% endif %}
         </div>
-    </div>
     </div>
     </div>
 {% endfor %}
