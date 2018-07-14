@@ -26,14 +26,14 @@
                     </div>
                 </div>
                 <div class="col-sm-5">
-                    <div class="col-sm-5">
+                    <div class="col-sm-4">
                         {{ userAvatar(posting.createdBy.getUid(), {rating: 'g'}) }}
                     </div>
-                <div class="col-sm-7">
+                <div class="col-sm-8">
                     {% set profileLink = posting.createdBy.getUid()|profileLinkByUserId() %}
                     {{ __f('Created by %user on %date', {'%user': profileLink, '%date': posting.createdDate|localizeddate('medium', 'short')})|raw }}
                     {{ __('Rank') }}: {{ posting.user.rank.name }}<br />
-                    {% set rankAmount = posting.user.rank.numberOficons %}
+                    {% set rankAmount = posting.user.rank.numberOfIcons %}
                     {% set counter = 0 %}
                     {% set icon = getModVar('MUBoardModule', 'standardIcon' ) %}
                         {% for i in 1..rankAmount %}

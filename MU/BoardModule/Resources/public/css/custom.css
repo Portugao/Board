@@ -77,6 +77,16 @@
 
 /***********POSTING****************/
 
+.list-group .active {
+	color: #eee;
+}
+
+.list-group .active a:link,
+.list-group .active a:visited,
+.list-group .active h3  {
+	color: #efefef;
+}
+
 .muboard-user-posting-content-text {
 	padding: 15px;
 }
