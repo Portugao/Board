@@ -50,7 +50,7 @@
             {% set itemText = item.last.title %}
         {% endif %}
         {% endif %}
-        {% if item.last %}<span class="last-posting"><a href="{{ path('muboardmodule_posting_display', {'id': itemLink }) }}">{{ itemText }}</a><br />{{ __('by') }}
+        {% if item.last %}<span class="last-posting"><a href="{{ path('muboardmodule_posting_display', {'id': itemLink }) }}#group-item-{{ item.last.id }}">{{ itemText }}</a><br />{{ __('by') }}
         <span class="posting-avatar">{{ userAvatar(item.last.createdBy.uid, {rating: 'g'}) }}</span> {% set profileLink = item.last.createdBy.uid|profileLinkByUserId() %} {{ profileLink|raw }}<br />{{ __('on') }}  {{ item.last.createdDate|localizeddate('medium', 'short')}} {% else %}{{ __('No posting available') }}{% endif %}
     </div>
     <input name="pictures[]" type="hidden" value={$item.id} />
