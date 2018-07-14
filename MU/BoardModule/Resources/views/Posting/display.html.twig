@@ -12,12 +12,12 @@
     </div>#}
 {% endblock %}
 {% block content %}
-    {% set isQuickView = app.request.query.getBoolean('raw', false) %}
-    <div class="muboardmodule-posting muboardmodule-display">
-    
-        {#<div class="row">#}
-        <div class="row">
-            <div class="col-sm-12">
+{% set isQuickView = app.request.query.getBoolean('raw', false) %}
+<div class="muboardmodule-posting muboardmodule-display">
+<ul class="list-group">
+  <li class="list-group-item active">
+    <div class="row">
+        <div class="col-sm-12">
             <div class="posting-display-header">
                 <div class="col-sm-4">       
                     <div id="posting-title">
@@ -26,19 +26,19 @@
                     </div>
                 </div>
                 <div class="col-sm-5">
-                <div class="col-sm-5">
-                {{ userAvatar(posting.createdBy.getUid(), {rating: 'g'}) }}
-                </div>
+                    <div class="col-sm-5">
+                        {{ userAvatar(posting.createdBy.getUid(), {rating: 'g'}) }}
+                    </div>
                 <div class="col-sm-7">
-                {% set profileLink = posting.createdBy.getUid()|profileLinkByUserId() %}
-                {{ __f('Created by %user on %date', {'%user': profileLink, '%date': posting.createdDate|localizeddate('medium', 'short')})|raw }}
-                {{ __('Rank') }}: {{ posting.user.rank.name }}<br />
-                {% set rankAmount = posting.user.rank.numberOficons %}
-                {% set counter = 0 %}
-                {% set icon = getModVar('MUBoardModule', 'standardIcon' ) %}
-                {% for i in 1..rankAmount %}
-                    {{ icon|raw }}
-                {% endfor %}
+                    {% set profileLink = posting.createdBy.getUid()|profileLinkByUserId() %}
+                    {{ __f('Created by %user on %date', {'%user': profileLink, '%date': posting.createdDate|localizeddate('medium', 'short')})|raw }}
+                    {{ __('Rank') }}: {{ posting.user.rank.name }}<br />
+                    {% set rankAmount = posting.user.rank.numberOficons %}
+                    {% set counter = 0 %}
+                    {% set icon = getModVar('MUBoardModule', 'standardIcon' ) %}
+                        {% for i in 1..rankAmount %}
+                            {{ icon|raw }}
+                    {% endfor %}
                 </div>
                 </div>
                 <div class="col-sm-3">
@@ -46,29 +46,36 @@
                     <h4>{{ __('Forum') }}<br /><a href="{{ path('muboardmodule_forum_' ~ routeArea ~ 'display', {'id': posting.forum.id}) }}">{{ posting.forum.title }}</a></h4>
                 </div>
             </div>
-            </div>
-            </div>
-            <div class="row">
-            <div class="col-sm-12">
-                <div class="posting-display-content">
+        </div>
+    </div>
+
+  </li>
+  <li class="list-group-item list-group-item-info">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="posting-display-content">
                 <div class="muboard-user-posting-content-text">
-                {{ posting.text|safeHtml }}
+                    {{ posting.text|safeHtml }}
                 </div>
-                {% if posting.children|default %}
-                    {{ include(
-                        '@MUBoardModule/Posting/includeDisplayItemListManyOwnChildren.html.twig',
-                        {items: posting.children}
-                    ) }}
-                {% endif %}
-                </div>
-            </div>
-            </div>
-        {#<div>#}
-        <div class="row">
-            <div class="col-md-12">
-                {{ muboardmodule_showEditForm() }}
             </div>
         </div>
+    </div>
+  </li>
+
+</ul>
+
+
+    {% if posting.children|default %}
+        {{ include(
+            '@MUBoardModule/Posting/includeDisplayItemListManyOwnChildren.html.twig',
+                {items: posting.children}
+        ) }}
+    {% endif %}
+    <div class="row">
+        <div class="col-md-12">
+            {{ muboardmodule_showEditForm() }}
+        </div>
+    </div>
 
     {#<div class="row">
         <div class="col-sm-9">
