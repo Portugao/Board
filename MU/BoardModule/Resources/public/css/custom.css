@@ -4,8 +4,7 @@
 
 .category-view-header,
 .category-display-header,
-.forum-display-header,
-.posting-display-header {
+.forum-display-header {
 	background: #eee;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
@@ -19,15 +18,12 @@
 }
 
 .posting-display-header {
-    float: left;
-    width: 100%;
-    border-bottom: 5px solid #fedefe;
+
 }
 
 .category-view-content,
 .category-display-content,
-.forum-display-content,
-.posting-display-content {
+.forum-display-content {
 	background: #ddd;
 	border-radius: 5px;
 	width: 100%;
@@ -103,10 +99,7 @@
 }
 
 .children {
-	border-bottom: 3px solid #c0c0c0;
-	background-color: #eee;
-	margin: 5px 0 0 0;
-	border-radius: 5px;
+
 }
 
 .move-forum .fa-bars {
