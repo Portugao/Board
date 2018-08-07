@@ -71,11 +71,15 @@
                 {items: posting.children}
         ) }}
     {% endif %}
+    {% if posting.state == 0 %}
     <div class="row">
         <div class="col-md-12">
             {{ muboardmodule_showEditForm() }}
         </div>
     </div>
+    {% else %}
+        <div class="row alert alert-info">{{ __('This issue is closed') }}</div>
+    {% endif %}
 
     {#<div class="row">
         <div class="col-sm-9">

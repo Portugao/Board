@@ -26,7 +26,7 @@
         <webMaster>{{ pageGetVar('adminmail') }}</webMaster>
 {% for category in items %}
     <item>
-        <title><![CDATA[{% if category.updatedDate|default %}{{ category.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ category|muboardmodule_formattedTitle|notifyFilters('muboardmodule.filterhook.categories')|safeHtml }}]]></title>
+        <title><![CDATA[{{ category|muboardmodule_formattedTitle|notifyFilters('muboardmodule.filterhook.categories')|safeHtml }}]]></title>
         <link>{{ url('muboardmodule_category_' ~ routeArea ~ 'display', {'id': category.getId()}) }}</link>
         <guid>{{ url('muboardmodule_category_' ~ routeArea ~ 'display', {'id': category.getId()}) }}</guid>
         {% if category.createdBy|default and category.createdBy.getUid() > 0 %}

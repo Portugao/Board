@@ -30,6 +30,9 @@ framework:
                 - name: trash
                   from: waiting
                   to: trashed
+                - name: recover
+                  from: trashed
+                  to: waiting
                 - name: delete
                   from: [waiting, approved, trashed]
                   to: deleted

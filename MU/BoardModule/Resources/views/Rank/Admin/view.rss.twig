@@ -26,7 +26,7 @@
         <webMaster>{{ pageGetVar('adminmail') }}</webMaster>
 {% for rank in items %}
     <item>
-        <title><![CDATA[{% if rank.updatedDate|default %}{{ rank.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ rank|muboardmodule_formattedTitle|notifyFilters('muboardmodule.filterhook.ranks')|safeHtml }}]]></title>
+        <title><![CDATA[{{ rank|muboardmodule_formattedTitle|notifyFilters('muboardmodule.filterhook.ranks')|safeHtml }}]]></title>
         <link>{{ url('muboardmodule_rank_' ~ routeArea ~ 'display', {'id': rank.getId()}) }}</link>
         <guid>{{ url('muboardmodule_rank_' ~ routeArea ~ 'display', {'id': rank.getId()}) }}</guid>
         {% if rank.createdBy|default and rank.createdBy.getUid() > 0 %}

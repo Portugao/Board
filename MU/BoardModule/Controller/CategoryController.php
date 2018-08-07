@@ -34,12 +34,6 @@ class CategoryController extends AbstractCategoryController
      *        methods = {"GET"}
      * )
      * @Theme("admin")
-     *
-     * @param Request $request Current request instance
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function adminIndexAction(Request $request)
     {
@@ -52,12 +46,6 @@ class CategoryController extends AbstractCategoryController
      * @Route("/categories",
      *        methods = {"GET"}
      * )
-     *
-     * @param Request $request Current request instance
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function indexAction(Request $request)
     {
@@ -73,15 +61,6 @@ class CategoryController extends AbstractCategoryController
      * )
      * @Theme("admin")
      *
-     * @param Request $request Current request instance
-     * @param string $sort         Sorting field
-     * @param string $sortdir      Sorting direction
-     * @param int    $pos          Current pager position
-     * @param int    $num          Amount of entries to display
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function adminViewAction(Request $request, $sort, $sortdir, $pos, $num)
     {
@@ -96,16 +75,6 @@ class CategoryController extends AbstractCategoryController
      *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
      *        methods = {"GET"}
      * )
-     *
-     * @param Request $request Current request instance
-     * @param string $sort         Sorting field
-     * @param string $sortdir      Sorting direction
-     * @param int    $pos          Current pager position
-     * @param int    $num          Amount of entries to display
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function viewAction(Request $request, $sort, $sortdir, $pos, $num)
     {
@@ -120,14 +89,6 @@ class CategoryController extends AbstractCategoryController
      *        methods = {"GET"}
      * )
      * @Theme("admin")
-     *
-     * @param Request $request Current request instance
-     * @param CategoryEntity $category Treated category instance
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if category to be displayed isn't found
      */
     public function adminDisplayAction(Request $request, CategoryEntity $category)
     {
@@ -142,14 +103,6 @@ class CategoryController extends AbstractCategoryController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
-     *
-     * @param Request $request Current request instance
-     * @param CategoryEntity $category Treated category instance
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if category to be displayed isn't found
      */
     public function displayAction(Request $request, CategoryEntity $category)
     {
@@ -164,14 +117,6 @@ class CategoryController extends AbstractCategoryController
      *        methods = {"GET", "POST"}
      * )
      * @Theme("admin")
-     *
-     * @param Request $request Current request instance
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by form handler if category to be edited isn't found
-     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function adminEditAction(Request $request)
     {
@@ -186,14 +131,6 @@ class CategoryController extends AbstractCategoryController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     *
-     * @param Request $request Current request instance
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by form handler if category to be edited isn't found
-     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function editAction(Request $request)
     {
@@ -208,15 +145,6 @@ class CategoryController extends AbstractCategoryController
      *        methods = {"GET", "POST"}
      * )
      * @Theme("admin")
-     *
-     * @param Request $request Current request instance
-     * @param CategoryEntity $category Treated category instance
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if category to be deleted isn't found
-     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function adminDeleteAction(Request $request, CategoryEntity $category)
     {
@@ -231,15 +159,6 @@ class CategoryController extends AbstractCategoryController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     *
-     * @param Request $request Current request instance
-     * @param CategoryEntity $category Treated category instance
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if category to be deleted isn't found
-     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function deleteAction(Request $request, CategoryEntity $category)
     {
@@ -256,12 +175,6 @@ class CategoryController extends AbstractCategoryController
      *        methods = {"POST"}
      * )
      * @Theme("admin")
-     *
-     * @param Request $request Current request instance
-     *
-     * @return RedirectResponse
-     *
-     * @throws RuntimeException Thrown if executing the workflow action fails
      */
     public function adminHandleSelectedEntriesAction(Request $request)
     {
@@ -277,11 +190,6 @@ class CategoryController extends AbstractCategoryController
      * @Route("/categories/handleSelectedEntries",
      *        methods = {"POST"}
      * )
-     *
-     * @param Request $request Current request instance
-     *
-     * @return RedirectResponse
-     *
      * @throws RuntimeException Thrown if executing the workflow action fails
      */
     public function handleSelectedEntriesAction(Request $request)

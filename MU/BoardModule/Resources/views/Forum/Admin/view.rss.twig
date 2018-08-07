@@ -26,7 +26,7 @@
         <webMaster>{{ pageGetVar('adminmail') }}</webMaster>
 {% for forum in items %}
     <item>
-        <title><![CDATA[{% if forum.updatedDate|default %}{{ forum.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ forum|muboardmodule_formattedTitle|notifyFilters('muboardmodule.filterhook.forums')|safeHtml }}]]></title>
+        <title><![CDATA[{{ forum|muboardmodule_formattedTitle|notifyFilters('muboardmodule.filterhook.forums')|safeHtml }}]]></title>
         <link>{{ url('muboardmodule_forum_' ~ routeArea ~ 'display', {'id': forum.getId()}) }}</link>
         <guid>{{ url('muboardmodule_forum_' ~ routeArea ~ 'display', {'id': forum.getId()}) }}</guid>
         {% if forum.createdBy|default and forum.createdBy.getUid() > 0 %}

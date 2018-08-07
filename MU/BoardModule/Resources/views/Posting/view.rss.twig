@@ -26,7 +26,7 @@
         <webMaster>{{ pageGetVar('adminmail') }}</webMaster>
 {% for posting in items %}
     <item>
-        <title><![CDATA[{% if posting.updatedDate|default %}{{ posting.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ posting|muboardmodule_formattedTitle|notifyFilters('muboardmodule.filterhook.postings')|safeHtml }}]]></title>
+        <title><![CDATA[{{ posting|muboardmodule_formattedTitle|notifyFilters('muboardmodule.filterhook.postings')|safeHtml }}]]></title>
         <link>{{ url('muboardmodule_posting_' ~ routeArea ~ 'display', {'id': posting.getId()}) }}</link>
         <guid>{{ url('muboardmodule_posting_' ~ routeArea ~ 'display', {'id': posting.getId()}) }}</guid>
         {% if posting.createdBy|default and posting.createdBy.getUid() > 0 %}

@@ -26,7 +26,7 @@
         <webMaster>{{ pageGetVar('adminmail') }}</webMaster>
 {% for abo in items %}
     <item>
-        <title><![CDATA[{% if abo.updatedDate|default %}{{ abo.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ abo|muboardmodule_formattedTitle|notifyFilters('muboardmodule.filterhook.abos')|safeHtml }}]]></title>
+        <title><![CDATA[{{ abo|muboardmodule_formattedTitle|notifyFilters('muboardmodule.filterhook.abos')|safeHtml }}]]></title>
         <link>{{ url('muboardmodule_abo_' ~ routeArea ~ 'display', {'id': abo.getId()}) }}</link>
         <guid>{{ url('muboardmodule_abo_' ~ routeArea ~ 'display', {'id': abo.getId()}) }}</guid>
         {% if abo.createdBy|default and abo.createdBy.getUid() > 0 %}

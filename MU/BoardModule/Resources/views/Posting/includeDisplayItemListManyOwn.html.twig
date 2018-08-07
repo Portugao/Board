@@ -49,28 +49,35 @@
 {% endif %}
 {% endfor %}
 </div>
-    <script>
-    var MU = jQuery.noConflict();
-    MU(document).ready(function() {
-        MU('.posting-state').click(function() {
-        var postingId = MU(this).next().attr('data-posting-id');
-        var postingLink = MU(this).next();
-        var postingState = MU(this);
-            MU(this).append('<img class="ajax-indicator" style="width: 16px; height: 16px;" src="/zik15/images/ajax/indicator.white.gif" />');
-            MU.get('{{ path('muboardmodule_ajax_togglestate')}}?id=' + postingId, function(data) {
+
+    {% set stateInitScript %}
+        <script>
+        /* <![CDATA[ */
+        
+        ( function($) {
+        $(document).ready(function() {
+        $('.posting-state').click(function() {
+        var postingId = $(this).next().attr('data-posting-id');
+        var postingLink = $(this).next();
+        var postingState = $(this);
+            $(this).append('<img class="ajax-indicator" style="width: 16px; height: 16px;" src="/zik15/images/ajax/indicator.white.gif" />');
+            $.get('{{ path('muboardmodule_ajax_togglestate')}}?id=' + postingId, function(data) {
                 if(data) {
                 if (postingState.hasClass('state-green') == true) {
                         postingState.removeClass('state-green').addClass('state-red');
                     } else {
                         postingState.removeClass('state-red').addClass('state-green');
                     }
-                    MU('.ajax-indicator').hide('slow').remove();
+                    $('.ajax-indicator').hide('slow').remove();
                     postingLink.after('<span id="statusmessage">{{ __('The state of this issue was changed') }}</span>');
-                    MU('#statusmessage').delay(3000).hide('slow');
+                    $('#statusmessage').delay(3000).hide('slow');
                 }
             });
         });
-    });
-
-</script>
+		});
+        })(jQuery);            
+        /* ]]> */
+        </script>
+    {% endset %}
+    {{ pageAddAsset('footer', stateInitScript) }}
 {% endif %}

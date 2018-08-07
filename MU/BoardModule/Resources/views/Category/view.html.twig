@@ -112,18 +112,5 @@
         </script>
     {% endset %}
     {{ pageAddAsset('footer', sortInitScript) }}
-    
-<script>    
-    /*MU('.forum').on('sortchange', function( event, ui ) {
-    var sortedIDs = MU('.forum').sortable( "toArray" ).toString();
-    var sorted = MU('forum').sortable( "serialize", { key: "id" } );
-    MU.get('{{ path('muboardmodule_ajax_saveforumposition') }}',{pictures:sortedIDs} , function(data) {
-        if(data) {
-            alert(data.message);
-        }
-    });
-    });*/
-
-</script>
 {% endif %}
 {% endblock %}

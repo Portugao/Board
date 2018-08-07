@@ -26,7 +26,7 @@
         <webMaster>{{ pageGetVar('adminmail') }}</webMaster>
 {% for user in items %}
     <item>
-        <title><![CDATA[{% if user.updatedDate|default %}{{ user.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ user|muboardmodule_formattedTitle|notifyFilters('muboardmodule.filterhook.users')|safeHtml }}]]></title>
+        <title><![CDATA[{{ user|muboardmodule_formattedTitle|notifyFilters('muboardmodule.filterhook.users')|safeHtml }}]]></title>
         <link>{{ url('muboardmodule_user_' ~ routeArea ~ 'display', {'id': user.getId()}) }}</link>
         <guid>{{ url('muboardmodule_user_' ~ routeArea ~ 'display', {'id': user.getId()}) }}</guid>
         <description>
