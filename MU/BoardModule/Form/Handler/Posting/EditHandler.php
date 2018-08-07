@@ -13,6 +13,8 @@
 namespace MU\BoardModule\Form\Handler\Posting;
 
 use MU\BoardModule\Form\Handler\Posting\Base\AbstractEditHandler;
+use MU\BoardModule\Entity\UserEntity;
+use Twig\Profiler\Node\EnterProfileNode;
 
 /**
  * This handler class handles the page events of editing forms.
@@ -43,6 +45,8 @@ class EditHandler extends AbstractEditHandler
         
         $postingId = $this->request->request->get('postingid',0);
         $postingRepository = $this->entityFactory->getRepository('posting');
+        $entityManager = $this->entityFactory->getObjectManager();
+        
         if ($postingId > 0) {
         $posting = $postingRepository->find($postingId);
         $entity['parent'] = $posting;
@@ -66,6 +70,32 @@ class EditHandler extends AbstractEditHandler
         if ($success && $this->templateParameters['mode'] == 'create') {
             // store new identifier
             $this->idValue = $entity->getKey();
+            $currentUser = $this->currentUserApi->get('uid');
+            
+            $date = date('Y-m-d H:i:s');
+            
+            $userRepository = $this->entityFactory->getRepository('user');
+            $criteria = array('userid' => $currentUser);
+            $thisUserArray = $userRepository->findBy($criteria);
+
+            if (count($thisUserArray) == 1) {
+                $thisUser = $userRepository->find($thisUserArray[0]['id']);
+            }
+            
+            if ($thisUser) {
+                $thisUser->setNumberPostings($thisUser->getNumberPostings() + 1);
+                $thisUser->setLastVisit($date);
+                $entityManager->flush();
+            } else {               
+                $newUser = new UserEntity();
+                $newUser->setWorkflowState('approved');
+                $newUser->setLastVisit($date);
+                $newUser->setNumberPostings(1);
+                $newUser->setUserid($currentUser);
+                $entityManager->persist($newUser);
+                $entityManager->flush();
+                
+            }
         }
     
         return $success;
