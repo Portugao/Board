@@ -36,23 +36,30 @@
 }
 
 .children-include-header {
-	padding: 5px;
+	padding: 5px 10px 5px 0;
     border-bottom: 1px solid #bbb;
     font-size: 0.9em;
 }
 
 .children-include-user,
-.children-include-content {
-	padding: 5px;
+.children-include-text {
+	padding: 10px;
 	float: left;
 	height: 100%;
+	min-height: 80px;
 }
 
 .children-include-user {
 	text-align: center;
-	border-right: 1px solid #bbb;
 	width: 100%;
 	font-size: 0.9em;
+}
+
+.children-include-content {
+	text-align: center;
+	border-left: 1px solid #bbb;
+	width: 100%;
+	float: left;
 }
 
 #posting-title {

@@ -21,10 +21,11 @@
         </div>
     </div>
     <div class="col-xs-6 col-sm-8">
+        <div class="children-include-content">
         <div class="children-include-header">
             {{ include('@MUBoardModule/Helper/includeStandardFieldsDisplay3.html.twig', {obj: item}) }}
         </div>
-        <div class="children-include-content">
+        <div class="children-include-text">
             {{ item.text|safeHtml }}<br />
             {% if item.firstImage is not empty and item.firstImageMeta|default %}
                         <a href="{{ item.firstImageUrl }}" title="{{ item|muboardmodule_formattedTitle|e('html_attr') }}"{% if item.firstImageMeta.isImage %} class="image-link"{% endif %}>
@@ -36,6 +37,7 @@
             {% endif %}
             </a>
             {% else %}&nbsp;{% endif %}
+        </div>
         </div>
     </div>
     </div>
