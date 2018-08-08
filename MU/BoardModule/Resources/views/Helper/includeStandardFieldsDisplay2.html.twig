@@ -4,7 +4,7 @@
     <div class="col-md-5">
     {% if obj.createdBy|default and obj.createdBy.getUid() > 0 %}
         {% set profileLink = obj.createdBy.getUid()|profileLinkByUserId() %}
-        <dd class="avatar">{{ userAvatar(obj.createdBy.getUid(), {rating: 'g', width: '80px'}) }}</dd>
+        <dd class="avatar">{{ userAvatar(obj.createdBy.getUid(), {rating: 'g', width: '50px'}) }}<br /><br /></dd>
         <dd>
             {{ __f('%user', {'%user': profileLink})|raw }}
             {% if currentUser.loggedIn %}
