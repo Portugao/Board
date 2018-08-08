@@ -6,4 +6,8 @@
             {{ __f('Answered on %date', {'%date': obj.createdDate|localizeddate('medium', 'short')})|raw }}
         </span>
     {% endif %}
+    {% set editPostings = getModVar('MUBoardModule', 'editPostings') %}
+    {% if editPostings == 1 %}
+        <span class="edit-posting"><a href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'edit', {'id': obj.getId()}) }}"><i class="fa fa-edit"></i></a></span>
+    {% endif %}
 {% endif %}
