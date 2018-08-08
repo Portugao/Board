@@ -51,20 +51,20 @@
                 <div class="hidden">
             {% endif %}
             {{ form_row(form.firstImage) }}
-            {% if images == 0 %}
-                </div>
-            {% endif %}
-            {% if numberImages == 1 %}
+            {% if numberImages <= 1 %}
                 <div class="hidden">
             {% endif %}
             {{ form_row(form.secondImage) }}
-            {% if numberImages == 1 %}
+            {% if numberImages <= 1 %}
                 </div>            
             {% endif %}
-            {% if images == 0 or (images == 1 and (numberImages == 1 or numberImages == 2)) %}
+            {% if numberImages <= 2 %}
                 <div class="hidden">
             {% endif %}
             {{ form_row(form.thirdImage) }}
+            {% if numberImages <= 2 %}
+                </div>
+            {% endif %}            
             {% if images == 0 %}
                 </div>            
             {% endif %}
@@ -73,10 +73,8 @@
             {% set numberFiles = getModVar('MUBoardModule', 'numberFiles') %}
             {% if files == 0 %}
                 <div class="hidden">
-            {% endif %}             
-            {% if numberFiles == 1 or numberFiles == 2 or numberFiles == 3 %}
-            {{ form_row(form.firstFile) }}
             {% endif %}            
+            {{ form_row(form.firstFile) }}          
             {% if numberFiles <= 1 %}
             <div class="hidden">
             {% endif %}  
@@ -94,6 +92,7 @@
             {% if files == 0 %}
                 </div>
             {% endif %}  
+            
         </fieldset>
         <div class="hidden">
         {{ include(
