@@ -14,7 +14,9 @@ namespace MU\BoardModule\Form\Handler\Posting;
 
 use MU\BoardModule\Form\Handler\Posting\Base\AbstractEditHandler;
 use MU\BoardModule\Entity\UserEntity;
-use Twig\Profiler\Node\EnterProfileNode;
+use RuntimeException;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * This handler class handles the page events of editing forms.
@@ -83,21 +85,41 @@ class EditHandler extends AbstractEditHandler
             }
             
             if ($thisUser) {
-                $thisUser->setNumberPostings($thisUser->getNumberPostings() + 1);
+                $numberPostings = $thisUser->getNumberPostings() + 1;
+                $thisUser->setNumberPostings($numberPostings);
                 $thisUser->setLastVisit($date);
+                $rank = $this->getRank($numberPostings);
+                $thisUser->setRank($rank);
                 $entityManager->flush();
+                
             } else {               
                 $newUser = new UserEntity();
                 $newUser->setWorkflowState('approved');
                 $newUser->setLastVisit($date);
                 $newUser->setNumberPostings(1);
                 $newUser->setUserid($currentUser);
+                $rank = $this->getRank(1);
+                $newUser->setRank($rank);
                 $entityManager->persist($newUser);
                 $entityManager->flush();
-                
+                $numberPostings = 1;
             }
         }
     
         return $success;
     }
+    
+    /**
+     * 
+     * @param integer $numberPostings
+     * @return object $rank
+     */
+    public function getRank($numberPostings)
+    {
+        $rankRepository = $this->entityFactory->getRepository('rank');
+        $rank = $rankRepository->getRank($numberPostings);
+        
+        return $rank;
+    }
+    
 }
