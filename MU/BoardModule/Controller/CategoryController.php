@@ -90,9 +90,9 @@ class CategoryController extends AbstractCategoryController
      * )
      * @Theme("admin")
      */
-    public function adminDisplayAction(Request $request, CategoryEntity $category)
+    public function adminDisplayAction(Request $request, $id)
     {
-        return parent::adminDisplayAction($request, $category);
+        return parent::adminDisplayAction($request, $id);
     }
     
     /**
@@ -104,9 +104,9 @@ class CategoryController extends AbstractCategoryController
      *        methods = {"GET"}
      * )
      */
-    public function displayAction(Request $request, CategoryEntity $category)
+    public function displayAction(Request $request, $id)
     {
-        return parent::displayAction($request, $category);
+        return parent::displayAction($request, $id);
     }
     /**
      * @inheritDoc
@@ -146,9 +146,9 @@ class CategoryController extends AbstractCategoryController
      * )
      * @Theme("admin")
      */
-    public function adminDeleteAction(Request $request, CategoryEntity $category)
+    public function adminDeleteAction(Request $request, $id)
     {
-        return parent::adminDeleteAction($request, $category);
+        return parent::adminDeleteAction($request, $id);
     }
     
     /**
@@ -160,9 +160,9 @@ class CategoryController extends AbstractCategoryController
      *        methods = {"GET", "POST"}
      * )
      */
-    public function deleteAction(Request $request, CategoryEntity $category)
+    public function deleteAction(Request $request, $id)
     {
-        return parent::deleteAction($request, $category);
+        return parent::deleteAction($request, $id);
     }
 
     /**
