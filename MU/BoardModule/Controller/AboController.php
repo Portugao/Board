@@ -16,7 +16,6 @@ use MU\BoardModule\Controller\Base\AbstractAboController;
 
 use RuntimeException;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -91,12 +90,11 @@ class AboController extends AbstractAboController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
-     * @ParamConverter("abo", class="MUBoardModule:AboEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Theme("admin")
      */
-    public function adminDisplayAction(Request $request, AboEntity $abo)
+    public function adminDisplayAction(Request $request, $id)
     {
-        return parent::adminDisplayAction($request, $abo);
+        return parent::adminDisplayAction($request, $id);
     }
     
     /**
@@ -107,11 +105,10 @@ class AboController extends AbstractAboController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
-     * @ParamConverter("abo", class="MUBoardModule:AboEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      */
-    public function displayAction(Request $request, AboEntity $abo)
+    public function displayAction(Request $request, $id)
     {
-        return parent::displayAction($request, $abo);
+        return parent::displayAction($request, $id);
     }
     
     /**
@@ -151,12 +148,11 @@ class AboController extends AbstractAboController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     * @ParamConverter("abo", class="MUBoardModule:AboEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Theme("admin")
      */
-    public function adminDeleteAction(Request $request, AboEntity $abo)
+    public function adminDeleteAction(Request $request, $id)
     {
-        return parent::adminDeleteAction($request, $abo);
+        return parent::adminDeleteAction($request, $id);
     }
     
     /**
@@ -167,11 +163,10 @@ class AboController extends AbstractAboController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     * @ParamConverter("abo", class="MUBoardModule:AboEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      */
-    public function deleteAction(Request $request, AboEntity $abo)
+    public function deleteAction(Request $request, $id)
     {
-        return parent::deleteAction($request, $abo);
+        return parent::deleteAction($request, $id);
     }
     
     /**

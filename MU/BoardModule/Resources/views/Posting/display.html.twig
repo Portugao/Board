@@ -13,6 +13,14 @@
 {% endblock %}
 {% block content %}
 {% set isQuickView = app.request.query.getBoolean('raw', false) %}
+{% set editPostings = getModVar('MUBoardModule', 'editPostings') %}
+    {% if editPostings == 1 %}
+        {% set titlestatus = 'titlestatus' %}
+        {% set textstatus = 'textstatus' %}
+    {% else %}
+        {% set titlestatus = '' %}
+        {% set textstatus = '' %}
+    {% endif %}
 <div class="muboardmodule-posting muboardmodule-display">
 <ul class="list-group">
   <li class="list-group-item active">
@@ -22,7 +30,7 @@
                 <div class="col-sm-4">       
                     <div id="posting-title">
                         {% set templateTitle = posting|muboardmodule_formattedTitle|default(__('Posting')) %}
-                        <h3>{{ templateTitle|notifyFilters('muboardmodule.filter_hooks.forums.filter')|safeHtml }}</h3>
+                        <h3 class="titlestatus">{{ templateTitle|notifyFilters('muboardmodule.filter_hooks.forums.filter')|safeHtml }}</h3>
                     </div>
                 </div>
                 <div class="col-sm-5">
@@ -54,7 +62,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="posting-display-content">
-                <div class="muboard-user-posting-content-text">
+                <div class="muboard-user-posting-content-text textstatus">
                     {{ posting.text|safeHtml }}
                 </div>
             </div>
@@ -280,4 +288,63 @@
         <h4>{{ providerArea }}</h4>
         {{ hook }}
     {% endfor %}
+        {% set titleInitScript %}
+        <script>
+        /* <![CDATA[ */
+        
+        ( function($) {
+        $(document).ready(function() {
+        $('#posting-title h3').click(function() {
+        var thisTitle = $('#posting-title');
+        var text = thisTitle.val();
+        thisTitle.html('<form id="title-form"><div class="form-group"><input id="newtitle" class="form-control" type="text" value=text /><input id="title-send" class="btn btn-default btn-xs" type="submit" /></div></form>');
+
+        });
+		});
+        })(jQuery);
+        
+        ( function($) {
+        $(document).ready(function() {
+        $('.muboard-user-posting-content-text').click(function() {
+        var thisTitle = $('#posting-title');
+        var text = thisTitle.val();
+        $(this).html('<form id="text-form"><div class="form-group"><input id="newtext" class="form-control" type="text" value=text /><input id="text-send" class="btn btn-default btn-xs" type="submit" /></div></form>');
+
+        });
+		});
+        })(jQuery);          
+        
+        ( function($) {
+        $(document).ready(function() {        
+        $('body').on('click','#title-form', function(e) {
+        e.preventDefault();
+        var id = $(this).find('#newtitle').val();
+        var title = $(this).find('#newtitle').val();
+        $.ajax({
+            method: 'POST',
+            url: '{{ path('muboardmodule_ajax_editposting') }}',
+            data: {
+                title: title
+            },
+            success: function(data) {
+                alert: 'Yo'
+            }
+		});
+	    });
+	    });
+        })(jQuery);
+
+        
+        ( function($) {
+        $(document).ready(function() {        
+        $('body').on('click','#text-send', function(e) {
+        e.preventDefault();
+        });
+		});
+        })(jQuery);
+            
+        /* ]]> */
+        </script>
+    {% endset %}
+    {{ pageAddAsset('footer', titleInitScript) }}
 {% endblock %}

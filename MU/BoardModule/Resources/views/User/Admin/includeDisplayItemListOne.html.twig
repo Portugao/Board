@@ -1,5 +1,5 @@
 {# purpose of this template: inclusion template for display of related users #}
-{% set hasAdminPermission = hasPermission('MUBoardModule:User:', '::', 'ACCESS_EDIT') %}
+{% set hasAdminPermission = permissionHelper.hasComponentPermission('user', constant('ACCESS_EDIT')) %}
 {% if noLink is not defined %}
     {% set noLink = false %}
 {% endif %}

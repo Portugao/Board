@@ -13,7 +13,6 @@
 namespace MU\BoardModule\Helper\Base;
 
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
@@ -24,6 +23,7 @@ use MU\BoardModule\Entity\Factory\EntityFactory;
 use MU\BoardModule\Helper\CollectionFilterHelper;
 use MU\BoardModule\Helper\ImageHelper;
 use MU\BoardModule\Helper\ModelHelper;
+use MU\BoardModule\Helper\PermissionHelper;
 
 /**
  * Helper base class for controller layer methods.
@@ -31,53 +31,59 @@ use MU\BoardModule\Helper\ModelHelper;
 abstract class AbstractControllerHelper
 {
     use TranslatorTrait;
-
+    
     /**
-     * @var Request
+     * @var RequestStack
      */
-    protected $request;
-
+    protected $requestStack;
+    
     /**
      * @var FormFactoryInterface
      */
     protected $formFactory;
-
+    
     /**
      * @var VariableApiInterface
      */
     protected $variableApi;
-
+    
     /**
      * @var EntityFactory
      */
     protected $entityFactory;
-
+    
     /**
      * @var CollectionFilterHelper
      */
     protected $collectionFilterHelper;
-
+    
+    /**
+     * @var PermissionHelper
+     */
+    protected $permissionHelper;
+    
     /**
      * @var ModelHelper
      */
     protected $modelHelper;
-
+    
     /**
      * @var ImageHelper
      */
     protected $imageHelper;
-
+    
     /**
      * ControllerHelper constructor.
      *
-     * @param TranslatorInterface $translator      Translator service instance
-     * @param RequestStack        $requestStack    RequestStack service instance
-     * @param FormFactoryInterface $formFactory    FormFactory service instance
+     * @param TranslatorInterface $translator       Translator service instance
+     * @param RequestStack        $requestStack     RequestStack service instance
+     * @param FormFactoryInterface $formFactory     FormFactory service instance
      * @param VariableApiInterface $variableApi     VariableApi service instance
-     * @param EntityFactory       $entityFactory   EntityFactory service instance
+     * @param EntityFactory       $entityFactory    EntityFactory service instance
      * @param CollectionFilterHelper $collectionFilterHelper CollectionFilterHelper service instance
-     * @param ModelHelper         $modelHelper     ModelHelper service instance
-     * @param ImageHelper         $imageHelper     ImageHelper service instance
+     * @param PermissionHelper    $permissionHelper PermissionHelper service instance
+     * @param ModelHelper         $modelHelper      ModelHelper service instance
+     * @param ImageHelper         $imageHelper      ImageHelper service instance
      */
     public function __construct(
         TranslatorInterface $translator,
@@ -86,19 +92,21 @@ abstract class AbstractControllerHelper
         VariableApiInterface $variableApi,
         EntityFactory $entityFactory,
         CollectionFilterHelper $collectionFilterHelper,
+        PermissionHelper $permissionHelper,
         ModelHelper $modelHelper,
         ImageHelper $imageHelper
     ) {
         $this->setTranslator($translator);
-        $this->request = $requestStack->getCurrentRequest();
+        $this->requestStack = $requestStack;
         $this->formFactory = $formFactory;
         $this->variableApi = $variableApi;
         $this->entityFactory = $entityFactory;
         $this->collectionFilterHelper = $collectionFilterHelper;
+        $this->permissionHelper = $permissionHelper;
         $this->modelHelper = $modelHelper;
         $this->imageHelper = $imageHelper;
     }
-
+    
     /**
      * Sets the translator.
      *
@@ -108,7 +116,7 @@ abstract class AbstractControllerHelper
     {
         $this->translator = $translator;
     }
-
+    
     /**
      * Returns an array of all allowed object types in MUBoardModule.
      *
@@ -133,7 +141,7 @@ abstract class AbstractControllerHelper
     
         return $allowedObjectTypes;
     }
-
+    
     /**
      * Returns the default object type in MUBoardModule.
      *
@@ -150,7 +158,7 @@ abstract class AbstractControllerHelper
     
         return 'category';
     }
-
+    
     /**
      * Processes the parameters for a view action.
      * This includes handling pagination, quick navigation forms and other aspects.
@@ -169,7 +177,7 @@ abstract class AbstractControllerHelper
             throw new \Exception($this->__('Error! Invalid object type received.'));
         }
     
-        $request = $this->request;
+        $request = $this->requestStack->getCurrentRequest();
         $repository = $this->entityFactory->getRepository($objectType);
     
         // parameter for used sorting field
@@ -206,7 +214,7 @@ abstract class AbstractControllerHelper
                     $sort = $fieldValue;
                 } elseif ($fieldName == 'sortdir' && !empty($fieldValue)) {
                     $sortdir = $fieldValue;
-                } elseif (false === stripos($fieldName, 'thumbRuntimeOptions') && false === stripos($fieldName, 'featureActivationHelper')) {
+                } elseif (false === stripos($fieldName, 'thumbRuntimeOptions') && false === stripos($fieldName, 'featureActivationHelper') && false === stripos($fieldName, 'permissionHelper')) {
                     // set filter as query argument, fetched inside repository
                     $request->query->set($fieldName, $fieldValue);
                 }
@@ -281,7 +289,7 @@ abstract class AbstractControllerHelper
      */
     protected function determineDefaultViewSorting($objectType)
     {
-        $request = $this->request;
+        $request = $this->requestStack->getCurrentRequest();
         $repository = $this->entityFactory->getRepository($objectType);
     
         $sort = $request->query->get('sort', '');
@@ -301,7 +309,7 @@ abstract class AbstractControllerHelper
     
         return [$sort, $sortdir];
     }
-
+    
     /**
      * Processes the parameters for a display action.
      *
@@ -322,13 +330,13 @@ abstract class AbstractControllerHelper
             // build RouteUrl instance for display hooks
             $entity = $templateParameters[$objectType];
             $urlParameters = $entity->createUrlArgs();
-            $urlParameters['_locale'] = $this->request->getLocale();
+            $urlParameters['_locale'] = $this->requestStack->getCurrentRequest()->getLocale();
             $templateParameters['currentUrlObject'] = new RouteUrl('muboardmodule_' . strtolower($objectType) . '_display', $urlParameters);
         }
     
         return $this->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);
     }
-
+    
     /**
      * Processes the parameters for an edit action.
      *
@@ -346,7 +354,7 @@ abstract class AbstractControllerHelper
     
         return $this->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);
     }
-
+    
     /**
      * Processes the parameters for a delete action.
      *
@@ -365,7 +373,7 @@ abstract class AbstractControllerHelper
     
         return $this->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);
     }
-
+    
     /**
      * Returns an array of additional template variables which are specific to the object type.
      *
@@ -384,7 +392,7 @@ abstract class AbstractControllerHelper
     
         if ($context == 'controllerAction') {
             if (!isset($args['action'])) {
-                $routeName = $this->request->get('_route');
+                $routeName = $this->requestStack->getCurrentRequest()->get('_route');
                 $routeNameParts = explode('_', $routeName);
                 $args['action'] = end($routeNameParts);
             }
@@ -413,6 +421,7 @@ abstract class AbstractControllerHelper
                 $parameters['relationThumbRuntimeOptions'] = $this->imageHelper->getCustomRuntimeOptions('', '', 'MUBoardModule_relateditem', $context, $args);
             }
         }
+        $parameters['permissionHelper'] = $this->permissionHelper;
     
         return $parameters;
     }

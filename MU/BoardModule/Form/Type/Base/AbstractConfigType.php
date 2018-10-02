@@ -71,9 +71,9 @@ abstract class AbstractConfigType extends AbstractType
     {
         $this->addGeneralFields($builder, $options);
         $this->addLayoutFields($builder, $options);
-        $this->addModerationFields($builder, $options);
         $this->addListViewsFields($builder, $options);
         $this->addImagesFields($builder, $options);
+        $this->addModerationFields($builder, $options);
         $this->addIntegrationFields($builder, $options);
 
         $this->addSubmitButtons($builder, $options);
@@ -117,7 +117,7 @@ abstract class AbstractConfigType extends AbstractType
         }
         $builder->add('numberImages', ChoiceType::class, [
             'label' => $this->__('Number images') . ':',
-            'empty_data' => '',
+            'empty_data' => '1',
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Choose the number images.')
@@ -158,7 +158,7 @@ abstract class AbstractConfigType extends AbstractType
         }
         $builder->add('numberFiles', ChoiceType::class, [
             'label' => $this->__('Number files') . ':',
-            'empty_data' => '',
+            'empty_data' => '1',
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Choose the number files.')
@@ -186,7 +186,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Time of editing allowed in hours.')
             ],
             'help' => $this->__('Time of editing allowed in hours.'),
-            'empty_data' => '6',
+            'empty_data' => 6,
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
@@ -203,7 +203,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('In Hours.')
             ],
             'help' => $this->__('In Hours.'),
-            'empty_data' => '24',
+            'empty_data' => 24,
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
@@ -222,7 +222,7 @@ abstract class AbstractConfigType extends AbstractType
         }
         $builder->add('sortingCategories', ChoiceType::class, [
             'label' => $this->__('Sorting categories') . ':',
-            'empty_data' => '',
+            'empty_data' => 'descending',
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Choose the sorting categories.')
@@ -243,7 +243,7 @@ abstract class AbstractConfigType extends AbstractType
         }
         $builder->add('sortingForums', ChoiceType::class, [
             'label' => $this->__('Sorting forums') . ':',
-            'empty_data' => '',
+            'empty_data' => 'descending',
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Choose the sorting forums.')
@@ -264,7 +264,7 @@ abstract class AbstractConfigType extends AbstractType
         }
         $builder->add('sortingPostings', ChoiceType::class, [
             'label' => $this->__('Sorting postings') . ':',
-            'empty_data' => '',
+            'empty_data' => 'descending',
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Choose the sorting postings.')
@@ -317,7 +317,7 @@ abstract class AbstractConfigType extends AbstractType
         }
         $builder->add('iconSet', ChoiceType::class, [
             'label' => $this->__('Icon set') . ':',
-            'empty_data' => '',
+            'empty_data' => '1',
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Choose the icon set.')
@@ -338,7 +338,7 @@ abstract class AbstractConfigType extends AbstractType
         }
         $builder->add('template', ChoiceType::class, [
             'label' => $this->__('Template') . ':',
-            'empty_data' => '',
+            'empty_data' => 'normal',
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Choose the template.')
@@ -370,36 +370,6 @@ abstract class AbstractConfigType extends AbstractType
     }
 
     /**
-     * Adds fields for moderation fields.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addModerationFields(FormBuilderInterface $builder, array $options = [])
-    {
-        
-        $builder->add('moderationGroupForPostings', EntityType::class, [
-            'label' => $this->__('Moderation group for postings') . ':',
-            'label_attr' => [
-                'class' => 'tooltips',
-                'title' => $this->__('Used to determine moderator user accounts for sending email notifications.')
-            ],
-            'help' => $this->__('Used to determine moderator user accounts for sending email notifications.'),
-            'empty_data' => '2',
-            'attr' => [
-                'maxlength' => 255,
-                'class' => '',
-                'title' => $this->__('Choose the moderation group for postings')
-            ],
-            'required' => true,
-            // Zikula core should provide a form type for this to hide entity details
-            'class' => 'ZikulaGroupsModule:GroupEntity',
-            'choice_label' => 'name',
-            'choice_value' => 'gid'
-        ]);
-    }
-
-    /**
      * Adds fields for list views fields.
      *
      * @param FormBuilderInterface $builder The form builder
@@ -415,7 +385,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The amount of categories shown per page')
             ],
             'help' => $this->__('The amount of categories shown per page'),
-            'empty_data' => '10',
+            'empty_data' => 10,
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
@@ -446,7 +416,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The amount of forums shown per page')
             ],
             'help' => $this->__('The amount of forums shown per page'),
-            'empty_data' => '10',
+            'empty_data' => 10,
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
@@ -477,7 +447,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The amount of postings shown per page')
             ],
             'help' => $this->__('The amount of postings shown per page'),
-            'empty_data' => '10',
+            'empty_data' => 10,
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
@@ -508,7 +478,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The amount of abos shown per page')
             ],
             'help' => $this->__('The amount of abos shown per page'),
-            'empty_data' => '10',
+            'empty_data' => 10,
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
@@ -539,7 +509,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The amount of users shown per page')
             ],
             'help' => $this->__('The amount of users shown per page'),
-            'empty_data' => '10',
+            'empty_data' => 10,
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
@@ -556,7 +526,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The amount of ranks shown per page')
             ],
             'help' => $this->__('The amount of ranks shown per page'),
-            'empty_data' => '10',
+            'empty_data' => 10,
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
@@ -625,7 +595,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The maximum image width in pixels.')
             ],
             'help' => $this->__('The maximum image width in pixels.'),
-            'empty_data' => '800',
+            'empty_data' => 800,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -643,7 +613,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The maximum image height in pixels.')
             ],
             'help' => $this->__('The maximum image height in pixels.'),
-            'empty_data' => '600',
+            'empty_data' => 600,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -668,7 +638,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail mode (inset or outbound).')
             ],
             'help' => $this->__('Thumbnail mode (inset or outbound).'),
-            'empty_data' => '',
+            'empty_data' => 'inset',
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Choose the thumbnail mode.')
@@ -687,7 +657,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail width on view pages in pixels.')
             ],
             'help' => $this->__('Thumbnail width on view pages in pixels.'),
-            'empty_data' => '32',
+            'empty_data' => 32,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -705,7 +675,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail height on view pages in pixels.')
             ],
             'help' => $this->__('Thumbnail height on view pages in pixels.'),
-            'empty_data' => '24',
+            'empty_data' => 24,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -723,7 +693,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail width on display pages in pixels.')
             ],
             'help' => $this->__('Thumbnail width on display pages in pixels.'),
-            'empty_data' => '240',
+            'empty_data' => 240,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -741,7 +711,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail height on display pages in pixels.')
             ],
             'help' => $this->__('Thumbnail height on display pages in pixels.'),
-            'empty_data' => '180',
+            'empty_data' => 180,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -759,7 +729,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail width on edit pages in pixels.')
             ],
             'help' => $this->__('Thumbnail width on edit pages in pixels.'),
-            'empty_data' => '240',
+            'empty_data' => 240,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -777,7 +747,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail height on edit pages in pixels.')
             ],
             'help' => $this->__('Thumbnail height on edit pages in pixels.'),
-            'empty_data' => '180',
+            'empty_data' => 180,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -809,7 +779,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The maximum image width in pixels.')
             ],
             'help' => $this->__('The maximum image width in pixels.'),
-            'empty_data' => '800',
+            'empty_data' => 800,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -827,7 +797,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The maximum image height in pixels.')
             ],
             'help' => $this->__('The maximum image height in pixels.'),
-            'empty_data' => '600',
+            'empty_data' => 600,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -852,7 +822,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail mode (inset or outbound).')
             ],
             'help' => $this->__('Thumbnail mode (inset or outbound).'),
-            'empty_data' => '',
+            'empty_data' => 'inset',
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Choose the thumbnail mode.')
@@ -871,7 +841,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail width on view pages in pixels.')
             ],
             'help' => $this->__('Thumbnail width on view pages in pixels.'),
-            'empty_data' => '32',
+            'empty_data' => 32,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -889,7 +859,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail height on view pages in pixels.')
             ],
             'help' => $this->__('Thumbnail height on view pages in pixels.'),
-            'empty_data' => '24',
+            'empty_data' => 24,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -907,7 +877,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail width on display pages in pixels.')
             ],
             'help' => $this->__('Thumbnail width on display pages in pixels.'),
-            'empty_data' => '240',
+            'empty_data' => 240,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -925,7 +895,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail height on display pages in pixels.')
             ],
             'help' => $this->__('Thumbnail height on display pages in pixels.'),
-            'empty_data' => '180',
+            'empty_data' => 180,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -943,7 +913,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail width on edit pages in pixels.')
             ],
             'help' => $this->__('Thumbnail width on edit pages in pixels.'),
-            'empty_data' => '240',
+            'empty_data' => 240,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -961,7 +931,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail height on edit pages in pixels.')
             ],
             'help' => $this->__('Thumbnail height on edit pages in pixels.'),
-            'empty_data' => '180',
+            'empty_data' => 180,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -993,7 +963,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The maximum image width in pixels.')
             ],
             'help' => $this->__('The maximum image width in pixels.'),
-            'empty_data' => '800',
+            'empty_data' => 800,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -1011,7 +981,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The maximum image height in pixels.')
             ],
             'help' => $this->__('The maximum image height in pixels.'),
-            'empty_data' => '600',
+            'empty_data' => 600,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -1036,7 +1006,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail mode (inset or outbound).')
             ],
             'help' => $this->__('Thumbnail mode (inset or outbound).'),
-            'empty_data' => '',
+            'empty_data' => 'inset',
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Choose the thumbnail mode.')
@@ -1055,7 +1025,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail width on view pages in pixels.')
             ],
             'help' => $this->__('Thumbnail width on view pages in pixels.'),
-            'empty_data' => '32',
+            'empty_data' => 32,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -1073,7 +1043,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail height on view pages in pixels.')
             ],
             'help' => $this->__('Thumbnail height on view pages in pixels.'),
-            'empty_data' => '24',
+            'empty_data' => 24,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -1091,7 +1061,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail width on display pages in pixels.')
             ],
             'help' => $this->__('Thumbnail width on display pages in pixels.'),
-            'empty_data' => '240',
+            'empty_data' => 240,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -1109,7 +1079,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail height on display pages in pixels.')
             ],
             'help' => $this->__('Thumbnail height on display pages in pixels.'),
-            'empty_data' => '180',
+            'empty_data' => 180,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -1127,7 +1097,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail width on edit pages in pixels.')
             ],
             'help' => $this->__('Thumbnail width on edit pages in pixels.'),
-            'empty_data' => '240',
+            'empty_data' => 240,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -1145,7 +1115,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail height on edit pages in pixels.')
             ],
             'help' => $this->__('Thumbnail height on edit pages in pixels.'),
-            'empty_data' => '180',
+            'empty_data' => 180,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -1177,7 +1147,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The maximum image width in pixels.')
             ],
             'help' => $this->__('The maximum image width in pixels.'),
-            'empty_data' => '800',
+            'empty_data' => 800,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -1195,7 +1165,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The maximum image height in pixels.')
             ],
             'help' => $this->__('The maximum image height in pixels.'),
-            'empty_data' => '600',
+            'empty_data' => 600,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -1220,7 +1190,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail mode (inset or outbound).')
             ],
             'help' => $this->__('Thumbnail mode (inset or outbound).'),
-            'empty_data' => '',
+            'empty_data' => 'inset',
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Choose the thumbnail mode.')
@@ -1239,7 +1209,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail width on view pages in pixels.')
             ],
             'help' => $this->__('Thumbnail width on view pages in pixels.'),
-            'empty_data' => '32',
+            'empty_data' => 32,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -1257,7 +1227,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail height on view pages in pixels.')
             ],
             'help' => $this->__('Thumbnail height on view pages in pixels.'),
-            'empty_data' => '24',
+            'empty_data' => 24,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -1275,7 +1245,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail width on display pages in pixels.')
             ],
             'help' => $this->__('Thumbnail width on display pages in pixels.'),
-            'empty_data' => '240',
+            'empty_data' => 240,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -1293,7 +1263,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail height on display pages in pixels.')
             ],
             'help' => $this->__('Thumbnail height on display pages in pixels.'),
-            'empty_data' => '180',
+            'empty_data' => 180,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -1311,7 +1281,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail width on edit pages in pixels.')
             ],
             'help' => $this->__('Thumbnail width on edit pages in pixels.'),
-            'empty_data' => '240',
+            'empty_data' => 240,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -1329,7 +1299,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail height on edit pages in pixels.')
             ],
             'help' => $this->__('Thumbnail height on edit pages in pixels.'),
-            'empty_data' => '180',
+            'empty_data' => 180,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -1338,6 +1308,176 @@ abstract class AbstractConfigType extends AbstractType
             'required' => true,
             'scale' => 0,
             'input_group' => ['right' => $this->__('pixels')]
+        ]);
+    }
+
+    /**
+     * Adds fields for moderation fields.
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
+     */
+    public function addModerationFields(FormBuilderInterface $builder, array $options = [])
+    {
+        
+        $builder->add('moderationGroupForPostings', EntityType::class, [
+            'label' => $this->__('Moderation group for postings') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Used to determine moderator user accounts for sending email notifications.')
+            ],
+            'help' => $this->__('Used to determine moderator user accounts for sending email notifications.'),
+            'empty_data' => 2,
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Choose the moderation group for postings')
+            ],
+            'required' => true,
+            // Zikula core should provide a form type for this to hide entity details
+            'class' => 'ZikulaGroupsModule:GroupEntity',
+            'choice_label' => 'name',
+            'choice_value' => 'gid'
+        ]);
+        
+        $builder->add('allowModerationSpecificCreatorForCategory', CheckboxType::class, [
+            'label' => $this->__('Allow moderation specific creator for category') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Whether to allow moderators choosing a user which will be set as creator.')
+            ],
+            'help' => $this->__('Whether to allow moderators choosing a user which will be set as creator.'),
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('The allow moderation specific creator for category option')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('allowModerationSpecificCreationDateForCategory', CheckboxType::class, [
+            'label' => $this->__('Allow moderation specific creation date for category') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Whether to allow moderators choosing a custom creation date.')
+            ],
+            'help' => $this->__('Whether to allow moderators choosing a custom creation date.'),
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('The allow moderation specific creation date for category option')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('allowModerationSpecificCreatorForForum', CheckboxType::class, [
+            'label' => $this->__('Allow moderation specific creator for forum') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Whether to allow moderators choosing a user which will be set as creator.')
+            ],
+            'help' => $this->__('Whether to allow moderators choosing a user which will be set as creator.'),
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('The allow moderation specific creator for forum option')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('allowModerationSpecificCreationDateForForum', CheckboxType::class, [
+            'label' => $this->__('Allow moderation specific creation date for forum') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Whether to allow moderators choosing a custom creation date.')
+            ],
+            'help' => $this->__('Whether to allow moderators choosing a custom creation date.'),
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('The allow moderation specific creation date for forum option')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('allowModerationSpecificCreatorForPosting', CheckboxType::class, [
+            'label' => $this->__('Allow moderation specific creator for posting') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Whether to allow moderators choosing a user which will be set as creator.')
+            ],
+            'help' => $this->__('Whether to allow moderators choosing a user which will be set as creator.'),
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('The allow moderation specific creator for posting option')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('allowModerationSpecificCreationDateForPosting', CheckboxType::class, [
+            'label' => $this->__('Allow moderation specific creation date for posting') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Whether to allow moderators choosing a custom creation date.')
+            ],
+            'help' => $this->__('Whether to allow moderators choosing a custom creation date.'),
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('The allow moderation specific creation date for posting option')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('allowModerationSpecificCreatorForAbo', CheckboxType::class, [
+            'label' => $this->__('Allow moderation specific creator for abo') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Whether to allow moderators choosing a user which will be set as creator.')
+            ],
+            'help' => $this->__('Whether to allow moderators choosing a user which will be set as creator.'),
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('The allow moderation specific creator for abo option')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('allowModerationSpecificCreationDateForAbo', CheckboxType::class, [
+            'label' => $this->__('Allow moderation specific creation date for abo') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Whether to allow moderators choosing a custom creation date.')
+            ],
+            'help' => $this->__('Whether to allow moderators choosing a custom creation date.'),
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('The allow moderation specific creation date for abo option')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('allowModerationSpecificCreatorForRank', CheckboxType::class, [
+            'label' => $this->__('Allow moderation specific creator for rank') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Whether to allow moderators choosing a user which will be set as creator.')
+            ],
+            'help' => $this->__('Whether to allow moderators choosing a user which will be set as creator.'),
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('The allow moderation specific creator for rank option')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('allowModerationSpecificCreationDateForRank', CheckboxType::class, [
+            'label' => $this->__('Allow moderation specific creation date for rank') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Whether to allow moderators choosing a custom creation date.')
+            ],
+            'help' => $this->__('Whether to allow moderators choosing a custom creation date.'),
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('The allow moderation specific creation date for rank option')
+            ],
+            'required' => false,
         ]);
     }
 
@@ -1364,7 +1504,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Which sections are supported in the Finder component (used by Scribite plug-ins).')
             ],
             'help' => $this->__('Which sections are supported in the Finder component (used by Scribite plug-ins).'),
-            'empty_data' => '',
+            'empty_data' => 'category###forum###posting###abo###user###rank',
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Choose the enabled finder types.')

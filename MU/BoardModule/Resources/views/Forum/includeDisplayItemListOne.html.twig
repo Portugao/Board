@@ -1,5 +1,5 @@
 {# purpose of this template: inclusion template for display of related forums #}
-{% set hasAdminPermission = hasPermission('MUBoardModule:Forum:', '::', 'ACCESS_EDIT') %}
+{% set hasAdminPermission = permissionHelper.hasComponentPermission('forum', constant('ACCESS_EDIT')) %}
 {% if noLink is not defined %}
     {% set noLink = false %}
 {% endif %}

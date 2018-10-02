@@ -49,7 +49,7 @@
                     </td>
                 {% endif %}
                 <td id="itemActions{{ category.getKey() }}Start" headers="hItemActionsStart" class="actions nowrap z-w02">
-                    {% set itemActions = knp_menu_get('MUBoardModule:ItemActionsMenu:menu', [], {entity: category, area: routeArea, context: 'view'}) %}
+                    {% set itemActions = knp_menu_get('mUBoardMenuItemActions', [], {entity: category, area: routeArea, context: 'view'}) %}
                     <div class="dropdown">
                         <a id="itemActions{{ category.getKey() }}DropDownToggleStart" role="button" data-toggle="dropdown" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
                         {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:bootstrap_fontawesome.html.twig'}) }}
@@ -100,7 +100,7 @@
 {% block page_nav_links %}
     <p>
         {% if canBeCreated %}
-            {% if hasPermission('MUBoardModule:Category:', '::', 'ACCESS_EDIT') %}
+            {% if permissionHelper.hasComponentPermission('category', constant('ACCESS_EDIT')) %}
                 {% set createTitle = __('Create category') %}
                 <a href="{{ path('muboardmodule_category_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}"><i class="fa fa-plus"></i> {{ createTitle }}</a>
             {% endif %}

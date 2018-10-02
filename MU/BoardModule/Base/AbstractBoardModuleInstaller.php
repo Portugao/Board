@@ -81,7 +81,6 @@ abstract class AbstractBoardModuleInstaller extends AbstractExtensionInstaller
         $this->setVar('template', 'normal');
         $this->setVar('showStatisticInDetails', false);
         $this->setVar('showStatisticOnBottom', false);
-        $this->setVar('moderationGroupForPostings', 2);
         $this->setVar('categoryEntriesPerPage', 10);
         $this->setVar('linkOwnCategoriesOnAccountPage', true);
         $this->setVar('forumEntriesPerPage', 10);
@@ -134,6 +133,17 @@ abstract class AbstractBoardModuleInstaller extends AbstractExtensionInstaller
         $this->setVar('thumbnailHeightRankUploadImageDisplay', 180);
         $this->setVar('thumbnailWidthRankUploadImageEdit', 240);
         $this->setVar('thumbnailHeightRankUploadImageEdit', 180);
+        $this->setVar('moderationGroupForPostings', 2);
+        $this->setVar('allowModerationSpecificCreatorForCategory', false);
+        $this->setVar('allowModerationSpecificCreationDateForCategory', false);
+        $this->setVar('allowModerationSpecificCreatorForForum', false);
+        $this->setVar('allowModerationSpecificCreationDateForForum', false);
+        $this->setVar('allowModerationSpecificCreatorForPosting', false);
+        $this->setVar('allowModerationSpecificCreationDateForPosting', false);
+        $this->setVar('allowModerationSpecificCreatorForAbo', false);
+        $this->setVar('allowModerationSpecificCreationDateForAbo', false);
+        $this->setVar('allowModerationSpecificCreatorForRank', false);
+        $this->setVar('allowModerationSpecificCreationDateForRank', false);
         $this->setVar('enabledFinderTypes', 'category###forum###posting###abo###user###rank');
     
         // initialisation successful

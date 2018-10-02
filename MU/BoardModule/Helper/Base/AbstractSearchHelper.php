@@ -17,7 +17,6 @@ use Doctrine\ORM\Query\Expr\Composite;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Zikula\Common\Translator\TranslatorInterface;
@@ -43,9 +42,9 @@ abstract class AbstractSearchHelper implements SearchableInterface
     protected $session;
     
     /**
-     * @var Request
+     * @var RequestStack
      */
-    protected $request;
+    protected $requestStack;
     
     /**
      * @var EntityFactory
@@ -89,7 +88,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
     ) {
         $this->setTranslator($translator);
         $this->session = $session;
-        $this->request = $requestStack->getCurrentRequest();
+        $this->requestStack = $requestStack;
         $this->entityFactory = $entityFactory;
         $this->controllerHelper = $controllerHelper;
         $this->entityDisplayHelper = $entityDisplayHelper;
@@ -112,7 +111,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
     public function amendForm(FormBuilderInterface $builder)
     {
         if (!$this->permissionHelper->hasPermission(ACCESS_READ)) {
-            return '';
+            return;
         }
     
         $builder->add('active', HiddenType::class, [
@@ -146,10 +145,11 @@ abstract class AbstractSearchHelper implements SearchableInterface
         // retrieve list of activated object types
         $searchTypes = $this->getSearchTypes();
         $entitiesWithDisplayAction = ['category', 'forum', 'posting', 'abo', 'user', 'rank'];
+        $request = $this->requestStack->getCurrentRequest();
     
         foreach ($searchTypes as $searchTypeCode => $typeInfo) {
             $isActivated = false;
-            $searchSettings = $this->request->query->get('zikulasearchmodule_search', []);
+            $searchSettings = $request->query->get('zikulasearchmodule_search', []);
             $moduleActivationInfo = $searchSettings['modules'];
             if (isset($moduleActivationInfo['MUBoardModule'])) {
                 $moduleActivationInfo = $moduleActivationInfo['MUBoardModule'];
@@ -200,13 +200,13 @@ abstract class AbstractSearchHelper implements SearchableInterface
             $repository = $this->entityFactory->getRepository($objectType);
     
             // build the search query without any joins
-            $qb = $repository->genericBaseQuery('', '', false);
+            $qb = $repository->getListQueryBuilder('', '', false);
     
             // build where expression for given search type
             $whereExpr = $this->formatWhere($qb, $words, $whereArray, $searchType);
             $qb->andWhere($whereExpr);
     
-            $query = $qb->getQuery();
+            $query = $repository->getQueryFromBuilder($qb);
     
             // set a sensitive limit
             $query->setFirstResult(0)
@@ -234,7 +234,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
                 $displayUrl = '';
                 if ($hasDisplayAction) {
                     $urlArgs = $entity->createUrlArgs();
-                    $urlArgs['_locale'] = (null !== $languageField && !empty($entity[$languageField])) ? $entity[$languageField] : $this->request->getLocale();
+                    $urlArgs['_locale'] = (null !== $languageField && !empty($entity[$languageField])) ? $entity[$languageField] : $request->getLocale();
                     $displayUrl = new RouteUrl('muboardmodule_' . strtolower($objectType) . '_display', $urlArgs);
                 }
     

@@ -13,7 +13,6 @@
 namespace MU\BoardModule\Helper\Base;
 
 use Symfony\Bundle\TwigBundle\Loader\FilesystemLoader;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Twig_Environment;
@@ -32,37 +31,37 @@ abstract class AbstractViewHelper
      * @var Twig_Environment
      */
     protected $twig;
-
+    
     /**
      * @var FilesystemLoader
      */
     protected $twigLoader;
-
+    
     /**
-     * @var Request
+     * @var RequestStack
      */
-    protected $request;
-
+    protected $requestStack;
+    
     /**
      * @var VariableApiInterface
      */
     protected $variableApi;
-
+    
     /**
      * @var ParameterBag
      */
     protected $pageVars;
-
+    
     /**
      * @var ControllerHelper
      */
     protected $controllerHelper;
-
+    
     /**
      * @var PermissionHelper
      */
     protected $permissionHelper;
-
+    
     /**
      * ViewHelper constructor.
      *
@@ -87,13 +86,13 @@ abstract class AbstractViewHelper
     ) {
         $this->twig = $twig;
         $this->twigLoader = $twigLoader;
-        $this->request = $requestStack->getCurrentRequest();
+        $this->requestStack = $requestStack;
         $this->variableApi = $variableApi;
         $this->pageVars = $pageVars;
         $this->controllerHelper = $controllerHelper;
         $this->permissionHelper = $permissionHelper;
     }
-
+    
     /**
      * Determines the view template for a certain method with given parameters.
      *
@@ -112,7 +111,7 @@ abstract class AbstractViewHelper
         $templateExtension = '.' . $this->determineExtension($type, $func);
     
         // check whether a special template is used
-        $tpl = $this->request->query->getAlnum('tpl', '');
+        $tpl = $this->requestStack->getCurrentRequest()->query->getAlnum('tpl', '');
         if (!empty($tpl)) {
             // check if custom template exists
             $customTemplate = $template . ucfirst($tpl);
@@ -125,7 +124,7 @@ abstract class AbstractViewHelper
     
         return $template;
     }
-
+    
     /**
      * Helper method for managing view templates.
      *
@@ -145,7 +144,7 @@ abstract class AbstractViewHelper
         }
     
         // look whether we need output with or without the theme
-        $raw = $this->request->query->getBoolean('raw', false);
+        $raw = $this->requestStack->getCurrentRequest()->query->getBoolean('raw', false);
         if (!$raw && $templateExtension != 'html.twig') {
             $raw = true;
         }
@@ -183,7 +182,7 @@ abstract class AbstractViewHelper
     
         return $response;
     }
-
+    
     /**
      * Get extension of the currently treated template.
      *
@@ -200,14 +199,14 @@ abstract class AbstractViewHelper
         }
     
         $extensions = $this->availableExtensions($type, $func);
-        $format = $this->request->getRequestFormat();
+        $format = $this->requestStack->getCurrentRequest()->getRequestFormat();
         if ($format != 'html' && in_array($format, $extensions)) {
             $templateExtension = $format . '.twig';
         }
     
         return $templateExtension;
     }
-
+    
     /**
      * Get list of available template extensions.
      *

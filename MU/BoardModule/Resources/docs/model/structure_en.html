@@ -80,7 +80,7 @@
             </tr>
             <tr>
                 <th id="hPlatform" scope="row" headers="hBasicField">Platform</th>
-                <td headers="hBasicValue hPlatform"><a href="https://ziku.la/en/" title="Zikula website" target="_blank">Zikula</a> 2.0.8</td>
+                <td headers="hBasicValue hPlatform"><a href="https://ziku.la/en/" title="Zikula website" target="_blank">Zikula</a> 2.0.11</td>
             </tr>
             <tr>
                 <th id="hGenerated" scope="row" headers="hBasicField">Generated</th>
@@ -3013,59 +3013,9 @@
         </tbody>
     </table>
 </div>
-<h3><i class="fa fa-server"></i> Moderation</h3>
-<p>Here you can assign moderation groups for enhanced workflow actions.</p>
-<p>Sort value: 3</p>
-<p>Composite: <i class="fa fa-times"></i>
-</p>
-<h4><i class="fa fa-bars"></i> Fields</h4>
-<div class="table-responsive">
-    <table class="table-striped table-bordered table-hover table-condensed">
-        <colgroup>
-            <col id="cVariablesModerationFieldName" />
-            <col id="cVariablesModerationFieldType" />
-            <col id="cVariablesModerationFieldMandatory" />
-            <col id="cVariablesModerationFieldDefault" />
-            <col id="cVariablesModerationFieldDisplayType" />
-            <col id="cVariablesModerationFieldConstraints" />
-            <col id="cVariablesModerationFieldRemarks" />
-        </colgroup>
-        <thead>
-            <tr>
-                <th id="hVariablesModerationFieldName" scope="col">Name</th>
-                <th id="hVariablesModerationFieldType" scope="col">Type</th>
-                <th id="hVariablesModerationFieldMandatory" scope="col">Mandatory</th>
-                <th id="hVariablesModerationFieldDefault" scope="col">Default value</th>
-                <th id="hVariablesModerationFieldDisplayType" scope="col">Display</th>
-                <th id="hVariablesModerationFieldConstraints" scope="col">Constraints</th>
-                <th id="hVariablesModerationFieldRemarks" scope="col">Remarks</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th id="hVariablesModerationFieldModerationGroupForPostings" scope="row" headers="hVariablesModerationFieldName">Moderation group for postings</th>
-                <td headers="hVariablesModerationFieldModerationGroupForPostings hVariablesModerationFieldType">Integer</td>
-                <td headers="hVariablesModerationFieldModerationGroupForPostings hVariablesModerationFieldMandatory">true</td>
-                <td headers="hVariablesModerationFieldModerationGroupForPostings hVariablesModerationFieldDefault">2</td>
-                <td headers="hVariablesModerationFieldModerationGroupForPostings hVariablesModerationFieldDisplayType">ALL</td>
-                <td headers="hVariablesModerationFieldModerationGroupForPostings hVariablesModerationFieldConstraints">
-                    <ul>
-                        <li>Has a length of 11.</li>
-                    </ul>
-                </td>
-                <td headers="hVariablesModerationFieldModerationGroupForPostings hVariablesModerationFieldRemarks">
-                    <ul>
-                        <li>Used to determine moderator user accounts for sending email notifications. </li>
-                        <li>This field is not unique and allows no null values.</li>
-                    </ul>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
 <h3><i class="fa fa-server"></i> List views</h3>
 <p>Here you can configure parameters for list views.</p>
-<p>Sort value: 4</p>
+<p>Sort value: 3</p>
 <p>Composite: <i class="fa fa-times"></i>
 </p>
 <h4><i class="fa fa-bars"></i> Fields</h4>
@@ -3307,7 +3257,7 @@
 </div>
 <h3><i class="fa fa-server"></i> Images</h3>
 <p>Here you can define several options for image handling.</p>
-<p>Sort value: 5</p>
+<p>Sort value: 4</p>
 <p>Composite: <i class="fa fa-times"></i>
 </p>
 <h4><i class="fa fa-bars"></i> Fields</h4>
@@ -4054,6 +4004,226 @@
                 <td headers="hVariablesImagesFieldThumbnailHeightRankUploadImageEdit hVariablesImagesFieldRemarks">
                     <ul>
                         <li>Thumbnail height on edit pages in pixels. </li>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h3><i class="fa fa-server"></i> Moderation</h3>
+<p>Here you can define moderation-related settings.</p>
+<p>Sort value: 5</p>
+<p>Composite: <i class="fa fa-times"></i>
+</p>
+<h4><i class="fa fa-bars"></i> Fields</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cVariablesModerationFieldName" />
+            <col id="cVariablesModerationFieldType" />
+            <col id="cVariablesModerationFieldMandatory" />
+            <col id="cVariablesModerationFieldDefault" />
+            <col id="cVariablesModerationFieldDisplayType" />
+            <col id="cVariablesModerationFieldConstraints" />
+            <col id="cVariablesModerationFieldRemarks" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hVariablesModerationFieldName" scope="col">Name</th>
+                <th id="hVariablesModerationFieldType" scope="col">Type</th>
+                <th id="hVariablesModerationFieldMandatory" scope="col">Mandatory</th>
+                <th id="hVariablesModerationFieldDefault" scope="col">Default value</th>
+                <th id="hVariablesModerationFieldDisplayType" scope="col">Display</th>
+                <th id="hVariablesModerationFieldConstraints" scope="col">Constraints</th>
+                <th id="hVariablesModerationFieldRemarks" scope="col">Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hVariablesModerationFieldModerationGroupForPostings" scope="row" headers="hVariablesModerationFieldName">Moderation group for postings</th>
+                <td headers="hVariablesModerationFieldModerationGroupForPostings hVariablesModerationFieldType">Integer</td>
+                <td headers="hVariablesModerationFieldModerationGroupForPostings hVariablesModerationFieldMandatory">true</td>
+                <td headers="hVariablesModerationFieldModerationGroupForPostings hVariablesModerationFieldDefault">2</td>
+                <td headers="hVariablesModerationFieldModerationGroupForPostings hVariablesModerationFieldDisplayType">ALL</td>
+                <td headers="hVariablesModerationFieldModerationGroupForPostings hVariablesModerationFieldConstraints">
+                    <ul>
+                        <li>Has a length of 11.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesModerationFieldModerationGroupForPostings hVariablesModerationFieldRemarks">
+                    <ul>
+                        <li>Used to determine moderator user accounts for sending email notifications. </li>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesModerationFieldAllowModerationSpecificCreatorForCategory" scope="row" headers="hVariablesModerationFieldName">Allow moderation specific creator for category</th>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForCategory hVariablesModerationFieldType">Boolean</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForCategory hVariablesModerationFieldMandatory">false</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForCategory hVariablesModerationFieldDefault">false</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForCategory hVariablesModerationFieldDisplayType">ALL</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForCategory hVariablesModerationFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForCategory hVariablesModerationFieldRemarks">
+                    <ul>
+                        <li>Whether to allow moderators choosing a user which will be set as creator. </li>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesModerationFieldAllowModerationSpecificCreationDateForCategory" scope="row" headers="hVariablesModerationFieldName">Allow moderation specific creation date for category</th>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForCategory hVariablesModerationFieldType">Boolean</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForCategory hVariablesModerationFieldMandatory">false</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForCategory hVariablesModerationFieldDefault">false</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForCategory hVariablesModerationFieldDisplayType">ALL</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForCategory hVariablesModerationFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForCategory hVariablesModerationFieldRemarks">
+                    <ul>
+                        <li>Whether to allow moderators choosing a custom creation date. </li>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesModerationFieldAllowModerationSpecificCreatorForForum" scope="row" headers="hVariablesModerationFieldName">Allow moderation specific creator for forum</th>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForForum hVariablesModerationFieldType">Boolean</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForForum hVariablesModerationFieldMandatory">false</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForForum hVariablesModerationFieldDefault">false</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForForum hVariablesModerationFieldDisplayType">ALL</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForForum hVariablesModerationFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForForum hVariablesModerationFieldRemarks">
+                    <ul>
+                        <li>Whether to allow moderators choosing a user which will be set as creator. </li>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesModerationFieldAllowModerationSpecificCreationDateForForum" scope="row" headers="hVariablesModerationFieldName">Allow moderation specific creation date for forum</th>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForForum hVariablesModerationFieldType">Boolean</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForForum hVariablesModerationFieldMandatory">false</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForForum hVariablesModerationFieldDefault">false</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForForum hVariablesModerationFieldDisplayType">ALL</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForForum hVariablesModerationFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForForum hVariablesModerationFieldRemarks">
+                    <ul>
+                        <li>Whether to allow moderators choosing a custom creation date. </li>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesModerationFieldAllowModerationSpecificCreatorForPosting" scope="row" headers="hVariablesModerationFieldName">Allow moderation specific creator for posting</th>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForPosting hVariablesModerationFieldType">Boolean</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForPosting hVariablesModerationFieldMandatory">false</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForPosting hVariablesModerationFieldDefault">false</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForPosting hVariablesModerationFieldDisplayType">ALL</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForPosting hVariablesModerationFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForPosting hVariablesModerationFieldRemarks">
+                    <ul>
+                        <li>Whether to allow moderators choosing a user which will be set as creator. </li>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesModerationFieldAllowModerationSpecificCreationDateForPosting" scope="row" headers="hVariablesModerationFieldName">Allow moderation specific creation date for posting</th>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForPosting hVariablesModerationFieldType">Boolean</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForPosting hVariablesModerationFieldMandatory">false</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForPosting hVariablesModerationFieldDefault">false</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForPosting hVariablesModerationFieldDisplayType">ALL</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForPosting hVariablesModerationFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForPosting hVariablesModerationFieldRemarks">
+                    <ul>
+                        <li>Whether to allow moderators choosing a custom creation date. </li>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesModerationFieldAllowModerationSpecificCreatorForAbo" scope="row" headers="hVariablesModerationFieldName">Allow moderation specific creator for abo</th>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForAbo hVariablesModerationFieldType">Boolean</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForAbo hVariablesModerationFieldMandatory">false</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForAbo hVariablesModerationFieldDefault">false</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForAbo hVariablesModerationFieldDisplayType">ALL</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForAbo hVariablesModerationFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForAbo hVariablesModerationFieldRemarks">
+                    <ul>
+                        <li>Whether to allow moderators choosing a user which will be set as creator. </li>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesModerationFieldAllowModerationSpecificCreationDateForAbo" scope="row" headers="hVariablesModerationFieldName">Allow moderation specific creation date for abo</th>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForAbo hVariablesModerationFieldType">Boolean</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForAbo hVariablesModerationFieldMandatory">false</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForAbo hVariablesModerationFieldDefault">false</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForAbo hVariablesModerationFieldDisplayType">ALL</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForAbo hVariablesModerationFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForAbo hVariablesModerationFieldRemarks">
+                    <ul>
+                        <li>Whether to allow moderators choosing a custom creation date. </li>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesModerationFieldAllowModerationSpecificCreatorForRank" scope="row" headers="hVariablesModerationFieldName">Allow moderation specific creator for rank</th>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForRank hVariablesModerationFieldType">Boolean</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForRank hVariablesModerationFieldMandatory">false</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForRank hVariablesModerationFieldDefault">false</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForRank hVariablesModerationFieldDisplayType">ALL</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForRank hVariablesModerationFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForRank hVariablesModerationFieldRemarks">
+                    <ul>
+                        <li>Whether to allow moderators choosing a user which will be set as creator. </li>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesModerationFieldAllowModerationSpecificCreationDateForRank" scope="row" headers="hVariablesModerationFieldName">Allow moderation specific creation date for rank</th>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForRank hVariablesModerationFieldType">Boolean</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForRank hVariablesModerationFieldMandatory">false</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForRank hVariablesModerationFieldDefault">false</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForRank hVariablesModerationFieldDisplayType">ALL</td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForRank hVariablesModerationFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForRank hVariablesModerationFieldRemarks">
+                    <ul>
+                        <li>Whether to allow moderators choosing a custom creation date. </li>
                         <li>This field is not unique and allows no null values.</li>
                     </ul>
                 </td>

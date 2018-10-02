@@ -15,6 +15,7 @@ namespace MU\BoardModule\Controller\Base;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\Bundle\FormExtensionBundle\Form\Type\DeletionType;
@@ -167,15 +168,20 @@ abstract class AbstractUserController extends AbstractController
      * This action provides a item detail view in the admin area.
      *
      * @param Request $request Current request instance
-     * @param UserEntity $user Treated user instance
+     * @param integer $id Identifier of treated user instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if user to be displayed isn't found
+     * @throws NotFoundHttpException Thrown if user to be displayed isn't found
      */
-    public function adminDisplayAction(Request $request, UserEntity $user)
+    public function adminDisplayAction(Request $request, $id)
     {
+        $user = $this->get('mu_board_module.entity_factory')->getRepository('user')->selectById($id);
+        if (null === $user) {
+            throw new NotFoundHttpException($this->__('No such user found.'));
+        }
+    
         return $this->displayInternal($request, $user, true);
     }
     
@@ -183,15 +189,20 @@ abstract class AbstractUserController extends AbstractController
      * This action provides a item detail view.
      *
      * @param Request $request Current request instance
-     * @param UserEntity $user Treated user instance
+     * @param integer $id Identifier of treated user instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if user to be displayed isn't found
+     * @throws NotFoundHttpException Thrown if user to be displayed isn't found
      */
-    public function displayAction(Request $request, UserEntity $user)
+    public function displayAction(Request $request, $id)
     {
+        $user = $this->get('mu_board_module.entity_factory')->getRepository('user')->selectById($id);
+        if (null === $user) {
+            throw new NotFoundHttpException($this->__('No such user found.'));
+        }
+    
         return $this->displayInternal($request, $user, false);
     }
     
@@ -214,7 +225,7 @@ abstract class AbstractUserController extends AbstractController
         ];
         
         $controllerHelper = $this->get('mu_board_module.controller_helper');
-        $templateParameters = $controllerHelper->processDisplayActionParameters($objectType, $templateParameters, true);
+        $templateParameters = $controllerHelper->processDisplayActionParameters($objectType, $templateParameters, $user->supportsHookSubscribers());
         
         // fetch and return the appropriate template
         $response = $this->get('mu_board_module.view_helper')->processTemplate($objectType, 'display', $templateParameters);
@@ -230,7 +241,6 @@ abstract class AbstractUserController extends AbstractController
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by form handler if user to be edited isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function adminEditAction(Request $request)
@@ -246,7 +256,6 @@ abstract class AbstractUserController extends AbstractController
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by form handler if user to be edited isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function editAction(Request $request)
@@ -291,41 +300,46 @@ abstract class AbstractUserController extends AbstractController
      * This action provides a handling of simple delete requests in the admin area.
      *
      * @param Request $request Current request instance
-     * @param UserEntity $user Treated user instance
+     * @param integer $id Identifier of treated user instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if user to be deleted isn't found
+     * @throws NotFoundHttpException Thrown if user to be deleted isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
-    public function adminDeleteAction(Request $request, UserEntity $user)
+    public function adminDeleteAction(Request $request, $id)
     {
-        return $this->deleteInternal($request, $user, true);
+        return $this->deleteInternal($request, $id, true);
     }
     
     /**
      * This action provides a handling of simple delete requests.
      *
      * @param Request $request Current request instance
-     * @param UserEntity $user Treated user instance
+     * @param integer $id Identifier of treated user instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if user to be deleted isn't found
+     * @throws NotFoundHttpException Thrown if user to be deleted isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
-    public function deleteAction(Request $request, UserEntity $user)
+    public function deleteAction(Request $request, $id)
     {
-        return $this->deleteInternal($request, $user, false);
+        return $this->deleteInternal($request, $id, false);
     }
     
     /**
      * This method includes the common implementation code for adminDelete() and delete().
      */
-    protected function deleteInternal(Request $request, UserEntity $user, $isAdmin = false)
+    protected function deleteInternal(Request $request, $id, $isAdmin = false)
     {
+        $user = $this->get('mu_board_module.entity_factory')->getRepository('user')->selectById($id);
+        if (null === $user) {
+            throw new NotFoundHttpException($this->__('No such user found.'));
+        }
+        
         $objectType = 'user';
         // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_DELETE;
@@ -367,18 +381,39 @@ abstract class AbstractUserController extends AbstractController
         }
         
         $form = $this->createForm(DeletionType::class, $user);
-        $hookHelper = $this->get('mu_board_module.hook_helper');
+        if ($user->supportsHookSubscribers()) {
+            $hookHelper = $this->get('mu_board_module.hook_helper');
         
-        // Call form aware display hooks
-        $formHook = $hookHelper->callFormDisplayHooks($form, $user, FormAwareCategory::TYPE_DELETE);
+            // Call form aware display hooks
+            $formHook = $hookHelper->callFormDisplayHooks($form, $user, FormAwareCategory::TYPE_DELETE);
+        }
         
         if ($form->handleRequest($request)->isValid()) {
             if ($form->get('delete')->isClicked()) {
-                // Let any ui hooks perform additional validation actions
-                $validationErrors = $hookHelper->callValidationHooks($user, UiHooksCategory::TYPE_VALIDATE_DELETE);
-                if (count($validationErrors) > 0) {
-                    foreach ($validationErrors as $message) {
-                        $this->addFlash('error', $message);
+                if ($user->supportsHookSubscribers()) {
+                    // Let any ui hooks perform additional validation actions
+                    $validationErrors = $hookHelper->callValidationHooks($user, UiHooksCategory::TYPE_VALIDATE_DELETE);
+                    if (count($validationErrors) > 0) {
+                        foreach ($validationErrors as $message) {
+                            $this->addFlash('error', $message);
+                        }
+                    } else {
+                        // execute the workflow action
+                        $success = $workflowHelper->executeAction($user, $deleteActionId);
+                        if ($success) {
+                            $this->addFlash('status', $this->__('Done! Item deleted.'));
+                            $logger->notice('{app}: User {user} deleted the {entity} with id {id}.', $logArgs);
+                        }
+                        
+                        if ($user->supportsHookSubscribers()) {
+                            // Call form aware processing hooks
+                            $hookHelper->callFormProcessHooks($form, $user, FormAwareCategory::TYPE_PROCESS_DELETE);
+                        
+                            // Let any ui hooks know that we have deleted the user
+                            $hookHelper->callProcessHooks($user, UiHooksCategory::TYPE_PROCESS_DELETE);
+                        }
+                        
+                        return $this->redirectToRoute($redirectRoute);
                     }
                 } else {
                     // execute the workflow action
@@ -388,11 +423,13 @@ abstract class AbstractUserController extends AbstractController
                         $logger->notice('{app}: User {user} deleted the {entity} with id {id}.', $logArgs);
                     }
                     
-                    // Call form aware processing hooks
-                    $hookHelper->callFormProcessHooks($form, $user, FormAwareCategory::TYPE_PROCESS_DELETE);
+                    if ($user->supportsHookSubscribers()) {
+                        // Call form aware processing hooks
+                        $hookHelper->callFormProcessHooks($form, $user, FormAwareCategory::TYPE_PROCESS_DELETE);
                     
-                    // Let any ui hooks know that we have deleted the user
-                    $hookHelper->callProcessHooks($user, UiHooksCategory::TYPE_PROCESS_DELETE);
+                        // Let any ui hooks know that we have deleted the user
+                        $hookHelper->callProcessHooks($user, UiHooksCategory::TYPE_PROCESS_DELETE);
+                    }
                     
                     return $this->redirectToRoute($redirectRoute);
                 }
@@ -406,9 +443,11 @@ abstract class AbstractUserController extends AbstractController
         $templateParameters = [
             'routeArea' => $isAdmin ? 'admin' : '',
             'deleteForm' => $form->createView(),
-            $objectType => $user,
-            'formHookTemplates' => $formHook->getTemplates()
+            $objectType => $user
         ];
+        if ($user->supportsHookSubscribers()) {
+            $templateParameters['formHookTemplates'] = $formHook->getTemplates();
+        }
         
         $controllerHelper = $this->get('mu_board_module.controller_helper');
         $templateParameters = $controllerHelper->processDeleteActionParameters($objectType, $templateParameters, true);
@@ -489,14 +528,16 @@ abstract class AbstractUserController extends AbstractController
                 continue;
             }
         
-            // Let any ui hooks perform additional validation actions
-            $hookType = $action == 'delete' ? UiHooksCategory::TYPE_VALIDATE_DELETE : UiHooksCategory::TYPE_VALIDATE_EDIT;
-            $validationErrors = $hookHelper->callValidationHooks($entity, $hookType);
-            if (count($validationErrors) > 0) {
-                foreach ($validationErrors as $message) {
-                    $this->addFlash('error', $message);
+            if ($entity->supportsHookSubscribers()) {
+                // Let any ui hooks perform additional validation actions
+                $hookType = $action == 'delete' ? UiHooksCategory::TYPE_VALIDATE_DELETE : UiHooksCategory::TYPE_VALIDATE_EDIT;
+                $validationErrors = $hookHelper->callValidationHooks($entity, $hookType);
+                if (count($validationErrors) > 0) {
+                    foreach ($validationErrors as $message) {
+                        $this->addFlash('error', $message);
+                    }
+                    continue;
                 }
-                continue;
             }
         
             $success = false;
@@ -520,15 +561,17 @@ abstract class AbstractUserController extends AbstractController
                 $logger->notice('{app}: User {user} executed the {action} workflow action for the {entity} with id {id}.', ['app' => 'MUBoardModule', 'user' => $userName, 'action' => $action, 'entity' => 'user', 'id' => $itemId]);
             }
         
-            // Let any ui hooks know that we have updated or deleted an item
-            $hookType = $action == 'delete' ? UiHooksCategory::TYPE_PROCESS_DELETE : UiHooksCategory::TYPE_PROCESS_EDIT;
-            $url = null;
-            if ($action != 'delete') {
-                $urlArgs = $entity->createUrlArgs();
-                $urlArgs['_locale'] = $request->getLocale();
-                $url = new RouteUrl('muboardmodule_user_display', $urlArgs);
+            if ($entity->supportsHookSubscribers()) {
+                // Let any ui hooks know that we have updated or deleted an item
+                $hookType = $action == 'delete' ? UiHooksCategory::TYPE_PROCESS_DELETE : UiHooksCategory::TYPE_PROCESS_EDIT;
+                $url = null;
+                if ($action != 'delete') {
+                    $urlArgs = $entity->createUrlArgs();
+                    $urlArgs['_locale'] = $request->getLocale();
+                    $url = new RouteUrl('muboardmodule_user_display', $urlArgs);
+                }
+                $hookHelper->callProcessHooks($entity, $hookType, $url);
             }
-            $hookHelper->callProcessHooks($entity, $hookType, $url);
         }
         
         return $this->redirectToRoute('muboardmodule_user_' . ($isAdmin ? 'admin' : '') . 'index');

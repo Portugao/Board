@@ -2,7 +2,7 @@
 
 Board is a small forum module
 
-This module is intended for being used with Zikula 2.0.8 and later.
+This module is intended for being used with Zikula 2.0.11 and later.
 
 For questions and other remarks visit our homepage https://homepages-mit-zikula.de.
 

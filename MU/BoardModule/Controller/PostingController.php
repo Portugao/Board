@@ -16,7 +16,6 @@ use MU\BoardModule\Controller\Base\AbstractPostingController;
 
 use RuntimeException;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -91,12 +90,11 @@ class PostingController extends AbstractPostingController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
-     * @ParamConverter("posting", class="MUBoardModule:PostingEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Theme("admin")
      */
-    public function adminDisplayAction(Request $request, PostingEntity $posting)
+    public function adminDisplayAction(Request $request, $id)
     {
-        return parent::adminDisplayAction($request, $posting);
+        return parent::adminDisplayAction($request, $id);
     }
     
     /**
@@ -107,11 +105,10 @@ class PostingController extends AbstractPostingController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
-     * @ParamConverter("posting", class="MUBoardModule:PostingEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      */
-    public function displayAction(Request $request, PostingEntity $posting)
+    public function displayAction(Request $request, $id)
     {
-        return parent::displayAction($request, $posting);
+        return parent::displayAction($request, $id);
     }
     
     /**
@@ -151,12 +148,11 @@ class PostingController extends AbstractPostingController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     * @ParamConverter("posting", class="MUBoardModule:PostingEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Theme("admin")
      */
-    public function adminDeleteAction(Request $request, PostingEntity $posting)
+    public function adminDeleteAction(Request $request, $id)
     {
-        return parent::adminDeleteAction($request, $posting);
+        return parent::adminDeleteAction($request, $id);
     }
     
     /**
@@ -167,11 +163,10 @@ class PostingController extends AbstractPostingController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     * @ParamConverter("posting", class="MUBoardModule:PostingEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      */
-    public function deleteAction(Request $request, PostingEntity $posting)
+    public function deleteAction(Request $request, $id)
     {
-        return parent::deleteAction($request, $posting);
+        return parent::deleteAction($request, $id);
     }
     
     /**

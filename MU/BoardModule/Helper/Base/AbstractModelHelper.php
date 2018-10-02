@@ -23,7 +23,7 @@ abstract class AbstractModelHelper
      * @var EntityFactory
      */
     protected $entityFactory;
-
+    
     /**
      * ModelHelper constructor.
      *
@@ -33,7 +33,7 @@ abstract class AbstractModelHelper
     {
         $this->entityFactory = $entityFactory;
     }
-
+    
     /**
      * Determines whether creating an instance of a certain object type is possible.
      * This is when
@@ -76,7 +76,7 @@ abstract class AbstractModelHelper
     
         return $result;
     }
-
+    
     /**
      * Determines whether there exists at least one instance of a certain object type in the database.
      *
@@ -93,7 +93,7 @@ abstract class AbstractModelHelper
     
         return $repository->selectCount() > 0;
     }
-
+    
     /**
      * Returns a desired sorting criteria for passing it to a repository method.
      *
@@ -108,12 +108,24 @@ abstract class AbstractModelHelper
             return 'RAND()';
         }
     
+        $hasStandardFields = in_array($objectType, ['category', 'forum', 'posting', 'abo', 'rank']);
+    
         $sortParam = '';
         if ($sorting == 'newest') {
-            $sortParam = $this->entityFactory->getIdField($objectType) . ' DESC';
+            if (true === $hasStandardFields) {
+                $sortParam = 'createdDate DESC';
+            } else {
+                $sortParam = $this->entityFactory->getIdField($objectType) . ' DESC';
+            }
+        } elseif ($sorting == 'updated') {
+            if (true === $hasStandardFields) {
+                $sortParam = 'updatedDate DESC';
+            } else {
+                $sortParam = $this->entityFactory->getIdField($objectType) . ' DESC';
+            }
         } elseif ($sorting == 'default') {
             $repository = $this->entityFactory->getRepository($objectType);
-            $sortParam = $repository->getDefaultSortingField() . ' ASC';
+            $sortParam = $repository->getDefaultSortingField();
         }
     
         return $sortParam;

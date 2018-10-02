@@ -1,7 +1,9 @@
 {# purpose of this template: users admin index view #}
 {% extends 'MUBoardModule::adminBase.html.twig' %}
-{% block title __('users') %}
+{% block title __('Users') %}
 {% block admin_page_icon 'home' %}
 {% block content %}
-    <p>{{ __('Welcome to the user section of the Board application.') }}</p>
+    <div class="muboardmodule-user muboardmodule-index">
+        <p>{{ __('Welcome to the user section of the Board application.') }}</p>
+    </div>
 {% endblock %}

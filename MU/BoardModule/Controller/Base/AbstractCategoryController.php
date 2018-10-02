@@ -15,6 +15,7 @@ namespace MU\BoardModule\Controller\Base;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\Bundle\FormExtensionBundle\Form\Type\DeletionType;
@@ -169,15 +170,20 @@ abstract class AbstractCategoryController extends AbstractController
      * This action provides a item detail view in the admin area.
      *
      * @param Request $request Current request instance
-     * @param CategoryEntity $category Treated category instance
+     * @param integer $id Identifier of treated category instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if category to be displayed isn't found
+     * @throws NotFoundHttpException Thrown if category to be displayed isn't found
      */
-    public function adminDisplayAction(Request $request, CategoryEntity $category)
+    public function adminDisplayAction(Request $request, $id)
     {
+        $category = $this->get('mu_board_module.entity_factory')->getRepository('category')->selectById($id);
+        if (null === $category) {
+            throw new NotFoundHttpException($this->__('No such category found.'));
+        }
+    
         return $this->displayInternal($request, $category, true);
     }
     
@@ -185,15 +191,20 @@ abstract class AbstractCategoryController extends AbstractController
      * This action provides a item detail view.
      *
      * @param Request $request Current request instance
-     * @param CategoryEntity $category Treated category instance
+     * @param integer $id Identifier of treated category instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if category to be displayed isn't found
+     * @throws NotFoundHttpException Thrown if category to be displayed isn't found
      */
-    public function displayAction(Request $request, CategoryEntity $category)
+    public function displayAction(Request $request, $id)
     {
+        $category = $this->get('mu_board_module.entity_factory')->getRepository('category')->selectById($id);
+        if (null === $category) {
+            throw new NotFoundHttpException($this->__('No such category found.'));
+        }
+    
         return $this->displayInternal($request, $category, false);
     }
     
@@ -216,7 +227,7 @@ abstract class AbstractCategoryController extends AbstractController
         ];
         
         $controllerHelper = $this->get('mu_board_module.controller_helper');
-        $templateParameters = $controllerHelper->processDisplayActionParameters($objectType, $templateParameters, true);
+        $templateParameters = $controllerHelper->processDisplayActionParameters($objectType, $templateParameters, $category->supportsHookSubscribers());
         
         // fetch and return the appropriate template
         $response = $this->get('mu_board_module.view_helper')->processTemplate($objectType, 'display', $templateParameters);
@@ -232,7 +243,6 @@ abstract class AbstractCategoryController extends AbstractController
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by form handler if category to be edited isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function adminEditAction(Request $request)
@@ -248,7 +258,6 @@ abstract class AbstractCategoryController extends AbstractController
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by form handler if category to be edited isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function editAction(Request $request)
@@ -293,41 +302,46 @@ abstract class AbstractCategoryController extends AbstractController
      * This action provides a handling of simple delete requests in the admin area.
      *
      * @param Request $request Current request instance
-     * @param CategoryEntity $category Treated category instance
+     * @param integer $id Identifier of treated category instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if category to be deleted isn't found
+     * @throws NotFoundHttpException Thrown if category to be deleted isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
-    public function adminDeleteAction(Request $request, CategoryEntity $category)
+    public function adminDeleteAction(Request $request, $id)
     {
-        return $this->deleteInternal($request, $category, true);
+        return $this->deleteInternal($request, $id, true);
     }
     
     /**
      * This action provides a handling of simple delete requests.
      *
      * @param Request $request Current request instance
-     * @param CategoryEntity $category Treated category instance
+     * @param integer $id Identifier of treated category instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if category to be deleted isn't found
+     * @throws NotFoundHttpException Thrown if category to be deleted isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
-    public function deleteAction(Request $request, CategoryEntity $category)
+    public function deleteAction(Request $request, $id)
     {
-        return $this->deleteInternal($request, $category, false);
+        return $this->deleteInternal($request, $id, false);
     }
     
     /**
      * This method includes the common implementation code for adminDelete() and delete().
      */
-    protected function deleteInternal(Request $request, CategoryEntity $category, $isAdmin = false)
+    protected function deleteInternal(Request $request, $id, $isAdmin = false)
     {
+        $category = $this->get('mu_board_module.entity_factory')->getRepository('category')->selectById($id);
+        if (null === $category) {
+            throw new NotFoundHttpException($this->__('No such category found.'));
+        }
+        
         $objectType = 'category';
         // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_DELETE;
@@ -369,18 +383,39 @@ abstract class AbstractCategoryController extends AbstractController
         }
         
         $form = $this->createForm(DeletionType::class, $category);
-        $hookHelper = $this->get('mu_board_module.hook_helper');
+        if ($category->supportsHookSubscribers()) {
+            $hookHelper = $this->get('mu_board_module.hook_helper');
         
-        // Call form aware display hooks
-        $formHook = $hookHelper->callFormDisplayHooks($form, $category, FormAwareCategory::TYPE_DELETE);
+            // Call form aware display hooks
+            $formHook = $hookHelper->callFormDisplayHooks($form, $category, FormAwareCategory::TYPE_DELETE);
+        }
         
         if ($form->handleRequest($request)->isValid()) {
             if ($form->get('delete')->isClicked()) {
-                // Let any ui hooks perform additional validation actions
-                $validationErrors = $hookHelper->callValidationHooks($category, UiHooksCategory::TYPE_VALIDATE_DELETE);
-                if (count($validationErrors) > 0) {
-                    foreach ($validationErrors as $message) {
-                        $this->addFlash('error', $message);
+                if ($category->supportsHookSubscribers()) {
+                    // Let any ui hooks perform additional validation actions
+                    $validationErrors = $hookHelper->callValidationHooks($category, UiHooksCategory::TYPE_VALIDATE_DELETE);
+                    if (count($validationErrors) > 0) {
+                        foreach ($validationErrors as $message) {
+                            $this->addFlash('error', $message);
+                        }
+                    } else {
+                        // execute the workflow action
+                        $success = $workflowHelper->executeAction($category, $deleteActionId);
+                        if ($success) {
+                            $this->addFlash('status', $this->__('Done! Item deleted.'));
+                            $logger->notice('{app}: User {user} deleted the {entity} with id {id}.', $logArgs);
+                        }
+                        
+                        if ($category->supportsHookSubscribers()) {
+                            // Call form aware processing hooks
+                            $hookHelper->callFormProcessHooks($form, $category, FormAwareCategory::TYPE_PROCESS_DELETE);
+                        
+                            // Let any ui hooks know that we have deleted the category
+                            $hookHelper->callProcessHooks($category, UiHooksCategory::TYPE_PROCESS_DELETE);
+                        }
+                        
+                        return $this->redirectToRoute($redirectRoute);
                     }
                 } else {
                     // execute the workflow action
@@ -390,11 +425,13 @@ abstract class AbstractCategoryController extends AbstractController
                         $logger->notice('{app}: User {user} deleted the {entity} with id {id}.', $logArgs);
                     }
                     
-                    // Call form aware processing hooks
-                    $hookHelper->callFormProcessHooks($form, $category, FormAwareCategory::TYPE_PROCESS_DELETE);
+                    if ($category->supportsHookSubscribers()) {
+                        // Call form aware processing hooks
+                        $hookHelper->callFormProcessHooks($form, $category, FormAwareCategory::TYPE_PROCESS_DELETE);
                     
-                    // Let any ui hooks know that we have deleted the category
-                    $hookHelper->callProcessHooks($category, UiHooksCategory::TYPE_PROCESS_DELETE);
+                        // Let any ui hooks know that we have deleted the category
+                        $hookHelper->callProcessHooks($category, UiHooksCategory::TYPE_PROCESS_DELETE);
+                    }
                     
                     return $this->redirectToRoute($redirectRoute);
                 }
@@ -408,9 +445,11 @@ abstract class AbstractCategoryController extends AbstractController
         $templateParameters = [
             'routeArea' => $isAdmin ? 'admin' : '',
             'deleteForm' => $form->createView(),
-            $objectType => $category,
-            'formHookTemplates' => $formHook->getTemplates()
+            $objectType => $category
         ];
+        if ($category->supportsHookSubscribers()) {
+            $templateParameters['formHookTemplates'] = $formHook->getTemplates();
+        }
         
         $controllerHelper = $this->get('mu_board_module.controller_helper');
         $templateParameters = $controllerHelper->processDeleteActionParameters($objectType, $templateParameters, true);
@@ -491,14 +530,16 @@ abstract class AbstractCategoryController extends AbstractController
                 continue;
             }
         
-            // Let any ui hooks perform additional validation actions
-            $hookType = $action == 'delete' ? UiHooksCategory::TYPE_VALIDATE_DELETE : UiHooksCategory::TYPE_VALIDATE_EDIT;
-            $validationErrors = $hookHelper->callValidationHooks($entity, $hookType);
-            if (count($validationErrors) > 0) {
-                foreach ($validationErrors as $message) {
-                    $this->addFlash('error', $message);
+            if ($entity->supportsHookSubscribers()) {
+                // Let any ui hooks perform additional validation actions
+                $hookType = $action == 'delete' ? UiHooksCategory::TYPE_VALIDATE_DELETE : UiHooksCategory::TYPE_VALIDATE_EDIT;
+                $validationErrors = $hookHelper->callValidationHooks($entity, $hookType);
+                if (count($validationErrors) > 0) {
+                    foreach ($validationErrors as $message) {
+                        $this->addFlash('error', $message);
+                    }
+                    continue;
                 }
-                continue;
             }
         
             $success = false;
@@ -522,15 +563,17 @@ abstract class AbstractCategoryController extends AbstractController
                 $logger->notice('{app}: User {user} executed the {action} workflow action for the {entity} with id {id}.', ['app' => 'MUBoardModule', 'user' => $userName, 'action' => $action, 'entity' => 'category', 'id' => $itemId]);
             }
         
-            // Let any ui hooks know that we have updated or deleted an item
-            $hookType = $action == 'delete' ? UiHooksCategory::TYPE_PROCESS_DELETE : UiHooksCategory::TYPE_PROCESS_EDIT;
-            $url = null;
-            if ($action != 'delete') {
-                $urlArgs = $entity->createUrlArgs();
-                $urlArgs['_locale'] = $request->getLocale();
-                $url = new RouteUrl('muboardmodule_category_display', $urlArgs);
+            if ($entity->supportsHookSubscribers()) {
+                // Let any ui hooks know that we have updated or deleted an item
+                $hookType = $action == 'delete' ? UiHooksCategory::TYPE_PROCESS_DELETE : UiHooksCategory::TYPE_PROCESS_EDIT;
+                $url = null;
+                if ($action != 'delete') {
+                    $urlArgs = $entity->createUrlArgs();
+                    $urlArgs['_locale'] = $request->getLocale();
+                    $url = new RouteUrl('muboardmodule_category_display', $urlArgs);
+                }
+                $hookHelper->callProcessHooks($entity, $hookType, $url);
             }
-            $hookHelper->callProcessHooks($entity, $hookType, $url);
         }
         
         return $this->redirectToRoute('muboardmodule_category_' . ($isAdmin ? 'admin' : '') . 'index');

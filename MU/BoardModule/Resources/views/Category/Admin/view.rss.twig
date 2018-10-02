@@ -23,7 +23,7 @@
         #}
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <copyright>Copyright (c) {{ 'now'|date('Y') }}, {{ app.request.schemeAndHttpHost }}</copyright>
-        <webMaster>{{ pageGetVar('adminmail') }}</webMaster>
+        <webMaster>{{ getSystemVar('adminmail') }}</webMaster>
 {% for category in items %}
     <item>
         <title><![CDATA[{{ category|muboardmodule_formattedTitle|notifyFilters('muboardmodule.filterhook.categories')|safeHtml }}]]></title>

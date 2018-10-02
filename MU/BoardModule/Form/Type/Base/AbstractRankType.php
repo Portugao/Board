@@ -15,13 +15,10 @@ namespace MU\BoardModule\Form\Type\Base;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\File;
@@ -30,10 +27,10 @@ use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use MU\BoardModule\Entity\Factory\EntityFactory;
 use MU\BoardModule\Form\Type\Field\UploadType;
-use Zikula\UsersModule\Form\Type\UserLiveSearchType;
 use MU\BoardModule\Helper\CollectionFilterHelper;
 use MU\BoardModule\Helper\EntityDisplayHelper;
 use MU\BoardModule\Helper\ListEntriesHelper;
+use MU\BoardModule\Traits\ModerationFormFieldsTrait;
 
 /**
  * Rank editing form type base class.
@@ -41,6 +38,7 @@ use MU\BoardModule\Helper\ListEntriesHelper;
 abstract class AbstractRankType extends AbstractType
 {
     use TranslatorTrait;
+    use ModerationFormFieldsTrait;
 
     /**
      * @var EntityFactory
@@ -103,23 +101,6 @@ abstract class AbstractRankType extends AbstractType
         $this->addEntityFields($builder, $options);
         $this->addModerationFields($builder, $options);
         $this->addSubmitButtons($builder, $options);
-
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $entity = $event->getData();
-            foreach (['uploadImage'] as $uploadFieldName) {
-                $entity[$uploadFieldName] = [
-                    $uploadFieldName => $entity[$uploadFieldName] instanceof File ? $entity[$uploadFieldName]->getPathname() : null
-                ];
-            }
-        });
-        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
-            $entity = $event->getData();
-            foreach (['uploadImage'] as $uploadFieldName) {
-                if (is_array($entity[$uploadFieldName])) {
-                    $entity[$uploadFieldName] = $entity[$uploadFieldName][$uploadFieldName];
-                }
-            }
-        });
     }
 
     /**
@@ -144,7 +125,7 @@ abstract class AbstractRankType extends AbstractType
         
         $builder->add('minPostings', IntegerType::class, [
             'label' => $this->__('Min postings') . ':',
-            'empty_data' => '',
+            'empty_data' => 0,
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
@@ -156,7 +137,7 @@ abstract class AbstractRankType extends AbstractType
         
         $builder->add('maxPostings', IntegerType::class, [
             'label' => $this->__('Max postings') . ':',
-            'empty_data' => '',
+            'empty_data' => 0,
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
@@ -168,7 +149,7 @@ abstract class AbstractRankType extends AbstractType
         
         $builder->add('numberOfIcons', IntegerType::class, [
             'label' => $this->__('Number of icons') . ':',
-            'empty_data' => '',
+            'empty_data' => 0,
             'attr' => [
                 'maxlength' => 2,
                 'class' => '',
@@ -197,48 +178,6 @@ abstract class AbstractRankType extends AbstractType
                 'title' => $this->__('special ?')
             ],
             'required' => false,
-        ]);
-    }
-
-    /**
-     * Adds special fields for moderators.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addModerationFields(FormBuilderInterface $builder, array $options = [])
-    {
-        if (!$options['has_moderate_permission']) {
-            return;
-        }
-        if ($options['inline_usage']) {
-            return;
-        }
-    
-        $builder->add('moderationSpecificCreator', UserLiveSearchType::class, [
-            'mapped' => false,
-            'label' => $this->__('Creator') . ':',
-            'attr' => [
-                'maxlength' => 11,
-                'title' => $this->__('Here you can choose a user which will be set as creator.')
-            ],
-            'empty_data' => 0,
-            'required' => false,
-            'help' => $this->__('Here you can choose a user which will be set as creator.')
-        ]);
-        $builder->add('moderationSpecificCreationDate', DateTimeType::class, [
-            'mapped' => false,
-            'label' => $this->__('Creation date') . ':',
-            'attr' => [
-                'class' => '',
-                'title' => $this->__('Here you can choose a custom creation date.')
-            ],
-            'empty_data' => '',
-            'required' => false,
-            'with_seconds' => true,
-            'date_widget' => 'single_text',
-            'time_widget' => 'single_text',
-            'help' => $this->__('Here you can choose a custom creation date.')
         ]);
     }
 
@@ -313,6 +252,8 @@ abstract class AbstractRankType extends AbstractType
                 'mode' => 'create',
                 'actions' => [],
                 'has_moderate_permission' => false,
+                'allow_moderation_specific_creator' => false,
+                'allow_moderation_specific_creation_date' => false,
                 'filter_by_ownership' => true,
                 'inline_usage' => false
             ])
@@ -320,6 +261,8 @@ abstract class AbstractRankType extends AbstractType
             ->setAllowedTypes('mode', 'string')
             ->setAllowedTypes('actions', 'array')
             ->setAllowedTypes('has_moderate_permission', 'bool')
+            ->setAllowedTypes('allow_moderation_specific_creator', 'bool')
+            ->setAllowedTypes('allow_moderation_specific_creation_date', 'bool')
             ->setAllowedTypes('filter_by_ownership', 'bool')
             ->setAllowedTypes('inline_usage', 'bool')
             ->setAllowedValues('mode', ['create', 'edit'])

@@ -1,7 +1,9 @@
 {# purpose of this template: abos admin index view #}
 {% extends 'MUBoardModule::adminBase.html.twig' %}
-{% block title __('abos') %}
+{% block title __('Abos') %}
 {% block admin_page_icon 'home' %}
 {% block content %}
-    <p>{{ __('Welcome to the abo section of the Board application.') }}</p>
+    <div class="muboardmodule-abo muboardmodule-index">
+        <p>{{ __('Welcome to the abo section of the Board application.') }}</p>
+    </div>
 {% endblock %}

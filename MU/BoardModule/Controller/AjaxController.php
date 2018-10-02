@@ -161,22 +161,77 @@ class AjaxController extends AbstractAjaxController
             $index = $index + 1;
             $thisForum = $repository->selectById($forum);
             $thisForum->setPos($index);
-            //$entityManager->flush();
-            /*$thisalbum = $thispicture->getAlbum();
-             $thisAlbumId = $thisalbum['id'];*/
             
             // save entity back to database
             $entityFactory->getObjectManager()->flush();
         }
         
-        /*$logger = $this->get('logger');
-         $logArgs = ['app' => 'MUBoardModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => $objectType, 'id' => $id];
-         $logger->notice('{app}: User {user} toggled the state of posting  {entity} with id {id}.', $logArgs);*/
-        
         // return response
         return new JsonResponse([
             'message' => $this->__('The setting has been successfully changed.')
         ]);
+    }
+    
+    /**
+     * Changes a given state (boolean field) by switching between true and false.
+     *
+     * @Route("/editPosting", methods = {"GET"}, options={"expose"=true})
+     *
+     * @param Request $request Current request instance
+     *
+     * @return JsonResponse
+     *
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
+     */
+    public function editPostingAction(Request $request)
+    {
+        return $this->editPostingFunction($request);
+    }
+    
+    public function editPostingFunction(Request $request)
+    {
+        if (!$this->hasPermission('MUBoardModule::Ajax', '::', ACCESS_EDIT)) {
+            throw new AccessDeniedException();
+        }
+        
+        $objectType = 'posting';
+        $id = $request->query->getInt('id', 0);
+        $title = $request->query->get('title', '');
+        $text = $request->query->get('text', '');
+        
+        if ($id == 0) {
+            $result = $this->__('Error: invalid input.');
+        }
+        
+        // select data from data source
+        $entityFactory = $this->get('mu_board_module.entity_factory');
+        $repository = $entityFactory->getRepository($objectType);
+        $entity = $repository->selectById($id, false);
+        if (null === $entity) {
+            $result = $this->__('No such item.');
+        }
+        
+        // set new title
+        if ($title != '') {
+            $entity['title'] = $title;
+        }
+        
+        // set new test
+        if ($text != '') {
+            $entity['text'] = $text;
+        }
+     
+        // save entity back to database
+        $entityFactory->getObjectManager()->flush();
+        
+        $logger = $this->get('logger');
+        $logArgs = ['app' => 'MUBoardModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => $objectType, 'id' => $id];
+        $logger->notice('{app}: User {user} toggled the state of posting  {entity} with id {id}.', $logArgs);
+        
+        $state = $this->__('The title of this issue was changed');
+        
+        // return response
+        return new JsonResponse($state);
     }
 
     // feel free to add your own ajax controller methods here

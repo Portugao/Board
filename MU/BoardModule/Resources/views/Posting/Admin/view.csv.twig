@@ -1,12 +1,11 @@
 {# purpose of this template: postings view csv view #}
-{% spaceless %}"{{ __('Parent_id') }}";"{{ __('Title') }}";"{{ __('Text') }}";"{{ __('Invocations') }}";"{{ __('State') }}";"{{ __('Solved') }}";"{{ __('First image') }}";"{{ __('Second image') }}";"{{ __('Third image') }}";"{{ __('First file') }}";"{{ __('Second file') }}";"{{ __('Third file') }}";"{{ __('Workflow state') }}"
-;"{{ __('Parent') }}";"{{ __('Forum') }}"
+{% spaceless %}"{{ __('Parent_id') }}";"{{ __('Title') }}";"{{ __('Text') }}";"{{ __('Invocations') }}";"{{ __('State') }}";"{{ __('Solved') }}";"{{ __('First image') }}";"{{ __('Second image') }}";"{{ __('Third image') }}";"{{ __('First file') }}";"{{ __('Second file') }}";"{{ __('Third file') }}";"{{ __('Workflow state') }}";"{{ __('Parent') }}";"{{ __('Forum') }}"
 ;"{{ __('Children') }}"
 {% endspaceless %}
 {% for posting in items %}
+
 {% spaceless %}
-    "{{ posting.parent_id }}";"{{ posting.title }}";"{{ posting.text|safeHtml }}";"{{ posting.invocations }}";"{% if not posting.state %}0{% else %}1{% endif %}";"{% if not posting.solved %}0{% else %}1{% endif %}";"{{ posting.firstImage }}";"{{ posting.secondImage }}";"{{ posting.thirdImage }}";"{{ posting.firstFile }}";"{{ posting.secondFile }}";"{{ posting.thirdFile }}";"{{ posting.workflowState|muboardmodule_objectState(false)|lower }}"
-    ;"{% if posting.parent|default %}{{ posting.parent|muboardmodule_formattedTitle }}{% endif %}";"{% if posting.forum|default %}{{ posting.forum|muboardmodule_formattedTitle }}{% endif %}"
+    "{{ posting.parent_id }}";"{{ posting.title }}";"{{ posting.text|safeHtml }}";"{{ posting.invocations }}";"{% if not posting.state %}0{% else %}1{% endif %}";"{% if not posting.solved %}0{% else %}1{% endif %}";"{{ posting.firstImage }}";"{{ posting.secondImage }}";"{{ posting.thirdImage }}";"{{ posting.firstFile }}";"{{ posting.secondFile }}";"{{ posting.thirdFile }}";"{{ posting.workflowState|muboardmodule_objectState(false)|lower }}";"{% if posting.parent|default %}{{ posting.parent|muboardmodule_formattedTitle }}{% endif %}";"{% if posting.forum|default %}{{ posting.forum|muboardmodule_formattedTitle }}{% endif %}"
     ;"
     {% if posting.children|default %}
         {% for relatedItem in posting.children %}

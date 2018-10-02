@@ -43,6 +43,16 @@ abstract class AbstractPostingEntity extends EntityAccess
     protected $_objectType = 'posting';
     
     /**
+     * @var string Path to upload base folder
+     */
+    protected $_uploadBasePath = '';
+    
+    /**
+     * @var string Base URL to upload files
+     */
+    protected $_uploadBaseUrl = '';
+    
+    /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer", unique=true)
@@ -117,17 +127,11 @@ abstract class AbstractPostingEntity extends EntityAccess
     protected $firstImageMeta = [];
     
     /**
-     * @ORM\Column(length=255, nullable=true)
+     * @ORM\Column(name="firstImage", length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
-     * @Assert\File(
-     *    maxSize = "200k",
-     *    mimeTypes = {"image/*"}
-     * )
-     * @Assert\Image(
-     * )
-     * @var string $firstImage
+     * @var string $firstImageFileName
      */
-    protected $firstImage = null;
+    protected $firstImageFileName = null;
     
     /**
      * Full first image path as url.
@@ -136,6 +140,19 @@ abstract class AbstractPostingEntity extends EntityAccess
      * @var string $firstImageUrl
      */
     protected $firstImageUrl = '';
+    
+    /**
+     * First image file object.
+     *
+     * @Assert\File(
+     *    maxSize = "200k",
+     *    mimeTypes = {"image/*"}
+     * )
+     * @Assert\Image(
+     * )
+     * @var File $firstImage
+     */
+    protected $firstImage = null;
     
     /**
      * Second image meta data array.
@@ -147,17 +164,11 @@ abstract class AbstractPostingEntity extends EntityAccess
     protected $secondImageMeta = [];
     
     /**
-     * @ORM\Column(length=255, nullable=true)
+     * @ORM\Column(name="secondImage", length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
-     * @Assert\File(
-     *    maxSize = "200k",
-     *    mimeTypes = {"image/*"}
-     * )
-     * @Assert\Image(
-     * )
-     * @var string $secondImage
+     * @var string $secondImageFileName
      */
-    protected $secondImage = null;
+    protected $secondImageFileName = null;
     
     /**
      * Full second image path as url.
@@ -166,6 +177,19 @@ abstract class AbstractPostingEntity extends EntityAccess
      * @var string $secondImageUrl
      */
     protected $secondImageUrl = '';
+    
+    /**
+     * Second image file object.
+     *
+     * @Assert\File(
+     *    maxSize = "200k",
+     *    mimeTypes = {"image/*"}
+     * )
+     * @Assert\Image(
+     * )
+     * @var File $secondImage
+     */
+    protected $secondImage = null;
     
     /**
      * Third image meta data array.
@@ -177,17 +201,11 @@ abstract class AbstractPostingEntity extends EntityAccess
     protected $thirdImageMeta = [];
     
     /**
-     * @ORM\Column(length=255, nullable=true)
+     * @ORM\Column(name="thirdImage", length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
-     * @Assert\File(
-     *    maxSize = "200k",
-     *    mimeTypes = {"image/*"}
-     * )
-     * @Assert\Image(
-     * )
-     * @var string $thirdImage
+     * @var string $thirdImageFileName
      */
-    protected $thirdImage = null;
+    protected $thirdImageFileName = null;
     
     /**
      * Full third image path as url.
@@ -196,6 +214,19 @@ abstract class AbstractPostingEntity extends EntityAccess
      * @var string $thirdImageUrl
      */
     protected $thirdImageUrl = '';
+    
+    /**
+     * Third image file object.
+     *
+     * @Assert\File(
+     *    maxSize = "200k",
+     *    mimeTypes = {"image/*"}
+     * )
+     * @Assert\Image(
+     * )
+     * @var File $thirdImage
+     */
+    protected $thirdImage = null;
     
     /**
      * First file meta data array.
@@ -207,15 +238,11 @@ abstract class AbstractPostingEntity extends EntityAccess
     protected $firstFileMeta = [];
     
     /**
-     * @ORM\Column(length=255, nullable=true)
+     * @ORM\Column(name="firstFile", length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
-     * @Assert\File(
-     *    maxSize = "2M",
-     *    mimeTypes = {"application/*"}
-     * )
-     * @var string $firstFile
+     * @var string $firstFileFileName
      */
-    protected $firstFile = null;
+    protected $firstFileFileName = null;
     
     /**
      * Full first file path as url.
@@ -224,6 +251,17 @@ abstract class AbstractPostingEntity extends EntityAccess
      * @var string $firstFileUrl
      */
     protected $firstFileUrl = '';
+    
+    /**
+     * First file file object.
+     *
+     * @Assert\File(
+     *    maxSize = "2M",
+     *    mimeTypes = {"application/*"}
+     * )
+     * @var File $firstFile
+     */
+    protected $firstFile = null;
     
     /**
      * Second file meta data array.
@@ -235,15 +273,11 @@ abstract class AbstractPostingEntity extends EntityAccess
     protected $secondFileMeta = [];
     
     /**
-     * @ORM\Column(length=255, nullable=true)
+     * @ORM\Column(name="secondFile", length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
-     * @Assert\File(
-     *    maxSize = "2M",
-     *    mimeTypes = {"application/*"}
-     * )
-     * @var string $secondFile
+     * @var string $secondFileFileName
      */
-    protected $secondFile = null;
+    protected $secondFileFileName = null;
     
     /**
      * Full second file path as url.
@@ -252,6 +286,17 @@ abstract class AbstractPostingEntity extends EntityAccess
      * @var string $secondFileUrl
      */
     protected $secondFileUrl = '';
+    
+    /**
+     * Second file file object.
+     *
+     * @Assert\File(
+     *    maxSize = "2M",
+     *    mimeTypes = {"application/*"}
+     * )
+     * @var File $secondFile
+     */
+    protected $secondFile = null;
     
     /**
      * Third file meta data array.
@@ -263,15 +308,11 @@ abstract class AbstractPostingEntity extends EntityAccess
     protected $thirdFileMeta = [];
     
     /**
-     * @ORM\Column(length=255, nullable=true)
+     * @ORM\Column(name="thirdFile", length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
-     * @Assert\File(
-     *    maxSize = "2M",
-     *    mimeTypes = {"application/*"}
-     * )
-     * @var string $thirdFile
+     * @var string $thirdFileFileName
      */
-    protected $thirdFile = null;
+    protected $thirdFileFileName = null;
     
     /**
      * Full third file path as url.
@@ -280,6 +321,17 @@ abstract class AbstractPostingEntity extends EntityAccess
      * @var string $thirdFileUrl
      */
     protected $thirdFileUrl = '';
+    
+    /**
+     * Third file file object.
+     *
+     * @Assert\File(
+     *    maxSize = "2M",
+     *    mimeTypes = {"application/*"}
+     * )
+     * @var File $thirdFile
+     */
+    protected $thirdFile = null;
     
     
     /**
@@ -313,7 +365,7 @@ abstract class AbstractPostingEntity extends EntityAccess
      *      joinColumns={@ORM\JoinColumn(name="parent_id", referencedColumnName="id" )},
      *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" )}
      * )
-     * @ORM\OrderBy({"createdDate" = "DESC"})
+     * @ORM\OrderBy({"createdDate" = "ASC"})
      * @var \MU\BoardModule\Entity\PostingEntity[] $children
      */
     protected $children = null;
@@ -351,7 +403,55 @@ abstract class AbstractPostingEntity extends EntityAccess
     public function set_objectType($_objectType)
     {
         if ($this->_objectType != $_objectType) {
-            $this->_objectType = $_objectType;
+            $this->_objectType = isset($_objectType) ? $_objectType : '';
+        }
+    }
+    
+    /**
+     * Returns the _upload base path.
+     *
+     * @return string
+     */
+    public function get_uploadBasePath()
+    {
+        return $this->_uploadBasePath;
+    }
+    
+    /**
+     * Sets the _upload base path.
+     *
+     * @param string $_uploadBasePath
+     *
+     * @return void
+     */
+    public function set_uploadBasePath($_uploadBasePath)
+    {
+        if ($this->_uploadBasePath != $_uploadBasePath) {
+            $this->_uploadBasePath = isset($_uploadBasePath) ? $_uploadBasePath : '';
+        }
+    }
+    
+    /**
+     * Returns the _upload base url.
+     *
+     * @return string
+     */
+    public function get_uploadBaseUrl()
+    {
+        return $this->_uploadBaseUrl;
+    }
+    
+    /**
+     * Sets the _upload base url.
+     *
+     * @param string $_uploadBaseUrl
+     *
+     * @return void
+     */
+    public function set_uploadBaseUrl($_uploadBaseUrl)
+    {
+        if ($this->_uploadBaseUrl != $_uploadBaseUrl) {
+            $this->_uploadBaseUrl = isset($_uploadBaseUrl) ? $_uploadBaseUrl : '';
         }
     }
     
@@ -551,24 +651,79 @@ abstract class AbstractPostingEntity extends EntityAccess
     /**
      * Returns the first image.
      *
-     * @return string
+     * @return File
      */
     public function getFirstImage()
     {
+        if (null !== $this->firstImage) {
+            return $this->firstImage;
+        }
+    
+        $fileName = $this->firstImageFileName;
+        if (!empty($fileName) && !$this->_uploadBasePath) {
+            throw new \RuntimeException('Invalid upload base path in ' . get_class($this) . '#getFirstImage().');
+        }
+    
+        $filePath = $this->_uploadBasePath . 'firstimage/' . $fileName;
+        if (!empty($fileName) && file_exists($filePath)) {
+            $this->firstImage = new File($filePath);
+            $this->setFirstImageUrl($this->_uploadBaseUrl . '/' . $filePath);
+        } else {
+            $this->setFirstImageFileName('');
+            $this->setFirstImageUrl('');
+            $this->setFirstImageMeta([]);
+        }
+    
         return $this->firstImage;
     }
     
     /**
      * Sets the first image.
      *
-     * @param string $firstImage
+     * @param File|null $firstImage
      *
      * @return void
      */
     public function setFirstImage($firstImage)
     {
-        if ($this->firstImage !== $firstImage) {
-            $this->firstImage = $firstImage;
+        if (null === $this->firstImage && null === $firstImage) {
+            return;
+        }
+        if (null !== $this->firstImage && null !== $firstImage && $this->firstImage->getRealPath() === $firstImage->getRealPath()) {
+            return;
+        }
+        $this->firstImage = $firstImage;
+    
+        if (null === $this->firstImage) {
+            $this->setFirstImageFileName('');
+            $this->setFirstImageUrl('');
+            $this->setFirstImageMeta([]);
+        } else {
+            $this->setFirstImageFileName($this->firstImage->getFilename());
+        }
+    }
+    
+    /**
+     * Returns the first image file name.
+     *
+     * @return string
+     */
+    public function getFirstImageFileName()
+    {
+        return $this->firstImageFileName;
+    }
+    
+    /**
+     * Sets the first image file name.
+     *
+     * @param string $firstImageFileName
+     *
+     * @return void
+     */
+    public function setFirstImageFileName($firstImageFileName)
+    {
+        if ($this->firstImageFileName !== $firstImageFileName) {
+            $this->firstImageFileName = $firstImageFileName;
         }
     }
     
@@ -623,24 +778,79 @@ abstract class AbstractPostingEntity extends EntityAccess
     /**
      * Returns the second image.
      *
-     * @return string
+     * @return File
      */
     public function getSecondImage()
     {
+        if (null !== $this->secondImage) {
+            return $this->secondImage;
+        }
+    
+        $fileName = $this->secondImageFileName;
+        if (!empty($fileName) && !$this->_uploadBasePath) {
+            throw new \RuntimeException('Invalid upload base path in ' . get_class($this) . '#getSecondImage().');
+        }
+    
+        $filePath = $this->_uploadBasePath . 'secondimage/' . $fileName;
+        if (!empty($fileName) && file_exists($filePath)) {
+            $this->secondImage = new File($filePath);
+            $this->setSecondImageUrl($this->_uploadBaseUrl . '/' . $filePath);
+        } else {
+            $this->setSecondImageFileName('');
+            $this->setSecondImageUrl('');
+            $this->setSecondImageMeta([]);
+        }
+    
         return $this->secondImage;
     }
     
     /**
      * Sets the second image.
      *
-     * @param string $secondImage
+     * @param File|null $secondImage
      *
      * @return void
      */
     public function setSecondImage($secondImage)
     {
-        if ($this->secondImage !== $secondImage) {
-            $this->secondImage = $secondImage;
+        if (null === $this->secondImage && null === $secondImage) {
+            return;
+        }
+        if (null !== $this->secondImage && null !== $secondImage && $this->secondImage->getRealPath() === $secondImage->getRealPath()) {
+            return;
+        }
+        $this->secondImage = $secondImage;
+    
+        if (null === $this->secondImage) {
+            $this->setSecondImageFileName('');
+            $this->setSecondImageUrl('');
+            $this->setSecondImageMeta([]);
+        } else {
+            $this->setSecondImageFileName($this->secondImage->getFilename());
+        }
+    }
+    
+    /**
+     * Returns the second image file name.
+     *
+     * @return string
+     */
+    public function getSecondImageFileName()
+    {
+        return $this->secondImageFileName;
+    }
+    
+    /**
+     * Sets the second image file name.
+     *
+     * @param string $secondImageFileName
+     *
+     * @return void
+     */
+    public function setSecondImageFileName($secondImageFileName)
+    {
+        if ($this->secondImageFileName !== $secondImageFileName) {
+            $this->secondImageFileName = $secondImageFileName;
         }
     }
     
@@ -695,24 +905,79 @@ abstract class AbstractPostingEntity extends EntityAccess
     /**
      * Returns the third image.
      *
-     * @return string
+     * @return File
      */
     public function getThirdImage()
     {
+        if (null !== $this->thirdImage) {
+            return $this->thirdImage;
+        }
+    
+        $fileName = $this->thirdImageFileName;
+        if (!empty($fileName) && !$this->_uploadBasePath) {
+            throw new \RuntimeException('Invalid upload base path in ' . get_class($this) . '#getThirdImage().');
+        }
+    
+        $filePath = $this->_uploadBasePath . 'thirdimage/' . $fileName;
+        if (!empty($fileName) && file_exists($filePath)) {
+            $this->thirdImage = new File($filePath);
+            $this->setThirdImageUrl($this->_uploadBaseUrl . '/' . $filePath);
+        } else {
+            $this->setThirdImageFileName('');
+            $this->setThirdImageUrl('');
+            $this->setThirdImageMeta([]);
+        }
+    
         return $this->thirdImage;
     }
     
     /**
      * Sets the third image.
      *
-     * @param string $thirdImage
+     * @param File|null $thirdImage
      *
      * @return void
      */
     public function setThirdImage($thirdImage)
     {
-        if ($this->thirdImage !== $thirdImage) {
-            $this->thirdImage = $thirdImage;
+        if (null === $this->thirdImage && null === $thirdImage) {
+            return;
+        }
+        if (null !== $this->thirdImage && null !== $thirdImage && $this->thirdImage->getRealPath() === $thirdImage->getRealPath()) {
+            return;
+        }
+        $this->thirdImage = $thirdImage;
+    
+        if (null === $this->thirdImage) {
+            $this->setThirdImageFileName('');
+            $this->setThirdImageUrl('');
+            $this->setThirdImageMeta([]);
+        } else {
+            $this->setThirdImageFileName($this->thirdImage->getFilename());
+        }
+    }
+    
+    /**
+     * Returns the third image file name.
+     *
+     * @return string
+     */
+    public function getThirdImageFileName()
+    {
+        return $this->thirdImageFileName;
+    }
+    
+    /**
+     * Sets the third image file name.
+     *
+     * @param string $thirdImageFileName
+     *
+     * @return void
+     */
+    public function setThirdImageFileName($thirdImageFileName)
+    {
+        if ($this->thirdImageFileName !== $thirdImageFileName) {
+            $this->thirdImageFileName = $thirdImageFileName;
         }
     }
     
@@ -767,24 +1032,79 @@ abstract class AbstractPostingEntity extends EntityAccess
     /**
      * Returns the first file.
      *
-     * @return string
+     * @return File
      */
     public function getFirstFile()
     {
+        if (null !== $this->firstFile) {
+            return $this->firstFile;
+        }
+    
+        $fileName = $this->firstFileFileName;
+        if (!empty($fileName) && !$this->_uploadBasePath) {
+            throw new \RuntimeException('Invalid upload base path in ' . get_class($this) . '#getFirstFile().');
+        }
+    
+        $filePath = $this->_uploadBasePath . 'firstfile/' . $fileName;
+        if (!empty($fileName) && file_exists($filePath)) {
+            $this->firstFile = new File($filePath);
+            $this->setFirstFileUrl($this->_uploadBaseUrl . '/' . $filePath);
+        } else {
+            $this->setFirstFileFileName('');
+            $this->setFirstFileUrl('');
+            $this->setFirstFileMeta([]);
+        }
+    
         return $this->firstFile;
     }
     
     /**
      * Sets the first file.
      *
-     * @param string $firstFile
+     * @param File|null $firstFile
      *
      * @return void
      */
     public function setFirstFile($firstFile)
     {
-        if ($this->firstFile !== $firstFile) {
-            $this->firstFile = $firstFile;
+        if (null === $this->firstFile && null === $firstFile) {
+            return;
+        }
+        if (null !== $this->firstFile && null !== $firstFile && $this->firstFile->getRealPath() === $firstFile->getRealPath()) {
+            return;
+        }
+        $this->firstFile = $firstFile;
+    
+        if (null === $this->firstFile) {
+            $this->setFirstFileFileName('');
+            $this->setFirstFileUrl('');
+            $this->setFirstFileMeta([]);
+        } else {
+            $this->setFirstFileFileName($this->firstFile->getFilename());
+        }
+    }
+    
+    /**
+     * Returns the first file file name.
+     *
+     * @return string
+     */
+    public function getFirstFileFileName()
+    {
+        return $this->firstFileFileName;
+    }
+    
+    /**
+     * Sets the first file file name.
+     *
+     * @param string $firstFileFileName
+     *
+     * @return void
+     */
+    public function setFirstFileFileName($firstFileFileName)
+    {
+        if ($this->firstFileFileName !== $firstFileFileName) {
+            $this->firstFileFileName = $firstFileFileName;
         }
     }
     
@@ -839,24 +1159,79 @@ abstract class AbstractPostingEntity extends EntityAccess
     /**
      * Returns the second file.
      *
-     * @return string
+     * @return File
      */
     public function getSecondFile()
     {
+        if (null !== $this->secondFile) {
+            return $this->secondFile;
+        }
+    
+        $fileName = $this->secondFileFileName;
+        if (!empty($fileName) && !$this->_uploadBasePath) {
+            throw new \RuntimeException('Invalid upload base path in ' . get_class($this) . '#getSecondFile().');
+        }
+    
+        $filePath = $this->_uploadBasePath . 'secondfile/' . $fileName;
+        if (!empty($fileName) && file_exists($filePath)) {
+            $this->secondFile = new File($filePath);
+            $this->setSecondFileUrl($this->_uploadBaseUrl . '/' . $filePath);
+        } else {
+            $this->setSecondFileFileName('');
+            $this->setSecondFileUrl('');
+            $this->setSecondFileMeta([]);
+        }
+    
         return $this->secondFile;
     }
     
     /**
      * Sets the second file.
      *
-     * @param string $secondFile
+     * @param File|null $secondFile
      *
      * @return void
      */
     public function setSecondFile($secondFile)
     {
-        if ($this->secondFile !== $secondFile) {
-            $this->secondFile = $secondFile;
+        if (null === $this->secondFile && null === $secondFile) {
+            return;
+        }
+        if (null !== $this->secondFile && null !== $secondFile && $this->secondFile->getRealPath() === $secondFile->getRealPath()) {
+            return;
+        }
+        $this->secondFile = $secondFile;
+    
+        if (null === $this->secondFile) {
+            $this->setSecondFileFileName('');
+            $this->setSecondFileUrl('');
+            $this->setSecondFileMeta([]);
+        } else {
+            $this->setSecondFileFileName($this->secondFile->getFilename());
+        }
+    }
+    
+    /**
+     * Returns the second file file name.
+     *
+     * @return string
+     */
+    public function getSecondFileFileName()
+    {
+        return $this->secondFileFileName;
+    }
+    
+    /**
+     * Sets the second file file name.
+     *
+     * @param string $secondFileFileName
+     *
+     * @return void
+     */
+    public function setSecondFileFileName($secondFileFileName)
+    {
+        if ($this->secondFileFileName !== $secondFileFileName) {
+            $this->secondFileFileName = $secondFileFileName;
         }
     }
     
@@ -911,24 +1286,79 @@ abstract class AbstractPostingEntity extends EntityAccess
     /**
      * Returns the third file.
      *
-     * @return string
+     * @return File
      */
     public function getThirdFile()
     {
+        if (null !== $this->thirdFile) {
+            return $this->thirdFile;
+        }
+    
+        $fileName = $this->thirdFileFileName;
+        if (!empty($fileName) && !$this->_uploadBasePath) {
+            throw new \RuntimeException('Invalid upload base path in ' . get_class($this) . '#getThirdFile().');
+        }
+    
+        $filePath = $this->_uploadBasePath . 'thirdfile/' . $fileName;
+        if (!empty($fileName) && file_exists($filePath)) {
+            $this->thirdFile = new File($filePath);
+            $this->setThirdFileUrl($this->_uploadBaseUrl . '/' . $filePath);
+        } else {
+            $this->setThirdFileFileName('');
+            $this->setThirdFileUrl('');
+            $this->setThirdFileMeta([]);
+        }
+    
         return $this->thirdFile;
     }
     
     /**
      * Sets the third file.
      *
-     * @param string $thirdFile
+     * @param File|null $thirdFile
      *
      * @return void
      */
     public function setThirdFile($thirdFile)
     {
-        if ($this->thirdFile !== $thirdFile) {
-            $this->thirdFile = $thirdFile;
+        if (null === $this->thirdFile && null === $thirdFile) {
+            return;
+        }
+        if (null !== $this->thirdFile && null !== $thirdFile && $this->thirdFile->getRealPath() === $thirdFile->getRealPath()) {
+            return;
+        }
+        $this->thirdFile = $thirdFile;
+    
+        if (null === $this->thirdFile) {
+            $this->setThirdFileFileName('');
+            $this->setThirdFileUrl('');
+            $this->setThirdFileMeta([]);
+        } else {
+            $this->setThirdFileFileName($this->thirdFile->getFilename());
+        }
+    }
+    
+    /**
+     * Returns the third file file name.
+     *
+     * @return string
+     */
+    public function getThirdFileFileName()
+    {
+        return $this->thirdFileFileName;
+    }
+    
+    /**
+     * Sets the third file file name.
+     *
+     * @param string $thirdFileFileName
+     *
+     * @return void
+     */
+    public function setThirdFileFileName($thirdFileFileName)
+    {
+        if ($this->thirdFileFileName !== $thirdFileFileName) {
+            $this->thirdFileFileName = $thirdFileFileName;
         }
     }
     
@@ -1172,23 +1602,11 @@ abstract class AbstractPostingEntity extends EntityAccess
     
         // reset upload fields
         $this->setFirstImage(null);
-        $this->setFirstImageMeta([]);
-        $this->setFirstImageUrl('');
         $this->setSecondImage(null);
-        $this->setSecondImageMeta([]);
-        $this->setSecondImageUrl('');
         $this->setThirdImage(null);
-        $this->setThirdImageMeta([]);
-        $this->setThirdImageUrl('');
         $this->setFirstFile(null);
-        $this->setFirstFileMeta([]);
-        $this->setFirstFileUrl('');
         $this->setSecondFile(null);
-        $this->setSecondFileMeta([]);
-        $this->setSecondFileUrl('');
         $this->setThirdFile(null);
-        $this->setThirdFileMeta([]);
-        $this->setThirdFileUrl('');
     
         $this->setCreatedBy(null);
         $this->setCreatedDate(null);

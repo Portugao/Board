@@ -17,6 +17,7 @@ services:
             - "@zikula_extensions_module.api.variable"
             - "@mu_board_module.entity_factory"
             - "@mu_board_module.collection_filter_helper"
+            - "@mu_board_module.permission_helper"
             - "@mu_board_module.model_helper"
             - "@mu_board_module.image_helper"
     
@@ -54,7 +55,6 @@ services:
         arguments:
             - "@kernel"
             - "@translator.default"
-            - "@session"
             - "@router"
             - "@request_stack"
             - "@zikula_extensions_module.api.variable"

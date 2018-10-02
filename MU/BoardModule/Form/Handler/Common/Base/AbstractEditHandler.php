@@ -17,7 +17,6 @@ use RuntimeException;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -144,15 +143,11 @@ abstract class AbstractEditHandler
     protected $formFactory;
 
     /**
-     * The current request.
-     *
-     * @var Request
+     * @var RequestStack
      */
-    protected $request;
+    protected $requestStack;
 
     /**
-     * The router.
-     *
      * @var RouterInterface
      */
     protected $router;
@@ -267,7 +262,7 @@ abstract class AbstractEditHandler
         $this->kernel = $kernel;
         $this->setTranslator($translator);
         $this->formFactory = $formFactory;
-        $this->request = $requestStack->getCurrentRequest();
+        $this->requestStack = $requestStack;
         $this->router = $router;
         $this->logger = $logger;
         $this->variableApi = $variableApi;
@@ -304,42 +299,41 @@ abstract class AbstractEditHandler
      */
     public function processForm(array $templateParameters = [])
     {
+        $request = $this->requestStack->getCurrentRequest();
         $this->templateParameters = $templateParameters;
-        $this->templateParameters['inlineUsage'] = $this->request->query->getBoolean('raw', false);
+        $this->templateParameters['inlineUsage'] = $request->query->getBoolean('raw', false);
     
-        $this->idPrefix = $this->request->query->get('idp', '');
+        $this->idPrefix = $request->query->get('idp', '');
     
         // initialise redirect goal
-        $this->returnTo = $this->request->query->get('returnTo', null);
+        $this->returnTo = $request->query->get('returnTo', null);
         // default to referer
         $refererSessionVar = 'muboardmodule' . $this->objectTypeCapital . 'Referer';
-        if (null === $this->returnTo && $this->request->headers->has('referer')) {
-            $currentReferer = $this->request->headers->get('referer');
-            if ($currentReferer != $this->request->getUri()) {
+        if (null === $this->returnTo && $request->headers->has('referer')) {
+            $currentReferer = $request->headers->get('referer');
+            if ($currentReferer != urldecode($request->getUri())) {
                 $this->returnTo = $currentReferer;
-                $this->request->getSession()->set($refererSessionVar, $this->returnTo);
+                $request->getSession()->set($refererSessionVar, $this->returnTo);
             }
         }
-        if (null === $this->returnTo && $this->request->getSession()->has($refererSessionVar)) {
-            $this->returnTo = $this->request->getSession()->get($refererSessionVar);
+        if (null === $this->returnTo && $request->getSession()->has($refererSessionVar)) {
+            $this->returnTo = $request->getSession()->get($refererSessionVar);
         }
         // store current uri for repeated creations
-        $this->repeatReturnUrl = $this->request->getUri();
+        $this->repeatReturnUrl = $request->getUri();
     
         $this->idField = $this->entityFactory->getIdField($this->objectType);
     
         // retrieve identifier of the object we wish to edit
-        $routeParams = $this->request->get('_route_params', []);
-        if (empty($this->idValue)) {
-            if (array_key_exists($this->idField, $routeParams)) {
-                $this->idValue = (int) !empty($routeParams[$this->idField]) ? $routeParams[$this->idField] : 0;
-            }
-            if (0 === $this->idValue) {
-                $this->idValue = $this->request->query->getInt($this->idField, 0);
-            }
-            if (0 === $this->idValue && $this->idField != 'id') {
-                $this->idValue = $this->request->query->getInt('id', 0);
-            }
+        $routeParams = $request->get('_route_params', []);
+        if (array_key_exists($this->idField, $routeParams)) {
+            $this->idValue = (int) !empty($routeParams[$this->idField]) ? $routeParams[$this->idField] : 0;
+        }
+        if (0 === $this->idValue) {
+            $this->idValue = $request->query->getInt($this->idField, 0);
+        }
+        if (0 === $this->idValue && $this->idField != 'id') {
+            $this->idValue = $request->query->getInt('id', 0);
         }
     
         $entity = null;
@@ -355,10 +349,9 @@ abstract class AbstractEditHandler
                     // reload entity as the addLock call above has triggered the preUpdate event
                     $this->entityFactory->getObjectManager()->refresh($entity);
                 }
-            }
-    
-            if (!$this->permissionHelper->mayEdit($entity)) {
-                throw new AccessDeniedException();
+                if (!$this->permissionHelper->mayEdit($entity)) {
+                    throw new AccessDeniedException();
+                }
             }
         } else {
             $permissionLevel = in_array($this->objectType, ['posting']) ? ACCESS_COMMENT : ACCESS_EDIT;
@@ -369,7 +362,7 @@ abstract class AbstractEditHandler
             $entity = $this->initEntityForCreation();
     
             // set default values from request parameters
-            foreach ($this->request->query->all() as $key => $value) {
+            foreach ($request->query->all() as $key => $value) {
                 if (strlen($key) < 5 || substr($key, 0, 4) != 'set_') {
                     continue;
                 }
@@ -383,7 +376,7 @@ abstract class AbstractEditHandler
         }
     
         if (null === $entity) {
-            $this->request->getSession()->getFlashBag()->add('error', $this->__('No such item found.'));
+            $request->getSession()->getFlashBag()->add('error', $this->__('No such item found.'));
     
             return new RedirectResponse($this->getRedirectUrl(['commandName' => 'cancel']), 302);
         }
@@ -396,7 +389,7 @@ abstract class AbstractEditHandler
     
         $actions = $this->workflowHelper->getActionsForObject($entity);
         if (false === $actions || !is_array($actions)) {
-            $this->request->getSession()->getFlashBag()->add('error', $this->__('Error! Could not determine workflow actions.'));
+            $request->getSession()->getFlashBag()->add('error', $this->__('Error! Could not determine workflow actions.'));
             $logArgs = ['app' => 'MUBoardModule', 'user' => $this->currentUserApi->get('uname'), 'entity' => $this->objectType, 'id' => $entity->getKey()];
             $this->logger->error('{app}: User {user} tried to edit the {entity} with id {id}, but failed to determine available workflow actions.', $logArgs);
             throw new \RuntimeException($this->__('Error! Could not determine workflow actions.'));
@@ -416,7 +409,7 @@ abstract class AbstractEditHandler
         }
     
         // handle form request and check validity constraints of edited entity
-        if ($this->form->handleRequest($this->request) && $this->form->isSubmitted()) {
+        if ($this->form->handleRequest($request) && $this->form->isSubmitted()) {
             if ($this->form->get('cancel')->isClicked()) {
                 if (true === $this->hasPageLockSupport && $this->templateParameters['mode'] == 'edit' && $this->kernel->isBundle('ZikulaPageLockModule') && null !== $this->lockingApi) {
                     $lockName = 'MUBoardModule' . $this->objectTypeCapital . $entity->getKey();
@@ -498,10 +491,11 @@ abstract class AbstractEditHandler
      */
     protected function initEntityForCreation()
     {
-        $templateId = $this->request->query->getInt('astemplate', '');
+        $request = $this->requestStack->getCurrentRequest();
+        $templateId = $request->query->getInt('astemplate', 0);
         $entity = null;
     
-        if (!empty($templateId)) {
+        if ($templateId > 0) {
             // reuse existing entity
             $entityT = $this->entityFactory->getRepository($this->objectType)->selectById($templateId);
             if (null === $entityT) {
@@ -519,7 +513,7 @@ abstract class AbstractEditHandler
     }
 
     /**
-     * Get list of allowed redirect codes.
+     * Returns a list of allowed redirect codes.
      *
      * @return string[] list of possible redirect codes
      */
@@ -534,6 +528,7 @@ abstract class AbstractEditHandler
 
     /**
      * Command event handler.
+     * This event handler is called when a command is issued by the user.
      *
      * @param array $args List of arguments
      *
@@ -547,7 +542,7 @@ abstract class AbstractEditHandler
                 $args['commandName'] = $action['id'];
             }
         }
-        if ($this->templateParameters['mode'] == 'create' && $this->form->has('submitrepeat') && $this->form->get('submitrepeat')->isClicked()) {
+        if ('create' == $this->templateParameters['mode'] && $this->form->has('submitrepeat') && $this->form->get('submitrepeat')->isClicked()) {
             $args['commandName'] = 'submit';
             $this->repeatCreateAction = true;
         }
@@ -560,12 +555,12 @@ abstract class AbstractEditHandler
         // get treated entity reference from persisted member var
         $entity = $this->entityRef;
     
-        if ($entity->supportsHookSubscribers() && $action != 'cancel') {
+        if ($entity->supportsHookSubscribers()) {
             // Let any ui hooks perform additional validation actions
             $hookType = $action == 'delete' ? UiHooksCategory::TYPE_VALIDATE_DELETE : UiHooksCategory::TYPE_VALIDATE_EDIT;
             $validationErrors = $this->hookHelper->callValidationHooks($entity, $hookType);
             if (count($validationErrors) > 0) {
-                $flashBag = $this->request->getSession()->getFlashBag();
+                $flashBag = $this->requestStack->getCurrentRequest()->getSession()->getFlashBag();
                 foreach ($validationErrors as $message) {
                     $flashBag->add('error', $message);
                 }
@@ -587,7 +582,7 @@ abstract class AbstractEditHandler
             $routeUrl = null;
             if ($hasDisplayAction && $action != 'delete') {
                 $urlArgs = $entity->createUrlArgs();
-                $urlArgs['_locale'] = $this->request->getLocale();
+                $urlArgs['_locale'] = $this->requestStack->getCurrentRequest()->getLocale();
                 $routeUrl = new RouteUrl('muboardmodule_' . $this->objectTypeLower . '_display', $urlArgs);
             }
     
@@ -662,7 +657,7 @@ abstract class AbstractEditHandler
         }
     
         $flashType = true === $success ? 'status' : 'error';
-        $this->request->getSession()->getFlashBag()->add($flashType, $message);
+        $this->requestStack->getCurrentRequest()->getSession()->getFlashBag()->add($flashType, $message);
         $logArgs = ['app' => 'MUBoardModule', 'user' => $this->currentUserApi->get('uname'), 'entity' => $this->objectType, 'id' => $this->entityRef->getKey()];
         if (true === $success) {
             $this->logger->notice('{app}: User {user} updated the {entity} with id {id}.', $logArgs);
@@ -689,7 +684,7 @@ abstract class AbstractEditHandler
         }
     
         if (isset($this->form['additionalNotificationRemarks']) && $this->form['additionalNotificationRemarks']->getData() != '') {
-            $this->request->getSession()->set('MUBoardModuleAdditionalNotificationRemarks', $this->form['additionalNotificationRemarks']->getData());
+            $this->requestStack->getCurrentRequest()->getSession()->set('MUBoardModuleAdditionalNotificationRemarks', $this->form['additionalNotificationRemarks']->getData());
         }
     
         // return remaining form data
@@ -697,7 +692,7 @@ abstract class AbstractEditHandler
     }
 
     /**
-     * This method executes a certain workflow action.
+     * Executes a certain workflow action.
      *
      * @param array $args List of arguments from handleCommand method
      *
@@ -720,7 +715,7 @@ abstract class AbstractEditHandler
     {
         $roles = [];
         $currentUserId = $this->currentUserApi->isLoggedIn() ? $this->currentUserApi->get('uid') : UsersConstant::USER_ID_ANONYMOUS;
-        $roles['is_creator'] = $this->templateParameters['mode'] == 'create'
+        $roles['is_creator'] = 'create' == $this->templateParameters['mode']
             || (method_exists($this->entityRef, 'getCreatedBy') && $this->entityRef->getCreatedBy()->getUid() == $currentUserId);
     
         $groupApplicationArgs = [

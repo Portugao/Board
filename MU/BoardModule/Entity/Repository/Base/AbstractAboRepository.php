@@ -50,7 +50,7 @@ abstract class AbstractAboRepository extends EntityRepository
     /**
      * Retrieves an array with all fields which can be used for sorting instances.
      *
-     * @return string[] Sorting fields array
+     * @return string[] List of sorting field names
      */
     public function getAllowedSortingFields()
     {
@@ -299,6 +299,10 @@ abstract class AbstractAboRepository extends EntityRepository
         $qb = $this->genericBaseQuery('', '', $useJoins, $slimMode);
         $qb = $this->addIdListFilter($idList, $qb);
     
+        if (!$slimMode && null !== $this->collectionFilterHelper) {
+            $qb = $this->collectionFilterHelper->applyDefaultFilters('abo', $qb);
+        }
+    
         $query = $this->getQueryFromBuilder($qb);
     
         $results = $query->getResult();
@@ -337,7 +341,7 @@ abstract class AbstractAboRepository extends EntityRepository
     public function getListQueryBuilder($where = '', $orderBy = '', $useJoins = true, $slimMode = false)
     {
         $qb = $this->genericBaseQuery($where, $orderBy, $useJoins, $slimMode);
-        if ((!$useJoins || !$slimMode) && null !== $this->collectionFilterHelper) {
+        if (!$slimMode && null !== $this->collectionFilterHelper) {
             $qb = $this->collectionFilterHelper->addCommonViewFilters('abo', $qb);
         }
     
@@ -374,6 +378,12 @@ abstract class AbstractAboRepository extends EntityRepository
      */
     public function getSelectWherePaginatedQuery(QueryBuilder $qb, $currentPage = 1, $resultsPerPage = 25)
     {
+        if ($currentPage < 1) {
+            $currentPage = 1;
+        }
+        if ($resultsPerPage < 1) {
+            $resultsPerPage = 25;
+        }
         $query = $this->getQueryFromBuilder($qb);
         $offset = ($currentPage-1) * $resultsPerPage;
     
@@ -469,20 +479,17 @@ abstract class AbstractAboRepository extends EntityRepository
     public function getCountQuery($where = '', $useJoins = false)
     {
         $selection = 'COUNT(tbl.id) AS numAbos';
-        if (true === $useJoins) {
-            $selection .= $this->addJoinsToSelection();
-        }
     
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select($selection)
            ->from($this->mainEntityClass, 'tbl');
     
-        if (!empty($where)) {
-            $qb->andWhere($where);
-        }
-    
         if (true === $useJoins) {
             $this->addJoinsToFrom($qb);
+        }
+    
+        if (!empty($where)) {
+            $qb->andWhere($where);
         }
     
         return $qb;

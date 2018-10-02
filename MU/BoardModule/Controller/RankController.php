@@ -16,7 +16,6 @@ use MU\BoardModule\Controller\Base\AbstractRankController;
 
 use RuntimeException;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -91,12 +90,11 @@ class RankController extends AbstractRankController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
-     * @ParamConverter("rank", class="MUBoardModule:RankEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Theme("admin")
      */
-    public function adminDisplayAction(Request $request, RankEntity $rank)
+    public function adminDisplayAction(Request $request, $id)
     {
-        return parent::adminDisplayAction($request, $rank);
+        return parent::adminDisplayAction($request, $id);
     }
     
     /**
@@ -107,11 +105,10 @@ class RankController extends AbstractRankController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
-     * @ParamConverter("rank", class="MUBoardModule:RankEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      */
-    public function displayAction(Request $request, RankEntity $rank)
+    public function displayAction(Request $request, $id)
     {
-        return parent::displayAction($request, $rank);
+        return parent::displayAction($request, $id);
     }
     
     /**
@@ -151,12 +148,11 @@ class RankController extends AbstractRankController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     * @ParamConverter("rank", class="MUBoardModule:RankEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Theme("admin")
      */
-    public function adminDeleteAction(Request $request, RankEntity $rank)
+    public function adminDeleteAction(Request $request, $id)
     {
-        return parent::adminDeleteAction($request, $rank);
+        return parent::adminDeleteAction($request, $id);
     }
     
     /**
@@ -167,11 +163,10 @@ class RankController extends AbstractRankController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     * @ParamConverter("rank", class="MUBoardModule:RankEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      */
-    public function deleteAction(Request $request, RankEntity $rank)
+    public function deleteAction(Request $request, $id)
     {
-        return parent::deleteAction($request, $rank);
+        return parent::deleteAction($request, $id);
     }
     
     /**

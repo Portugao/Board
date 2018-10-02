@@ -85,19 +85,19 @@ abstract class AbstractItemBlockType extends AbstractType
     public function addObjectTypeField(FormBuilderInterface $builder, array $options = [])
     {
         $builder->add('objectType', ChoiceType::class, [
-            'label' => $this->__('Object type') . ':',
+            'label' => $this->__('Object type', 'muboardmodule') . ':',
             'empty_data' => 'category',
             'attr' => [
-                'title' => $this->__('If you change this please save the block once to reload the parameters below.')
+                'title' => $this->__('If you change this please save the block once to reload the parameters below.', 'muboardmodule')
             ],
-            'help' => $this->__('If you change this please save the block once to reload the parameters below.'),
+            'help' => $this->__('If you change this please save the block once to reload the parameters below.', 'muboardmodule'),
             'choices' => [
-                $this->__('Categories') => 'category',
-                $this->__('Forums') => 'forum',
-                $this->__('Postings') => 'posting',
-                $this->__('Abos') => 'abo',
-                $this->__('Users') => 'user',
-                $this->__('Ranks') => 'rank'
+                $this->__('Categories', 'muboardmodule') => 'category',
+                $this->__('Forums', 'muboardmodule') => 'forum',
+                $this->__('Postings', 'muboardmodule') => 'posting',
+                $this->__('Abos', 'muboardmodule') => 'abo',
+                $this->__('Users', 'muboardmodule') => 'user',
+                $this->__('Ranks', 'muboardmodule') => 'rank'
             ],
             'multiple' => false,
             'expanded' => false
@@ -127,7 +127,7 @@ abstract class AbstractItemBlockType extends AbstractType
             'expanded' => false,
             'choices' => $choices,
             'required' => true,
-            'label' => $this->__('Entry to display') . ':'
+            'label' => $this->__('Entry to display', 'muboardmodule') . ':'
         ]);
     }
 
@@ -141,15 +141,15 @@ abstract class AbstractItemBlockType extends AbstractType
     {
         $builder
             ->add('customTemplate', TextType::class, [
-                'label' => $this->__('Custom template') . ':',
+                'label' => $this->__('Custom template', 'muboardmodule') . ':',
                 'required' => false,
                 'attr' => [
                     'maxlength' => 80,
-                    'title' => $this->__('Example') . ': displaySpecial.html.twig'
+                    'title' => $this->__('Example', 'muboardmodule') . ': displaySpecial.html.twig'
                 ],
                 'help' => [
-                    $this->__('Example') . ': <em>displaySpecial.html.twig</em>',
-                    $this->__('Needs to be located in the "External/YourEntity/" directory.')
+                    $this->__('Example', 'muboardmodule') . ': <em>displaySpecial.html.twig</em>',
+                    $this->__('Needs to be located in the "External/YourEntity/" directory.', 'muboardmodule')
                 ]
             ])
         ;

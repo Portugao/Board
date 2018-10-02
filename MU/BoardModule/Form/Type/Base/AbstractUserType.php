@@ -110,7 +110,7 @@ abstract class AbstractUserType extends AbstractType
         
         $builder->add('userid', IntegerType::class, [
             'label' => $this->__('Userid') . ':',
-            'empty_data' => '',
+            'empty_data' => 0,
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
@@ -122,7 +122,7 @@ abstract class AbstractUserType extends AbstractType
         
         $builder->add('numberPostings', IntegerType::class, [
             'label' => $this->__('Number postings') . ':',
-            'empty_data' => '',
+            'empty_data' => 0,
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',

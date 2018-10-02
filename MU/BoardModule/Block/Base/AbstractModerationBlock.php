@@ -20,11 +20,15 @@ use Zikula\BlocksModule\AbstractBlockHandler;
 abstract class AbstractModerationBlock extends AbstractBlockHandler
 {
     /**
-     * Display the block content.
-     *
-     * @param array $properties The block properties
-     *
-     * @return string
+     * @inheritDoc
+     */
+    public function getType()
+    {
+        return $this->__('Board moderation', 'muboardmodule');
+    }
+    
+    /**
+     * @inheritDoc
      */
     public function display(array $properties = [])
     {
@@ -45,7 +49,7 @@ abstract class AbstractModerationBlock extends AbstractBlockHandler
     
         // set a block title
         if (empty($properties['title'])) {
-            $properties['title'] = $this->__('Moderation');
+            $properties['title'] = $this->__('Moderation', 'muboardmodule');
         }
     
         return $this->renderView($template, ['moderationObjects' => $amounts]);

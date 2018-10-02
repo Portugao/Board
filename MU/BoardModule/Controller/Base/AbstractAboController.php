@@ -15,6 +15,7 @@ namespace MU\BoardModule\Controller\Base;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\Bundle\FormExtensionBundle\Form\Type\DeletionType;
@@ -171,15 +172,20 @@ abstract class AbstractAboController extends AbstractController
      * This action provides a item detail view in the admin area.
      *
      * @param Request $request Current request instance
-     * @param AboEntity $abo Treated abo instance
+     * @param integer $id Identifier of treated abo instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if abo to be displayed isn't found
+     * @throws NotFoundHttpException Thrown if abo to be displayed isn't found
      */
-    public function adminDisplayAction(Request $request, AboEntity $abo)
+    public function adminDisplayAction(Request $request, $id)
     {
+        $abo = $this->get('mu_board_module.entity_factory')->getRepository('abo')->selectById($id);
+        if (null === $abo) {
+            throw new NotFoundHttpException($this->__('No such abo found.'));
+        }
+    
         return $this->displayInternal($request, $abo, true);
     }
     
@@ -187,15 +193,20 @@ abstract class AbstractAboController extends AbstractController
      * This action provides a item detail view.
      *
      * @param Request $request Current request instance
-     * @param AboEntity $abo Treated abo instance
+     * @param integer $id Identifier of treated abo instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if abo to be displayed isn't found
+     * @throws NotFoundHttpException Thrown if abo to be displayed isn't found
      */
-    public function displayAction(Request $request, AboEntity $abo)
+    public function displayAction(Request $request, $id)
     {
+        $abo = $this->get('mu_board_module.entity_factory')->getRepository('abo')->selectById($id);
+        if (null === $abo) {
+            throw new NotFoundHttpException($this->__('No such abo found.'));
+        }
+    
         return $this->displayInternal($request, $abo, false);
     }
     
@@ -218,7 +229,7 @@ abstract class AbstractAboController extends AbstractController
         ];
         
         $controllerHelper = $this->get('mu_board_module.controller_helper');
-        $templateParameters = $controllerHelper->processDisplayActionParameters($objectType, $templateParameters, true);
+        $templateParameters = $controllerHelper->processDisplayActionParameters($objectType, $templateParameters, $abo->supportsHookSubscribers());
         
         // fetch and return the appropriate template
         $response = $this->get('mu_board_module.view_helper')->processTemplate($objectType, 'display', $templateParameters);
@@ -234,7 +245,6 @@ abstract class AbstractAboController extends AbstractController
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by form handler if abo to be edited isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function adminEditAction(Request $request)
@@ -250,7 +260,6 @@ abstract class AbstractAboController extends AbstractController
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by form handler if abo to be edited isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function editAction(Request $request)
@@ -295,41 +304,46 @@ abstract class AbstractAboController extends AbstractController
      * This action provides a handling of simple delete requests in the admin area.
      *
      * @param Request $request Current request instance
-     * @param AboEntity $abo Treated abo instance
+     * @param integer $id Identifier of treated abo instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if abo to be deleted isn't found
+     * @throws NotFoundHttpException Thrown if abo to be deleted isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
-    public function adminDeleteAction(Request $request, AboEntity $abo)
+    public function adminDeleteAction(Request $request, $id)
     {
-        return $this->deleteInternal($request, $abo, true);
+        return $this->deleteInternal($request, $id, true);
     }
     
     /**
      * This action provides a handling of simple delete requests.
      *
      * @param Request $request Current request instance
-     * @param AboEntity $abo Treated abo instance
+     * @param integer $id Identifier of treated abo instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if abo to be deleted isn't found
+     * @throws NotFoundHttpException Thrown if abo to be deleted isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
-    public function deleteAction(Request $request, AboEntity $abo)
+    public function deleteAction(Request $request, $id)
     {
-        return $this->deleteInternal($request, $abo, false);
+        return $this->deleteInternal($request, $id, false);
     }
     
     /**
      * This method includes the common implementation code for adminDelete() and delete().
      */
-    protected function deleteInternal(Request $request, AboEntity $abo, $isAdmin = false)
+    protected function deleteInternal(Request $request, $id, $isAdmin = false)
     {
+        $abo = $this->get('mu_board_module.entity_factory')->getRepository('abo')->selectById($id);
+        if (null === $abo) {
+            throw new NotFoundHttpException($this->__('No such abo found.'));
+        }
+        
         $objectType = 'abo';
         // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_DELETE;
@@ -371,18 +385,39 @@ abstract class AbstractAboController extends AbstractController
         }
         
         $form = $this->createForm(DeletionType::class, $abo);
-        $hookHelper = $this->get('mu_board_module.hook_helper');
+        if ($abo->supportsHookSubscribers()) {
+            $hookHelper = $this->get('mu_board_module.hook_helper');
         
-        // Call form aware display hooks
-        $formHook = $hookHelper->callFormDisplayHooks($form, $abo, FormAwareCategory::TYPE_DELETE);
+            // Call form aware display hooks
+            $formHook = $hookHelper->callFormDisplayHooks($form, $abo, FormAwareCategory::TYPE_DELETE);
+        }
         
         if ($form->handleRequest($request)->isValid()) {
             if ($form->get('delete')->isClicked()) {
-                // Let any ui hooks perform additional validation actions
-                $validationErrors = $hookHelper->callValidationHooks($abo, UiHooksCategory::TYPE_VALIDATE_DELETE);
-                if (count($validationErrors) > 0) {
-                    foreach ($validationErrors as $message) {
-                        $this->addFlash('error', $message);
+                if ($abo->supportsHookSubscribers()) {
+                    // Let any ui hooks perform additional validation actions
+                    $validationErrors = $hookHelper->callValidationHooks($abo, UiHooksCategory::TYPE_VALIDATE_DELETE);
+                    if (count($validationErrors) > 0) {
+                        foreach ($validationErrors as $message) {
+                            $this->addFlash('error', $message);
+                        }
+                    } else {
+                        // execute the workflow action
+                        $success = $workflowHelper->executeAction($abo, $deleteActionId);
+                        if ($success) {
+                            $this->addFlash('status', $this->__('Done! Item deleted.'));
+                            $logger->notice('{app}: User {user} deleted the {entity} with id {id}.', $logArgs);
+                        }
+                        
+                        if ($abo->supportsHookSubscribers()) {
+                            // Call form aware processing hooks
+                            $hookHelper->callFormProcessHooks($form, $abo, FormAwareCategory::TYPE_PROCESS_DELETE);
+                        
+                            // Let any ui hooks know that we have deleted the abo
+                            $hookHelper->callProcessHooks($abo, UiHooksCategory::TYPE_PROCESS_DELETE);
+                        }
+                        
+                        return $this->redirectToRoute($redirectRoute);
                     }
                 } else {
                     // execute the workflow action
@@ -392,11 +427,13 @@ abstract class AbstractAboController extends AbstractController
                         $logger->notice('{app}: User {user} deleted the {entity} with id {id}.', $logArgs);
                     }
                     
-                    // Call form aware processing hooks
-                    $hookHelper->callFormProcessHooks($form, $abo, FormAwareCategory::TYPE_PROCESS_DELETE);
+                    if ($abo->supportsHookSubscribers()) {
+                        // Call form aware processing hooks
+                        $hookHelper->callFormProcessHooks($form, $abo, FormAwareCategory::TYPE_PROCESS_DELETE);
                     
-                    // Let any ui hooks know that we have deleted the abo
-                    $hookHelper->callProcessHooks($abo, UiHooksCategory::TYPE_PROCESS_DELETE);
+                        // Let any ui hooks know that we have deleted the abo
+                        $hookHelper->callProcessHooks($abo, UiHooksCategory::TYPE_PROCESS_DELETE);
+                    }
                     
                     return $this->redirectToRoute($redirectRoute);
                 }
@@ -410,9 +447,11 @@ abstract class AbstractAboController extends AbstractController
         $templateParameters = [
             'routeArea' => $isAdmin ? 'admin' : '',
             'deleteForm' => $form->createView(),
-            $objectType => $abo,
-            'formHookTemplates' => $formHook->getTemplates()
+            $objectType => $abo
         ];
+        if ($abo->supportsHookSubscribers()) {
+            $templateParameters['formHookTemplates'] = $formHook->getTemplates();
+        }
         
         $controllerHelper = $this->get('mu_board_module.controller_helper');
         $templateParameters = $controllerHelper->processDeleteActionParameters($objectType, $templateParameters, true);
@@ -493,14 +532,16 @@ abstract class AbstractAboController extends AbstractController
                 continue;
             }
         
-            // Let any ui hooks perform additional validation actions
-            $hookType = $action == 'delete' ? UiHooksCategory::TYPE_VALIDATE_DELETE : UiHooksCategory::TYPE_VALIDATE_EDIT;
-            $validationErrors = $hookHelper->callValidationHooks($entity, $hookType);
-            if (count($validationErrors) > 0) {
-                foreach ($validationErrors as $message) {
-                    $this->addFlash('error', $message);
+            if ($entity->supportsHookSubscribers()) {
+                // Let any ui hooks perform additional validation actions
+                $hookType = $action == 'delete' ? UiHooksCategory::TYPE_VALIDATE_DELETE : UiHooksCategory::TYPE_VALIDATE_EDIT;
+                $validationErrors = $hookHelper->callValidationHooks($entity, $hookType);
+                if (count($validationErrors) > 0) {
+                    foreach ($validationErrors as $message) {
+                        $this->addFlash('error', $message);
+                    }
+                    continue;
                 }
-                continue;
             }
         
             $success = false;
@@ -524,15 +565,17 @@ abstract class AbstractAboController extends AbstractController
                 $logger->notice('{app}: User {user} executed the {action} workflow action for the {entity} with id {id}.', ['app' => 'MUBoardModule', 'user' => $userName, 'action' => $action, 'entity' => 'abo', 'id' => $itemId]);
             }
         
-            // Let any ui hooks know that we have updated or deleted an item
-            $hookType = $action == 'delete' ? UiHooksCategory::TYPE_PROCESS_DELETE : UiHooksCategory::TYPE_PROCESS_EDIT;
-            $url = null;
-            if ($action != 'delete') {
-                $urlArgs = $entity->createUrlArgs();
-                $urlArgs['_locale'] = $request->getLocale();
-                $url = new RouteUrl('muboardmodule_abo_display', $urlArgs);
+            if ($entity->supportsHookSubscribers()) {
+                // Let any ui hooks know that we have updated or deleted an item
+                $hookType = $action == 'delete' ? UiHooksCategory::TYPE_PROCESS_DELETE : UiHooksCategory::TYPE_PROCESS_EDIT;
+                $url = null;
+                if ($action != 'delete') {
+                    $urlArgs = $entity->createUrlArgs();
+                    $urlArgs['_locale'] = $request->getLocale();
+                    $url = new RouteUrl('muboardmodule_abo_display', $urlArgs);
+                }
+                $hookHelper->callProcessHooks($entity, $hookType, $url);
             }
-            $hookHelper->callProcessHooks($entity, $hookType, $url);
         }
         
         return $this->redirectToRoute('muboardmodule_abo_' . ($isAdmin ? 'admin' : '') . 'index');

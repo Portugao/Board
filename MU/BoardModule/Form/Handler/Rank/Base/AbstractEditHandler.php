@@ -26,13 +26,7 @@ use RuntimeException;
 abstract class AbstractEditHandler extends EditHandler
 {
     /**
-     * Initialise form handler.
-     *
-     * This method takes care of all necessary initialisation of our data and form states.
-     *
-     * @param array $templateParameters List of preassigned template variables
-     *
-     * @return boolean False in case of initialisation errors, otherwise true
+     * @inheritDoc
      */
     public function processForm(array $templateParameters = [])
     {
@@ -47,9 +41,9 @@ abstract class AbstractEditHandler extends EditHandler
             return $result;
         }
     
-        if ($this->templateParameters['mode'] == 'create') {
+        if ('create' == $this->templateParameters['mode']) {
             if (!$this->modelHelper->canBeCreated($this->objectType)) {
-                $this->request->getSession()->getFlashBag()->add('error', $this->__('Sorry, but you can not create the rank yet as other items are required which must be created before!'));
+                $this->requestStack->getCurrentRequest()->getSession()->getFlashBag()->add('error', $this->__('Sorry, but you can not create the rank yet as other items are required which must be created before!'));
                 $logArgs = ['app' => 'MUBoardModule', 'user' => $this->currentUserApi->get('uname'), 'entity' => $this->objectType];
                 $this->logger->notice('{app}: User {user} tried to create a new {entity}, but failed as it other items are required which must be created before.', $logArgs);
     
@@ -61,12 +55,13 @@ abstract class AbstractEditHandler extends EditHandler
     
         // assign data to template as array (for additions like standard fields)
         $this->templateParameters[$this->objectTypeLower] = $entityData;
+        $this->templateParameters['supportsHookSubscribers'] = $this->entityRef->supportsHookSubscribers();
     
         return $result;
     }
     
     /**
-     * Creates the form type.
+     * @inheritDoc
      */
     protected function createForm()
     {
@@ -74,9 +69,7 @@ abstract class AbstractEditHandler extends EditHandler
     }
     
     /**
-     * Returns the form options.
-     *
-     * @return array
+     * @inheritDoc
      */
     protected function getFormOptions()
     {
@@ -85,6 +78,8 @@ abstract class AbstractEditHandler extends EditHandler
             'mode' => $this->templateParameters['mode'],
             'actions' => $this->templateParameters['actions'],
             'has_moderate_permission' => $this->permissionHelper->hasEntityPermission($this->entityRef, ACCESS_ADMIN),
+            'allow_moderation_specific_creator' => $this->variableApi->get('MUBoardModule', 'allowModerationSpecificCreatorFor' . $this->objectTypeCapital, false),
+            'allow_moderation_specific_creation_date' => $this->variableApi->get('MUBoardModule', 'allowModerationSpecificCreationDateFor' . $this->objectTypeCapital, false),
             'filter_by_ownership' => !$this->permissionHelper->hasEntityPermission($this->entityRef, ACCESS_ADD),
             'inline_usage' => $this->templateParameters['inlineUsage']
         ];
@@ -92,11 +87,8 @@ abstract class AbstractEditHandler extends EditHandler
         return $options;
     }
 
-
     /**
-     * Get list of allowed redirect codes.
-     *
-     * @return string[] list of possible redirect codes
+     * @inheritDoc
      */
     protected function getRedirectCodes()
     {
@@ -134,14 +126,9 @@ abstract class AbstractEditHandler extends EditHandler
     protected function getDefaultReturnUrl(array $args = [])
     {
         $objectIsPersisted = $args['commandName'] != 'delete' && !($this->templateParameters['mode'] == 'create' && $args['commandName'] == 'cancel');
-    
-        if (null !== $this->returnTo) {
-            $refererParts = explode('/', $this->returnTo);
-            $isDisplayOrEditPage = $refererParts[count($refererParts)-1] == $this->idValue;
-            if (!$isDisplayOrEditPage || $objectIsPersisted) {
-                // return to referer
-                return $this->returnTo;
-            }
+        if (null !== $this->returnTo && $objectIsPersisted) {
+            // return to referer
+            return $this->returnTo;
         }
     
         $routeArea = array_key_exists('routeArea', $this->templateParameters) ? $this->templateParameters['routeArea'] : '';
@@ -150,17 +137,16 @@ abstract class AbstractEditHandler extends EditHandler
         // redirect to the list of ranks
         $url = $this->router->generate($routePrefix . 'view');
     
+        if ($objectIsPersisted) {
+            // redirect to the detail page of treated rank
+            $url = $this->router->generate($routePrefix . 'display', $this->entityRef->createUrlArgs());
+        }
+    
         return $url;
     }
 
     /**
-     * Command event handler.
-     *
-     * This event handler is called when a command is issued by the user.
-     *
-     * @param array $args List of arguments
-     *
-     * @return mixed Redirect or false on errors
+     * @inheritDoc
      */
     public function handleCommand(array $args = [])
     {
@@ -175,7 +161,7 @@ abstract class AbstractEditHandler extends EditHandler
                 $args['commandName'] = $action['id'];
             }
         }
-        if ($this->templateParameters['mode'] == 'create' && $this->form->has('submitrepeat') && $this->form->get('submitrepeat')->isClicked()) {
+        if ('create' == $this->templateParameters['mode'] && $this->form->has('submitrepeat') && $this->form->get('submitrepeat')->isClicked()) {
             $args['commandName'] = 'submit';
             $this->repeatCreateAction = true;
         }
@@ -184,12 +170,7 @@ abstract class AbstractEditHandler extends EditHandler
     }
     
     /**
-     * Get success or error message for default operations.
-     *
-     * @param array   $args    List of arguments from handleCommand method
-     * @param boolean $success Becomes true if this is a success, false for default error
-     *
-     * @return String desired status or error message
+     * @inheritDoc
      */
     protected function getDefaultMessage(array $args = [], $success = false)
     {
@@ -200,7 +181,7 @@ abstract class AbstractEditHandler extends EditHandler
         $message = '';
         switch ($args['commandName']) {
             case 'submit':
-                if ($this->templateParameters['mode'] == 'create') {
+                if ('create' == $this->templateParameters['mode']) {
                     $message = $this->__('Done! Rank created.');
                 } else {
                     $message = $this->__('Done! Rank updated.');
@@ -218,12 +199,7 @@ abstract class AbstractEditHandler extends EditHandler
     }
 
     /**
-     * This method executes a certain workflow action.
-     *
-     * @param array $args List of arguments from handleCommand method
-     *
-     * @return boolean Whether everything worked well or not
-     *
+     * @inheritDoc
      * @throws RuntimeException Thrown if concurrent editing is recognised or another error occurs
      */
     public function applyAction(array $args = [])
@@ -234,7 +210,7 @@ abstract class AbstractEditHandler extends EditHandler
         $action = $args['commandName'];
     
         $success = false;
-        $flashBag = $this->request->getSession()->getFlashBag();
+        $flashBag = $this->requestStack->getCurrentRequest()->getSession()->getFlashBag();
         try {
             // execute the workflow action
             $success = $this->workflowHelper->executeAction($entity, $action);
@@ -246,7 +222,7 @@ abstract class AbstractEditHandler extends EditHandler
     
         $this->addDefaultMessage($args, $success);
     
-        if ($success && $this->templateParameters['mode'] == 'create') {
+        if ($success && 'create' == $this->templateParameters['mode']) {
             // store new identifier
             $this->idValue = $entity->getKey();
         }
@@ -255,7 +231,7 @@ abstract class AbstractEditHandler extends EditHandler
     }
 
     /**
-     * Get url to redirect to.
+     * Get URL to redirect to.
      *
      * @param array $args List of arguments
      *
@@ -267,8 +243,10 @@ abstract class AbstractEditHandler extends EditHandler
             return $this->repeatReturnUrl;
         }
     
-        if ($this->request->getSession()->has('muboardmodule' . $this->objectTypeCapital . 'Referer')) {
-            $this->request->getSession()->remove('muboardmodule' . $this->objectTypeCapital . 'Referer');
+        $session = $this->requestStack->getCurrentRequest()->getSession();
+        if ($session->has('muboardmodule' . $this->objectTypeCapital . 'Referer')) {
+            $this->returnTo = $session->get('muboardmodule' . $this->objectTypeCapital . 'Referer');
+            $session->remove('muboardmodule' . $this->objectTypeCapital . 'Referer');
         }
     
         // normal usage, compute return url from given redirect code

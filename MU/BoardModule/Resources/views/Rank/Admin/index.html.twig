@@ -1,7 +1,9 @@
 {# purpose of this template: ranks admin index view #}
 {% extends 'MUBoardModule::adminBase.html.twig' %}
-{% block title __('ranks') %}
+{% block title __('Ranks') %}
 {% block admin_page_icon 'home' %}
 {% block content %}
-    <p>{{ __('Welcome to the rank section of the Board application.') }}</p>
+    <div class="muboardmodule-rank muboardmodule-index">
+        <p>{{ __('Welcome to the rank section of the Board application.') }}</p>
+    </div>
 {% endblock %}

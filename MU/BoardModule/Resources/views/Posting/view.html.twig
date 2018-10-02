@@ -84,7 +84,7 @@
                     </td>
                 {% endif %}
                 <td id="itemActions{{ posting.getKey() }}Start" headers="hItemActionsStart" class="actions nowrap z-w02">
-                    {% set itemActions = knp_menu_get('MUBoardModule:ItemActionsMenu:menu', [], {entity: posting, area: routeArea, context: 'view'}) %}
+                    {% set itemActions = knp_menu_get('mUBoardMenuItemActions', [], {entity: posting, area: routeArea, context: 'view'}) %}
                     <div class="dropdown">
                         <a id="itemActions{{ posting.getKey() }}DropDownToggleStart" role="button" data-toggle="dropdown" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
                         {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:bootstrap_fontawesome.html.twig'}) }}
@@ -203,7 +203,7 @@
 {% block page_nav_links %}
     <p>
         {% if canBeCreated %}
-            {% if hasPermission('MUBoardModule:Posting:', '::', 'ACCESS_COMMENT') %}
+            {% if permissionHelper.hasComponentPermission('posting', constant('ACCESS_COMMENT')) %}
                 {% set createTitle = __('Create posting') %}
                 <a href="{{ path('muboardmodule_posting_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}"><i class="fa fa-plus"></i> {{ createTitle }}</a>
             {% endif %}

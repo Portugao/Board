@@ -16,14 +16,11 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\File;
@@ -32,10 +29,11 @@ use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use MU\BoardModule\Entity\Factory\EntityFactory;
 use MU\BoardModule\Form\Type\Field\UploadType;
-use Zikula\UsersModule\Form\Type\UserLiveSearchType;
 use MU\BoardModule\Helper\CollectionFilterHelper;
 use MU\BoardModule\Helper\EntityDisplayHelper;
 use MU\BoardModule\Helper\ListEntriesHelper;
+use MU\BoardModule\Traits\ModerationFormFieldsTrait;
+use MU\BoardModule\Traits\WorkflowFormFieldsTrait;
 
 /**
  * Posting editing form type base class.
@@ -43,6 +41,8 @@ use MU\BoardModule\Helper\ListEntriesHelper;
 abstract class AbstractPostingType extends AbstractType
 {
     use TranslatorTrait;
+    use ModerationFormFieldsTrait;
+    use WorkflowFormFieldsTrait;
 
     /**
      * @var EntityFactory
@@ -107,23 +107,6 @@ abstract class AbstractPostingType extends AbstractType
         $this->addAdditionalNotificationRemarksField($builder, $options);
         $this->addModerationFields($builder, $options);
         $this->addSubmitButtons($builder, $options);
-
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $entity = $event->getData();
-            foreach (['firstImage', 'secondImage', 'thirdImage', 'firstFile', 'secondFile', 'thirdFile'] as $uploadFieldName) {
-                $entity[$uploadFieldName] = [
-                    $uploadFieldName => $entity[$uploadFieldName] instanceof File ? $entity[$uploadFieldName]->getPathname() : null
-                ];
-            }
-        });
-        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
-            $entity = $event->getData();
-            foreach (['firstImage', 'secondImage', 'thirdImage', 'firstFile', 'secondFile', 'thirdFile'] as $uploadFieldName) {
-                if (is_array($entity[$uploadFieldName])) {
-                    $entity[$uploadFieldName] = $entity[$uploadFieldName][$uploadFieldName];
-                }
-            }
-        });
     }
 
     /**
@@ -160,7 +143,7 @@ abstract class AbstractPostingType extends AbstractType
         
         $builder->add('invocations', IntegerType::class, [
             'label' => $this->__('Invocations') . ':',
-            'empty_data' => '0',
+            'empty_data' => 0,
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
@@ -314,78 +297,6 @@ abstract class AbstractPostingType extends AbstractType
     }
 
     /**
-     * Adds a field for additional notification remarks.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addAdditionalNotificationRemarksField(FormBuilderInterface $builder, array $options = [])
-    {
-        $helpText = '';
-        if ($options['is_moderator']) {
-            $helpText = $this->__('These remarks (like a reason for deny) are not stored, but added to any notification emails send to the creator.');
-        } elseif ($options['is_creator']) {
-            $helpText = $this->__('These remarks (like questions about conformance) are not stored, but added to any notification emails send to our moderators.');
-        }
-    
-        $builder->add('additionalNotificationRemarks', TextareaType::class, [
-            'mapped' => false,
-            'label' => $this->__('Additional remarks'),
-            'label_attr' => [
-                'class' => 'tooltips',
-                'title' => $helpText
-            ],
-            'attr' => [
-                'title' => 'create' == $options['mode'] ? $this->__('Enter any additions about your content') : $this->__('Enter any additions about your changes')
-            ],
-            'required' => false,
-            'help' => $helpText
-        ]);
-    }
-
-    /**
-     * Adds special fields for moderators.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addModerationFields(FormBuilderInterface $builder, array $options = [])
-    {
-        if (!$options['has_moderate_permission']) {
-            return;
-        }
-        if ($options['inline_usage']) {
-            return;
-        }
-    
-        $builder->add('moderationSpecificCreator', UserLiveSearchType::class, [
-            'mapped' => false,
-            'label' => $this->__('Creator') . ':',
-            'attr' => [
-                'maxlength' => 11,
-                'title' => $this->__('Here you can choose a user which will be set as creator.')
-            ],
-            'empty_data' => 0,
-            'required' => false,
-            'help' => $this->__('Here you can choose a user which will be set as creator.')
-        ]);
-        $builder->add('moderationSpecificCreationDate', DateTimeType::class, [
-            'mapped' => false,
-            'label' => $this->__('Creation date') . ':',
-            'attr' => [
-                'class' => '',
-                'title' => $this->__('Here you can choose a custom creation date.')
-            ],
-            'empty_data' => '',
-            'required' => false,
-            'with_seconds' => true,
-            'date_widget' => 'single_text',
-            'time_widget' => 'single_text',
-            'help' => $this->__('Here you can choose a custom creation date.')
-        ]);
-    }
-
-    /**
      * Adds submit buttons.
      *
      * @param FormBuilderInterface $builder The form builder
@@ -463,6 +374,8 @@ abstract class AbstractPostingType extends AbstractType
                 'is_creator' => false,
                 'actions' => [],
                 'has_moderate_permission' => false,
+                'allow_moderation_specific_creator' => false,
+                'allow_moderation_specific_creation_date' => false,
                 'filter_by_ownership' => true,
                 'inline_usage' => false
             ])
@@ -472,6 +385,8 @@ abstract class AbstractPostingType extends AbstractType
             ->setAllowedTypes('is_creator', 'bool')
             ->setAllowedTypes('actions', 'array')
             ->setAllowedTypes('has_moderate_permission', 'bool')
+            ->setAllowedTypes('allow_moderation_specific_creator', 'bool')
+            ->setAllowedTypes('allow_moderation_specific_creation_date', 'bool')
             ->setAllowedTypes('filter_by_ownership', 'bool')
             ->setAllowedTypes('inline_usage', 'bool')
             ->setAllowedValues('mode', ['create', 'edit'])

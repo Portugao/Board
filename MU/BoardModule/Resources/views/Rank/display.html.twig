@@ -5,7 +5,7 @@
 {% block title %}
     {% set templateTitle = rank|muboardmodule_formattedTitle|default(__('Rank')) %}
     {{ templateTitle|notifyFilters('muboardmodule.filter_hooks.ranks.filter')|safeHtml }}
-    {% set itemActions = knp_menu_get('MUBoardModule:ItemActionsMenu:menu', [], {entity: rank, area: routeArea, context: 'display'}) %}
+    {% set itemActions = knp_menu_get('mUBoardMenuItemActions', [], {entity: rank, area: routeArea, context: 'display'}) %}
     <div class="dropdown">
         <a id="itemActions{{ rank.getKey() }}DropDownToggleStart" role="button" data-toggle="dropdown" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
         {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:bootstrap_fontawesome.html.twig'}) }}
@@ -89,7 +89,7 @@
         ) }}
     {% endif %}
     
-    {% set mayManage = hasPermission('MUBoardModule:User:', '::', 'ACCESS_EDIT') %}
+    {% set mayManage = permissionHelper.hasComponentPermission('user', constant('ACCESS_EDIT')) %}
     {% if mayManage %}
         <p class="managelink">
             {% set createTitle = __('Create user') %}
@@ -98,10 +98,12 @@
     {% endif %}
 {% endblock %}
 {% block display_hooks %}
-    {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.ranks.display_view', id=rank.getKey(), urlObject=currentUrlObject, outputAsArray=true) %}
-    {% if hooks is iterable and hooks|length > 0 %}
-        {% for area, hook in hooks %}
-            <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook|raw }}</div>
-        {% endfor %}
+    {% if rank.supportsHookSubscribers() %}
+        {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.ranks.display_view', id=rank.getKey(), urlObject=currentUrlObject, outputAsArray=true) %}
+        {% if hooks is iterable and hooks|length > 0 %}
+            {% for area, hook in hooks %}
+                <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook|raw }}</div>
+            {% endfor %}
+        {% endif %}
     {% endif %}
 {% endblock %}

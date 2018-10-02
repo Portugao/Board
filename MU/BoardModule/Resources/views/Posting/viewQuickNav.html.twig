@@ -1,5 +1,5 @@
 {# purpose of this template: postings view filter form #}
-{% if hasPermission('MUBoardModule:Posting:', '::', 'ACCESS_EDIT') %}
+{% if permissionHelper.hasComponentPermission('posting', constant('ACCESS_EDIT')) %}
     {% form_theme quickNavForm with [
         'bootstrap_3_layout.html.twig'
     ] %}

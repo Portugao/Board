@@ -1,5 +1,5 @@
 {# purpose of this template: inclusion template for display of related postings #}
-{% set hasAdminPermission = hasPermission('MUBoardModule:Posting:', '::', 'ACCESS_COMMENT') %}
+{% set hasAdminPermission = permissionHelper.hasComponentPermission('posting', constant('ACCESS_COMMENT')) %}
 {% if noLink is not defined %}
     {% set noLink = false %}
 {% endif %}

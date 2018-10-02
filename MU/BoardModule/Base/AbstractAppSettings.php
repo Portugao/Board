@@ -166,14 +166,6 @@ abstract class AbstractAppSettings
     protected $showStatisticOnBottom = false;
     
     /**
-     * Used to determine moderator user accounts for sending email notifications.
-     *
-     * @Assert\NotBlank()
-     * @var integer $moderationGroupForPostings
-     */
-    protected $moderationGroupForPostings = 2;
-    
-    /**
      * The amount of categories shown per page
      *
      * @Assert\Type(type="integer")
@@ -718,6 +710,104 @@ abstract class AbstractAppSettings
     protected $thumbnailHeightRankUploadImageEdit = 180;
     
     /**
+     * Used to determine moderator user accounts for sending email notifications.
+     *
+     * @Assert\NotBlank()
+     * @var integer $moderationGroupForPostings
+     */
+    protected $moderationGroupForPostings = 2;
+    
+    /**
+     * Whether to allow moderators choosing a user which will be set as creator.
+     *
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $allowModerationSpecificCreatorForCategory
+     */
+    protected $allowModerationSpecificCreatorForCategory = false;
+    
+    /**
+     * Whether to allow moderators choosing a custom creation date.
+     *
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $allowModerationSpecificCreationDateForCategory
+     */
+    protected $allowModerationSpecificCreationDateForCategory = false;
+    
+    /**
+     * Whether to allow moderators choosing a user which will be set as creator.
+     *
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $allowModerationSpecificCreatorForForum
+     */
+    protected $allowModerationSpecificCreatorForForum = false;
+    
+    /**
+     * Whether to allow moderators choosing a custom creation date.
+     *
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $allowModerationSpecificCreationDateForForum
+     */
+    protected $allowModerationSpecificCreationDateForForum = false;
+    
+    /**
+     * Whether to allow moderators choosing a user which will be set as creator.
+     *
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $allowModerationSpecificCreatorForPosting
+     */
+    protected $allowModerationSpecificCreatorForPosting = false;
+    
+    /**
+     * Whether to allow moderators choosing a custom creation date.
+     *
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $allowModerationSpecificCreationDateForPosting
+     */
+    protected $allowModerationSpecificCreationDateForPosting = false;
+    
+    /**
+     * Whether to allow moderators choosing a user which will be set as creator.
+     *
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $allowModerationSpecificCreatorForAbo
+     */
+    protected $allowModerationSpecificCreatorForAbo = false;
+    
+    /**
+     * Whether to allow moderators choosing a custom creation date.
+     *
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $allowModerationSpecificCreationDateForAbo
+     */
+    protected $allowModerationSpecificCreationDateForAbo = false;
+    
+    /**
+     * Whether to allow moderators choosing a user which will be set as creator.
+     *
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $allowModerationSpecificCreatorForRank
+     */
+    protected $allowModerationSpecificCreatorForRank = false;
+    
+    /**
+     * Whether to allow moderators choosing a custom creation date.
+     *
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $allowModerationSpecificCreationDateForRank
+     */
+    protected $allowModerationSpecificCreationDateForRank = false;
+    
+    /**
      * Which sections are supported in the Finder component (used by Scribite plug-ins).
      *
      * @Assert\NotNull()
@@ -1172,30 +1262,6 @@ abstract class AbstractAppSettings
     {
         if (boolval($this->showStatisticOnBottom) !== boolval($showStatisticOnBottom)) {
             $this->showStatisticOnBottom = boolval($showStatisticOnBottom);
-        }
-    }
-    
-    /**
-     * Returns the moderation group for postings.
-     *
-     * @return integer
-     */
-    public function getModerationGroupForPostings()
-    {
-        return $this->moderationGroupForPostings;
-    }
-    
-    /**
-     * Sets the moderation group for postings.
-     *
-     * @param integer $moderationGroupForPostings
-     *
-     * @return void
-     */
-    public function setModerationGroupForPostings($moderationGroupForPostings)
-    {
-        if ($this->moderationGroupForPostings !== $moderationGroupForPostings) {
-            $this->moderationGroupForPostings = $moderationGroupForPostings;
         }
     }
     
@@ -2448,6 +2514,270 @@ abstract class AbstractAppSettings
     }
     
     /**
+     * Returns the moderation group for postings.
+     *
+     * @return integer
+     */
+    public function getModerationGroupForPostings()
+    {
+        return $this->moderationGroupForPostings;
+    }
+    
+    /**
+     * Sets the moderation group for postings.
+     *
+     * @param integer $moderationGroupForPostings
+     *
+     * @return void
+     */
+    public function setModerationGroupForPostings($moderationGroupForPostings)
+    {
+        if ($this->moderationGroupForPostings !== $moderationGroupForPostings) {
+            $this->moderationGroupForPostings = $moderationGroupForPostings;
+        }
+    }
+    
+    /**
+     * Returns the allow moderation specific creator for category.
+     *
+     * @return boolean
+     */
+    public function getAllowModerationSpecificCreatorForCategory()
+    {
+        return $this->allowModerationSpecificCreatorForCategory;
+    }
+    
+    /**
+     * Sets the allow moderation specific creator for category.
+     *
+     * @param boolean $allowModerationSpecificCreatorForCategory
+     *
+     * @return void
+     */
+    public function setAllowModerationSpecificCreatorForCategory($allowModerationSpecificCreatorForCategory)
+    {
+        if (boolval($this->allowModerationSpecificCreatorForCategory) !== boolval($allowModerationSpecificCreatorForCategory)) {
+            $this->allowModerationSpecificCreatorForCategory = boolval($allowModerationSpecificCreatorForCategory);
+        }
+    }
+    
+    /**
+     * Returns the allow moderation specific creation date for category.
+     *
+     * @return boolean
+     */
+    public function getAllowModerationSpecificCreationDateForCategory()
+    {
+        return $this->allowModerationSpecificCreationDateForCategory;
+    }
+    
+    /**
+     * Sets the allow moderation specific creation date for category.
+     *
+     * @param boolean $allowModerationSpecificCreationDateForCategory
+     *
+     * @return void
+     */
+    public function setAllowModerationSpecificCreationDateForCategory($allowModerationSpecificCreationDateForCategory)
+    {
+        if (boolval($this->allowModerationSpecificCreationDateForCategory) !== boolval($allowModerationSpecificCreationDateForCategory)) {
+            $this->allowModerationSpecificCreationDateForCategory = boolval($allowModerationSpecificCreationDateForCategory);
+        }
+    }
+    
+    /**
+     * Returns the allow moderation specific creator for forum.
+     *
+     * @return boolean
+     */
+    public function getAllowModerationSpecificCreatorForForum()
+    {
+        return $this->allowModerationSpecificCreatorForForum;
+    }
+    
+    /**
+     * Sets the allow moderation specific creator for forum.
+     *
+     * @param boolean $allowModerationSpecificCreatorForForum
+     *
+     * @return void
+     */
+    public function setAllowModerationSpecificCreatorForForum($allowModerationSpecificCreatorForForum)
+    {
+        if (boolval($this->allowModerationSpecificCreatorForForum) !== boolval($allowModerationSpecificCreatorForForum)) {
+            $this->allowModerationSpecificCreatorForForum = boolval($allowModerationSpecificCreatorForForum);
+        }
+    }
+    
+    /**
+     * Returns the allow moderation specific creation date for forum.
+     *
+     * @return boolean
+     */
+    public function getAllowModerationSpecificCreationDateForForum()
+    {
+        return $this->allowModerationSpecificCreationDateForForum;
+    }
+    
+    /**
+     * Sets the allow moderation specific creation date for forum.
+     *
+     * @param boolean $allowModerationSpecificCreationDateForForum
+     *
+     * @return void
+     */
+    public function setAllowModerationSpecificCreationDateForForum($allowModerationSpecificCreationDateForForum)
+    {
+        if (boolval($this->allowModerationSpecificCreationDateForForum) !== boolval($allowModerationSpecificCreationDateForForum)) {
+            $this->allowModerationSpecificCreationDateForForum = boolval($allowModerationSpecificCreationDateForForum);
+        }
+    }
+    
+    /**
+     * Returns the allow moderation specific creator for posting.
+     *
+     * @return boolean
+     */
+    public function getAllowModerationSpecificCreatorForPosting()
+    {
+        return $this->allowModerationSpecificCreatorForPosting;
+    }
+    
+    /**
+     * Sets the allow moderation specific creator for posting.
+     *
+     * @param boolean $allowModerationSpecificCreatorForPosting
+     *
+     * @return void
+     */
+    public function setAllowModerationSpecificCreatorForPosting($allowModerationSpecificCreatorForPosting)
+    {
+        if (boolval($this->allowModerationSpecificCreatorForPosting) !== boolval($allowModerationSpecificCreatorForPosting)) {
+            $this->allowModerationSpecificCreatorForPosting = boolval($allowModerationSpecificCreatorForPosting);
+        }
+    }
+    
+    /**
+     * Returns the allow moderation specific creation date for posting.
+     *
+     * @return boolean
+     */
+    public function getAllowModerationSpecificCreationDateForPosting()
+    {
+        return $this->allowModerationSpecificCreationDateForPosting;
+    }
+    
+    /**
+     * Sets the allow moderation specific creation date for posting.
+     *
+     * @param boolean $allowModerationSpecificCreationDateForPosting
+     *
+     * @return void
+     */
+    public function setAllowModerationSpecificCreationDateForPosting($allowModerationSpecificCreationDateForPosting)
+    {
+        if (boolval($this->allowModerationSpecificCreationDateForPosting) !== boolval($allowModerationSpecificCreationDateForPosting)) {
+            $this->allowModerationSpecificCreationDateForPosting = boolval($allowModerationSpecificCreationDateForPosting);
+        }
+    }
+    
+    /**
+     * Returns the allow moderation specific creator for abo.
+     *
+     * @return boolean
+     */
+    public function getAllowModerationSpecificCreatorForAbo()
+    {
+        return $this->allowModerationSpecificCreatorForAbo;
+    }
+    
+    /**
+     * Sets the allow moderation specific creator for abo.
+     *
+     * @param boolean $allowModerationSpecificCreatorForAbo
+     *
+     * @return void
+     */
+    public function setAllowModerationSpecificCreatorForAbo($allowModerationSpecificCreatorForAbo)
+    {
+        if (boolval($this->allowModerationSpecificCreatorForAbo) !== boolval($allowModerationSpecificCreatorForAbo)) {
+            $this->allowModerationSpecificCreatorForAbo = boolval($allowModerationSpecificCreatorForAbo);
+        }
+    }
+    
+    /**
+     * Returns the allow moderation specific creation date for abo.
+     *
+     * @return boolean
+     */
+    public function getAllowModerationSpecificCreationDateForAbo()
+    {
+        return $this->allowModerationSpecificCreationDateForAbo;
+    }
+    
+    /**
+     * Sets the allow moderation specific creation date for abo.
+     *
+     * @param boolean $allowModerationSpecificCreationDateForAbo
+     *
+     * @return void
+     */
+    public function setAllowModerationSpecificCreationDateForAbo($allowModerationSpecificCreationDateForAbo)
+    {
+        if (boolval($this->allowModerationSpecificCreationDateForAbo) !== boolval($allowModerationSpecificCreationDateForAbo)) {
+            $this->allowModerationSpecificCreationDateForAbo = boolval($allowModerationSpecificCreationDateForAbo);
+        }
+    }
+    
+    /**
+     * Returns the allow moderation specific creator for rank.
+     *
+     * @return boolean
+     */
+    public function getAllowModerationSpecificCreatorForRank()
+    {
+        return $this->allowModerationSpecificCreatorForRank;
+    }
+    
+    /**
+     * Sets the allow moderation specific creator for rank.
+     *
+     * @param boolean $allowModerationSpecificCreatorForRank
+     *
+     * @return void
+     */
+    public function setAllowModerationSpecificCreatorForRank($allowModerationSpecificCreatorForRank)
+    {
+        if (boolval($this->allowModerationSpecificCreatorForRank) !== boolval($allowModerationSpecificCreatorForRank)) {
+            $this->allowModerationSpecificCreatorForRank = boolval($allowModerationSpecificCreatorForRank);
+        }
+    }
+    
+    /**
+     * Returns the allow moderation specific creation date for rank.
+     *
+     * @return boolean
+     */
+    public function getAllowModerationSpecificCreationDateForRank()
+    {
+        return $this->allowModerationSpecificCreationDateForRank;
+    }
+    
+    /**
+     * Sets the allow moderation specific creation date for rank.
+     *
+     * @param boolean $allowModerationSpecificCreationDateForRank
+     *
+     * @return void
+     */
+    public function setAllowModerationSpecificCreationDateForRank($allowModerationSpecificCreationDateForRank)
+    {
+        if (boolval($this->allowModerationSpecificCreationDateForRank) !== boolval($allowModerationSpecificCreationDateForRank)) {
+            $this->allowModerationSpecificCreationDateForRank = boolval($allowModerationSpecificCreationDateForRank);
+        }
+    }
+    
+    /**
      * Returns the enabled finder types.
      *
      * @return string
@@ -2532,9 +2862,6 @@ abstract class AbstractAppSettings
         }
         if (isset($moduleVars['showStatisticOnBottom'])) {
             $this->setShowStatisticOnBottom($moduleVars['showStatisticOnBottom']);
-        }
-        if (isset($moduleVars['moderationGroupForPostings'])) {
-            $this->setModerationGroupForPostings($moduleVars['moderationGroupForPostings']);
         }
         if (isset($moduleVars['categoryEntriesPerPage'])) {
             $this->setCategoryEntriesPerPage($moduleVars['categoryEntriesPerPage']);
@@ -2692,6 +3019,39 @@ abstract class AbstractAppSettings
         if (isset($moduleVars['thumbnailHeightRankUploadImageEdit'])) {
             $this->setThumbnailHeightRankUploadImageEdit($moduleVars['thumbnailHeightRankUploadImageEdit']);
         }
+        if (isset($moduleVars['moderationGroupForPostings'])) {
+            $this->setModerationGroupForPostings($moduleVars['moderationGroupForPostings']);
+        }
+        if (isset($moduleVars['allowModerationSpecificCreatorForCategory'])) {
+            $this->setAllowModerationSpecificCreatorForCategory($moduleVars['allowModerationSpecificCreatorForCategory']);
+        }
+        if (isset($moduleVars['allowModerationSpecificCreationDateForCategory'])) {
+            $this->setAllowModerationSpecificCreationDateForCategory($moduleVars['allowModerationSpecificCreationDateForCategory']);
+        }
+        if (isset($moduleVars['allowModerationSpecificCreatorForForum'])) {
+            $this->setAllowModerationSpecificCreatorForForum($moduleVars['allowModerationSpecificCreatorForForum']);
+        }
+        if (isset($moduleVars['allowModerationSpecificCreationDateForForum'])) {
+            $this->setAllowModerationSpecificCreationDateForForum($moduleVars['allowModerationSpecificCreationDateForForum']);
+        }
+        if (isset($moduleVars['allowModerationSpecificCreatorForPosting'])) {
+            $this->setAllowModerationSpecificCreatorForPosting($moduleVars['allowModerationSpecificCreatorForPosting']);
+        }
+        if (isset($moduleVars['allowModerationSpecificCreationDateForPosting'])) {
+            $this->setAllowModerationSpecificCreationDateForPosting($moduleVars['allowModerationSpecificCreationDateForPosting']);
+        }
+        if (isset($moduleVars['allowModerationSpecificCreatorForAbo'])) {
+            $this->setAllowModerationSpecificCreatorForAbo($moduleVars['allowModerationSpecificCreatorForAbo']);
+        }
+        if (isset($moduleVars['allowModerationSpecificCreationDateForAbo'])) {
+            $this->setAllowModerationSpecificCreationDateForAbo($moduleVars['allowModerationSpecificCreationDateForAbo']);
+        }
+        if (isset($moduleVars['allowModerationSpecificCreatorForRank'])) {
+            $this->setAllowModerationSpecificCreatorForRank($moduleVars['allowModerationSpecificCreatorForRank']);
+        }
+        if (isset($moduleVars['allowModerationSpecificCreationDateForRank'])) {
+            $this->setAllowModerationSpecificCreationDateForRank($moduleVars['allowModerationSpecificCreationDateForRank']);
+        }
         if (isset($moduleVars['enabledFinderTypes'])) {
             $this->setEnabledFinderTypes($moduleVars['enabledFinderTypes']);
         }
@@ -2734,7 +3094,6 @@ abstract class AbstractAppSettings
         $this->variableApi->set('MUBoardModule', 'template', $this->getTemplate());
         $this->variableApi->set('MUBoardModule', 'showStatisticInDetails', $this->getShowStatisticInDetails());
         $this->variableApi->set('MUBoardModule', 'showStatisticOnBottom', $this->getShowStatisticOnBottom());
-        $this->variableApi->set('MUBoardModule', 'moderationGroupForPostings', $this->getModerationGroupForPostings());
         $this->variableApi->set('MUBoardModule', 'categoryEntriesPerPage', $this->getCategoryEntriesPerPage());
         $this->variableApi->set('MUBoardModule', 'linkOwnCategoriesOnAccountPage', $this->getLinkOwnCategoriesOnAccountPage());
         $this->variableApi->set('MUBoardModule', 'forumEntriesPerPage', $this->getForumEntriesPerPage());
@@ -2787,6 +3146,17 @@ abstract class AbstractAppSettings
         $this->variableApi->set('MUBoardModule', 'thumbnailHeightRankUploadImageDisplay', $this->getThumbnailHeightRankUploadImageDisplay());
         $this->variableApi->set('MUBoardModule', 'thumbnailWidthRankUploadImageEdit', $this->getThumbnailWidthRankUploadImageEdit());
         $this->variableApi->set('MUBoardModule', 'thumbnailHeightRankUploadImageEdit', $this->getThumbnailHeightRankUploadImageEdit());
+        $this->variableApi->set('MUBoardModule', 'moderationGroupForPostings', $this->getModerationGroupForPostings());
+        $this->variableApi->set('MUBoardModule', 'allowModerationSpecificCreatorForCategory', $this->getAllowModerationSpecificCreatorForCategory());
+        $this->variableApi->set('MUBoardModule', 'allowModerationSpecificCreationDateForCategory', $this->getAllowModerationSpecificCreationDateForCategory());
+        $this->variableApi->set('MUBoardModule', 'allowModerationSpecificCreatorForForum', $this->getAllowModerationSpecificCreatorForForum());
+        $this->variableApi->set('MUBoardModule', 'allowModerationSpecificCreationDateForForum', $this->getAllowModerationSpecificCreationDateForForum());
+        $this->variableApi->set('MUBoardModule', 'allowModerationSpecificCreatorForPosting', $this->getAllowModerationSpecificCreatorForPosting());
+        $this->variableApi->set('MUBoardModule', 'allowModerationSpecificCreationDateForPosting', $this->getAllowModerationSpecificCreationDateForPosting());
+        $this->variableApi->set('MUBoardModule', 'allowModerationSpecificCreatorForAbo', $this->getAllowModerationSpecificCreatorForAbo());
+        $this->variableApi->set('MUBoardModule', 'allowModerationSpecificCreationDateForAbo', $this->getAllowModerationSpecificCreationDateForAbo());
+        $this->variableApi->set('MUBoardModule', 'allowModerationSpecificCreatorForRank', $this->getAllowModerationSpecificCreatorForRank());
+        $this->variableApi->set('MUBoardModule', 'allowModerationSpecificCreationDateForRank', $this->getAllowModerationSpecificCreationDateForRank());
         $this->variableApi->set('MUBoardModule', 'enabledFinderTypes', $this->getEnabledFinderTypes());
     }
 }

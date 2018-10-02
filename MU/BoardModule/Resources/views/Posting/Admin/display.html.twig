@@ -5,7 +5,7 @@
 {% block title %}
     {% set templateTitle = posting|muboardmodule_formattedTitle|default(__('Posting')) %}
     {{ templateTitle|notifyFilters('muboardmodule.filter_hooks.postings.filter')|safeHtml }}{% if routeArea == 'admin' %} <small>({{ posting.workflowState|muboardmodule_objectState(false)|lower }})</small>{% endif %}
-    {% set itemActions = knp_menu_get('MUBoardModule:ItemActionsMenu:menu', [], {entity: posting, area: routeArea, context: 'display'}) %}
+    {% set itemActions = knp_menu_get('mUBoardMenuItemActions', [], {entity: posting, area: routeArea, context: 'display'}) %}
     <div class="dropdown">
         <a id="itemActions{{ posting.getKey() }}DropDownToggleStart" role="button" data-toggle="dropdown" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
         {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:bootstrap_fontawesome.html.twig'}) }}
@@ -190,7 +190,7 @@
         ) }}
     {% endif %}
     
-    {% set mayManage = hasPermission('MUBoardModule:Posting:', '::', 'ACCESS_COMMENT') %}
+    {% set mayManage = permissionHelper.hasComponentPermission('posting', constant('ACCESS_COMMENT')) %}
     {% if mayManage %}
         <p class="managelink">
             {% set createTitle = __('Create posting') %}
@@ -199,10 +199,12 @@
     {% endif %}
 {% endblock %}
 {% block display_hooks %}
-    {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.postings.display_view', id=posting.getKey(), urlObject=currentUrlObject, outputAsArray=true) %}
-    {% if hooks is iterable and hooks|length > 0 %}
-        {% for area, hook in hooks %}
-            <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook|raw }}</div>
-        {% endfor %}
+    {% if posting.supportsHookSubscribers() %}
+        {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.postings.display_view', id=posting.getKey(), urlObject=currentUrlObject, outputAsArray=true) %}
+        {% if hooks is iterable and hooks|length > 0 %}
+            {% for area, hook in hooks %}
+                <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook|raw }}</div>
+            {% endfor %}
+        {% endif %}
     {% endif %}
 {% endblock %}

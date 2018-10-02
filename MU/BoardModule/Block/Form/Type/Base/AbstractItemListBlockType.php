@@ -69,19 +69,19 @@ abstract class AbstractItemListBlockType extends AbstractType
     public function addObjectTypeField(FormBuilderInterface $builder, array $options = [])
     {
         $builder->add('objectType', ChoiceType::class, [
-            'label' => $this->__('Object type') . ':',
+            'label' => $this->__('Object type', 'muboardmodule') . ':',
             'empty_data' => 'category',
             'attr' => [
-                'title' => $this->__('If you change this please save the block once to reload the parameters below.')
+                'title' => $this->__('If you change this please save the block once to reload the parameters below.', 'muboardmodule')
             ],
-            'help' => $this->__('If you change this please save the block once to reload the parameters below.'),
+            'help' => $this->__('If you change this please save the block once to reload the parameters below.', 'muboardmodule'),
             'choices' => [
-                $this->__('Categories') => 'category',
-                $this->__('Forums') => 'forum',
-                $this->__('Postings') => 'posting',
-                $this->__('Abos') => 'abo',
-                $this->__('Users') => 'user',
-                $this->__('Ranks') => 'rank'
+                $this->__('Categories', 'muboardmodule') => 'category',
+                $this->__('Forums', 'muboardmodule') => 'forum',
+                $this->__('Postings', 'muboardmodule') => 'posting',
+                $this->__('Abos', 'muboardmodule') => 'abo',
+                $this->__('Users', 'muboardmodule') => 'user',
+                $this->__('Ranks', 'muboardmodule') => 'rank'
             ],
             'multiple' => false,
             'expanded' => false
@@ -97,12 +97,13 @@ abstract class AbstractItemListBlockType extends AbstractType
     public function addSortingField(FormBuilderInterface $builder, array $options = [])
     {
         $builder->add('sorting', ChoiceType::class, [
-            'label' => $this->__('Sorting') . ':',
+            'label' => $this->__('Sorting', 'muboardmodule') . ':',
             'empty_data' => 'default',
             'choices' => [
-                $this->__('Random') => 'random',
-                $this->__('Newest') => 'newest',
-                $this->__('Default') => 'default'
+                $this->__('Random', 'muboardmodule') => 'random',
+                $this->__('Newest', 'muboardmodule') => 'newest',
+                $this->__('Updated', 'muboardmodule') => 'updated',
+                $this->__('Default', 'muboardmodule') => 'default'
             ],
             'multiple' => false,
             'expanded' => false
@@ -118,12 +119,12 @@ abstract class AbstractItemListBlockType extends AbstractType
     public function addAmountField(FormBuilderInterface $builder, array $options = [])
     {
         $builder->add('amount', IntegerType::class, [
-            'label' => $this->__('Amount') . ':',
+            'label' => $this->__('Amount', 'muboardmodule') . ':',
             'attr' => [
                 'maxlength' => 2,
-                'title' => $this->__('The maximum amount of items to be shown.') . ' ' . $this->__('Only digits are allowed.')
+                'title' => $this->__('The maximum amount of items to be shown.', 'muboardmodule') . ' ' . $this->__('Only digits are allowed.', 'muboardmodule')
             ],
-            'help' => $this->__('The maximum amount of items to be shown.') . ' ' . $this->__('Only digits are allowed.'),
+            'help' => $this->__('The maximum amount of items to be shown.', 'muboardmodule') . ' ' . $this->__('Only digits are allowed.', 'muboardmodule'),
             'empty_data' => 5,
             'scale' => 0
         ]);
@@ -139,24 +140,24 @@ abstract class AbstractItemListBlockType extends AbstractType
     {
         $builder
             ->add('template', ChoiceType::class, [
-                'label' => $this->__('Template') . ':',
+                'label' => $this->__('Template', 'muboardmodule') . ':',
                 'empty_data' => 'itemlist_display.html.twig',
                 'choices' => [
-                    $this->__('Only item titles') => 'itemlist_display.html.twig',
-                    $this->__('With description') => 'itemlist_display_description.html.twig',
-                    $this->__('Custom template') => 'custom'
+                    $this->__('Only item titles', 'muboardmodule') => 'itemlist_display.html.twig',
+                    $this->__('With description', 'muboardmodule') => 'itemlist_display_description.html.twig',
+                    $this->__('Custom template', 'muboardmodule') => 'custom'
                 ],
                 'multiple' => false,
                 'expanded' => false
             ])
             ->add('customTemplate', TextType::class, [
-                'label' => $this->__('Custom template') . ':',
+                'label' => $this->__('Custom template', 'muboardmodule') . ':',
                 'required' => false,
                 'attr' => [
                     'maxlength' => 80,
-                    'title' => $this->__('Example') . ': itemlist_[objectType]_display.html.twig'
+                    'title' => $this->__('Example', 'muboardmodule') . ': itemlist_[objectType]_display.html.twig'
                 ],
-                'help' => $this->__('Example') . ': <em>itemlist_[objectType]_display.html.twig</em>'
+                'help' => $this->__('Example', 'muboardmodule') . ': <em>itemlist_[objectType]_display.html.twig</em>'
             ])
         ;
     }
@@ -170,13 +171,13 @@ abstract class AbstractItemListBlockType extends AbstractType
     public function addFilterField(FormBuilderInterface $builder, array $options = [])
     {
         $builder->add('filter', TextType::class, [
-            'label' => $this->__('Filter (expert option)') . ':',
+            'label' => $this->__('Filter (expert option)', 'muboardmodule') . ':',
             'required' => false,
             'attr' => [
                 'maxlength' => 255,
-                'title' => $this->__('Example') . ': tbl.age >= 18'
+                'title' => $this->__('Example', 'muboardmodule') . ': tbl.age >= 18'
             ],
-            'help' => $this->__('Example') . ': tbl.age >= 18'
+            'help' => $this->__('Example', 'muboardmodule') . ': tbl.age >= 18'
         ]);
     }
 

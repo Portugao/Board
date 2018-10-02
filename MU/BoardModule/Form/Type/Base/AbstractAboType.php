@@ -14,7 +14,6 @@ namespace MU\BoardModule\Form\Type\Base;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -24,8 +23,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use MU\BoardModule\Entity\Factory\EntityFactory;
-use Zikula\UsersModule\Form\Type\UserLiveSearchType;
 use MU\BoardModule\Helper\ListEntriesHelper;
+use MU\BoardModule\Traits\ModerationFormFieldsTrait;
 
 /**
  * Abo editing form type base class.
@@ -33,6 +32,7 @@ use MU\BoardModule\Helper\ListEntriesHelper;
 abstract class AbstractAboType extends AbstractType
 {
     use TranslatorTrait;
+    use ModerationFormFieldsTrait;
 
     /**
      * @var EntityFactory
@@ -92,7 +92,7 @@ abstract class AbstractAboType extends AbstractType
         
         $builder->add('userid', IntegerType::class, [
             'label' => $this->__('Userid') . ':',
-            'empty_data' => '',
+            'empty_data' => 0,
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
@@ -104,7 +104,7 @@ abstract class AbstractAboType extends AbstractType
         
         $builder->add('catid', IntegerType::class, [
             'label' => $this->__('Catid') . ':',
-            'empty_data' => '',
+            'empty_data' => 0,
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
@@ -116,7 +116,7 @@ abstract class AbstractAboType extends AbstractType
         
         $builder->add('forumid', IntegerType::class, [
             'label' => $this->__('Forumid') . ':',
-            'empty_data' => '',
+            'empty_data' => 0,
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
@@ -128,7 +128,7 @@ abstract class AbstractAboType extends AbstractType
         
         $builder->add('postingid', IntegerType::class, [
             'label' => $this->__('Postingid') . ':',
-            'empty_data' => '',
+            'empty_data' => 0,
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
@@ -136,45 +136,6 @@ abstract class AbstractAboType extends AbstractType
             ],
             'required' => false,
             'scale' => 0
-        ]);
-    }
-
-    /**
-     * Adds special fields for moderators.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addModerationFields(FormBuilderInterface $builder, array $options = [])
-    {
-        if (!$options['has_moderate_permission']) {
-            return;
-        }
-    
-        $builder->add('moderationSpecificCreator', UserLiveSearchType::class, [
-            'mapped' => false,
-            'label' => $this->__('Creator') . ':',
-            'attr' => [
-                'maxlength' => 11,
-                'title' => $this->__('Here you can choose a user which will be set as creator.')
-            ],
-            'empty_data' => 0,
-            'required' => false,
-            'help' => $this->__('Here you can choose a user which will be set as creator.')
-        ]);
-        $builder->add('moderationSpecificCreationDate', DateTimeType::class, [
-            'mapped' => false,
-            'label' => $this->__('Creation date') . ':',
-            'attr' => [
-                'class' => '',
-                'title' => $this->__('Here you can choose a custom creation date.')
-            ],
-            'empty_data' => '',
-            'required' => false,
-            'with_seconds' => true,
-            'date_widget' => 'single_text',
-            'time_widget' => 'single_text',
-            'help' => $this->__('Here you can choose a custom creation date.')
         ]);
     }
 
@@ -248,11 +209,15 @@ abstract class AbstractAboType extends AbstractType
                 'mode' => 'create',
                 'actions' => [],
                 'has_moderate_permission' => false,
+                'allow_moderation_specific_creator' => false,
+                'allow_moderation_specific_creation_date' => false,
             ])
             ->setRequired(['mode', 'actions'])
             ->setAllowedTypes('mode', 'string')
             ->setAllowedTypes('actions', 'array')
             ->setAllowedTypes('has_moderate_permission', 'bool')
+            ->setAllowedTypes('allow_moderation_specific_creator', 'bool')
+            ->setAllowedTypes('allow_moderation_specific_creation_date', 'bool')
             ->setAllowedValues('mode', ['create', 'edit'])
         ;
     }

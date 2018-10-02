@@ -22,11 +22,15 @@ use MU\BoardModule\Block\Form\Type\ItemListBlockType;
 abstract class AbstractItemListBlock extends AbstractBlockHandler
 {
     /**
-     * Display the block content.
-     *
-     * @param array $properties The block properties
-     *
-     * @return string
+     * @inheritDoc
+     */
+    public function getType()
+    {
+        return $this->__('Board list', 'muboardmodule');
+    }
+    
+    /**
+     * @inheritDoc
      */
     public function display(array $properties = [])
     {
@@ -66,7 +70,7 @@ abstract class AbstractItemListBlock extends AbstractBlockHandler
     
         // set a block title
         if (empty($properties['title'])) {
-            $properties['title'] = $this->__('MUBoardModule items');
+            $properties['title'] = $this->__('Board list', 'muboardmodule');
         }
     
         $template = $this->getDisplayTemplate($properties);
@@ -92,7 +96,7 @@ abstract class AbstractItemListBlock extends AbstractBlockHandler
     protected function getDisplayTemplate(array $properties = [])
     {
         $templateFile = $properties['template'];
-        if ($templateFile == 'custom' && null !== $properties['customTemplate'] && $properties['customTemplate'] != '') {
+        if ('custom' == $templateFile && null !== $properties['customTemplate'] && '' != $properties['customTemplate']) {
             $templateFile = $properties['customTemplate'];
         }
     
@@ -117,9 +121,7 @@ abstract class AbstractItemListBlock extends AbstractBlockHandler
     }
     
     /**
-     * Returns the fully qualified class name of the block's form class.
-     *
-     * @return string Template path
+     * @inheritDoc
      */
     public function getFormClassName()
     {
@@ -127,9 +129,7 @@ abstract class AbstractItemListBlock extends AbstractBlockHandler
     }
     
     /**
-     * Returns an array of form options.
-     *
-     * @return array Options array
+     * @inheritDoc
      */
     public function getFormOptions()
     {
@@ -155,9 +155,7 @@ abstract class AbstractItemListBlock extends AbstractBlockHandler
     }
     
     /**
-     * Returns the template used for rendering the editing form.
-     *
-     * @return string Template path
+     * @inheritDoc
      */
     public function getFormTemplate()
     {

@@ -5,7 +5,7 @@
 {% block title %}
     {% set templateTitle = abo|muboardmodule_formattedTitle|default(__('Abo')) %}
     {{ templateTitle|notifyFilters('muboardmodule.filter_hooks.abos.filter')|safeHtml }}
-    {% set itemActions = knp_menu_get('MUBoardModule:ItemActionsMenu:menu', [], {entity: abo, area: routeArea, context: 'display'}) %}
+    {% set itemActions = knp_menu_get('mUBoardMenuItemActions', [], {entity: abo, area: routeArea, context: 'display'}) %}
     <div class="dropdown">
         <a id="itemActions{{ abo.getKey() }}DropDownToggleStart" role="button" data-toggle="dropdown" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
         {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:bootstrap_fontawesome.html.twig'}) }}
@@ -41,10 +41,12 @@
 </div>
 {% endblock %}
 {% block display_hooks %}
-    {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.abos.display_view', id=abo.getKey(), urlObject=currentUrlObject, outputAsArray=true) %}
-    {% if hooks is iterable and hooks|length > 0 %}
-        {% for area, hook in hooks %}
-            <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook|raw }}</div>
-        {% endfor %}
+    {% if abo.supportsHookSubscribers() %}
+        {% set hooks = notifyDisplayHooks(eventName='muboardmodule.ui_hooks.abos.display_view', id=abo.getKey(), urlObject=currentUrlObject, outputAsArray=true) %}
+        {% if hooks is iterable and hooks|length > 0 %}
+            {% for area, hook in hooks %}
+                <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook|raw }}</div>
+            {% endfor %}
+        {% endif %}
     {% endif %}
 {% endblock %}

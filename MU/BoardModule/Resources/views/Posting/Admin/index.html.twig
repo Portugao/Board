@@ -1,7 +1,9 @@
 {# purpose of this template: postings admin index view #}
 {% extends 'MUBoardModule::adminBase.html.twig' %}
-{% block title __('postings') %}
+{% block title __('Postings') %}
 {% block admin_page_icon 'home' %}
 {% block content %}
-    <p>{{ __('Welcome to the posting section of the Board application.') }}</p>
+    <div class="muboardmodule-posting muboardmodule-index">
+        <p>{{ __('Welcome to the posting section of the Board application.') }}</p>
+    </div>
 {% endblock %}

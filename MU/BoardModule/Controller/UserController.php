@@ -16,7 +16,6 @@ use MU\BoardModule\Controller\Base\AbstractUserController;
 
 use RuntimeException;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -91,12 +90,11 @@ class UserController extends AbstractUserController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
-     * @ParamConverter("user", class="MUBoardModule:UserEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Theme("admin")
      */
-    public function adminDisplayAction(Request $request, UserEntity $user)
+    public function adminDisplayAction(Request $request, $id)
     {
-        return parent::adminDisplayAction($request, $user);
+        return parent::adminDisplayAction($request, $id);
     }
     
     /**
@@ -107,11 +105,10 @@ class UserController extends AbstractUserController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
-     * @ParamConverter("user", class="MUBoardModule:UserEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      */
-    public function displayAction(Request $request, UserEntity $user)
+    public function displayAction(Request $request, $id)
     {
-        return parent::displayAction($request, $user);
+        return parent::displayAction($request, $id);
     }
     
     /**
@@ -151,12 +148,11 @@ class UserController extends AbstractUserController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     * @ParamConverter("user", class="MUBoardModule:UserEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Theme("admin")
      */
-    public function adminDeleteAction(Request $request, UserEntity $user)
+    public function adminDeleteAction(Request $request, $id)
     {
-        return parent::adminDeleteAction($request, $user);
+        return parent::adminDeleteAction($request, $id);
     }
     
     /**
@@ -167,11 +163,10 @@ class UserController extends AbstractUserController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     * @ParamConverter("user", class="MUBoardModule:UserEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      */
-    public function deleteAction(Request $request, UserEntity $user)
+    public function deleteAction(Request $request, $id)
     {
-        return parent::deleteAction($request, $user);
+        return parent::deleteAction($request, $id);
     }
     
     /**

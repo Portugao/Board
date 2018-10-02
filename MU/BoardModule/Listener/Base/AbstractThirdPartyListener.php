@@ -14,8 +14,6 @@ namespace MU\BoardModule\Listener\Base;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Zikula\Common\Collection\Collectible\PendingContentCollectible;
@@ -35,9 +33,9 @@ abstract class AbstractThirdPartyListener implements EventSubscriberInterface
     protected $filesystem;
     
     /**
-     * @var Request
+     * @var RequestStack
      */
-    protected $request;
+    protected $requestStack;
     
     /**
      * @var WorkflowHelper
@@ -56,7 +54,7 @@ abstract class AbstractThirdPartyListener implements EventSubscriberInterface
     public function __construct(Filesystem $filesystem, RequestStack $requestStack, WorkflowHelper $workflowHelper)
     {
         $this->filesystem = $filesystem;
-        $this->request = $requestStack->getCurrentRequest();
+        $this->requestStack = $requestStack;
         $this->workflowHelper = $workflowHelper;
     }
     
@@ -127,16 +125,10 @@ abstract class AbstractThirdPartyListener implements EventSubscriberInterface
     {
         // install assets for Scribite plugins
         $targetDir = 'web/modules/muboard';
-        $finder = new Finder();
         if (!$this->filesystem->exists($targetDir)) {
-            $this->filesystem->mkdir($targetDir, 0777);
-            if (is_dir($originDir = 'modules/MU/BoardModule/Resources/public')) {
-                $this->filesystem->mirror($originDir, $targetDir, Finder::create()->in($originDir));
-            }
-            if (is_dir($originDir = 'modules/MU/BoardModule/Resources/scribite')) {
-                $targetDir .= '/scribite';
-                $this->filesystem->mkdir($targetDir, 0777);
-                $this->filesystem->mirror($originDir, $targetDir, Finder::create()->in($originDir));
+            $moduleDirectory = str_replace('Listener/Base', '', __DIR__);
+            if (is_dir($originDir = $moduleDirectory . 'Resources/public')) {
+                $this->filesystem->symlink($originDir, $targetDir, true);
             }
         }
     
@@ -144,7 +136,7 @@ abstract class AbstractThirdPartyListener implements EventSubscriberInterface
             [
                 'module' => 'MUBoardModule',
                 'type' => 'javascript',
-                'path' => $this->request->getBasePath() . '/web/modules/muboard/js/MUBoardModule.Finder.js'
+                'path' => $this->requestStack->getCurrentRequest()->getBasePath() . '/web/modules/muboard/js/MUBoardModule.Finder.js'
             ]
         );
     }
@@ -165,7 +157,7 @@ abstract class AbstractThirdPartyListener implements EventSubscriberInterface
     {
         $event->getSubject()->add([
             'name' => 'muboardmodule',
-            'path' => $this->request->getBasePath() . '/web/modules/muboard/scribite/CKEditor/muboardmodule/',
+            'path' => $this->requestStack->getCurrentRequest()->getBasePath() . '/web/modules/muboard/scribite/CKEditor/muboardmodule/',
             'file' => 'plugin.js',
             'img' => 'ed_muboardmodule.gif'
         ]);
@@ -187,7 +179,7 @@ abstract class AbstractThirdPartyListener implements EventSubscriberInterface
     {
         $event->getSubject()->add([
             'name' => 'muboardmodule',
-            'path' => $this->request->getBasePath() . '/web/modules/muboard/scribite/Quill/muboardmodule/plugin.js'
+            'path' => $this->requestStack->getCurrentRequest()->getBasePath() . '/web/modules/muboard/scribite/Quill/muboardmodule/plugin.js'
         ]);
     }
     
@@ -207,7 +199,7 @@ abstract class AbstractThirdPartyListener implements EventSubscriberInterface
     {
         $event->getSubject()->add([
             'name' => 'muboardmodule',
-            'path' => $this->request->getBasePath() . '/web/modules/muboard/scribite/Summernote/muboardmodule/plugin.js'
+            'path' => $this->requestStack->getCurrentRequest()->getBasePath() . '/web/modules/muboard/scribite/Summernote/muboardmodule/plugin.js'
         ]);
     }
     
@@ -227,7 +219,7 @@ abstract class AbstractThirdPartyListener implements EventSubscriberInterface
     {
         $event->getSubject()->add([
             'name' => 'muboardmodule',
-            'path' => $this->request->getBasePath() . '/web/modules/muboard/scribite/TinyMce/muboardmodule/plugin.js'
+            'path' => $this->requestStack->getCurrentRequest()->getBasePath() . '/web/modules/muboard/scribite/TinyMce/muboardmodule/plugin.js'
         ]);
     }
 }

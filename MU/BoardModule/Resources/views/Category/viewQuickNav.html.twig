@@ -1,5 +1,5 @@
 {# purpose of this template: categories view filter form #}
-{% if hasPermission('MUBoardModule:Category:', '::', 'ACCESS_EDIT') %}
+{% if permissionHelper.hasComponentPermission('category', constant('ACCESS_EDIT')) %}
     {% form_theme quickNavForm with [
         'bootstrap_3_layout.html.twig'
     ] %}

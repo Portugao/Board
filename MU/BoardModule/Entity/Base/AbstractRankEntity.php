@@ -43,6 +43,16 @@ abstract class AbstractRankEntity extends EntityAccess
     protected $_objectType = 'rank';
     
     /**
+     * @var string Path to upload base folder
+     */
+    protected $_uploadBasePath = '';
+    
+    /**
+     * @var string Base URL to upload files
+     */
+    protected $_uploadBaseUrl = '';
+    
+    /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer", unique=true)
@@ -106,16 +116,11 @@ abstract class AbstractRankEntity extends EntityAccess
     protected $uploadImageMeta = [];
     
     /**
-     * @ORM\Column(length=255, nullable=true)
+     * @ORM\Column(name="uploadImage", length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
-     * @Assert\File(
-     *    mimeTypes = {"image/*"}
-     * )
-     * @Assert\Image(
-     * )
-     * @var string $uploadImage
+     * @var string $uploadImageFileName
      */
-    protected $uploadImage = null;
+    protected $uploadImageFileName = null;
     
     /**
      * Full upload image path as url.
@@ -124,6 +129,18 @@ abstract class AbstractRankEntity extends EntityAccess
      * @var string $uploadImageUrl
      */
     protected $uploadImageUrl = '';
+    
+    /**
+     * Upload image file object.
+     *
+     * @Assert\File(
+     *    mimeTypes = {"image/*"}
+     * )
+     * @Assert\Image(
+     * )
+     * @var File $uploadImage
+     */
+    protected $uploadImage = null;
     
     /**
      * @ORM\Column(type="boolean")
@@ -176,7 +193,55 @@ abstract class AbstractRankEntity extends EntityAccess
     public function set_objectType($_objectType)
     {
         if ($this->_objectType != $_objectType) {
-            $this->_objectType = $_objectType;
+            $this->_objectType = isset($_objectType) ? $_objectType : '';
+        }
+    }
+    
+    /**
+     * Returns the _upload base path.
+     *
+     * @return string
+     */
+    public function get_uploadBasePath()
+    {
+        return $this->_uploadBasePath;
+    }
+    
+    /**
+     * Sets the _upload base path.
+     *
+     * @param string $_uploadBasePath
+     *
+     * @return void
+     */
+    public function set_uploadBasePath($_uploadBasePath)
+    {
+        if ($this->_uploadBasePath != $_uploadBasePath) {
+            $this->_uploadBasePath = isset($_uploadBasePath) ? $_uploadBasePath : '';
+        }
+    }
+    
+    /**
+     * Returns the _upload base url.
+     *
+     * @return string
+     */
+    public function get_uploadBaseUrl()
+    {
+        return $this->_uploadBaseUrl;
+    }
+    
+    /**
+     * Sets the _upload base url.
+     *
+     * @param string $_uploadBaseUrl
+     *
+     * @return void
+     */
+    public function set_uploadBaseUrl($_uploadBaseUrl)
+    {
+        if ($this->_uploadBaseUrl != $_uploadBaseUrl) {
+            $this->_uploadBaseUrl = isset($_uploadBaseUrl) ? $_uploadBaseUrl : '';
         }
     }
     
@@ -328,24 +393,79 @@ abstract class AbstractRankEntity extends EntityAccess
     /**
      * Returns the upload image.
      *
-     * @return string
+     * @return File
      */
     public function getUploadImage()
     {
+        if (null !== $this->uploadImage) {
+            return $this->uploadImage;
+        }
+    
+        $fileName = $this->uploadImageFileName;
+        if (!empty($fileName) && !$this->_uploadBasePath) {
+            throw new \RuntimeException('Invalid upload base path in ' . get_class($this) . '#getUploadImage().');
+        }
+    
+        $filePath = $this->_uploadBasePath . 'uploadimage/' . $fileName;
+        if (!empty($fileName) && file_exists($filePath)) {
+            $this->uploadImage = new File($filePath);
+            $this->setUploadImageUrl($this->_uploadBaseUrl . '/' . $filePath);
+        } else {
+            $this->setUploadImageFileName('');
+            $this->setUploadImageUrl('');
+            $this->setUploadImageMeta([]);
+        }
+    
         return $this->uploadImage;
     }
     
     /**
      * Sets the upload image.
      *
-     * @param string $uploadImage
+     * @param File|null $uploadImage
      *
      * @return void
      */
     public function setUploadImage($uploadImage)
     {
-        if ($this->uploadImage !== $uploadImage) {
-            $this->uploadImage = $uploadImage;
+        if (null === $this->uploadImage && null === $uploadImage) {
+            return;
+        }
+        if (null !== $this->uploadImage && null !== $uploadImage && $this->uploadImage->getRealPath() === $uploadImage->getRealPath()) {
+            return;
+        }
+        $this->uploadImage = $uploadImage;
+    
+        if (null === $this->uploadImage) {
+            $this->setUploadImageFileName('');
+            $this->setUploadImageUrl('');
+            $this->setUploadImageMeta([]);
+        } else {
+            $this->setUploadImageFileName($this->uploadImage->getFilename());
+        }
+    }
+    
+    /**
+     * Returns the upload image file name.
+     *
+     * @return string
+     */
+    public function getUploadImageFileName()
+    {
+        return $this->uploadImageFileName;
+    }
+    
+    /**
+     * Sets the upload image file name.
+     *
+     * @param string $uploadImageFileName
+     *
+     * @return void
+     */
+    public function setUploadImageFileName($uploadImageFileName)
+    {
+        if ($this->uploadImageFileName !== $uploadImageFileName) {
+            $this->uploadImageFileName = $uploadImageFileName;
         }
     }
     
@@ -569,8 +689,6 @@ abstract class AbstractRankEntity extends EntityAccess
     
         // reset upload fields
         $this->setUploadImage(null);
-        $this->setUploadImageMeta([]);
-        $this->setUploadImageUrl('');
     
         $this->setCreatedBy(null);
         $this->setCreatedDate(null);

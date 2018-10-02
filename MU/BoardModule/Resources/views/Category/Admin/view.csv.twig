@@ -1,11 +1,10 @@
 {# purpose of this template: categories view csv view #}
-{% spaceless %}"{{ __('Title') }}";"{{ __('Description') }}";"{{ __('Pos') }}";"{{ __('Workflow state') }}"
-;"{{ __('Forum') }}"
+{% spaceless %}"{{ __('Title') }}";"{{ __('Description') }}";"{{ __('Pos') }}";"{{ __('Forum') }}"
 {% endspaceless %}
 {% for category in items %}
+
 {% spaceless %}
-    "{{ category.title }}";"{{ category.description|safeHtml }}";"{{ category.pos }}";"{{ category.workflowState|muboardmodule_objectState(false)|lower }}"
-    ;"
+    "{{ category.title }}";"{{ category.description|safeHtml }}";"{{ category.pos }}";"
     {% if category.forum|default %}
         {% for relatedItem in category.forum %}
         {{ relatedItem|muboardmodule_formattedTitle }}{% if not loop.last %}, {% endif %}

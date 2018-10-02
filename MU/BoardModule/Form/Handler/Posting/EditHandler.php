@@ -85,10 +85,11 @@ class EditHandler extends AbstractEditHandler
             }
             
             if ($thisUser) {
-                $numberPostings = $thisUser->getNumberPostings() + 1;
+                $numberPostings = $thisUser->getNumberPostings();
+                $numberPostings2 = $numberPostings + 1;
                 $thisUser->setNumberPostings($numberPostings);
                 $thisUser->setLastVisit($date);
-                $rank = $this->getRank($numberPostings);
+                $rank = $this->getRank($numberPostings2);
                 $thisUser->setRank($rank);
                 $entityManager->flush();
                 
@@ -102,7 +103,6 @@ class EditHandler extends AbstractEditHandler
                 $newUser->setRank($rank);
                 $entityManager->persist($newUser);
                 $entityManager->flush();
-                $numberPostings = 1;
             }
         }
     

@@ -13,7 +13,6 @@
 namespace MU\BoardModule\Helper\Base;
 
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 use Zikula\UsersModule\Constant as UsersConstant;
@@ -31,25 +30,25 @@ use MU\BoardModule\Helper\PermissionHelper;
 abstract class AbstractCollectionFilterHelper
 {
     /**
-     * @var Request
+     * @var RequestStack
      */
-    protected $request;
-
+    protected $requestStack;
+    
     /**
      * @var PermissionHelper
      */
     protected $permissionHelper;
-
+    
     /**
      * @var CurrentUserApiInterface
      */
     protected $currentUserApi;
-
+    
     /**
      * @var bool Fallback value to determine whether only own entries should be selected or not
      */
     protected $showOnlyOwnEntries = false;
-
+    
     /**
      * CollectionFilterHelper constructor.
      *
@@ -64,12 +63,12 @@ abstract class AbstractCollectionFilterHelper
         CurrentUserApiInterface $currentUserApi,
         $showOnlyOwnEntries
     ) {
-        $this->request = $requestStack->getCurrentRequest();
+        $this->requestStack = $requestStack;
         $this->permissionHelper = $permissionHelper;
         $this->currentUserApi = $currentUserApi;
         $this->showOnlyOwnEntries = $showOnlyOwnEntries;
     }
-
+    
     /**
      * Returns an array of additional template variables for view quick navigation forms.
      *
@@ -183,12 +182,13 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForCategory($context = '', array $args = [])
     {
         $parameters = [];
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $parameters;
         }
     
-        $parameters['workflowState'] = $this->request->query->get('workflowState', '');
-        $parameters['q'] = $this->request->query->get('q', '');
+        $parameters['workflowState'] = $request->query->get('workflowState', '');
+        $parameters['q'] = $request->query->get('q', '');
     
         return $parameters;
     }
@@ -204,13 +204,14 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForForum($context = '', array $args = [])
     {
         $parameters = [];
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $parameters;
         }
     
-        $parameters['category'] = $this->request->query->get('category', 0);
-        $parameters['workflowState'] = $this->request->query->get('workflowState', '');
-        $parameters['q'] = $this->request->query->get('q', '');
+        $parameters['category'] = $request->query->get('category', 0);
+        $parameters['workflowState'] = $request->query->get('workflowState', '');
+        $parameters['q'] = $request->query->get('q', '');
     
         return $parameters;
     }
@@ -226,16 +227,17 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForPosting($context = '', array $args = [])
     {
         $parameters = [];
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $parameters;
         }
     
-        $parameters['parent'] = $this->request->query->get('parent', 0);
-        $parameters['forum'] = $this->request->query->get('forum', 0);
-        $parameters['workflowState'] = $this->request->query->get('workflowState', '');
-        $parameters['q'] = $this->request->query->get('q', '');
-        $parameters['state'] = $this->request->query->get('state', '');
-        $parameters['solved'] = $this->request->query->get('solved', '');
+        $parameters['parent'] = $request->query->get('parent', 0);
+        $parameters['forum'] = $request->query->get('forum', 0);
+        $parameters['workflowState'] = $request->query->get('workflowState', '');
+        $parameters['q'] = $request->query->get('q', '');
+        $parameters['state'] = $request->query->get('state', '');
+        $parameters['solved'] = $request->query->get('solved', '');
     
         return $parameters;
     }
@@ -251,12 +253,13 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForAbo($context = '', array $args = [])
     {
         $parameters = [];
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $parameters;
         }
     
-        $parameters['workflowState'] = $this->request->query->get('workflowState', '');
-        $parameters['q'] = $this->request->query->get('q', '');
+        $parameters['workflowState'] = $request->query->get('workflowState', '');
+        $parameters['q'] = $request->query->get('q', '');
     
         return $parameters;
     }
@@ -272,13 +275,14 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForUser($context = '', array $args = [])
     {
         $parameters = [];
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $parameters;
         }
     
-        $parameters['rank'] = $this->request->query->get('rank', 0);
-        $parameters['workflowState'] = $this->request->query->get('workflowState', '');
-        $parameters['q'] = $this->request->query->get('q', '');
+        $parameters['rank'] = $request->query->get('rank', 0);
+        $parameters['workflowState'] = $request->query->get('workflowState', '');
+        $parameters['q'] = $request->query->get('q', '');
     
         return $parameters;
     }
@@ -294,13 +298,14 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForRank($context = '', array $args = [])
     {
         $parameters = [];
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $parameters;
         }
     
-        $parameters['workflowState'] = $this->request->query->get('workflowState', '');
-        $parameters['q'] = $this->request->query->get('q', '');
-        $parameters['special'] = $this->request->query->get('special', '');
+        $parameters['workflowState'] = $request->query->get('workflowState', '');
+        $parameters['q'] = $request->query->get('q', '');
+        $parameters['special'] = $request->query->get('special', '');
     
         return $parameters;
     }
@@ -314,10 +319,11 @@ abstract class AbstractCollectionFilterHelper
      */
     protected function addCommonViewFiltersForCategory(QueryBuilder $qb)
     {
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $qb;
         }
-        $routeName = $this->request->get('_route');
+        $routeName = $request->get('_route');
         if (false !== strpos($routeName, 'edit')) {
             return $qb;
         }
@@ -365,10 +371,11 @@ abstract class AbstractCollectionFilterHelper
      */
     protected function addCommonViewFiltersForForum(QueryBuilder $qb)
     {
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $qb;
         }
-        $routeName = $this->request->get('_route');
+        $routeName = $request->get('_route');
         if (false !== strpos($routeName, 'edit')) {
             return $qb;
         }
@@ -416,10 +423,11 @@ abstract class AbstractCollectionFilterHelper
      */
     protected function addCommonViewFiltersForPosting(QueryBuilder $qb)
     {
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $qb;
         }
-        $routeName = $this->request->get('_route');
+        $routeName = $request->get('_route');
         if (false !== strpos($routeName, 'edit')) {
             return $qb;
         }
@@ -475,10 +483,11 @@ abstract class AbstractCollectionFilterHelper
      */
     protected function addCommonViewFiltersForAbo(QueryBuilder $qb)
     {
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $qb;
         }
-        $routeName = $this->request->get('_route');
+        $routeName = $request->get('_route');
         if (false !== strpos($routeName, 'edit')) {
             return $qb;
         }
@@ -526,10 +535,11 @@ abstract class AbstractCollectionFilterHelper
      */
     protected function addCommonViewFiltersForUser(QueryBuilder $qb)
     {
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $qb;
         }
-        $routeName = $this->request->get('_route');
+        $routeName = $request->get('_route');
         if (false !== strpos($routeName, 'edit')) {
             return $qb;
         }
@@ -577,10 +587,11 @@ abstract class AbstractCollectionFilterHelper
      */
     protected function addCommonViewFiltersForRank(QueryBuilder $qb)
     {
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $qb;
         }
-        $routeName = $this->request->get('_route');
+        $routeName = $request->get('_route');
         if (false !== strpos($routeName, 'edit')) {
             return $qb;
         }
@@ -637,16 +648,17 @@ abstract class AbstractCollectionFilterHelper
      */
     protected function applyDefaultFiltersForCategory(QueryBuilder $qb, array $parameters = [])
     {
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $qb;
         }
-        $routeName = $this->request->get('_route');
+        $routeName = $request->get('_route');
         $isAdminArea = false !== strpos($routeName, 'muboardmodule_category_admin');
         if ($isAdminArea) {
             return $qb;
         }
     
-        $showOnlyOwnEntries = (bool)$this->request->query->getInt('own', $this->showOnlyOwnEntries);
+        $showOnlyOwnEntries = (bool)$request->query->getInt('own', $this->showOnlyOwnEntries);
     
         if (!in_array('workflowState', array_keys($parameters)) || empty($parameters['workflowState'])) {
             // per default we show approved categories only
@@ -672,16 +684,17 @@ abstract class AbstractCollectionFilterHelper
      */
     protected function applyDefaultFiltersForForum(QueryBuilder $qb, array $parameters = [])
     {
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $qb;
         }
-        $routeName = $this->request->get('_route');
+        $routeName = $request->get('_route');
         $isAdminArea = false !== strpos($routeName, 'muboardmodule_forum_admin');
         if ($isAdminArea) {
             return $qb;
         }
     
-        $showOnlyOwnEntries = (bool)$this->request->query->getInt('own', $this->showOnlyOwnEntries);
+        $showOnlyOwnEntries = (bool)$request->query->getInt('own', $this->showOnlyOwnEntries);
     
         if (!in_array('workflowState', array_keys($parameters)) || empty($parameters['workflowState'])) {
             // per default we show approved forums only
@@ -707,16 +720,17 @@ abstract class AbstractCollectionFilterHelper
      */
     protected function applyDefaultFiltersForPosting(QueryBuilder $qb, array $parameters = [])
     {
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $qb;
         }
-        $routeName = $this->request->get('_route');
+        $routeName = $request->get('_route');
         $isAdminArea = false !== strpos($routeName, 'muboardmodule_posting_admin');
         if ($isAdminArea) {
             return $qb;
         }
     
-        $showOnlyOwnEntries = (bool)$this->request->query->getInt('own', $this->showOnlyOwnEntries);
+        $showOnlyOwnEntries = (bool)$request->query->getInt('own', $this->showOnlyOwnEntries);
     
         if (!in_array('workflowState', array_keys($parameters)) || empty($parameters['workflowState'])) {
             // per default we show approved postings only
@@ -742,16 +756,17 @@ abstract class AbstractCollectionFilterHelper
      */
     protected function applyDefaultFiltersForAbo(QueryBuilder $qb, array $parameters = [])
     {
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $qb;
         }
-        $routeName = $this->request->get('_route');
+        $routeName = $request->get('_route');
         $isAdminArea = false !== strpos($routeName, 'muboardmodule_abo_admin');
         if ($isAdminArea) {
             return $qb;
         }
     
-        $showOnlyOwnEntries = (bool)$this->request->query->getInt('own', $this->showOnlyOwnEntries);
+        $showOnlyOwnEntries = (bool)$request->query->getInt('own', $this->showOnlyOwnEntries);
     
         if (!in_array('workflowState', array_keys($parameters)) || empty($parameters['workflowState'])) {
             // per default we show approved abos only
@@ -777,10 +792,11 @@ abstract class AbstractCollectionFilterHelper
      */
     protected function applyDefaultFiltersForUser(QueryBuilder $qb, array $parameters = [])
     {
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $qb;
         }
-        $routeName = $this->request->get('_route');
+        $routeName = $request->get('_route');
         $isAdminArea = false !== strpos($routeName, 'muboardmodule_user_admin');
         if ($isAdminArea) {
             return $qb;
@@ -806,16 +822,17 @@ abstract class AbstractCollectionFilterHelper
      */
     protected function applyDefaultFiltersForRank(QueryBuilder $qb, array $parameters = [])
     {
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $qb;
         }
-        $routeName = $this->request->get('_route');
+        $routeName = $request->get('_route');
         $isAdminArea = false !== strpos($routeName, 'muboardmodule_rank_admin');
         if ($isAdminArea) {
             return $qb;
         }
     
-        $showOnlyOwnEntries = (bool)$this->request->query->getInt('own', $this->showOnlyOwnEntries);
+        $showOnlyOwnEntries = (bool)$request->query->getInt('own', $this->showOnlyOwnEntries);
     
         if (!in_array('workflowState', array_keys($parameters)) || empty($parameters['workflowState'])) {
             // per default we show approved ranks only
@@ -876,17 +893,17 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchText'] = '%' . $fragment . '%';
             $filters[] = 'tbl.invocations = :searchInvocations';
             $parameters['searchInvocations'] = $fragment;
-            $filters[] = 'tbl.firstImage = :searchFirstImage';
+            $filters[] = 'tbl.firstImageFileName = :searchFirstImage';
             $parameters['searchFirstImage'] = $fragment;
-            $filters[] = 'tbl.secondImage = :searchSecondImage';
+            $filters[] = 'tbl.secondImageFileName = :searchSecondImage';
             $parameters['searchSecondImage'] = $fragment;
-            $filters[] = 'tbl.thirdImage = :searchThirdImage';
+            $filters[] = 'tbl.thirdImageFileName = :searchThirdImage';
             $parameters['searchThirdImage'] = $fragment;
-            $filters[] = 'tbl.firstFile = :searchFirstFile';
+            $filters[] = 'tbl.firstFileFileName = :searchFirstFile';
             $parameters['searchFirstFile'] = $fragment;
-            $filters[] = 'tbl.secondFile = :searchSecondFile';
+            $filters[] = 'tbl.secondFileFileName = :searchSecondFile';
             $parameters['searchSecondFile'] = $fragment;
-            $filters[] = 'tbl.thirdFile = :searchThirdFile';
+            $filters[] = 'tbl.thirdFileFileName = :searchThirdFile';
             $parameters['searchThirdFile'] = $fragment;
         }
         if ($objectType == 'abo') {
@@ -916,7 +933,7 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchMaxPostings'] = $fragment;
             $filters[] = 'tbl.numberOfIcons = :searchNumberOfIcons';
             $parameters['searchNumberOfIcons'] = $fragment;
-            $filters[] = 'tbl.uploadImage = :searchUploadImage';
+            $filters[] = 'tbl.uploadImageFileName = :searchUploadImage';
             $parameters['searchUploadImage'] = $fragment;
         }
     

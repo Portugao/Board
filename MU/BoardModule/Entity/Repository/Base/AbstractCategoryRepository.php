@@ -50,7 +50,7 @@ abstract class AbstractCategoryRepository extends EntityRepository
     /**
      * Retrieves an array with all fields which can be used for sorting instances.
      *
-     * @return string[] Sorting fields array
+     * @return string[] List of sorting field names
      */
     public function getAllowedSortingFields()
     {
@@ -297,6 +297,10 @@ abstract class AbstractCategoryRepository extends EntityRepository
         $qb = $this->genericBaseQuery('', '', $useJoins, $slimMode);
         $qb = $this->addIdListFilter($idList, $qb);
     
+        if (!$slimMode && null !== $this->collectionFilterHelper) {
+            $qb = $this->collectionFilterHelper->applyDefaultFilters('category', $qb);
+        }
+    
         $query = $this->getQueryFromBuilder($qb);
     
         $results = $query->getResult();
@@ -335,7 +339,7 @@ abstract class AbstractCategoryRepository extends EntityRepository
     public function getListQueryBuilder($where = '', $orderBy = '', $useJoins = true, $slimMode = false)
     {
         $qb = $this->genericBaseQuery($where, $orderBy, $useJoins, $slimMode);
-        if ((!$useJoins || !$slimMode) && null !== $this->collectionFilterHelper) {
+        if (!$slimMode && null !== $this->collectionFilterHelper) {
             $qb = $this->collectionFilterHelper->addCommonViewFilters('category', $qb);
         }
     
@@ -372,6 +376,12 @@ abstract class AbstractCategoryRepository extends EntityRepository
      */
     public function getSelectWherePaginatedQuery(QueryBuilder $qb, $currentPage = 1, $resultsPerPage = 25)
     {
+        if ($currentPage < 1) {
+            $currentPage = 1;
+        }
+        if ($resultsPerPage < 1) {
+            $resultsPerPage = 25;
+        }
         $query = $this->getQueryFromBuilder($qb);
         $offset = ($currentPage-1) * $resultsPerPage;
     
@@ -467,20 +477,17 @@ abstract class AbstractCategoryRepository extends EntityRepository
     public function getCountQuery($where = '', $useJoins = false)
     {
         $selection = 'COUNT(tbl.id) AS numCategories';
-        if (true === $useJoins) {
-            $selection .= $this->addJoinsToSelection();
-        }
     
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select($selection)
            ->from($this->mainEntityClass, 'tbl');
     
-        if (!empty($where)) {
-            $qb->andWhere($where);
-        }
-    
         if (true === $useJoins) {
             $this->addJoinsToFrom($qb);
+        }
+    
+        if (!empty($where)) {
+            $qb->andWhere($where);
         }
     
         return $qb;

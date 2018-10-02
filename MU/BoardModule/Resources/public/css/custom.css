@@ -66,6 +66,10 @@
 	
 }
 
+.titlestatus {
+	cursor: text;
+}
+
 .state-green,
 .state-red {
 	cursor: pointer;

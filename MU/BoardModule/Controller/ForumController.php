@@ -16,7 +16,6 @@ use MU\BoardModule\Controller\Base\AbstractForumController;
 
 use RuntimeException;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -91,12 +90,11 @@ class ForumController extends AbstractForumController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
-     * @ParamConverter("forum", class="MUBoardModule:ForumEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Theme("admin")
      */
-    public function adminDisplayAction(Request $request, ForumEntity $forum)
+    public function adminDisplayAction(Request $request, $id)
     {
-        return parent::adminDisplayAction($request, $forum);
+        return parent::adminDisplayAction($request, $id);
     }
     
     /**
@@ -107,11 +105,10 @@ class ForumController extends AbstractForumController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
-     * @ParamConverter("forum", class="MUBoardModule:ForumEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      */
-    public function displayAction(Request $request, ForumEntity $forum)
+    public function displayAction(Request $request, $id)
     {
-        return parent::displayAction($request, $forum);
+        return parent::displayAction($request, $id);
     }
     
     /**
@@ -151,12 +148,11 @@ class ForumController extends AbstractForumController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     * @ParamConverter("forum", class="MUBoardModule:ForumEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Theme("admin")
      */
-    public function adminDeleteAction(Request $request, ForumEntity $forum)
+    public function adminDeleteAction(Request $request, $id)
     {
-        return parent::adminDeleteAction($request, $forum);
+        return parent::adminDeleteAction($request, $id);
     }
     
     /**
@@ -167,11 +163,10 @@ class ForumController extends AbstractForumController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     * @ParamConverter("forum", class="MUBoardModule:ForumEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      */
-    public function deleteAction(Request $request, ForumEntity $forum)
+    public function deleteAction(Request $request, $id)
     {
-        return parent::deleteAction($request, $forum);
+        return parent::deleteAction($request, $id);
     }
     
     /**

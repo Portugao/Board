@@ -164,7 +164,7 @@ abstract class AbstractAjaxController extends AbstractController
         $entity[$field] = !$entity[$field];
         
         // save entity back to database
-        $entityFactory->getObjectManager()->flush();
+        $entityFactory->getObjectManager()->flush($entity);
         
         $logger = $this->get('logger');
         $logArgs = ['app' => 'MUBoardModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'field' => $field, 'entity' => $objectType, 'id' => $id];

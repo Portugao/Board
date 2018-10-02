@@ -21,27 +21,5 @@ use MU\BoardModule\Entity\Repository\Base\AbstractRankRepository;
  */
 class RankRepository extends AbstractRankRepository
 {
-    /**
-     * @param integer $numberPostings 
-     *
-     */
-    public function getRank($numberPostings) {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('tbl');
-        $qb->from($this->mainEntityClass, 'tbl');
-        $qb->where('tbl.minPostings = :number');
-        $qb->orWhere('tbl.maxPostings = :number');
-        $qb->orWhere('tbl.minPostings < :number');
-        $qb->andWhere('tbl.maxPostings > :number');
-        $qb->setParameter('number', $numberPostings);
-        
-        $query = $qb->getQuery();
-        $result = $query->getResult();
-        if (count($result) == 1) {
-            $rank = $this->find($result[0]['id']);
-            return $rank;
-        }
-        
-        return $result;
-    }
+    // feel free to add your own methods here, like for example reusable DQL queries
 }
