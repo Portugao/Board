@@ -43,7 +43,9 @@ class ControllerHelper extends AbstractControllerHelper
     	$postingsRepository = $this->entityFactory->getRepository('posting');
     	$countIssues = 0;
     	$countPostings = 0;
-    	$workflowState = 'approved';
+    	$newForums = array();
+    	$newEntries = array();
+    	//$workflowState = 'approved';
     	foreach ($entries as $entry) {
     		if ($objectType == 'category') {
     			$forums = $entry['forum'];
@@ -115,7 +117,7 @@ class ControllerHelper extends AbstractControllerHelper
     		// build RouteUrl instance for display hooks
     		$entity = $templateParameters[$objectType];
     		$urlParameters = $entity->createUrlArgs();
-    		$urlParameters['_locale'] = $this->request->getLocale();
+    		$urlParameters['_locale'] = $this->requestStack->getCurrentRequest()->getLocale();
     		$templateParameters['currentUrlObject'] = new RouteUrl('muboardmodule_' . strtolower($objectType) . '_display', $urlParameters);
     	}
     	if ($objectType == 'category' && $this->variableApi->get('MUBoardModule', 'showStatisticInDetails') == 1) {
@@ -124,6 +126,7 @@ class ControllerHelper extends AbstractControllerHelper
    		    $countIssues = 0;
    		    $countPostings = 0;
     		if ($forums != NULL) {
+    		    $newForums = array();
     		    foreach ($forums as $forum) {
     		    	// where clause for issues
     		    	$where = 'tbl.parent_id is NULL';
@@ -157,7 +160,7 @@ class ControllerHelper extends AbstractControllerHelper
     		$countIssues = 0;
     		$countPostings = 0;
     		
-    		$postings = $templateParameters[$objectType]['posting'];
+    		//$postings = $templateParameters[$objectType]['posting'];
     		$postingsRepository = $this->entityFactory->getRepository('posting');    		
     		
     		// where clause for issues
@@ -175,7 +178,8 @@ class ControllerHelper extends AbstractControllerHelper
     		// get issues for forum
     		$issues = $postingsRepository->selectWhere($where);		
 
-    		if ($issues) {
+    		if (isset($issues)) {
+    		    $newPostings = array();
     			foreach ($issues as $posting) {
     				if ($posting['parent'] === NULL) {
     					
@@ -212,6 +216,7 @@ class ControllerHelper extends AbstractControllerHelper
     		$templateParameters['posting']['user'] = $thisPostingUser;
     		}
     		if ($posting['children'] != NULL) {
+    		    $newChildren = array();
     			foreach ($posting['children'] as $children) {
     				$childrenUserId = $children->getCreatedBy()->getUid();
     				$where2 = 'tbl.userid = ' . $childrenUserId;
@@ -225,8 +230,6 @@ class ControllerHelper extends AbstractControllerHelper
     			}
     		}
     	}
-    	
-
     
     	return $this->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);
     }
