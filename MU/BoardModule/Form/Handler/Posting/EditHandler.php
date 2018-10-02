@@ -38,14 +38,14 @@ class EditHandler extends AbstractEditHandler
         // get treated entity reference from persisted member var
         $entity = $this->entityRef;
         
-        $forumId = $this->request->request->get('forumid',0);
+        $forumId = $this->requestStack->getCurrentRequest()->request->get('forumid',0);
         $forumRepository = $this->entityFactory->getRepository('forum');
         if ($forumId > 0) {
         $forum = $forumRepository->find($forumId);
         $entity['forum'] = $forum;
         }
         
-        $postingId = $this->request->request->get('postingid',0);
+        $postingId = $this->requestStack->getCurrentRequest()->request->get('postingid',0);
         $postingRepository = $this->entityFactory->getRepository('posting');
         $entityManager = $this->entityFactory->getObjectManager();
         
@@ -57,7 +57,7 @@ class EditHandler extends AbstractEditHandler
         $action = $args['commandName'];
     
         $success = false;
-        $flashBag = $this->request->getSession()->getFlashBag();
+        $flashBag = $this->requestStack->getCurrentRequest()->getSession()->getFlashBag();
         try {
             // execute the workflow action
             $success = $this->workflowHelper->executeAction($entity, $action);
@@ -84,7 +84,7 @@ class EditHandler extends AbstractEditHandler
                 $thisUser = $userRepository->find($thisUserArray[0]['id']);
             }
             
-            if ($thisUser) {
+            if (isset($thisUser)) {
                 $numberPostings = $thisUser->getNumberPostings();
                 $numberPostings2 = $numberPostings + 1;
                 $thisUser->setNumberPostings($numberPostings);
@@ -117,7 +117,7 @@ class EditHandler extends AbstractEditHandler
     public function getRank($numberPostings)
     {
         $rankRepository = $this->entityFactory->getRepository('rank');
-        $rank = $rankRepository->getRank($numberPostings);
+        $rank = $rankRepository->find($numberPostings);
         
         return $rank;
     }
