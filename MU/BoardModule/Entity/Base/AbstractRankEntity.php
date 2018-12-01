@@ -436,7 +436,7 @@ abstract class AbstractRankEntity extends EntityAccess
         }
         $this->uploadImage = $uploadImage;
     
-        if (null === $this->uploadImage) {
+        if (null === $this->uploadImage || '' == $this->uploadImage) {
             $this->setUploadImageFileName('');
             $this->setUploadImageUrl('');
             $this->setUploadImageMeta([]);

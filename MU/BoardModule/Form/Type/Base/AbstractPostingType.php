@@ -32,6 +32,7 @@ use MU\BoardModule\Form\Type\Field\UploadType;
 use MU\BoardModule\Helper\CollectionFilterHelper;
 use MU\BoardModule\Helper\EntityDisplayHelper;
 use MU\BoardModule\Helper\ListEntriesHelper;
+use MU\BoardModule\Helper\UploadHelper;
 use MU\BoardModule\Traits\ModerationFormFieldsTrait;
 use MU\BoardModule\Traits\WorkflowFormFieldsTrait;
 
@@ -65,6 +66,11 @@ abstract class AbstractPostingType extends AbstractType
     protected $listHelper;
 
     /**
+     * @var UploadHelper
+     */
+    protected $uploadHelper;
+
+    /**
      * PostingType constructor.
      *
      * @param TranslatorInterface $translator    Translator service instance
@@ -72,19 +78,22 @@ abstract class AbstractPostingType extends AbstractType
      * @param CollectionFilterHelper $collectionFilterHelper CollectionFilterHelper service instance
      * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
      * @param ListEntriesHelper $listHelper ListEntriesHelper service instance
+     * @param UploadHelper $uploadHelper UploadHelper service instance
      */
     public function __construct(
         TranslatorInterface $translator,
         EntityFactory $entityFactory,
         CollectionFilterHelper $collectionFilterHelper,
         EntityDisplayHelper $entityDisplayHelper,
-        ListEntriesHelper $listHelper
+        ListEntriesHelper $listHelper,
+        UploadHelper $uploadHelper
     ) {
         $this->setTranslator($translator);
         $this->entityFactory = $entityFactory;
         $this->collectionFilterHelper = $collectionFilterHelper;
         $this->entityDisplayHelper = $entityDisplayHelper;
         $this->listHelper = $listHelper;
+        $this->uploadHelper = $uploadHelper;
     }
 
     /**
@@ -179,7 +188,7 @@ abstract class AbstractPostingType extends AbstractType
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
-            'allowed_extensions' => 'gif, jpeg, jpg, png',
+            'allowed_extensions' => implode(', ', $this->uploadHelper->getAllowedFileExtensions('posting', 'firstImage')),
             'allowed_size' => '200k'
         ]);
         
@@ -191,7 +200,7 @@ abstract class AbstractPostingType extends AbstractType
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
-            'allowed_extensions' => 'gif, jpeg, jpg, png',
+            'allowed_extensions' => implode(', ', $this->uploadHelper->getAllowedFileExtensions('posting', 'secondImage')),
             'allowed_size' => '200k'
         ]);
         
@@ -203,7 +212,7 @@ abstract class AbstractPostingType extends AbstractType
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
-            'allowed_extensions' => 'gif, jpeg, jpg, png',
+            'allowed_extensions' => implode(', ', $this->uploadHelper->getAllowedFileExtensions('posting', 'thirdImage')),
             'allowed_size' => '200k'
         ]);
         
@@ -215,7 +224,7 @@ abstract class AbstractPostingType extends AbstractType
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
-            'allowed_extensions' => 'pdf',
+            'allowed_extensions' => implode(', ', $this->uploadHelper->getAllowedFileExtensions('posting', 'firstFile')),
             'allowed_size' => '2M'
         ]);
         
@@ -227,7 +236,7 @@ abstract class AbstractPostingType extends AbstractType
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
-            'allowed_extensions' => 'pdf',
+            'allowed_extensions' => implode(', ', $this->uploadHelper->getAllowedFileExtensions('posting', 'secondFile')),
             'allowed_size' => '2M'
         ]);
         
@@ -239,7 +248,7 @@ abstract class AbstractPostingType extends AbstractType
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
-            'allowed_extensions' => 'pdf',
+            'allowed_extensions' => implode(', ', $this->uploadHelper->getAllowedFileExtensions('posting', 'thirdFile')),
             'allowed_size' => '2M'
         ]);
     }

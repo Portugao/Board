@@ -694,7 +694,7 @@ abstract class AbstractPostingEntity extends EntityAccess
         }
         $this->firstImage = $firstImage;
     
-        if (null === $this->firstImage) {
+        if (null === $this->firstImage || '' == $this->firstImage) {
             $this->setFirstImageFileName('');
             $this->setFirstImageUrl('');
             $this->setFirstImageMeta([]);
@@ -821,7 +821,7 @@ abstract class AbstractPostingEntity extends EntityAccess
         }
         $this->secondImage = $secondImage;
     
-        if (null === $this->secondImage) {
+        if (null === $this->secondImage || '' == $this->secondImage) {
             $this->setSecondImageFileName('');
             $this->setSecondImageUrl('');
             $this->setSecondImageMeta([]);
@@ -948,7 +948,7 @@ abstract class AbstractPostingEntity extends EntityAccess
         }
         $this->thirdImage = $thirdImage;
     
-        if (null === $this->thirdImage) {
+        if (null === $this->thirdImage || '' == $this->thirdImage) {
             $this->setThirdImageFileName('');
             $this->setThirdImageUrl('');
             $this->setThirdImageMeta([]);
@@ -1075,7 +1075,7 @@ abstract class AbstractPostingEntity extends EntityAccess
         }
         $this->firstFile = $firstFile;
     
-        if (null === $this->firstFile) {
+        if (null === $this->firstFile || '' == $this->firstFile) {
             $this->setFirstFileFileName('');
             $this->setFirstFileUrl('');
             $this->setFirstFileMeta([]);
@@ -1202,7 +1202,7 @@ abstract class AbstractPostingEntity extends EntityAccess
         }
         $this->secondFile = $secondFile;
     
-        if (null === $this->secondFile) {
+        if (null === $this->secondFile || '' == $this->secondFile) {
             $this->setSecondFileFileName('');
             $this->setSecondFileUrl('');
             $this->setSecondFileMeta([]);
@@ -1329,7 +1329,7 @@ abstract class AbstractPostingEntity extends EntityAccess
         }
         $this->thirdFile = $thirdFile;
     
-        if (null === $this->thirdFile) {
+        if (null === $this->thirdFile || '' == $this->thirdFile) {
             $this->setThirdFileFileName('');
             $this->setThirdFileUrl('');
             $this->setThirdFileMeta([]);

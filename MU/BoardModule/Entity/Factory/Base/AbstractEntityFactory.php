@@ -75,7 +75,7 @@ abstract class AbstractEntityFactory
     /**
      * Creates a new category instance.
      *
-     * @return MU\BoardModule\Entity\categoryEntity The newly created entity instance
+     * @return \MU\BoardModule\Entity\CategoryEntity The newly created entity instance
      */
     public function createCategory()
     {
@@ -91,7 +91,7 @@ abstract class AbstractEntityFactory
     /**
      * Creates a new forum instance.
      *
-     * @return MU\BoardModule\Entity\forumEntity The newly created entity instance
+     * @return \MU\BoardModule\Entity\ForumEntity The newly created entity instance
      */
     public function createForum()
     {
@@ -107,7 +107,7 @@ abstract class AbstractEntityFactory
     /**
      * Creates a new posting instance.
      *
-     * @return MU\BoardModule\Entity\postingEntity The newly created entity instance
+     * @return \MU\BoardModule\Entity\PostingEntity The newly created entity instance
      */
     public function createPosting()
     {
@@ -123,7 +123,7 @@ abstract class AbstractEntityFactory
     /**
      * Creates a new abo instance.
      *
-     * @return MU\BoardModule\Entity\aboEntity The newly created entity instance
+     * @return \MU\BoardModule\Entity\AboEntity The newly created entity instance
      */
     public function createAbo()
     {
@@ -139,7 +139,7 @@ abstract class AbstractEntityFactory
     /**
      * Creates a new user instance.
      *
-     * @return MU\BoardModule\Entity\userEntity The newly created entity instance
+     * @return \MU\BoardModule\Entity\UserEntity The newly created entity instance
      */
     public function createUser()
     {
@@ -155,7 +155,7 @@ abstract class AbstractEntityFactory
     /**
      * Creates a new rank instance.
      *
-     * @return MU\BoardModule\Entity\rankEntity The newly created entity instance
+     * @return \MU\BoardModule\Entity\RankEntity The newly created entity instance
      */
     public function createRank()
     {

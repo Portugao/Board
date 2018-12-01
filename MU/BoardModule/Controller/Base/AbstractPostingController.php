@@ -228,7 +228,7 @@ abstract class AbstractPostingController extends AbstractController
             throw new AccessDeniedException();
         }
         
-        if ($posting->getWorkflowState() != 'approved' && !$permissionHelper->hasEntityPermission($posting, ACCESS_ADMIN)) {
+        if ($posting->getWorkflowState() != 'approved' && !$permissionHelper->hasEntityPermission($posting, ACCESS_EDIT)) {
             throw new AccessDeniedException();
         }
         

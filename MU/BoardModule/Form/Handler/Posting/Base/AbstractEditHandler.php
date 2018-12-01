@@ -66,11 +66,10 @@ abstract class AbstractEditHandler extends EditHandler
     protected function initRelationPresets()
     {
         $entity = $this->entityRef;
-    
         
         // assign identifiers of predefined incoming relationships
         // editable relation, we store the id and assign it now to show it in UI
-        $this->relationPresets['parent'] = $this->requestStack->getCurrentRequest()->get('parent', '');
+        $this->relationPresets['parent'] = $this->requestStack->getCurrentRequest()->query->get('parent', '');
         if (!empty($this->relationPresets['parent'])) {
             $relObj = $this->entityFactory->getRepository('posting')->selectById($this->relationPresets['parent']);
             if (null !== $relObj) {
@@ -78,7 +77,7 @@ abstract class AbstractEditHandler extends EditHandler
             }
         }
         // editable relation, we store the id and assign it now to show it in UI
-        $this->relationPresets['forum'] = $this->requestStack->getCurrentRequest()->get('forum', '');
+        $this->relationPresets['forum'] = $this->requestStack->getCurrentRequest()->query->get('forum', '');
         if (!empty($this->relationPresets['forum'])) {
             $relObj = $this->entityFactory->getRepository('forum')->selectById($this->relationPresets['forum']);
             if (null !== $relObj) {
@@ -230,6 +229,9 @@ abstract class AbstractEditHandler extends EditHandler
                     $message = $this->__('Done! Posting created.');
                 } else {
                     $message = $this->__('Done! Posting updated.');
+                }
+                if ('waiting' == $this->entityRef->getWorkflowState()) {
+                    $message .= ' ' . $this->__('It is now waiting for approval by our moderators.');
                 }
                 break;
             case 'delete':

@@ -65,7 +65,7 @@ function mUBoardValidateNoSpace(val) {
 
 function mUBoardValidateUploadExtension(val, elem) {
     var fileExtension, allowedExtensions;
-    if (val === '') {
+    if ('' == val) {
         return true;
     }
 
